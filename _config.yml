@@ -3,17 +3,22 @@
 ## Source: https://github.com/hexojs/hexo/
 
 # Site
-title: tanrunjie 
+title: 奇幻物语 
 subtitle: '诗酒趁年华!'
-description: 'enjoy yourself!'
+description: '你太习惯这个世界了，才会对任何事情都不感到惊奇。'
 keywords:
-author: tanrunjie
-language: zh-Hans
-timezone: ''
+author: 神秘囚徒
+language: zh-CN
+timezone: Asia/Shanghai
 
+search:
+  path: ./public/search.xml
+  field: post
+  format: html
+  limit: 10000
 # URL
 ## Set your site url here. For example, if you use GitHub Page, set url as 'https://username.github.io/project'
-url: http://example.com
+url: http://tanrunjie.github.io
 permalink: :year/:month/:day/:title/
 permalink_defaults:
 pretty_urls:
@@ -105,3 +110,12 @@ deploy:
   type: git
   repo: git@github.com:tanrunjie/tanrunjie.github.io.git
   branch: master
+
+markdown:
+  plugins:
+    - markdown-it-footnote
+    - markdown-it-sup
+    - markdown-it-sub
+    - markdown-it-abbr
+    - markdown-it-emoji
+    - hexo-math
