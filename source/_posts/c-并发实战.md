@@ -3,6 +3,8 @@ title: c++并发实战
 mathjax: true
 date: 2021-12-28 10:48:17
 tags: c++ 多线程 并发
+categories:
+- c++
 ---
 
 ### chap1 c++并发世界

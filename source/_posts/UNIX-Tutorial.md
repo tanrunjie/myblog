@@ -2,7 +2,8 @@
 title: UNIX_Tutorial
 date: 2021-12-27 10:55:55
 tags: bash
-
+categories:
+- 常用指令
 mathjax: true
 ---
 

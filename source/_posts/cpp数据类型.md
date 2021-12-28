@@ -2,6 +2,8 @@
 title: cpp生成代码及数据类型
 date: 2021-12-14 10:58:56
 tags: c++ primer
+categories:
+- c++
 ---
 
 c++基本数据类型主要有*bool, char, int, float, double*。具体如下：

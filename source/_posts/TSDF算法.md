@@ -2,6 +2,8 @@
 title: TSDF算法
 date: 2021-12-23 16:54:25
 tags: SLAM
+categories:
+- SLAM
 ---
 
 具体学习于 [https://github.com/andyzeng/tsdf-fusion](https://github.com/andyzeng/tsdf-fusion)
