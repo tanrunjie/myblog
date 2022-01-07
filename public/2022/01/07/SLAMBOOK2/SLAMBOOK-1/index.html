@@ -20,20 +20,20 @@
     var CONFIG = {"hostname":"tanrunjie.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"./public/search.xml"};
   </script>
 
-  <meta name="description" content="摘自微信号十三手记 引言定时睡眠和睡眠时长时一个人精神饱满的关键吗？你以为是，其实不是。为什么？ 因为你没有真正懂得人的能量消耗和补充的原理，所以被某些单边的睡眠观念影响纠结，进而降低了睡眠质量。    人的系统能量是怎么消耗的？眼耳鼻舌身的功能运行和头脑里的各种念想。   系统能量是怎么补充的？适当的时候，主动放松降低眼耳鼻舌身意的运行频率，生命本源会自动补充你的精神能量；适度的饮食支持会提供身">
+  <meta name="description" content="SLAM：Simultaneous Localization and Mapping同步定位及建图：搭载特定传感器的主体，在没有环境先验信息情况下，在运动过程中建立环境模型，同时估计自己位姿的过程。根据传感器分为深度相机，RGB相机和激光。不同传感器特点不一样，应用环境以及遇到的难点不同。本书主要是视觉SLAM：围绕RGB相机，也会引入Depth相机。 CV之初，人们想象有一天计算机将和人一样，通">
 <meta property="og:type" content="article">
-<meta property="og:title" content="洞见睡眠">
-<meta property="og:url" content="http://tanrunjie.github.io/2021/12/28/shisan/%E6%B4%9E%E8%A7%81%E7%9D%A1%E7%9C%A0/index.html">
+<meta property="og:title" content="SLAM十四讲（一）预备及初识">
+<meta property="og:url" content="http://tanrunjie.github.io/2022/01/07/SLAMBOOK2/SLAMBOOK-1/index.html">
 <meta property="og:site_name" content="奇幻物语">
-<meta property="og:description" content="摘自微信号十三手记 引言定时睡眠和睡眠时长时一个人精神饱满的关键吗？你以为是，其实不是。为什么？ 因为你没有真正懂得人的能量消耗和补充的原理，所以被某些单边的睡眠观念影响纠结，进而降低了睡眠质量。    人的系统能量是怎么消耗的？眼耳鼻舌身的功能运行和头脑里的各种念想。   系统能量是怎么补充的？适当的时候，主动放松降低眼耳鼻舌身意的运行频率，生命本源会自动补充你的精神能量；适度的饮食支持会提供身">
+<meta property="og:description" content="SLAM：Simultaneous Localization and Mapping同步定位及建图：搭载特定传感器的主体，在没有环境先验信息情况下，在运动过程中建立环境模型，同时估计自己位姿的过程。根据传感器分为深度相机，RGB相机和激光。不同传感器特点不一样，应用环境以及遇到的难点不同。本书主要是视觉SLAM：围绕RGB相机，也会引入Depth相机。 CV之初，人们想象有一天计算机将和人一样，通">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2021-12-28T12:24:03.000Z">
-<meta property="article:modified_time" content="2022-01-05T06:24:21.669Z">
+<meta property="article:published_time" content="2022-01-07T08:52:46.000Z">
+<meta property="article:modified_time" content="2022-01-07T09:43:34.123Z">
 <meta property="article:author" content="神秘囚徒">
-<meta property="article:tag" content="十三手记">
+<meta property="article:tag" content="SLAMBOOK">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="http://tanrunjie.github.io/2021/12/28/shisan/%E6%B4%9E%E8%A7%81%E7%9D%A1%E7%9C%A0/">
+<link rel="canonical" href="http://tanrunjie.github.io/2022/01/07/SLAMBOOK2/SLAMBOOK-1/">
 
 
 <script id="page-configurations">
@@ -46,7 +46,7 @@
   };
 </script>
 
-  <title>洞见睡眠 | 奇幻物语</title>
+  <title>SLAM十四讲（一）预备及初识 | 奇幻物语</title>
   
 
 
@@ -200,7 +200,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://tanrunjie.github.io/2021/12/28/shisan/%E6%B4%9E%E8%A7%81%E7%9D%A1%E7%9C%A0/">
+    <link itemprop="mainEntityOfPage" href="http://tanrunjie.github.io/2022/01/07/SLAMBOOK2/SLAMBOOK-1/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpeg">
@@ -213,7 +213,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          洞见睡眠
+          SLAM十四讲（一）预备及初识
         </h1>
 
         <div class="post-meta">
@@ -222,23 +222,17 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
+              
 
-              <time title="创建时间：2021-12-28 20:24:03" itemprop="dateCreated datePublished" datetime="2021-12-28T20:24:03+08:00">2021-12-28</time>
+              <time title="创建时间：2022-01-07 16:52:46 / 修改时间：17:43:34" itemprop="dateCreated datePublished" datetime="2022-01-07T16:52:46+08:00">2022-01-07</time>
             </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-01-05 14:24:21" itemprop="dateModified" datetime="2022-01-05T14:24:21+08:00">2022-01-05</time>
-              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E5%8D%81%E4%B8%89%E6%89%8B%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">十三手记</span></a>
+                  <a href="/categories/SLAM%E5%8D%81%E5%9B%9B%E8%AE%B2/" itemprop="url" rel="index"><span itemprop="name">SLAM十四讲</span></a>
                 </span>
             </span>
 
@@ -255,7 +249,7 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>837</span>
+              <span>976</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
@@ -274,18 +268,21 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p><code>摘自微信号十三手记</code></p>
-<h3 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h3><p>定时睡眠和睡眠时长时一个人精神饱满的关键吗？<br>你以为是，其实不是。<br>为什么？ 因为你没有真正懂得人的能量消耗和补充的原理，所以被某些单边的睡眠观念影响纠结，进而降低了睡眠质量。  </p>
+        <h4 id="SLAM：Simultaneous-Localization-and-Mapping"><a href="#SLAM：Simultaneous-Localization-and-Mapping" class="headerlink" title="SLAM：Simultaneous Localization and Mapping"></a>SLAM：Simultaneous Localization and Mapping</h4><p>同步定位及建图：搭载特定传感器的主体，在没有环境先验信息情况下，在运动过程中建立环境模型，同时估计自己位姿的过程。根据传感器分为深度相机，RGB相机和激光。不同传感器特点不一样，应用环境以及遇到的难点不同。本书主要是视觉SLAM：围绕RGB相机，也会引入Depth相机。</p>
+<p>CV之初，人们想象有一天计算机将和人一样，通过眼睛去观察世界，理解周围的物体，探索未知的环境–这是一个美妙而又充满浪漫色彩的梦想，让无数科研人员日夜为之奋斗。</p>
+<p>SLAM相关的应用点：室内扫地机，移动机器人；户外的自动驾驶以及空中无人机；乃至虚拟现实和增强现实设备。</p>
+<p>SLAM研究的三十年，将主干分为四个大模块：</p>
 <ul>
-<li><p>人的系统能量是怎么消耗的？<br>眼耳鼻舌身的功能运行和头脑里的各种念想。 </p>
-</li>
-<li><p>系统能量是怎么补充的？<br>适当的时候，主动放松降低眼耳鼻舌身意的运行频率，生命本源会自动补充你的精神能量；适度的饮食支持会提供身体所需要的物质能量。</p>
-</li>
+<li>前端里程计（求pose)：估计相邻图像相机的运动以及局部地图样子</li>
+<li>后端优化（优化pose)：根据多个时刻的相机位姿以及回环检测进行优化，得到全局一致的轨迹和地图</li>
+<li>建图：根据轨迹建立与任务要求对应的地图</li>
+<li>回环检测（优化全局pose)：判断是否到达过先前的位置</li>
 </ul>
-<h3 id="要你深深明白"><a href="#要你深深明白" class="headerlink" title="要你深深明白"></a>要你深深明白</h3><p>二元有相世界，任何时候，当你放松敞开不纠结，系统能量便会自动减少消耗，补充便会自动提高。所以，定时睡眠以及睡眠时长并不是一个人精神饱满的关键，关键的问题是人的系统能量消耗和补充的原理，当你明白了这个原理，你便打破了睡眠是你能量补充的必须形式的局限认知，你便打破了你对睡眠的依赖性。  </p>
-<p>如此，反而你何时睡眠以及睡眠时长就可以根据你的意愿而主动安排；如此，你便不会因所谓的失眠而形成恐惧，便不会被恐惧纠结而形成反复消耗，反而能量补充会更加顺畅；如此，你的睡眠质量反而得到提高，你的生命自由度便会随着你心境的提升而逐步提升，身心健康和自由便走上了可期的道路。</p>
-<h3 id="附赠"><a href="#附赠" class="headerlink" title="附赠"></a>附赠</h3><p>失眠是什么？<br>是你先给自己定个睡觉时间，再把睡不着当成失眠吗？失眠是没睡觉的样子？还是说在特定时间没睡觉？为什么要特定？谁特定的？谁能除了定自己还能定别人？难道你不可以睡得着就睡，睡不着就不睡吗？</p>
-<h3 id="个人感悟"><a href="#个人感悟" class="headerlink" title="个人感悟"></a>个人感悟</h3><p>人类对自己的认知是那么的不足，对睡眠也几乎是一无所知。十三手记表达了令人惊奇的观点，人恢复能量和元气并不完完全全依赖于睡眠。虽然大部分时候睡眠质量很重要，但同时也没有必要一直纠结于自身的睡眠质量。能量的恢复是自然而然的，而人的感官意识都是无时无刻在耗费精力的，但当你关闭了这些感官和意识时，其实你就已经在休整，你的能量就已经是呈现上升的态势。所以，关于休息，我们应该更少焦虑的纠结于睡眠，更多关注我们感官意识的状态。这就是所谓的闭目养神，同时冥想可能可带来注意力的自主调整和加快能量恢复，以致于很多人推荐。</p>
+<p>1.定位问题：我在什么地方？<br>2.建图问题：周围环境是什么样？<br>方法很多：室内可以在地板铺设导引线，在墙上贴二维码，在桌子放置无线电定位设备；室外可以安装定位设备（GPS）等<br>传感器主要两类：1.安装在本体上，如轮式编码器，IMU，相机，激光； 2.安装在环境上，上述提到的</p>
+<h4 id="不同传感器的特性以及SLAM的影响"><a href="#不同传感器的特性以及SLAM的影响" class="headerlink" title="不同传感器的特性以及SLAM的影响"></a>不同传感器的特性以及SLAM的影响</h4><p>单目：图像是三维空间的二维投影，必须移动(Motion)才能估计结构(Structure).motion后只能根据视差估计相对的值，具有尺度不确定性。<br>问题：平移才能计算深度以及无法确定真实尺度，导致单目SLAM困难多多，但是成本较低。</p>
+<p>双目：利于基线解决尺度不确定性，但视差的匹配依然效率不高，需要引入GPU和FPGA加速才能实时输出整张图的距离信息。双目测量距离受基线大小影响，所以无人车上一般搭载很大的家伙<br>问题：对于SLAM而言，传感器的配置与标定较为复杂。</p>
+<p>RGB-D相机：通过TOF物理测量手段直接获得全图的深度信息<br>问题：低端TOF测量范围窄，噪声大，视野小；普遍存在日光干扰、无法测量投射材质以及高反高吸收率材质；所以主要用于室内应用，室外难以使用。</p>
+<p>目前而言，如果工作环境理想：静态、刚体、光照变化小、没有人为干扰的场景，SLAM是相当成熟。</p>
 
     </div>
 
@@ -295,7 +292,7 @@
 
       <footer class="post-footer">
           <div class="post-tags">
-              <a href="/tags/%E5%8D%81%E4%B8%89%E6%89%8B%E8%AE%B0/" rel="tag"># 十三手记</a>
+              <a href="/tags/SLAMBOOK/" rel="tag"># SLAMBOOK</a>
           </div>
 
         
@@ -304,13 +301,10 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2021/12/28/cpp/%E8%85%BE%E8%AE%AF%E8%AF%BE%E5%A0%82-C-11%E5%A4%9A%E7%BA%BF%E7%A8%8B/" rel="prev" title="腾讯课堂-C++11多线程">
-      <i class="fa fa-chevron-left"></i> 腾讯课堂-C++11多线程
+    <a href="/2022/01/05/shisan/%E6%81%90%E6%83%A7%E4%B9%8B%E7%A0%B4/" rel="prev" title="恐惧之破">
+      <i class="fa fa-chevron-left"></i> 恐惧之破
     </a></div>
-      <div class="post-nav-item">
-    <a href="/2021/12/29/cpp/chrono%E5%BA%93/" rel="next" title="chrono库">
-      chrono库 <i class="fa fa-chevron-right"></i>
-    </a></div>
+      <div class="post-nav-item"></div>
     </div>
       </footer>
     
@@ -370,7 +364,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BC%95%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">引言</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A6%81%E4%BD%A0%E6%B7%B1%E6%B7%B1%E6%98%8E%E7%99%BD"><span class="nav-number">2.</span> <span class="nav-text">要你深深明白</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%99%84%E8%B5%A0"><span class="nav-number">3.</span> <span class="nav-text">附赠</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%AA%E4%BA%BA%E6%84%9F%E6%82%9F"><span class="nav-number">4.</span> <span class="nav-text">个人感悟</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#SLAM%EF%BC%9ASimultaneous-Localization-and-Mapping"><span class="nav-number">1.</span> <span class="nav-text">SLAM：Simultaneous Localization and Mapping</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%B8%8D%E5%90%8C%E4%BC%A0%E6%84%9F%E5%99%A8%E7%9A%84%E7%89%B9%E6%80%A7%E4%BB%A5%E5%8F%8ASLAM%E7%9A%84%E5%BD%B1%E5%93%8D"><span class="nav-number">2.</span> <span class="nav-text">不同传感器的特性以及SLAM的影响</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -591,7 +585,7 @@ NexT.utils.loadComments(document.querySelector('#gitalk-container'), () => {
       repo        : 'tanrunjie.github.io',
       owner       : 'tanrunjie',
       admin       : ['tanrunjie'],
-      id          : 'c6c3d238111a6394bbff595ee0a7529b',
+      id          : '7db473cd561b14b996cafd571eff4ec2',
         language: 'zh-CN',
       distractionFreeMode: false
     });
