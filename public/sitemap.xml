@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://tanrunjie.github.io/2022/01/28/xinli/%E5%BF%83%E6%80%81%E7%BB%83%E4%B9%A0/</loc>
+    
+    <lastmod>2022-01-28</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://tanrunjie.github.io/2022/01/26/cpp/%E4%BB%A3%E7%A0%81%E9%87%8D%E7%94%A8/</loc>
     
     <lastmod>2022-01-27</lastmod>
@@ -270,7 +277,7 @@
   </url>
   
   <url>
-    <loc>http://tanrunjie.github.io/tags/c-%E5%A4%9A%E7%BA%BF%E7%A8%8B-%E5%B9%B6%E5%8F%91/</loc>
+    <loc>http://tanrunjie.github.io/tags/%E8%BA%AB%E4%BD%93%E5%81%A5%E5%BA%B7/</loc>
     <lastmod>2022-01-28</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
@@ -284,7 +291,7 @@
   </url>
   
   <url>
-    <loc>http://tanrunjie.github.io/tags/%E8%BA%AB%E4%BD%93%E5%81%A5%E5%BA%B7/</loc>
+    <loc>http://tanrunjie.github.io/tags/c-%E5%A4%9A%E7%BA%BF%E7%A8%8B-%E5%B9%B6%E5%8F%91/</loc>
     <lastmod>2022-01-28</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
@@ -305,13 +312,6 @@
   </url>
   
   <url>
-    <loc>http://tanrunjie.github.io/tags/C-%E5%A4%9A%E7%BA%BF%E7%A8%8B-%E5%B9%B6%E5%8F%91/</loc>
-    <lastmod>2022-01-28</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>http://tanrunjie.github.io/tags/EIGEN/</loc>
     <lastmod>2022-01-28</lastmod>
     <changefreq>daily</changefreq>
@@ -319,21 +319,7 @@
   </url>
   
   <url>
-    <loc>http://tanrunjie.github.io/tags/opencv/</loc>
-    <lastmod>2022-01-28</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>http://tanrunjie.github.io/tags/%E5%BF%83%E5%BE%97/</loc>
-    <lastmod>2022-01-28</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>http://tanrunjie.github.io/tags/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/</loc>
+    <loc>http://tanrunjie.github.io/tags/C-%E5%A4%9A%E7%BA%BF%E7%A8%8B-%E5%B9%B6%E5%8F%91/</loc>
     <lastmod>2022-01-28</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
@@ -347,7 +333,35 @@
   </url>
   
   <url>
+    <loc>http://tanrunjie.github.io/tags/opencv/</loc>
+    <lastmod>2022-01-28</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://tanrunjie.github.io/tags/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/</loc>
+    <lastmod>2022-01-28</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>http://tanrunjie.github.io/tags/%E5%8D%9A%E5%AE%A2%E8%BF%81%E7%A7%BB/</loc>
+    <lastmod>2022-01-28</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://tanrunjie.github.io/tags/%E5%BF%83%E5%BE%97/</loc>
+    <lastmod>2022-01-28</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://tanrunjie.github.io/tags/%E5%8D%81%E4%B8%89%E6%89%8B%E8%AE%B0/</loc>
     <lastmod>2022-01-28</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
@@ -361,7 +375,7 @@
   </url>
   
   <url>
-    <loc>http://tanrunjie.github.io/tags/%E5%8D%81%E4%B8%89%E6%89%8B%E8%AE%B0/</loc>
+    <loc>http://tanrunjie.github.io/tags/%E5%BF%83%E7%90%86/</loc>
     <lastmod>2022-01-28</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
@@ -384,7 +398,7 @@
   </url>
   
   <url>
-    <loc>http://tanrunjie.github.io/categories/c/</loc>
+    <loc>http://tanrunjie.github.io/categories/%E8%BA%AB%E4%BD%93%E5%81%A5%E5%BA%B7/</loc>
     <lastmod>2022-01-28</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
@@ -398,7 +412,7 @@
   </url>
   
   <url>
-    <loc>http://tanrunjie.github.io/categories/%E8%BA%AB%E4%BD%93%E5%81%A5%E5%BA%B7/</loc>
+    <loc>http://tanrunjie.github.io/categories/c/</loc>
     <lastmod>2022-01-28</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
@@ -412,21 +426,14 @@
   </url>
   
   <url>
-    <loc>http://tanrunjie.github.io/categories/opencv/</loc>
-    <lastmod>2022-01-28</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>http://tanrunjie.github.io/categories/%E8%AF%BB%E4%B9%A6/</loc>
-    <lastmod>2022-01-28</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>http://tanrunjie.github.io/categories/pcl/</loc>
+    <lastmod>2022-01-28</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://tanrunjie.github.io/categories/opencv/</loc>
     <lastmod>2022-01-28</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
@@ -454,7 +461,21 @@
   </url>
   
   <url>
+    <loc>http://tanrunjie.github.io/categories/%E8%AF%BB%E4%B9%A6/</loc>
+    <lastmod>2022-01-28</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>http://tanrunjie.github.io/categories/%E5%8D%81%E4%B8%89%E6%89%8B%E8%AE%B0/</loc>
+    <lastmod>2022-01-28</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://tanrunjie.github.io/categories/%E5%BF%83%E7%90%86/</loc>
     <lastmod>2022-01-28</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
