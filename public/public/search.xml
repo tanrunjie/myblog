@@ -300,6 +300,21 @@
       </tags>
   </entry>
   <entry>
+    <title>cpp生成代码及数据类型</title>
+    <url>/2021/12/14/cpp/cpp%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/</url>
+    <content><![CDATA[<p>c++基本数据类型主要有<em>bool, char, int, float, double</em>。具体如下：</p>
+<p><img src="/images/12_14_2.png" alt="basic data structure"><br><img src="/images/12_14_3.png" alt="basic data structure2"></p>
+<p>另外，C++<strong>生成代码的过程</strong>是：1.程序员编写源代码 2.编译器正确翻译C++为目标代码 3.链接器将环境启动的代码以及引入库的代码与目标代码正确链接 4.最后才输出机器认识的可执行代码<br><img src="/images/12_14_1.png" alt="code procedure"></p>
+<p>整型提升(integral promotion): 计算表达式时，bool, char, unsigned char, signed char short会转换为int，即int为计算机最自然的类型，也是运算速度可能最快的。较小与较大运算也可能提升。</p>
+]]></content>
+      <categories>
+        <category>c++</category>
+      </categories>
+      <tags>
+        <tag>c++ primer</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>chrono库</title>
     <url>/2021/12/29/cpp/chrono%E5%BA%93/</url>
     <content><![CDATA[<p>计时，常用于测试代码的运行时间和效率。</p>
@@ -317,21 +332,6 @@
       </tags>
   </entry>
   <entry>
-    <title>cpp生成代码及数据类型</title>
-    <url>/2021/12/14/cpp/cpp%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/</url>
-    <content><![CDATA[<p>c++基本数据类型主要有<em>bool, char, int, float, double</em>。具体如下：</p>
-<p><img src="/images/12_14_2.png" alt="basic data structure"><br><img src="/images/12_14_3.png" alt="basic data structure2"></p>
-<p>另外，C++<strong>生成代码的过程</strong>是：1.程序员编写源代码 2.编译器正确翻译C++为目标代码 3.链接器将环境启动的代码以及引入库的代码与目标代码正确链接 4.最后才输出机器认识的可执行代码<br><img src="/images/12_14_1.png" alt="code procedure"></p>
-<p>整型提升(integral promotion): 计算表达式时，bool, char, unsigned char, signed char short会转换为int，即int为计算机最自然的类型，也是运算速度可能最快的。较小与较大运算也可能提升。</p>
-]]></content>
-      <categories>
-        <category>c++</category>
-      </categories>
-      <tags>
-        <tag>c++ primer</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>代码重用</title>
     <url>/2022/01/26/cpp/%E4%BB%A3%E7%A0%81%E9%87%8D%E7%94%A8/</url>
     <content><![CDATA[<h3 id="类的复用"><a href="#类的复用" class="headerlink" title="类的复用"></a>类的复用</h3><p>上一节了解了public继承是is-a关系;C++ PRIMER第十四章重用讲解包含has-a的两种用法：1.组件包含 2.私有继承包含<br>大多数人会倾向于使用包含，一方面方便理解，另一方面多重继承容易引起问题；私有继承主要区别在于私有成员变成了继承而来的无名成员，调用成员时依赖this的类型转换。</p>
@@ -345,61 +345,7 @@
 <figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="class"><span class="keyword">class</span> <span class="title">T</span>&gt;</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ARray</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">  <span class="keyword">private</span>:</span><br><span class="line">    T entry;</span><br><span class="line">    ...</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">template</span> &lt;<span class="class"><span class="keyword">class</span> <span class="title">Type</span>&gt;</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">GrowArray</span>:</span><span class="keyword">public</span> Array&lt;Type&gt; &#123;...&#125;; <span class="comment">// inheritance</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">template</span> &lt;calss Tp&gt;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Stack</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">  Array&lt;Tp&gt; ar;    <span class="comment">// use an Array&lt;&gt; as a component</span></span><br><span class="line">  ...</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// need a blank between &gt; &gt;, show differ from &gt;&gt; operator</span></span><br><span class="line">Array &lt; Stack&lt;<span class="keyword">int</span>&gt; &gt; asi; <span class="comment">// an array of stacks of int</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 模板也可传参</span></span><br><span class="line"><span class="keyword">template</span>&lt;<span class="class"><span class="keyword">class</span> <span class="title">T</span>, <span class="title">int</span> <span class="title">n</span>&gt;</span></span><br><span class="line">ArrayTP&lt;T, n&gt;::<span class="built_in">ArrayTP</span>(<span class="keyword">const</span> T &amp; v)</span><br><span class="line">&#123;</span><br><span class="line">  <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;n;i++&gt;)</span><br><span class="line">    ar[i] = v;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 显示具体化，用于专用定义，优先匹配</span></span><br><span class="line"><span class="keyword">template</span>&lt;&gt; <span class="class"><span class="keyword">class</span> <span class="title">Ic</span>&lt;</span><span class="keyword">char</span> *&gt;</span><br><span class="line">&#123;</span><br><span class="line">  <span class="keyword">private</span>:</span><br><span class="line">  <span class="keyword">public</span>:</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 
 <p>模板参数类似函数参数，带有隐式显式转换及参数匹配规则。</p>
-]]></content>
-      <categories>
-        <category>c++</category>
-      </categories>
-      <tags>
-        <tag>c++</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>字符串</title>
-    <url>/2021/12/15/cpp/%E5%AD%97%E7%AC%A6%E4%B8%B2/</url>
-    <content><![CDATA[<h3 id="C-style字符串"><a href="#C-style字符串" class="headerlink" title="C-style字符串"></a>C-style字符串</h3><p>结尾带’\0’,这对于很多处理字符串的函数很关键。#include <cstring>包含大量C语言字串的操作函数如strlen, strcpy, strcat…</p>
-<p>strlen():只计算数组或者指针中的字符个数，不带结尾</p>
-<p><code>cin.getline(name,20)</code>:读取整行的字串到name,最多20个<br>cin.get()：类似，但下一次调用开头会带有换行(换行缓存到下次get)，顺便检查了上一次输入的正确程度。</p>
-<p>针对string类的getline(cin, string); 与cin混合使用时，在cin&gt;&gt;完成后，getline前需要通过getline(cin,”\n”)清除缓存，否则不进入getline输入。</p>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 清除缓存</span></span><br><span class="line">string str=<span class="string">&quot;\n&quot;</span>;</span><br><span class="line"><span class="built_in">getline</span>(cin,str);</span><br></pre></td></tr></table></figure>
-
-
-
-<h3 id="string类"><a href="#string类" class="headerlink" title="string类"></a>string类</h3><figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string&gt;</span></span></span><br><span class="line">std::string</span><br></pre></td></tr></table></figure>
-<p>更方便，也更安全。像vector一样管理char.</p>
-<h3 id="struct和union"><a href="#struct和union" class="headerlink" title="struct和union"></a>struct和union</h3><p>union只能同时存储<strong>一种</strong>类型，其他类型的会lost</p>
-<h3 id="new和delete"><a href="#new和delete" class="headerlink" title="new和delete"></a>new和delete</h3><ul>
-<li>不要delete释放不是new的内存</li>
-<li>不要delete同一块内存两次</li>
-<li>new[]数组应当用delete []释放</li>
-<li>若用new[]为单一实体分配内存，应使用delete（不带方括号）释放</li>
-<li>对空指针delete是安全的</li>
-</ul>
-<h3 id="cin与cin-getline区别"><a href="#cin与cin-getline区别" class="headerlink" title="cin与cin.getline区别"></a>cin与cin.getline区别</h3><p>cin.getline(addr,80) 与cin&gt;&gt;addr<br>getline:读整行直到‘回车’<br>cin:首先跳过‘空格’，读取字串，再次遇‘空格’停止；即跳过前面的空格，读取单个单词。</p>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line">cin&gt;&gt;ch;</span><br><span class="line">cin.<span class="built_in">get</span>(ch);</span><br><span class="line">ch=cin.<span class="built_in">get</span>();</span><br></pre></td></tr></table></figure>
-<p>上面区别主要是cin&gt;&gt;ch直接跳过空格换行以及制表符</p>
-<h3 id="string格式化输出4位数字-前面补0，多用于文件名操作"><a href="#string格式化输出4位数字-前面补0，多用于文件名操作" class="headerlink" title="string格式化输出4位数字,前面补0，多用于文件名操作"></a>string格式化输出4位数字,前面补0，多用于文件名操作</h3><figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="keyword">int</span> num_zero = <span class="number">4</span>;</span><br><span class="line">string num = <span class="built_in">to_string</span>(int_val);</span><br><span class="line">string new_num = <span class="built_in">string</span>(num_zero-num.<span class="built_in">length</span>(),<span class="string">&#x27;0&#x27;</span>) + num;</span><br></pre></td></tr></table></figure>
-<p>注意int_val长度小于num_zero。</p>
-]]></content>
-      <categories>
-        <category>c++</category>
-      </categories>
-      <tags>
-        <tag>c++ primer</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>异常处理</title>
-    <url>/2021/12/23/cpp/%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86/</url>
-    <content><![CDATA[<h3 id="处理可能出现异常的方法"><a href="#处理可能出现异常的方法" class="headerlink" title="处理可能出现异常的方法"></a>处理可能出现异常的方法</h3><ul>
-<li>调用abort()或exit()结束程序</li>
-<li>返回错误码</li>
-<li>异常机制：1.使用try块执行可能出现异常的代码段 2.throw引发异常 3.catch捕获并处理对应情况</li>
-</ul>
-<h3 id="throw机制"><a href="#throw机制" class="headerlink" title="throw机制"></a>throw机制</h3><p>若throw引发异常后，匹配对应catch。而后不是将控制权返回调用程序，而是引导程序沿着函数调用序列后退，直到找到try块中的函数<br>若没有throw出异常，则catch被跳过</p>
-<h3 id="通常用对象作为异常类型处理"><a href="#通常用对象作为异常类型处理" class="headerlink" title="通常用对象作为异常类型处理"></a>通常用对象作为异常类型处理</h3><p>好处是：直接根据类型区分异常，另外对象可以携带信息确定原因，catch根据信息来执行对应的操作</p>
-<h3 id="堆栈解退（unwinding-the-stack）"><a href="#堆栈解退（unwinding-the-stack）" class="headerlink" title="堆栈解退（unwinding the stack）"></a>堆栈解退（unwinding the stack）</h3><p>假设函数出现异常，而不是正确返回而终止。程序释放堆栈中的内存，但不会在释放堆栈的第一个返回地址后停止，而是继续释放堆栈，直到找到位于try块的返回地质。</p>
-<p><img src="/images/12_23_1.png"></p>
-<h3 id="文件IO"><a href="#文件IO" class="headerlink" title="文件IO"></a>文件IO</h3><figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;fstream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    ifstream inFile;</span><br><span class="line">    inFile.<span class="built_in">open</span>(<span class="string">&quot;file.txt&quot;</span>);</span><br><span class="line">    <span class="keyword">if</span>(!inFile.<span class="built_in">is_open</span>())</span><br><span class="line">    &#123;</span><br><span class="line">        cerr &lt;&lt;<span class="string">&quot;Failed open file.txt\n&quot;</span>;</span><br><span class="line">        <span class="built_in">exit</span>(<span class="number">0</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">char</span> ch;</span><br><span class="line">    <span class="keyword">int</span> cnt=<span class="number">0</span>;</span><br><span class="line">    <span class="keyword">while</span>(inFile&gt;&gt;ch)</span><br><span class="line">    &#123;</span><br><span class="line">        cnt++;</span><br><span class="line">    &#125;</span><br><span class="line">    cout &lt;&lt; cnt &lt;&lt;endl;</span><br><span class="line">    inFile.<span class="built_in">close</span>();</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h3 id="友元类"><a href="#友元类" class="headerlink" title="友元类"></a>友元类</h3><p>两个类关系既不是is-a也不是has-a，但存在控制的关系如电视和遥控。则可以定义遥控为电视的友元类，能够合理范围内修改电视的私有和保护的部分。相当于友元类需要直到朋友类的数据细节乃至实现细节。</p>
 ]]></content>
       <categories>
         <category>c++</category>
@@ -464,6 +410,40 @@
       </categories>
       <tags>
         <tag>c++</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>字符串</title>
+    <url>/2021/12/15/cpp/%E5%AD%97%E7%AC%A6%E4%B8%B2/</url>
+    <content><![CDATA[<h3 id="C-style字符串"><a href="#C-style字符串" class="headerlink" title="C-style字符串"></a>C-style字符串</h3><p>结尾带’\0’,这对于很多处理字符串的函数很关键。#include <cstring>包含大量C语言字串的操作函数如strlen, strcpy, strcat…</p>
+<p>strlen():只计算数组或者指针中的字符个数，不带结尾</p>
+<p><code>cin.getline(name,20)</code>:读取整行的字串到name,最多20个<br>cin.get()：类似，但下一次调用开头会带有换行(换行缓存到下次get)，顺便检查了上一次输入的正确程度。</p>
+<p>针对string类的getline(cin, string); 与cin混合使用时，在cin&gt;&gt;完成后，getline前需要通过getline(cin,”\n”)清除缓存，否则不进入getline输入。</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 清除缓存</span></span><br><span class="line">string str=<span class="string">&quot;\n&quot;</span>;</span><br><span class="line"><span class="built_in">getline</span>(cin,str);</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="string类"><a href="#string类" class="headerlink" title="string类"></a>string类</h3><figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string&gt;</span></span></span><br><span class="line">std::string</span><br></pre></td></tr></table></figure>
+<p>更方便，也更安全。像vector一样管理char.</p>
+<h3 id="struct和union"><a href="#struct和union" class="headerlink" title="struct和union"></a>struct和union</h3><p>union只能同时存储<strong>一种</strong>类型，其他类型的会lost</p>
+<h3 id="new和delete"><a href="#new和delete" class="headerlink" title="new和delete"></a>new和delete</h3><ul>
+<li>不要delete释放不是new的内存</li>
+<li>不要delete同一块内存两次</li>
+<li>new[]数组应当用delete []释放</li>
+<li>若用new[]为单一实体分配内存，应使用delete（不带方括号）释放</li>
+<li>对空指针delete是安全的</li>
+</ul>
+<h3 id="cin与cin-getline区别"><a href="#cin与cin-getline区别" class="headerlink" title="cin与cin.getline区别"></a>cin与cin.getline区别</h3><p>cin.getline(addr,80) 与cin&gt;&gt;addr<br>getline:读整行直到‘回车’<br>cin:首先跳过‘空格’，读取字串，再次遇‘空格’停止；即跳过前面的空格，读取单个单词。</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line">cin&gt;&gt;ch;</span><br><span class="line">cin.<span class="built_in">get</span>(ch);</span><br><span class="line">ch=cin.<span class="built_in">get</span>();</span><br></pre></td></tr></table></figure>
+<p>上面区别主要是cin&gt;&gt;ch直接跳过空格换行以及制表符</p>
+<h3 id="string格式化输出4位数字-前面补0，多用于文件名操作"><a href="#string格式化输出4位数字-前面补0，多用于文件名操作" class="headerlink" title="string格式化输出4位数字,前面补0，多用于文件名操作"></a>string格式化输出4位数字,前面补0，多用于文件名操作</h3><figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="keyword">int</span> num_zero = <span class="number">4</span>;</span><br><span class="line">string num = <span class="built_in">to_string</span>(int_val);</span><br><span class="line">string new_num = <span class="built_in">string</span>(num_zero-num.<span class="built_in">length</span>(),<span class="string">&#x27;0&#x27;</span>) + num;</span><br></pre></td></tr></table></figure>
+<p>注意int_val长度小于num_zero。</p>
+]]></content>
+      <categories>
+        <category>c++</category>
+      </categories>
+      <tags>
+        <tag>c++ primer</tag>
       </tags>
   </entry>
   <entry>
@@ -534,6 +514,44 @@
       </tags>
   </entry>
   <entry>
+    <title>异常处理</title>
+    <url>/2021/12/23/cpp/%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86/</url>
+    <content><![CDATA[<h3 id="处理可能出现异常的方法"><a href="#处理可能出现异常的方法" class="headerlink" title="处理可能出现异常的方法"></a>处理可能出现异常的方法</h3><ul>
+<li>调用abort()或exit()结束程序</li>
+<li>返回错误码</li>
+<li>异常机制：1.使用try块执行可能出现异常的代码段 2.throw引发异常 3.catch捕获并处理对应情况</li>
+</ul>
+<h3 id="throw机制"><a href="#throw机制" class="headerlink" title="throw机制"></a>throw机制</h3><p>若throw引发异常后，匹配对应catch。而后不是将控制权返回调用程序，而是引导程序沿着函数调用序列后退，直到找到try块中的函数<br>若没有throw出异常，则catch被跳过.<br>一般而言后退多步，再在main()中寻找与引发异常<strong>类型匹配</strong>的处理程序作处理。</p>
+<h3 id="通常用对象作为异常类型处理"><a href="#通常用对象作为异常类型处理" class="headerlink" title="通常用对象作为异常类型处理"></a>通常用对象作为异常类型处理</h3><p>好处是：直接根据类型区分异常，另外对象可以携带信息确定原因，catch根据信息来执行对应的操作</p>
+<h3 id="堆栈解退（unwinding-the-stack）"><a href="#堆栈解退（unwinding-the-stack）" class="headerlink" title="堆栈解退（unwinding the stack）"></a>堆栈解退（unwinding the stack）</h3><p>假设函数出现异常，而不是正确返回而终止。程序释放堆栈中的内存，但不会在释放堆栈的第一个返回地址后停止，而是继续释放堆栈，直到找到位于try块的返回地质。程序进行堆栈解退以回到能够捕获异常的地方时，将释放堆栈中的自动存储型变量。</p>
+<p><img src="/images/12_23_1.png"></p>
+<h3 id="文件IO"><a href="#文件IO" class="headerlink" title="文件IO"></a>文件IO</h3><figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;fstream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    ifstream inFile;</span><br><span class="line">    inFile.<span class="built_in">open</span>(<span class="string">&quot;file.txt&quot;</span>);</span><br><span class="line">    <span class="keyword">if</span>(!inFile.<span class="built_in">is_open</span>())</span><br><span class="line">    &#123;</span><br><span class="line">        cerr &lt;&lt;<span class="string">&quot;Failed open file.txt\n&quot;</span>;</span><br><span class="line">        <span class="built_in">exit</span>(<span class="number">0</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">char</span> ch;</span><br><span class="line">    <span class="keyword">int</span> cnt=<span class="number">0</span>;</span><br><span class="line">    <span class="keyword">while</span>(inFile&gt;&gt;ch)</span><br><span class="line">    &#123;</span><br><span class="line">        cnt++;</span><br><span class="line">    &#125;</span><br><span class="line">    cout &lt;&lt; cnt &lt;&lt;endl;</span><br><span class="line">    inFile.<span class="built_in">close</span>();</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>下面程序为harmony mean的除0错误，抛出const char *类型，匹配输出错误信息的代码。一般抛出错误类型通常为类。</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;cstdlib&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">double</span> <span class="title">hmean</span><span class="params">(<span class="keyword">double</span> a, <span class="keyword">double</span> b)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (a == -b)</span><br><span class="line">        <span class="keyword">throw</span> <span class="string">&quot;bad hmean() arguments: a = -b not allowed&quot;</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">2.0</span> * a * b / (a + b);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">double</span> x, y, z;</span><br><span class="line">    cout &lt;&lt; <span class="string">&quot;Enter two numbers:&quot;</span>;</span><br><span class="line">    <span class="keyword">while</span> (cin &gt;&gt; x &gt;&gt; y)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">try</span></span><br><span class="line">        &#123;</span><br><span class="line">            z = <span class="built_in">hmean</span>(x, y);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="built_in"><span class="keyword">catch</span></span>(<span class="keyword">const</span> <span class="keyword">char</span> * s)</span><br><span class="line">        &#123;</span><br><span class="line">            cout &lt;&lt; s &lt;&lt; endl;</span><br><span class="line">            cout &lt;&lt;<span class="string">&quot;Enter a new pair of numbers: &quot;</span>;</span><br><span class="line">            <span class="keyword">continue</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        cout &lt;&lt; <span class="string">&quot;Harmonic mean of &quot;</span> &lt;&lt; x &lt;&lt; <span class="string">&quot; and &quot;</span> &lt;&lt; y &lt;&lt; <span class="string">&quot;. is &quot;</span> &lt;&lt; z &lt;&lt; endl;</span><br><span class="line">        cout &lt;&lt; <span class="string">&quot;Enter next set of numbers &lt;q to quit&gt;:&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    cout &lt;&lt; <span class="string">&quot;Bye!&quot;</span> &lt;&lt; endl;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="throw-catch机制和函数参数以及函数返回机制的区别"><a href="#throw-catch机制和函数参数以及函数返回机制的区别" class="headerlink" title="throw-catch机制和函数参数以及函数返回机制的区别"></a>throw-catch机制和函数参数以及函数返回机制的区别</h3><p>1.函数控制权返回到调用函数的函数，throw语句控制权向上返回到第一个包含能够捕获相应异常的try-catch组合<br>2.引发异常时，编译器总是创建一个临时拷贝，彻底避免了函数机制指向不存在的临时变量的问题。<br>3.经常可见catch(problem &amp; p)，使用了引用，主要是针对通过继承关联起来的异常类型；此时使用基类引用即可执行派生类对象。此时层次结构最下面的异常类的catch语句应当放在最前面。</p>
+<p>catch (…)表示捕获任何异常</p>
+<h3 id="异常处理的注意事项"><a href="#异常处理的注意事项" class="headerlink" title="异常处理的注意事项"></a>异常处理的注意事项</h3><p>1.使用异常，应在设计程序时就加入，而不是以后才添加。<br>2.使用异常会增加程序代码，降低程序运行速度。<br>3.异常规范不适用于模板，异常和动态内存分配不能总是协同工作<br>因此，虽然异常处理对于某些项目极为重要，但也会增加编程的工作量、增大程序以及降低程序的速度。另外编译器对异常的支持以及用户的经验还没有达到成熟的程度，应有节制地使用这一特性。</p>
+<p>如无堆栈解退，则会出现内存泄漏，如下</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">test</span><span class="params">(<span class="keyword">int</span> n)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">double</span> * ar = <span class="keyword">new</span> <span class="keyword">double</span>[n];</span><br><span class="line">    <span class="keyword">if</span>(oh_no)</span><br><span class="line">        <span class="keyword">throw</span> <span class="built_in">exception</span>();</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">delete</span> [] ar;</span><br><span class="line">    <span class="keyword">return</span> ;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>throw了，则delete[]被忽略，ar指针消失了，内存块未释放且不可访问。</p>
+<h3 id="RTTI（RunTime-Type-Identification"><a href="#RTTI（RunTime-Type-Identification" class="headerlink" title="RTTI（RunTime Type Identification)"></a>RTTI（RunTime Type Identification)</h3><p>三个支持RTTI的元素：</p>
+<ul>
+<li>dynamic_cast操作符将基类指针生成派生指针：回答是否可以安全将对象的地址赋给特定类型的指针？如可，返回对象地址；否则，返回空指针。这对比“指向哪个类型的对象”，这更通用且有用。</li>
+<li>typeid操作符返回对象的类型</li>
+<li>type_info存储特定类型的信息<br>注意：RTTI只适用于包含虚函数的类</li>
+</ul>
+<p>与通用转换机制相比，dynamic_cast、static_cast、const_cast、reinterpret_cast提供了更安全和明确的类型转换。</p>
+]]></content>
+      <categories>
+        <category>c++</category>
+      </categories>
+      <tags>
+        <tag>c++</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>逻辑控制</title>
     <url>/2021/12/16/cpp/%E9%80%BB%E8%BE%91%E6%8E%A7%E5%88%B6/</url>
     <content><![CDATA[<h3 id="do…while…-至少会执行一次的循环逻辑"><a href="#do…while…-至少会执行一次的循环逻辑" class="headerlink" title="do…while… 至少会执行一次的循环逻辑"></a>do…while… 至少会执行一次的循环逻辑</h3><p>哨兵(sentinel)字符: 一直读取，直到’他‘为止</p>
@@ -556,27 +574,6 @@
       </categories>
       <tags>
         <tag>c++ primer</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>EIGEN_1 HELLO_WOLRD</title>
-    <url>/2022/01/20/eigen/eigen-1/</url>
-    <content><![CDATA[<h3 id="EIGEN简介"><a href="#EIGEN简介" class="headerlink" title="EIGEN简介"></a>EIGEN简介</h3><p>FROM WIKI: Eigen is a high-level C++ library of template headers for linear algebra, matrix and vector operations, geometrical transformations, numerical solvers and related algorithms.<br>简而言之C++开源模板库，支持线性代数、矩阵矢量运算和数值分析，是个方便好用的数学库。</p>
-<p>更绝的是，EIGEN所有源码用头文件编写，所以只需要Include,无需编译链接过程，直接与平台无关，非常通用！</p>
-<h3 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h3><p>安装过程也很简单，在UBUNTU下直接</p>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line">sudo apt-get install libeigen3-dev</span><br></pre></td></tr></table></figure>
-<p>一般安装在/usr/include目录下</p>
-<p>使用直接与标准库类似，#include &lt;Eigen/Dense&gt;等</p>
-<h3 id="主要模块"><a href="#主要模块" class="headerlink" title="主要模块"></a>主要模块</h3><p><img src="/images/01_20_1.png"></p>
-<h3 id="简单例子"><a href="#简单例子" class="headerlink" title="简单例子"></a>简单例子</h3><figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;eigen3/Eigen/Dense&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> Eigen;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line"></span><br><span class="line">    Matrix3d m = Matrix3d::<span class="built_in">Random</span>();</span><br><span class="line">    m = ( m + Matrix3d::<span class="built_in">Constant</span>(<span class="number">1.2</span>)) * <span class="number">50</span>;</span><br><span class="line"></span><br><span class="line">    cout &lt;&lt; m &lt;&lt; endl;</span><br><span class="line">    <span class="function">Vector3d <span class="title">v</span><span class="params">(<span class="number">3</span>)</span></span>;</span><br><span class="line">    v &lt;&lt; <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>;</span><br><span class="line">    cout &lt;&lt;m*v &lt;&lt; endl;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<p>这是fix_sized定义的写法，一般4*4以下的矩阵矢量用固定大小写法，对于比较大的才用不定量写法MatirxXd, VectorXd;</p>
-<p>主要结构为1D对象Vector, Array和2D对象Matrix</p>
-]]></content>
-      <categories>
-        <category>EIGEN</category>
-      </categories>
-      <tags>
-        <tag>EIGEN</tag>
       </tags>
   </entry>
   <entry>
@@ -616,27 +613,24 @@
       </tags>
   </entry>
   <entry>
-    <title>墙面分割</title>
-    <url>/2022/01/14/pcl/%E5%A2%99%E9%9D%A2%E5%88%86%E5%89%B2/</url>
-    <content><![CDATA[<h3 id="区域生长分割region-growing-segmentation"><a href="#区域生长分割region-growing-segmentation" class="headerlink" title="区域生长分割region growing segmentation"></a>区域生长分割region growing segmentation</h3><p>算法核心：基于点法线之间角度的比较，尽量将满足平滑约束的相邻点合并在一起，以一簇点集的形式输出，视为相同平面</p>
-<p>工作原理：区域增长从有最小曲率值curvature的点。则需要计算所有曲率值并进行排序；因为曲率最小的点位于平坦区域，从平坦区域增长可以减少区域的总数。（曲率与法线的求解方法类似,法线描述点在表面的法向，曲率则是法线间协方差矩阵的特征值，描述法向一致性)</p>
-<p>具体过程：</p>
-<ol>
-<li>对未标记点的曲率排序，将最小曲率点放入种子集</li>
-<li>对每个种子的所有邻点计算</li>
-<li>1 每个近邻点与当前点的法线角度差(reg.setSmoothnessThreshold),如果小于阈值则重点考虑，进入2.2判断</li>
-<li>2 该点通过2.1法线角度差检验，如果曲率小于设定的阈值(reg.setCurvatureThreshold)，这个点即被添加到种子点集，属于当前平面</li>
-<li>通过两次检验的点，被从原始点云去除</li>
-<li>设置最小点簇的点数reg.setMinClusterSize,以及最大簇reg.segMaxClusterSize</li>
-<li>重复1-3生成min~max个点数的所有平面，并对不同平面标记颜色区分</li>
-<li>直到算法在剩余点中生成的点簇不能满足min,停止工作</li>
-</ol>
+    <title>EIGEN_1 HELLO_WOLRD</title>
+    <url>/2022/01/20/eigen/eigen-1/</url>
+    <content><![CDATA[<h3 id="EIGEN简介"><a href="#EIGEN简介" class="headerlink" title="EIGEN简介"></a>EIGEN简介</h3><p>FROM WIKI: Eigen is a high-level C++ library of template headers for linear algebra, matrix and vector operations, geometrical transformations, numerical solvers and related algorithms.<br>简而言之C++开源模板库，支持线性代数、矩阵矢量运算和数值分析，是个方便好用的数学库。</p>
+<p>更绝的是，EIGEN所有源码用头文件编写，所以只需要Include,无需编译链接过程，直接与平台无关，非常通用！</p>
+<h3 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h3><p>安装过程也很简单，在UBUNTU下直接</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line">sudo apt-get install libeigen3-dev</span><br></pre></td></tr></table></figure>
+<p>一般安装在/usr/include目录下</p>
+<p>使用直接与标准库类似，#include &lt;Eigen/Dense&gt;等</p>
+<h3 id="主要模块"><a href="#主要模块" class="headerlink" title="主要模块"></a>主要模块</h3><p><img src="/images/01_20_1.png"></p>
+<h3 id="简单例子"><a href="#简单例子" class="headerlink" title="简单例子"></a>简单例子</h3><figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;eigen3/Eigen/Dense&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> Eigen;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line"></span><br><span class="line">    Matrix3d m = Matrix3d::<span class="built_in">Random</span>();</span><br><span class="line">    m = ( m + Matrix3d::<span class="built_in">Constant</span>(<span class="number">1.2</span>)) * <span class="number">50</span>;</span><br><span class="line"></span><br><span class="line">    cout &lt;&lt; m &lt;&lt; endl;</span><br><span class="line">    <span class="function">Vector3d <span class="title">v</span><span class="params">(<span class="number">3</span>)</span></span>;</span><br><span class="line">    v &lt;&lt; <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>;</span><br><span class="line">    cout &lt;&lt;m*v &lt;&lt; endl;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>这是fix_sized定义的写法，一般4*4以下的矩阵矢量用固定大小写法，对于比较大的才用不定量写法MatirxXd, VectorXd;</p>
+<p>主要结构为1D对象Vector, Array和2D对象Matrix</p>
 ]]></content>
       <categories>
-        <category>pcl</category>
+        <category>EIGEN</category>
       </categories>
       <tags>
-        <tag>pcl</tag>
+        <tag>EIGEN</tag>
       </tags>
   </entry>
   <entry>
@@ -661,6 +655,58 @@
       </tags>
   </entry>
   <entry>
+    <title>墙面分割</title>
+    <url>/2022/01/14/pcl/%E5%A2%99%E9%9D%A2%E5%88%86%E5%89%B2/</url>
+    <content><![CDATA[<h3 id="区域生长分割region-growing-segmentation"><a href="#区域生长分割region-growing-segmentation" class="headerlink" title="区域生长分割region growing segmentation"></a>区域生长分割region growing segmentation</h3><p>算法核心：基于点法线之间角度的比较，尽量将满足平滑约束的相邻点合并在一起，以一簇点集的形式输出，视为相同平面</p>
+<p>工作原理：区域增长从有最小曲率值curvature的点。则需要计算所有曲率值并进行排序；因为曲率最小的点位于平坦区域，从平坦区域增长可以减少区域的总数。（曲率与法线的求解方法类似,法线描述点在表面的法向，曲率则是法线间协方差矩阵的特征值，描述法向一致性)</p>
+<p>具体过程：</p>
+<ol>
+<li>对未标记点的曲率排序，将最小曲率点放入种子集</li>
+<li>对每个种子的所有邻点计算</li>
+<li>1 每个近邻点与当前点的法线角度差(reg.setSmoothnessThreshold),如果小于阈值则重点考虑，进入2.2判断</li>
+<li>2 该点通过2.1法线角度差检验，如果曲率小于设定的阈值(reg.setCurvatureThreshold)，这个点即被添加到种子点集，属于当前平面</li>
+<li>通过两次检验的点，被从原始点云去除</li>
+<li>设置最小点簇的点数reg.setMinClusterSize,以及最大簇reg.segMaxClusterSize</li>
+<li>重复1-3生成min~max个点数的所有平面，并对不同平面标记颜色区分</li>
+<li>直到算法在剩余点中生成的点簇不能满足min,停止工作</li>
+</ol>
+]]></content>
+      <categories>
+        <category>pcl</category>
+      </categories>
+      <tags>
+        <tag>pcl</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>《浪潮之巅》第4版：读书笔记</title>
+    <url>/2021/11/26/reading/%E6%B5%AA%E6%BD%AE%E4%B9%8B%E5%B7%85/</url>
+    <content><![CDATA[<h3 id="一部工业革命后的近代科技发展史"><a href="#一部工业革命后的近代科技发展史" class="headerlink" title="一部工业革命后的近代科技发展史"></a>一部工业革命后的近代科技发展史</h3><p>第一次阅读这本书大概是在大学的时期，当时应该还是第一第二版的样子。可惜当时认知有限或者是兴趣使然，确实是没有坚持读下来。作为一本信息科技人的导论书籍，吴军老师主要是从<strong>创始人及公司基因，资本加速以及调整创新</strong>等多个维度阐释每一个时代的技术浪潮。也让我重新认识硅谷，重新认识所有信息产业耳熟能详的近代技术及工业制品。有点后悔当初年少没有认认真真开启好这一本导论，以致于没有一个非常完备的大局观去规划个人职业生涯以及技术路线。弯弯曲曲之下，也就不难预见自己人生所能触及的高度了。</p>
+<h3 id="重新认识知名或者耳闻的科技公司发展"><a href="#重新认识知名或者耳闻的科技公司发展" class="headerlink" title="重新认识知名或者耳闻的科技公司发展"></a>重新认识知名或者耳闻的科技公司发展</h3><p>读完整篇最大的收获一方面是吴军老师分析浪潮与技术史的方法论与发展观，另外就是让我重新其认识那些早有耳闻的科技大公司以及了解他们所处时代的科技浪潮与技术产品。按照章节来列举的话：</p>
+<ul>
+<li>chap 1 北美最大的通讯服务商AT&amp;T及其贝尔实验室，对应国内就是国家垄断的电信移动联通三巨头。信息社会中，通讯业至关重要，从通讯硬件供应商以及软件算法的比如思科，华为；到对接用户的服务供应商，只要能分享整个通讯产业链的某一部分就存在巨大的利润。而且通讯的技术和协议也在不断更迭，从有线-&gt;无线-&gt;光纤-&gt;WIFI6，从2G到5G等等。</li>
+<li>chap 2 最早真正研制出计算机的IBM以及其从卖服务器PC到后来成为最大的服务提供商。说实话，IBM的名字在大学时期是如雷贯耳但我却从来不知道他是做什么的。而且至今，我对这家公司的印象和认知可以说都是比较模糊的，但我知道他的TO B服务应该很强。</li>
+<li>chap 3 “八叛徒”引出了硅谷不断开拓创新的精神，从一个核心技术到多个子公司分门立派相互竞争促进，大大加快了IC电路的发展，让我们真正迎来经久不衰的半导体时代。这个有点像一套绝世武功，虽然细节粗糙，但核心理论和精神质变于现有的功法。于是所学的弟子们都自立门派，却又各负盛名。最大的点是芯片技术乍看只是两个核心专利的技术，却影响千千万万，甚至于卡住了我们科技强国的脖子。再次，技术之间的差异如同人之间的差异。<strong>对于社会，最有价值的工作可能是20%的人所完成的；对于个人，最有价值的工作可能是20%的时间和精力里做出来的。</strong>那么，如何提升这一个比例呢？比如对于自己，如何让自己的时间和精力专注在最有价值和意义的事情上。如何让自己成为那20%最有价值的人，价值与流量是共通的。为着最大的社会群体服务，为着最广阔的行业作贡献。更细粒的维度划分就是从<strong>用户群体以及用户时间，从社会进步及人类进步</strong>去思考。（我承认，有点发散了，就当与自己对话了～）</li>
+<li>chap 4 详尽介绍苹果公司的起落，尤记10年前，乔布斯是无数IT从业者最重要的偶像物，如今又有新的浪潮涌起，比如马斯克。相信粉老乔的，都会读那本经典的自传，就不难认识到苹果了。一直以来，苹果在致力创新智能硬件与大多数人生活上的交互方式。从最早的UI系统，到后来的IPOD，IPHONE等。虽然不像安卓那样开源，但苹果的工程师依然非常的顶。极大的推进产品的质量以及竞争力，他们对产品的整合能力也非常出众，致力于把每一款推向市场的产品做到<strong>极致完美</strong>。以至于非常长的时间里，直到今天，我认为苹果公司推出的是市面上比较完美的智能设备，当然价格也很丰满。苹果的利润率是业界闻名的，除了产业链整合以及大品牌效应能从渠道方压缩成本，更重要的是在长时期里核心技术不断研发和积累的成果。</li>
+<li>chap 5 引出第一个方法论，信息产业的三大定律：1.<strong>摩尔定律</strong>，集成电路的集成度每18个月翻一翻。因此半导体智能产品的性能也翻番，说明一个高速发展的IT行业是呈现指数增长 2.<strong>win-tel定律</strong>，基于摩尔定律，硬件进步了，软件也会相应占用更多的资源，以此发挥硬件的能力，倒逼硬件行业完成摩尔增长 3.<strong>反摩尔定律</strong>，对于处在摩尔定律行业的公司，如果不进步达到指数，则在退步。如果只维持去年的水平，18月后就会下降剩一半。</li>
+<li>chap 6 Intel的芯片，全球通用且难有敌手。因为PC端的芯片研发成本摆在那儿，1985对32bit的80386研发投入就超过3亿美元。而且从芯片制程特殊性而言，集成度更高性能和功耗都提升，体积下降。大部分消费者难以退回旧一代的芯片，所以赢者通吃，落后者剩菜残羹。今时今日，除了MAC电脑，绝大部分的PC都采用intel芯片，而且服务器端也有见长。但是浪潮之中PC市场相对饱和，移动端崛起了10多年，更多的芯片战场转移到嵌入式去了。往后的就是终端芯片为主的变革，比如ISP，算法芯，AI芯等。</li>
+<li>chap 7 关于微软以及windows。真正意义第一个垄断性的超级公司就是微软了，因为其卖软件的特性，利润率极高。在PC时代无人匹敌，依赖windows系统，其绑定的PC软件也得到天然的优势。而后移动互联网浪潮来临，微软虽然没有攀上浪尖，却也从游戏方面入手取得不俗的成绩。由此奠定了大公司希望涉猎互联网的全领域利润，比如搜索，社交，移动支付，手机等等。但始终只留下其最擅长的产品。拥有再多第二第三列的产品并不足以让一家企业成为真正帝国性一样富有影响力的机构。另一方面也告诫我们，需要专注，成为单一方向最拔萃的人。</li>
+<li>chap 8 Oracle，一家以数据库闻名的企业。大概是大二还是大三的时候，首次听到这家公司的名字，但依然不得其意。大概跟IBM类似较多开展企业级相关的服务和技术支持。</li>
+<li>chap 9 思科通信巨头，主营交换机路由器等互联网基础设施。早期是互联网用于大学公司等，主要方便学术与办公交流。由于各个子网的网络协议不一，思科早期推出多协议路由终端成为子网间互联的关键。同样互联网的浪潮帮助思科乘风破浪。另外当时红杉资本热衷投资给年轻的穷人，因为越是贫穷越有成功的欲望和拼搏精神。西方的思科，东方的华为。华为起步只比思科晚4年，同样掌握当时世界最前沿的通信技术，通过大批雇用IBM顾问从而实现早期国际化的管理水平。至今华为找到手机移动的增长点，焕发最强民企的生命力。2020年统计，华为的科研投入遥遥领先于第二名的腾讯一倍有余，狼性文化下也涌现超级年薪的PHD。</li>
+<li>chap 10 YAHOO互联网入口，世界第一个黄页。除了整理了当时杂乱的互联网资信，吴军老师认为YAHOO制定了互联网行业重要的规则：开放，免费，基于流量的盈利模式。我认为这与当今的开源思想很有共同点，区别在于开源目前变现能力还不够。为此，我特意知乎了开源目前的盈利模式，主要有以下七个：1.多种产品线，开源版推广，专业版收费； 2.提供技术文档，培训以及二次开发作为收入（不是长久之计）； 3.应用服务托管，相当于云部署； 4.软硬一体化，开放软件，销售硬件 5.开源作为附属品 6.提升品牌和服务（大公司） 7.市场等其他 回到雅虎，当时手工密集式整理互联网信息，使之成为大部分人连接互联网的入口，加之互联网的快速发展使其价值和流量不断提升，也找到广告盈利的模式。当然资信发达引入的问题是对搜索引擎的迫切需求，以至于后来GOOGLE的崛起。当时浪潮之大，以至于当时只要有流量就有钱和投资，大量tricks如何提升网站流量的热度，狂热之下，互联网泡沫来临。网站大洗牌，小公司以及虚胖的大公司都一泻千里，被浪潮拍打在沙滩上。度过寒冬的以及寒冬后的企业，迎来了新的社会资源和人才，缺少老旧对手也能快速崛起。</li>
+<li>chap 11 惠普，一家如今印象只有打印机和PC产品的企业。殊不知一直以来是硅谷神话的代表，也是最早进驻斯坦福工业园的企业，开启了新时代校企合作的高效模式，高校培养顶尖人才，企业吸收并转化成遍布全球的产品。上世纪的惠普主营三大板块包括科学仪器，医疗器材以及计算机和外设，而后经营不合理导致只拆分剩计算机以及外设。</li>
+<li>chap 12 没落贵族-摩托罗拉，最早做通讯设备的公司，包括军用民用无线电，大哥大到2G手机。然而固有利润高的市场抑制了内部4G的推广，可见连内部都产生抑制新技术和新产品的现象，资本市场的竞争是十分激烈的，尽管存在反垄断法，但公司一旦占据行业的龙头位置，后来者就再难以从同样的赛道超越，除非是科技或者产品以质级的飞跃。</li>
+</ul>
+]]></content>
+      <categories>
+        <category>读书</category>
+      </categories>
+      <tags>
+        <tag>心得</tag>
+        <tag>读书笔记</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>皮肤的秘密</title>
     <url>/2022/01/19/reading/%E7%9A%AE%E8%82%A4%E7%9A%84%E7%A7%98%E5%AF%86/</url>
     <content><![CDATA[<h3 id="认识皮肤"><a href="#认识皮肤" class="headerlink" title="认识皮肤"></a>认识皮肤</h3><p>皮肤是人体最大的器官，展开达两平方米，是人体之于外界环境的保护膜，同时也是零距离感受外界的第一道关卡，所以每一寸都遍布了神经细胞。</p>
@@ -676,35 +722,6 @@
       </categories>
       <tags>
         <tag>读书笔记</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>六年前的自己</title>
-    <url>/2021/12/22/rizhi/%E5%85%AD%E5%B9%B4%E5%89%8D%E7%9A%84%E8%87%AA%E5%B7%B1/</url>
-    <content><![CDATA[<p><a href="https://csrjtan.github.io/">https://csrjtan.github.io/</a><br>回看六年前的自己，摘录一些当时有意义的文段</p>
-<h3 id="23岁的生日"><a href="#23岁的生日" class="headerlink" title="23岁的生日"></a>23岁的生日</h3><p>重读六年前的自己，用文字记录对这个世界的感受和认知，那时候的自己充满了希望，虽然能力配不上欲望而渐渐失落，但依然希望找到那种年轻的感觉。</p>
-<h3 id=""><a href="#" class="headerlink" title=""></a></h3><p>当年的愿望：</p>
-<ul>
-<li>工作上：提高编程和学术能力</li>
-<li>生活上：爱家人，爱生活，爱伴侣</li>
-<li>日常上：坚持读，坚持写，坚持学，坚持感受，坚持表达</li>
-</ul>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">《成长的天空》 </span><br><span class="line">我沉浸在自己的世界里</span><br><span class="line">写着无关是非的歌谣</span><br><span class="line">点蓝的笔触</span><br><span class="line">划过了年轻的天空</span><br><span class="line">一只飞鸟带走我的青春</span><br><span class="line">还我，岁月沉淀的帽子</span><br><span class="line">轻声说道</span><br><span class="line">年轻总不是永远的借口</span><br></pre></td></tr></table></figure>
-
-<h3 id="回看中秋自省的自己"><a href="#回看中秋自省的自己" class="headerlink" title="回看中秋自省的自己"></a>回看中秋自省的自己</h3><p>经过5年起起落落，心态转变得很明显甚至于有点得过且过的样子，现在自己比年轻的自己多了一点能力和资源，却失去了做大梦的勇气和毅力。希望自己能依然不断找到人生的兴奋点，勇往直前地去追寻探索，从今天开始，真正的为自己而活，不在乎别人的眼光，不在乎可能会失去的安逸。</p>
-<h3 id="家人信息简要"><a href="#家人信息简要" class="headerlink" title="家人信息简要"></a>家人信息简要</h3><p>爸：1961.7.8，牛，会计。爱好军事政治经济唱歌。性格硬朗好面子。优点：精神好，能干，勤勉<br>妈：1961.11.12，牛，仓管（退休）。爱好家庭家人养生。优点：节俭，爱戴我们，慈祥<br>哥：1987.8.9，兔，前端全栈，爱好广泛潮流酷玩。优点：工程能力强，迁就随和<br>为：1992.08.13，猴，算法攻城狮。爱好：声乐，运动，游戏。优点：耐受力，随和</p>
-<h3 id="选书策略"><a href="#选书策略" class="headerlink" title="选书策略"></a>选书策略</h3><p>出版社-&gt;作者-&gt;版次-&gt;印次-&gt;印数</p>
-<h3 id="追逐幸福的要素"><a href="#追逐幸福的要素" class="headerlink" title="追逐幸福的要素"></a>追逐幸福的要素</h3><ul>
-<li>找到喜欢的工作，有收入又受到社会尊重</li>
-<li>减少上下班耗费的时间，有充足的社交时间</li>
-<li>对国家和社会有政治热情，有参与度</li>
-</ul>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">不论曾经的彼此多么幼稚，多么可笑</span><br><span class="line">终有一天我们都变得成熟；</span><br><span class="line">也终有一天，我们都会老去；</span><br><span class="line">可是，却没有人可以永远不长大，</span><br><span class="line">却没有人可以永远年轻，</span><br><span class="line">成熟，有时候会让人心痛、很无奈。</span><br><span class="line">那个时候才会懂得：</span><br><span class="line">爱情本不是件该执着的事情。</span><br></pre></td></tr></table></figure>]]></content>
-      <categories>
-        <category>日常</category>
-      </categories>
-      <tags>
-        <tag>博客迁移</tag>
       </tags>
   </entry>
   <entry>
@@ -734,50 +751,6 @@
       <categories>
         <category>年终总结</category>
       </categories>
-  </entry>
-  <entry>
-    <title>《浪潮之巅》第4版：读书笔记</title>
-    <url>/2021/11/26/reading/%E6%B5%AA%E6%BD%AE%E4%B9%8B%E5%B7%85/</url>
-    <content><![CDATA[<h3 id="一部工业革命后的近代科技发展史"><a href="#一部工业革命后的近代科技发展史" class="headerlink" title="一部工业革命后的近代科技发展史"></a>一部工业革命后的近代科技发展史</h3><p>第一次阅读这本书大概是在大学的时期，当时应该还是第一第二版的样子。可惜当时认知有限或者是兴趣使然，确实是没有坚持读下来。作为一本信息科技人的导论书籍，吴军老师主要是从<strong>创始人及公司基因，资本加速以及调整创新</strong>等多个维度阐释每一个时代的技术浪潮。也让我重新认识硅谷，重新认识所有信息产业耳熟能详的近代技术及工业制品。有点后悔当初年少没有认认真真开启好这一本导论，以致于没有一个非常完备的大局观去规划个人职业生涯以及技术路线。弯弯曲曲之下，也就不难预见自己人生所能触及的高度了。</p>
-<h3 id="重新认识知名或者耳闻的科技公司发展"><a href="#重新认识知名或者耳闻的科技公司发展" class="headerlink" title="重新认识知名或者耳闻的科技公司发展"></a>重新认识知名或者耳闻的科技公司发展</h3><p>读完整篇最大的收获一方面是吴军老师分析浪潮与技术史的方法论与发展观，另外就是让我重新其认识那些早有耳闻的科技大公司以及了解他们所处时代的科技浪潮与技术产品。按照章节来列举的话：</p>
-<ul>
-<li>chap 1 北美最大的通讯服务商AT&amp;T及其贝尔实验室，对应国内就是国家垄断的电信移动联通三巨头。信息社会中，通讯业至关重要，从通讯硬件供应商以及软件算法的比如思科，华为；到对接用户的服务供应商，只要能分享整个通讯产业链的某一部分就存在巨大的利润。而且通讯的技术和协议也在不断更迭，从有线-&gt;无线-&gt;光纤-&gt;WIFI6，从2G到5G等等。</li>
-<li>chap 2 最早真正研制出计算机的IBM以及其从卖服务器PC到后来成为最大的服务提供商。说实话，IBM的名字在大学时期是如雷贯耳但我却从来不知道他是做什么的。而且至今，我对这家公司的印象和认知可以说都是比较模糊的，但我知道他的TO B服务应该很强。</li>
-<li>chap 3 “八叛徒”引出了硅谷不断开拓创新的精神，从一个核心技术到多个子公司分门立派相互竞争促进，大大加快了IC电路的发展，让我们真正迎来经久不衰的半导体时代。这个有点像一套绝世武功，虽然细节粗糙，但核心理论和精神质变于现有的功法。于是所学的弟子们都自立门派，却又各负盛名。最大的点是芯片技术乍看只是两个核心专利的技术，却影响千千万万，甚至于卡住了我们科技强国的脖子。再次，技术之间的差异如同人之间的差异。<strong>对于社会，最有价值的工作可能是20%的人所完成的；对于个人，最有价值的工作可能是20%的时间和精力里做出来的。</strong>那么，如何提升这一个比例呢？比如对于自己，如何让自己的时间和精力专注在最有价值和意义的事情上。如何让自己成为那20%最有价值的人，价值与流量是共通的。为着最大的社会群体服务，为着最广阔的行业作贡献。更细粒的维度划分就是从<strong>用户群体以及用户时间，从社会进步及人类进步</strong>去思考。（我承认，有点发散了，就当与自己对话了～）</li>
-<li>chap 4 详尽介绍苹果公司的起落，尤记10年前，乔布斯是无数IT从业者最重要的偶像物，如今又有新的浪潮涌起，比如马斯克。相信粉老乔的，都会读那本经典的自传，就不难认识到苹果了。一直以来，苹果在致力创新智能硬件与大多数人生活上的交互方式。从最早的UI系统，到后来的IPOD，IPHONE等。虽然不像安卓那样开源，但苹果的工程师依然非常的顶。极大的推进产品的质量以及竞争力，他们对产品的整合能力也非常出众，致力于把每一款推向市场的产品做到<strong>极致完美</strong>。以至于非常长的时间里，直到今天，我认为苹果公司推出的是市面上比较完美的智能设备，当然价格也很丰满。苹果的利润率是业界闻名的，除了产业链整合以及大品牌效应能从渠道方压缩成本，更重要的是在长时期里核心技术不断研发和积累的成果。</li>
-<li>chap 5 引出第一个方法论，信息产业的三大定律：1.<strong>摩尔定律</strong>，集成电路的集成度每18个月翻一翻。因此半导体智能产品的性能也翻番，说明一个高速发展的IT行业是呈现指数增长 2.<strong>win-tel定律</strong>，基于摩尔定律，硬件进步了，软件也会相应占用更多的资源，以此发挥硬件的能力，倒逼硬件行业完成摩尔增长 3.<strong>反摩尔定律</strong>，对于处在摩尔定律行业的公司，如果不进步达到指数，则在退步。如果只维持去年的水平，18月后就会下降剩一半。</li>
-<li>chap 6 Intel的芯片，全球通用且难有敌手。因为PC端的芯片研发成本摆在那儿，1985对32bit的80386研发投入就超过3亿美元。而且从芯片制程特殊性而言，集成度更高性能和功耗都提升，体积下降。大部分消费者难以退回旧一代的芯片，所以赢者通吃，落后者剩菜残羹。今时今日，除了MAC电脑，绝大部分的PC都采用intel芯片，而且服务器端也有见长。但是浪潮之中PC市场相对饱和，移动端崛起了10多年，更多的芯片战场转移到嵌入式去了。往后的就是终端芯片为主的变革，比如ISP，算法芯，AI芯等。</li>
-<li>chap 7 关于微软以及windows。真正意义第一个垄断性的超级公司就是微软了，因为其卖软件的特性，利润率极高。在PC时代无人匹敌，依赖windows系统，其绑定的PC软件也得到天然的优势。而后移动互联网浪潮来临，微软虽然没有攀上浪尖，却也从游戏方面入手取得不俗的成绩。由此奠定了大公司希望涉猎互联网的全领域利润，比如搜索，社交，移动支付，手机等等。但始终只留下其最擅长的产品。拥有再多第二第三列的产品并不足以让一家企业成为真正帝国性一样富有影响力的机构。另一方面也告诫我们，需要专注，成为单一方向最拔萃的人。</li>
-<li>chap 8 Oracle，一家以数据库闻名的企业。大概是大二还是大三的时候，首次听到这家公司的名字，但依然不得其意。大概跟IBM类似较多开展企业级相关的服务和技术支持。</li>
-<li>chap 9 思科通信巨头，主营交换机路由器等互联网基础设施。早期是互联网用于大学公司等，主要方便学术与办公交流。由于各个子网的网络协议不一，思科早期推出多协议路由终端成为子网间互联的关键。同样互联网的浪潮帮助思科乘风破浪。另外当时红杉资本热衷投资给年轻的穷人，因为越是贫穷越有成功的欲望和拼搏精神。西方的思科，东方的华为。华为起步只比思科晚4年，同样掌握当时世界最前沿的通信技术，通过大批雇用IBM顾问从而实现早期国际化的管理水平。至今华为找到手机移动的增长点，焕发最强民企的生命力。2020年统计，华为的科研投入遥遥领先于第二名的腾讯一倍有余，狼性文化下也涌现超级年薪的PHD。</li>
-<li>chap 10 YAHOO互联网入口，世界第一个黄页。除了整理了当时杂乱的互联网资信，吴军老师认为YAHOO制定了互联网行业重要的规则：开放，免费，基于流量的盈利模式。我认为这与当今的开源思想很有共同点，区别在于开源目前变现能力还不够。为此，我特意知乎了开源目前的盈利模式，主要有以下七个：1.多种产品线，开源版推广，专业版收费； 2.提供技术文档，培训以及二次开发作为收入（不是长久之计）； 3.应用服务托管，相当于云部署； 4.软硬一体化，开放软件，销售硬件 5.开源作为附属品 6.提升品牌和服务（大公司） 7.市场等其他 回到雅虎，当时手工密集式整理互联网信息，使之成为大部分人连接互联网的入口，加之互联网的快速发展使其价值和流量不断提升，也找到广告盈利的模式。当然资信发达引入的问题是对搜索引擎的迫切需求，以至于后来GOOGLE的崛起。当时浪潮之大，以至于当时只要有流量就有钱和投资，大量tricks如何提升网站流量的热度，狂热之下，互联网泡沫来临。网站大洗牌，小公司以及虚胖的大公司都一泻千里，被浪潮拍打在沙滩上。度过寒冬的以及寒冬后的企业，迎来了新的社会资源和人才，缺少老旧对手也能快速崛起。</li>
-<li>chap 11 惠普，一家如今印象只有打印机和PC产品的企业。殊不知一直以来是硅谷神话的代表，也是最早进驻斯坦福工业园的企业，开启了新时代校企合作的高效模式，高校培养顶尖人才，企业吸收并转化成遍布全球的产品。上世纪的惠普主营三大板块包括科学仪器，医疗器材以及计算机和外设，而后经营不合理导致只拆分剩计算机以及外设。</li>
-<li>chap 12 没落贵族-摩托罗拉，最早做通讯设备的公司，包括军用民用无线电，大哥大到2G手机。然而固有利润高的市场抑制了内部4G的推广，可见连内部都产生抑制新技术和新产品的现象，资本市场的竞争是十分激烈的，尽管存在反垄断法，但公司一旦占据行业的龙头位置，后来者就再难以从同样的赛道超越，除非是科技或者产品以质级的飞跃。</li>
-</ul>
-]]></content>
-      <categories>
-        <category>读书</category>
-      </categories>
-      <tags>
-        <tag>读书笔记</tag>
-        <tag>心得</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>努力方向之正解</title>
-    <url>/2021/12/21/shisan/%E5%8A%AA%E5%8A%9B%E6%96%B9%E5%90%91%E4%B9%8B%E6%AD%A3%E8%A7%A3/</url>
-    <content><![CDATA[<p><code>文章摘自微信公众号：十三先生手记</code></p>
-<p>人们总是误以为”方向不对，努力白费“</p>
-<p>所以到底什么方向是努力的正确方向，是对事情方向性的选择吗？<br>看起来是这样的，其实不然，在事情没有出现结果之前，谁能确定方向对不对？<br>于是乎，在很长一段时间里，你在方向的选择上纠结，大量耗费了精力；久而久之，方向选择对你的意义就逐步降低；久而久之，你在没有了方向的努力中不断的迷茫，努力所收获到的就多半不如意；久而久之，你便自然逐步丧失了努力的动力。</p>
-<p>所以其中蕴含<em><strong>真正的智慧</strong></em>是什么呢？<br>此刻，十三先生要你深深的明白：对于你真正想要成就的方向而言，基于外在目标而牵引你的行动方向就是你的迷障，基于你内心真正愿意去做的方向才是真正利于你达成整体目标的方向。若是你在每次做选择之际，你都按你内心真正未权衡的意愿立刻去着手行动，并在行动的过程中，实事求是的不断优化解决遇到的问题，而不是在事前先拿你预设的可能遇到的问题去和你的资源做权衡匹配，在来做方向选择的决定，假以时日，必定你会不断收获到你真正想要收获到的利益。</p>
-<h3 id="个人感悟"><a href="#个人感悟" class="headerlink" title="个人感悟"></a>个人感悟</h3><p>与其纠结于方向正确，不如尽快行动起来，尽快在行动中感受自我。那些未经反复驱动，内心自发想要完成的事情就是你人生的正确方向了。</p>
-]]></content>
-      <categories>
-        <category>十三手记</category>
-      </categories>
-      <tags>
-        <tag>十三手记</tag>
-      </tags>
   </entry>
   <entry>
     <title>经典话术</title>
@@ -823,15 +796,13 @@
       </tags>
   </entry>
   <entry>
-    <title>奖惩精要</title>
-    <url>/2021/12/27/shisan/%E5%A5%96%E6%83%A9%E7%B2%BE%E8%A6%81/</url>
-    <content><![CDATA[<p><code>摘自微信公众号十三手记</code></p>
-<p>自古以来，在团队、组织及家庭教育等人际关系管理中，奖惩都是当事人的必修课，凡能善用者，都能收获到相当的人生成就，可是真正能把奖惩落实到位乃至出神入化的人凤毛麟角，究其原因，其实都是没能真正明白奖惩的核心精髓，甚至因为错用奖惩而受到惩罚。</p>
-<h4 id="首先，奖惩时为了更好的控制别人吗？"><a href="#首先，奖惩时为了更好的控制别人吗？" class="headerlink" title="首先，奖惩时为了更好的控制别人吗？"></a>首先，奖惩时为了更好的控制别人吗？</h4><p>你以为是，但必定不是。若是为了更好的控制别人，为何那么多人用了奖惩手段并未真正收到真正控制别人的真正效果？  </p>
-<h4 id="那么，奖惩到底是为了什么？"><a href="#那么，奖惩到底是为了什么？" class="headerlink" title="那么，奖惩到底是为了什么？"></a>那么，奖惩到底是为了什么？</h4><p>那是为了促进对方强大的同时与其交心。  </p>
-<h4 id="何时奖惩？"><a href="#何时奖惩？" class="headerlink" title="何时奖惩？"></a>何时奖惩？</h4><p>尽快，及时  </p>
-<h4 id="何处奖惩？"><a href="#何处奖惩？" class="headerlink" title="何处奖惩？"></a>何处奖惩？</h4><p>公开的要公开，私下的要私下，否则就是反效果。</p>
-<p>此刻，十三先生要你深深的明白：在你的人际关系管理中，若是你的奖惩只是你控制别人的手段，那你的手段最多只是临时效果，最终必定不能如你所愿，甚至受到反效果；若是你的奖惩是在用心反馈你对别人行为有效性的重视，是为了及时给予对方诚意的肯定或是改进提醒，那你就是在用奖惩的办法促进对方强大的同时与其交心，假以时日，你必定能收获到奖惩给你的人际关系处理的真实力量和价值。</p>
+    <title>努力方向之正解</title>
+    <url>/2021/12/21/shisan/%E5%8A%AA%E5%8A%9B%E6%96%B9%E5%90%91%E4%B9%8B%E6%AD%A3%E8%A7%A3/</url>
+    <content><![CDATA[<p><code>文章摘自微信公众号：十三先生手记</code></p>
+<p>人们总是误以为”方向不对，努力白费“</p>
+<p>所以到底什么方向是努力的正确方向，是对事情方向性的选择吗？<br>看起来是这样的，其实不然，在事情没有出现结果之前，谁能确定方向对不对？<br>于是乎，在很长一段时间里，你在方向的选择上纠结，大量耗费了精力；久而久之，方向选择对你的意义就逐步降低；久而久之，你在没有了方向的努力中不断的迷茫，努力所收获到的就多半不如意；久而久之，你便自然逐步丧失了努力的动力。</p>
+<p>所以其中蕴含<em><strong>真正的智慧</strong></em>是什么呢？<br>此刻，十三先生要你深深的明白：对于你真正想要成就的方向而言，基于外在目标而牵引你的行动方向就是你的迷障，基于你内心真正愿意去做的方向才是真正利于你达成整体目标的方向。若是你在每次做选择之际，你都按你内心真正未权衡的意愿立刻去着手行动，并在行动的过程中，实事求是的不断优化解决遇到的问题，而不是在事前先拿你预设的可能遇到的问题去和你的资源做权衡匹配，在来做方向选择的决定，假以时日，必定你会不断收获到你真正想要收获到的利益。</p>
+<h3 id="个人感悟"><a href="#个人感悟" class="headerlink" title="个人感悟"></a>个人感悟</h3><p>与其纠结于方向正确，不如尽快行动起来，尽快在行动中感受自我。那些未经反复驱动，内心自发想要完成的事情就是你人生的正确方向了。</p>
 ]]></content>
       <categories>
         <category>十三手记</category>
@@ -841,12 +812,44 @@
       </tags>
   </entry>
   <entry>
-    <title>恐惧之破</title>
-    <url>/2022/01/05/shisan/%E6%81%90%E6%83%A7%E4%B9%8B%E7%A0%B4/</url>
-    <content><![CDATA[<p>你有恐惧吗？  想必有的<br>你想解除恐惧吗？  必定想的<br>可为什么你无法真正解除？  因为你不知道恐惧从何而来，更不知道什么是恐惧。</p>
-<h3 id="那么恐惧从何而来？"><a href="#那么恐惧从何而来？" class="headerlink" title="那么恐惧从何而来？"></a>那么恐惧从何而来？</h3><p>从曲解真相而来</p>
-<h3 id="恐惧是什么？"><a href="#恐惧是什么？" class="headerlink" title="恐惧是什么？"></a>恐惧是什么？</h3><p>是你的人生大礼给你的提醒。</p>
-<h3 id="此刻要你深深明白"><a href="#此刻要你深深明白" class="headerlink" title="此刻要你深深明白"></a>此刻要你深深明白</h3><p>二元有相世界，恐惧来自于你对真相的无视或者曲解。如此，只要你无视或者曲解了真相，必定会形成相应的恐惧；如此，你内心恐惧的形成是为了提醒你搞清楚恐惧背后的真相；如此，若是你逃避真相，你必定会反复感受到恐惧；如此，当你心有恐惧，请直面你所恐惧的东西，并搞清楚其真相，当你一旦真正清楚真相，恐惧必定就会随之而消失；与此同时，必定你就能在搞清楚真相的过程中收获到你人生的大礼。</p>
+    <title>六年前的自己</title>
+    <url>/2021/12/22/rizhi/%E5%85%AD%E5%B9%B4%E5%89%8D%E7%9A%84%E8%87%AA%E5%B7%B1/</url>
+    <content><![CDATA[<p><a href="https://csrjtan.github.io/">https://csrjtan.github.io/</a><br>回看六年前的自己，摘录一些当时有意义的文段</p>
+<h3 id="23岁的生日"><a href="#23岁的生日" class="headerlink" title="23岁的生日"></a>23岁的生日</h3><p>重读六年前的自己，用文字记录对这个世界的感受和认知，那时候的自己充满了希望，虽然能力配不上欲望而渐渐失落，但依然希望找到那种年轻的感觉。</p>
+<h3 id=""><a href="#" class="headerlink" title=""></a></h3><p>当年的愿望：</p>
+<ul>
+<li>工作上：提高编程和学术能力</li>
+<li>生活上：爱家人，爱生活，爱伴侣</li>
+<li>日常上：坚持读，坚持写，坚持学，坚持感受，坚持表达</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">《成长的天空》 </span><br><span class="line">我沉浸在自己的世界里</span><br><span class="line">写着无关是非的歌谣</span><br><span class="line">点蓝的笔触</span><br><span class="line">划过了年轻的天空</span><br><span class="line">一只飞鸟带走我的青春</span><br><span class="line">还我，岁月沉淀的帽子</span><br><span class="line">轻声说道</span><br><span class="line">年轻总不是永远的借口</span><br></pre></td></tr></table></figure>
+
+<h3 id="回看中秋自省的自己"><a href="#回看中秋自省的自己" class="headerlink" title="回看中秋自省的自己"></a>回看中秋自省的自己</h3><p>经过5年起起落落，心态转变得很明显甚至于有点得过且过的样子，现在自己比年轻的自己多了一点能力和资源，却失去了做大梦的勇气和毅力。希望自己能依然不断找到人生的兴奋点，勇往直前地去追寻探索，从今天开始，真正的为自己而活，不在乎别人的眼光，不在乎可能会失去的安逸。</p>
+<h3 id="家人信息简要"><a href="#家人信息简要" class="headerlink" title="家人信息简要"></a>家人信息简要</h3><p>爸：1961.7.8，牛，会计。爱好军事政治经济唱歌。性格硬朗好面子。优点：精神好，能干，勤勉<br>妈：1961.11.12，牛，仓管（退休）。爱好家庭家人养生。优点：节俭，爱戴我们，慈祥<br>哥：1987.8.9，兔，前端全栈，爱好广泛潮流酷玩。优点：工程能力强，迁就随和<br>为：1992.08.13，猴，算法攻城狮。爱好：声乐，运动，游戏。优点：耐受力，随和</p>
+<h3 id="选书策略"><a href="#选书策略" class="headerlink" title="选书策略"></a>选书策略</h3><p>出版社-&gt;作者-&gt;版次-&gt;印次-&gt;印数</p>
+<h3 id="追逐幸福的要素"><a href="#追逐幸福的要素" class="headerlink" title="追逐幸福的要素"></a>追逐幸福的要素</h3><ul>
+<li>找到喜欢的工作，有收入又受到社会尊重</li>
+<li>减少上下班耗费的时间，有充足的社交时间</li>
+<li>对国家和社会有政治热情，有参与度</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">不论曾经的彼此多么幼稚，多么可笑</span><br><span class="line">终有一天我们都变得成熟；</span><br><span class="line">也终有一天，我们都会老去；</span><br><span class="line">可是，却没有人可以永远不长大，</span><br><span class="line">却没有人可以永远年轻，</span><br><span class="line">成熟，有时候会让人心痛、很无奈。</span><br><span class="line">那个时候才会懂得：</span><br><span class="line">爱情本不是件该执着的事情。</span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>日常</category>
+      </categories>
+      <tags>
+        <tag>博客迁移</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>奖惩精要</title>
+    <url>/2021/12/27/shisan/%E5%A5%96%E6%83%A9%E7%B2%BE%E8%A6%81/</url>
+    <content><![CDATA[<p><code>摘自微信公众号十三手记</code></p>
+<p>自古以来，在团队、组织及家庭教育等人际关系管理中，奖惩都是当事人的必修课，凡能善用者，都能收获到相当的人生成就，可是真正能把奖惩落实到位乃至出神入化的人凤毛麟角，究其原因，其实都是没能真正明白奖惩的核心精髓，甚至因为错用奖惩而受到惩罚。</p>
+<h4 id="首先，奖惩时为了更好的控制别人吗？"><a href="#首先，奖惩时为了更好的控制别人吗？" class="headerlink" title="首先，奖惩时为了更好的控制别人吗？"></a>首先，奖惩时为了更好的控制别人吗？</h4><p>你以为是，但必定不是。若是为了更好的控制别人，为何那么多人用了奖惩手段并未真正收到真正控制别人的真正效果？  </p>
+<h4 id="那么，奖惩到底是为了什么？"><a href="#那么，奖惩到底是为了什么？" class="headerlink" title="那么，奖惩到底是为了什么？"></a>那么，奖惩到底是为了什么？</h4><p>那是为了促进对方强大的同时与其交心。  </p>
+<h4 id="何时奖惩？"><a href="#何时奖惩？" class="headerlink" title="何时奖惩？"></a>何时奖惩？</h4><p>尽快，及时  </p>
+<h4 id="何处奖惩？"><a href="#何处奖惩？" class="headerlink" title="何处奖惩？"></a>何处奖惩？</h4><p>公开的要公开，私下的要私下，否则就是反效果。</p>
+<p>此刻，十三先生要你深深的明白：在你的人际关系管理中，若是你的奖惩只是你控制别人的手段，那你的手段最多只是临时效果，最终必定不能如你所愿，甚至受到反效果；若是你的奖惩是在用心反馈你对别人行为有效性的重视，是为了及时给予对方诚意的肯定或是改进提醒，那你就是在用奖惩的办法促进对方强大的同时与其交心，假以时日，你必定能收获到奖惩给你的人际关系处理的真实力量和价值。</p>
 ]]></content>
       <categories>
         <category>十三手记</category>
@@ -875,11 +878,12 @@
       </tags>
   </entry>
   <entry>
-    <title>能量朗读</title>
-    <url>/2021/12/20/shisan/%E8%83%BD%E9%87%8F%E6%9C%97%E8%AF%BB/</url>
-    <content><![CDATA[<p><code>文章摘自微信公众号：十三先生手记</code></p>
-<p>小时候，我就一直渴望幸福，一直渴望坚强；<br>小时候，我就一直渴望正直，一直渴望善良；<br>小时候，为就一直渴望快乐，一直渴望成长；<br>现在，我几乎丢失了我的信心，我几乎丢失了我的梦想！<br>我知道，我不能再这样消极的逃避。<br>我知道，我不能再这样平庸的彷徨。<br>我知道，我要全力迸发我的热情；我要勇敢的收复我的希望。<br>我知道，我要真诚的对待身边每一个人，这样，我才能被每一个人真诚的对待；<br>我知道，我要用心的对待每天的时光，这样，我才能收获每天的力量；<br>我知道，我要帮助身边每一个人达成心愿，这样，大家才能帮助我实现梦想。<br>从今天起，我要打败我的懒惰，重拾我的阳光；<br>从今天起，我要改变我的粗俗，提升我的修养；<br>从今天起，我要挑战我的懦弱，找回我的坚强；</p>
-<p>我是为爱这个世界而来<br>我要让世界因我的爱而更加美丽，<br>我要让世界因我的爱而更加安康，<br>我要让世界因我的爱而更加真诚，<br>我要让世界因我的爱而更加和畅。</p>
+    <title>恐惧之破</title>
+    <url>/2022/01/05/shisan/%E6%81%90%E6%83%A7%E4%B9%8B%E7%A0%B4/</url>
+    <content><![CDATA[<p>你有恐惧吗？  想必有的<br>你想解除恐惧吗？  必定想的<br>可为什么你无法真正解除？  因为你不知道恐惧从何而来，更不知道什么是恐惧。</p>
+<h3 id="那么恐惧从何而来？"><a href="#那么恐惧从何而来？" class="headerlink" title="那么恐惧从何而来？"></a>那么恐惧从何而来？</h3><p>从曲解真相而来</p>
+<h3 id="恐惧是什么？"><a href="#恐惧是什么？" class="headerlink" title="恐惧是什么？"></a>恐惧是什么？</h3><p>是你的人生大礼给你的提醒。</p>
+<h3 id="此刻要你深深明白"><a href="#此刻要你深深明白" class="headerlink" title="此刻要你深深明白"></a>此刻要你深深明白</h3><p>二元有相世界，恐惧来自于你对真相的无视或者曲解。如此，只要你无视或者曲解了真相，必定会形成相应的恐惧；如此，你内心恐惧的形成是为了提醒你搞清楚恐惧背后的真相；如此，若是你逃避真相，你必定会反复感受到恐惧；如此，当你心有恐惧，请直面你所恐惧的东西，并搞清楚其真相，当你一旦真正清楚真相，恐惧必定就会随之而消失；与此同时，必定你就能在搞清楚真相的过程中收获到你人生的大礼。</p>
 ]]></content>
       <categories>
         <category>十三手记</category>
@@ -912,20 +916,11 @@
       </tags>
   </entry>
   <entry>
-    <title>金钱之二元整体观</title>
-    <url>/2021/12/22/shisan/%E9%87%91%E9%92%B1%E4%B9%8B%E4%BA%8C%E5%85%83%E6%95%B4%E4%BD%93%E8%A7%82/</url>
-    <content><![CDATA[<p><code>摘自微信号十三手记</code></p>
-<p>金钱只是金钱的样子吗？<br>你以为是，但必定不是。</p>
-<p>首先明白，金钱的有形或无形形式为什么存在？<br>是为了运行金钱背后的实际价值</p>
-<p>对于金钱而言，一般有三种状态：获取，存储，使用<br>三种状态在一起就是你金钱的留存路径，也是金钱存在的整体。</p>
-<p>此时，十三先生要你深深的明白：只要你对待金钱的这三种状态不平衡，只偏向执着于其一或其二，被你忽略掉的部分都必定会让你体验到金钱的匮乏，你都必定会经历金钱的反复障碍，无论金钱多少，你都是被金钱牵制捆绑的奴才；若是你懂得了今天讲的金钱整体性，在金钱对境中，把这三部分中你当时所处的部分运作出最大的价值和质感，并透过自己的障碍和痛苦主动去发现自己的单边局限，并及时主动透过逆袭自己的小气和不尊重金钱之粗糙的行为来扩大自己的金钱进出通道和格局，如此，假以时日，你便不会被金钱三部分中任何一部分障碍，你便会逐步成为内心富足的金钱主人。</p>
-<p><strong>一条手记</strong>：二元有相世界，金钱是你自己其中一个相，你对待金钱的状态就是你对待自己和对待世界的状态。</p>
-<h3 id="个人感悟"><a href="#个人感悟" class="headerlink" title="个人感悟"></a>个人感悟</h3><p>这边十三先生提到关于金钱从获得，存储和使用三个维度分析，从提升个人金钱观上升提高个人世界观。</p>
-<ul>
-<li>关于获得：没有人会嫌钱多，在尽个人最大努力以及精力下，应最高效提升金钱的获得效率。</li>
-<li>关于存储：有了上一步，存储才有意义，如何有效理财，提升金钱的有效价值；另外，足够的存储才能带给个人底气和自信。</li>
-<li>关于使用：根据上两步的情况，具体规划用度，及时安抚自我，时刻让自己充满斗志与动力。</li>
-</ul>
+    <title>能量朗读</title>
+    <url>/2021/12/20/shisan/%E8%83%BD%E9%87%8F%E6%9C%97%E8%AF%BB/</url>
+    <content><![CDATA[<p><code>文章摘自微信公众号：十三先生手记</code></p>
+<p>小时候，我就一直渴望幸福，一直渴望坚强；<br>小时候，我就一直渴望正直，一直渴望善良；<br>小时候，为就一直渴望快乐，一直渴望成长；<br>现在，我几乎丢失了我的信心，我几乎丢失了我的梦想！<br>我知道，我不能再这样消极的逃避。<br>我知道，我不能再这样平庸的彷徨。<br>我知道，我要全力迸发我的热情；我要勇敢的收复我的希望。<br>我知道，我要真诚的对待身边每一个人，这样，我才能被每一个人真诚的对待；<br>我知道，我要用心的对待每天的时光，这样，我才能收获每天的力量；<br>我知道，我要帮助身边每一个人达成心愿，这样，大家才能帮助我实现梦想。<br>从今天起，我要打败我的懒惰，重拾我的阳光；<br>从今天起，我要改变我的粗俗，提升我的修养；<br>从今天起，我要挑战我的懦弱，找回我的坚强；</p>
+<p>我是为爱这个世界而来<br>我要让世界因我的爱而更加美丽，<br>我要让世界因我的爱而更加安康，<br>我要让世界因我的爱而更加真诚，<br>我要让世界因我的爱而更加和畅。</p>
 ]]></content>
       <categories>
         <category>十三手记</category>
@@ -952,15 +947,20 @@
       </tags>
   </entry>
   <entry>
-    <title>高效行动</title>
-    <url>/2022/01/18/shisan/%E9%AB%98%E6%95%88%E8%A1%8C%E5%8A%A8/</url>
+    <title>金钱之二元整体观</title>
+    <url>/2021/12/22/shisan/%E9%87%91%E9%92%B1%E4%B9%8B%E4%BA%8C%E5%85%83%E6%95%B4%E4%BD%93%E8%A7%82/</url>
     <content><![CDATA[<p><code>摘自微信号十三手记</code></p>
-<h3 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h3><p>为什么那么忙，却没有达到想要的效果？<br>因为多余动作太多</p>
-<p>什么是多余动作？<br>对事情发展本身不直接着力的动作</p>
-<p>多余动作为什么会出现？<br>因为你害怕不利的结果来得太快，所以，你内心的恐惧感让你不自知的搞了这些动作来减缓进展的速度，虽然你以为这样做可以更好的优化过程，可以更快得到有利的结果。</p>
-<p>多余动作会产生什么效果？<br>你以为会让事态进展更高效，但，其实必定会生出更多跟事件发展本身无关的新问题，进而形成层层阻碍。</p>
-<h3 id="此刻你要明白"><a href="#此刻你要明白" class="headerlink" title="此刻你要明白"></a>此刻你要明白</h3><p>在事情发展过程中，只有你的行为尽量实事求是的直接着力于事件本身，你才能尽量减少多余动作产生的能耗，你才能让事件在发展过程中更加清晰的优化，你才能让事件的进展更加高效。</p>
-<h3 id="个人感悟"><a href="#个人感悟" class="headerlink" title="个人感悟"></a>个人感悟</h3><p>对于自我而言，其实是逃避真正问题的根因。有时候明知道面前有必须要解决的问题，但是总是希望从外界或者其他不相关的内容中得到方法，而非从自身出发努力去解决问题。因此往往会偏离有价值的行为，以及有效的解决真正问题，因此才一直无法有效解决问题。</p>
+<p>金钱只是金钱的样子吗？<br>你以为是，但必定不是。</p>
+<p>首先明白，金钱的有形或无形形式为什么存在？<br>是为了运行金钱背后的实际价值</p>
+<p>对于金钱而言，一般有三种状态：获取，存储，使用<br>三种状态在一起就是你金钱的留存路径，也是金钱存在的整体。</p>
+<p>此时，十三先生要你深深的明白：只要你对待金钱的这三种状态不平衡，只偏向执着于其一或其二，被你忽略掉的部分都必定会让你体验到金钱的匮乏，你都必定会经历金钱的反复障碍，无论金钱多少，你都是被金钱牵制捆绑的奴才；若是你懂得了今天讲的金钱整体性，在金钱对境中，把这三部分中你当时所处的部分运作出最大的价值和质感，并透过自己的障碍和痛苦主动去发现自己的单边局限，并及时主动透过逆袭自己的小气和不尊重金钱之粗糙的行为来扩大自己的金钱进出通道和格局，如此，假以时日，你便不会被金钱三部分中任何一部分障碍，你便会逐步成为内心富足的金钱主人。</p>
+<p><strong>一条手记</strong>：二元有相世界，金钱是你自己其中一个相，你对待金钱的状态就是你对待自己和对待世界的状态。</p>
+<h3 id="个人感悟"><a href="#个人感悟" class="headerlink" title="个人感悟"></a>个人感悟</h3><p>这边十三先生提到关于金钱从获得，存储和使用三个维度分析，从提升个人金钱观上升提高个人世界观。</p>
+<ul>
+<li>关于获得：没有人会嫌钱多，在尽个人最大努力以及精力下，应最高效提升金钱的获得效率。</li>
+<li>关于存储：有了上一步，存储才有意义，如何有效理财，提升金钱的有效价值；另外，足够的存储才能带给个人底气和自信。</li>
+<li>关于使用：根据上两步的情况，具体规划用度，及时安抚自我，时刻让自己充满斗志与动力。</li>
+</ul>
 ]]></content>
       <categories>
         <category>十三手记</category>
@@ -981,6 +981,24 @@
 <p>概念需求是什么意思？<br>是附加到人事物的功能和价值上的概念，是让你产生欲望后误以为自己需求的迷障。</p>
 <p>谁附加的概念？<br>是你自己或者是外界。</p>
 <h3 id="此刻要你深深的明白"><a href="#此刻要你深深的明白" class="headerlink" title="此刻要你深深的明白"></a>此刻要你深深的明白</h3><p>由于你的贪心，你分不清自己真正的需求。所以，你过去总被人事物的附加概念牵动而消耗了大量资源和精力，所以只有你真正懂得了你要的是人事物本身的功能和价值，你才不会被这些附加的概念干扰和误导，你才真正懂得了珍惜物命，你才真正懂得了珍惜缘分，你才真正懂得了珍惜人生。</p>
+]]></content>
+      <categories>
+        <category>十三手记</category>
+      </categories>
+      <tags>
+        <tag>十三手记</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>高效行动</title>
+    <url>/2022/01/18/shisan/%E9%AB%98%E6%95%88%E8%A1%8C%E5%8A%A8/</url>
+    <content><![CDATA[<p><code>摘自微信号十三手记</code></p>
+<h3 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h3><p>为什么那么忙，却没有达到想要的效果？<br>因为多余动作太多</p>
+<p>什么是多余动作？<br>对事情发展本身不直接着力的动作</p>
+<p>多余动作为什么会出现？<br>因为你害怕不利的结果来得太快，所以，你内心的恐惧感让你不自知的搞了这些动作来减缓进展的速度，虽然你以为这样做可以更好的优化过程，可以更快得到有利的结果。</p>
+<p>多余动作会产生什么效果？<br>你以为会让事态进展更高效，但，其实必定会生出更多跟事件发展本身无关的新问题，进而形成层层阻碍。</p>
+<h3 id="此刻你要明白"><a href="#此刻你要明白" class="headerlink" title="此刻你要明白"></a>此刻你要明白</h3><p>在事情发展过程中，只有你的行为尽量实事求是的直接着力于事件本身，你才能尽量减少多余动作产生的能耗，你才能让事件在发展过程中更加清晰的优化，你才能让事件的进展更加高效。</p>
+<h3 id="个人感悟"><a href="#个人感悟" class="headerlink" title="个人感悟"></a>个人感悟</h3><p>对于自我而言，其实是逃避真正问题的根因。有时候明知道面前有必须要解决的问题，但是总是希望从外界或者其他不相关的内容中得到方法，而非从自身出发努力去解决问题。因此往往会偏离有价值的行为，以及有效的解决真正问题，因此才一直无法有效解决问题。</p>
 ]]></content>
       <categories>
         <category>十三手记</category>
