@@ -186,6 +186,32 @@
       </tags>
   </entry>
   <entry>
+    <title>SLAM十四讲（一）预备及初识</title>
+    <url>/2022/01/07/SLAMBOOK2/SLAMBOOK-1/</url>
+    <content><![CDATA[<h4 id="SLAM：Simultaneous-Localization-and-Mapping"><a href="#SLAM：Simultaneous-Localization-and-Mapping" class="headerlink" title="SLAM：Simultaneous Localization and Mapping"></a>SLAM：Simultaneous Localization and Mapping</h4><p>同步定位及建图：搭载特定传感器的主体，在没有环境先验信息情况下，在运动过程中建立环境模型，同时估计自己位姿的过程。根据传感器分为深度相机，RGB相机和激光。不同传感器特点不一样，应用环境以及遇到的难点不同。本书主要是视觉SLAM：围绕RGB相机，也会引入Depth相机。</p>
+<p>CV之初，人们想象有一天计算机将和人一样，通过眼睛去观察世界，理解周围的物体，探索未知的环境–这是一个美妙而又充满浪漫色彩的梦想，让无数科研人员日夜为之奋斗。</p>
+<p>SLAM相关的应用点：室内扫地机，移动机器人；户外的自动驾驶以及空中无人机；乃至虚拟现实和增强现实设备。</p>
+<p>SLAM研究的三十年，将主干分为四个大模块：</p>
+<ul>
+<li>前端里程计（求pose)：估计相邻图像相机的运动以及局部地图样子</li>
+<li>后端优化（优化pose)：根据多个时刻的相机位姿以及回环检测进行优化，得到全局一致的轨迹和地图</li>
+<li>建图：根据轨迹建立与任务要求对应的地图</li>
+<li>回环检测（优化全局pose)：判断是否到达过先前的位置</li>
+</ul>
+<p>1.定位问题：我在什么地方？<br>2.建图问题：周围环境是什么样？<br>方法很多：室内可以在地板铺设导引线，在墙上贴二维码，在桌子放置无线电定位设备；室外可以安装定位设备（GPS）等<br>传感器主要两类：1.安装在本体上，如轮式编码器，IMU，相机，激光； 2.安装在环境上，上述提到的</p>
+<h4 id="不同传感器的特性以及SLAM的影响"><a href="#不同传感器的特性以及SLAM的影响" class="headerlink" title="不同传感器的特性以及SLAM的影响"></a>不同传感器的特性以及SLAM的影响</h4><p>单目：图像是三维空间的二维投影，必须移动(Motion)才能估计结构(Structure).motion后只能根据视差估计相对的值，具有尺度不确定性。<br>问题：平移才能计算深度以及无法确定真实尺度，导致单目SLAM困难多多，但是成本较低。</p>
+<p>双目：利于基线解决尺度不确定性，但视差的匹配依然效率不高，需要引入GPU和FPGA加速才能实时输出整张图的距离信息。双目测量距离受基线大小影响，所以无人车上一般搭载很大的家伙<br>问题：对于SLAM而言，传感器的配置与标定较为复杂。</p>
+<p>RGB-D相机：通过TOF物理测量手段直接获得全图的深度信息<br>问题：低端TOF测量范围窄，噪声大，视野小；普遍存在日光干扰、无法测量投射材质以及高反高吸收率材质；所以主要用于室内应用，室外难以使用。</p>
+<p>目前而言，如果工作环境理想：静态、刚体、光照变化小、没有人为干扰的场景，SLAM是相当成熟。</p>
+]]></content>
+      <categories>
+        <category>SLAM十四讲</category>
+      </categories>
+      <tags>
+        <tag>SLAMBOOK</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>盐选健康</title>
     <url>/2022/01/21/%E7%9B%90%E9%80%89%E5%81%A5%E5%BA%B7/</url>
     <content><![CDATA[<h3 id="优雅起床"><a href="#优雅起床" class="headerlink" title="优雅起床"></a>优雅起床</h3><p>熬夜:睡眠不规律,睡眠不足以及整夜不睡.而非指定睡觉时间,当然中医养生的角度应该是需要早睡早起,早上练功升阳.</p>
@@ -249,32 +275,6 @@
       </tags>
   </entry>
   <entry>
-    <title>SLAM十四讲（一）预备及初识</title>
-    <url>/2022/01/07/SLAMBOOK2/SLAMBOOK-1/</url>
-    <content><![CDATA[<h4 id="SLAM：Simultaneous-Localization-and-Mapping"><a href="#SLAM：Simultaneous-Localization-and-Mapping" class="headerlink" title="SLAM：Simultaneous Localization and Mapping"></a>SLAM：Simultaneous Localization and Mapping</h4><p>同步定位及建图：搭载特定传感器的主体，在没有环境先验信息情况下，在运动过程中建立环境模型，同时估计自己位姿的过程。根据传感器分为深度相机，RGB相机和激光。不同传感器特点不一样，应用环境以及遇到的难点不同。本书主要是视觉SLAM：围绕RGB相机，也会引入Depth相机。</p>
-<p>CV之初，人们想象有一天计算机将和人一样，通过眼睛去观察世界，理解周围的物体，探索未知的环境–这是一个美妙而又充满浪漫色彩的梦想，让无数科研人员日夜为之奋斗。</p>
-<p>SLAM相关的应用点：室内扫地机，移动机器人；户外的自动驾驶以及空中无人机；乃至虚拟现实和增强现实设备。</p>
-<p>SLAM研究的三十年，将主干分为四个大模块：</p>
-<ul>
-<li>前端里程计（求pose)：估计相邻图像相机的运动以及局部地图样子</li>
-<li>后端优化（优化pose)：根据多个时刻的相机位姿以及回环检测进行优化，得到全局一致的轨迹和地图</li>
-<li>建图：根据轨迹建立与任务要求对应的地图</li>
-<li>回环检测（优化全局pose)：判断是否到达过先前的位置</li>
-</ul>
-<p>1.定位问题：我在什么地方？<br>2.建图问题：周围环境是什么样？<br>方法很多：室内可以在地板铺设导引线，在墙上贴二维码，在桌子放置无线电定位设备；室外可以安装定位设备（GPS）等<br>传感器主要两类：1.安装在本体上，如轮式编码器，IMU，相机，激光； 2.安装在环境上，上述提到的</p>
-<h4 id="不同传感器的特性以及SLAM的影响"><a href="#不同传感器的特性以及SLAM的影响" class="headerlink" title="不同传感器的特性以及SLAM的影响"></a>不同传感器的特性以及SLAM的影响</h4><p>单目：图像是三维空间的二维投影，必须移动(Motion)才能估计结构(Structure).motion后只能根据视差估计相对的值，具有尺度不确定性。<br>问题：平移才能计算深度以及无法确定真实尺度，导致单目SLAM困难多多，但是成本较低。</p>
-<p>双目：利于基线解决尺度不确定性，但视差的匹配依然效率不高，需要引入GPU和FPGA加速才能实时输出整张图的距离信息。双目测量距离受基线大小影响，所以无人车上一般搭载很大的家伙<br>问题：对于SLAM而言，传感器的配置与标定较为复杂。</p>
-<p>RGB-D相机：通过TOF物理测量手段直接获得全图的深度信息<br>问题：低端TOF测量范围窄，噪声大，视野小；普遍存在日光干扰、无法测量投射材质以及高反高吸收率材质；所以主要用于室内应用，室外难以使用。</p>
-<p>目前而言，如果工作环境理想：静态、刚体、光照变化小、没有人为干扰的场景，SLAM是相当成熟。</p>
-]]></content>
-      <categories>
-        <category>SLAM十四讲</category>
-      </categories>
-      <tags>
-        <tag>SLAMBOOK</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>c++并发实战</title>
     <url>/2021/12/28/cpp/c-%E5%B9%B6%E5%8F%91%E5%AE%9E%E6%88%98/</url>
     <content><![CDATA[<h3 id="chap1-c-并发世界"><a href="#chap1-c-并发世界" class="headerlink" title="chap1 c++并发世界"></a>chap1 c++并发世界</h3><p>C++98的13年后，2011的C++11成为新的规范，同时确认了每三年发布新的扩展技术规范。<br>在C++11中，c++ standard第一次承认多线程存在于C++语言中，意味CPP编写与平台无关的多线程程序成为可能。以往编写多线程并发需要针对运行平台部署依赖扩展库，如今可移植性成为可能。</p>
@@ -297,21 +297,6 @@
       </categories>
       <tags>
         <tag>c++ 多线程 并发</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>cpp生成代码及数据类型</title>
-    <url>/2021/12/14/cpp/cpp%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/</url>
-    <content><![CDATA[<p>c++基本数据类型主要有<em>bool, char, int, float, double</em>。具体如下：</p>
-<p><img src="/images/12_14_2.png" alt="basic data structure"><br><img src="/images/12_14_3.png" alt="basic data structure2"></p>
-<p>另外，C++<strong>生成代码的过程</strong>是：1.程序员编写源代码 2.编译器正确翻译C++为目标代码 3.链接器将环境启动的代码以及引入库的代码与目标代码正确链接 4.最后才输出机器认识的可执行代码<br><img src="/images/12_14_1.png" alt="code procedure"></p>
-<p>整型提升(integral promotion): 计算表达式时，bool, char, unsigned char, signed char short会转换为int，即int为计算机最自然的类型，也是运算速度可能最快的。较小与较大运算也可能提升。</p>
-]]></content>
-      <categories>
-        <category>c++</category>
-      </categories>
-      <tags>
-        <tag>c++ primer</tag>
       </tags>
   </entry>
   <entry>
@@ -352,6 +337,55 @@
       </categories>
       <tags>
         <tag>c++</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>cpp生成代码及数据类型</title>
+    <url>/2021/12/14/cpp/cpp%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/</url>
+    <content><![CDATA[<p>c++基本数据类型主要有<em>bool, char, int, float, double</em>。具体如下：</p>
+<p><img src="/images/12_14_2.png" alt="basic data structure"><br><img src="/images/12_14_3.png" alt="basic data structure2"></p>
+<p>另外，C++<strong>生成代码的过程</strong>是：1.程序员编写源代码 2.编译器正确翻译C++为目标代码 3.链接器将环境启动的代码以及引入库的代码与目标代码正确链接 4.最后才输出机器认识的可执行代码<br><img src="/images/12_14_1.png" alt="code procedure"></p>
+<p>整型提升(integral promotion): 计算表达式时，bool, char, unsigned char, signed char short会转换为int，即int为计算机最自然的类型，也是运算速度可能最快的。较小与较大运算也可能提升。</p>
+]]></content>
+      <categories>
+        <category>c++</category>
+      </categories>
+      <tags>
+        <tag>c++ primer</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>字符串</title>
+    <url>/2021/12/15/cpp/%E5%AD%97%E7%AC%A6%E4%B8%B2/</url>
+    <content><![CDATA[<h3 id="C-style字符串"><a href="#C-style字符串" class="headerlink" title="C-style字符串"></a>C-style字符串</h3><p>结尾带’\0’,这对于很多处理字符串的函数很关键。#include <cstring>包含大量C语言字串的操作函数如strlen, strcpy, strcat…</p>
+<p>strlen():只计算数组或者指针中的字符个数，不带结尾</p>
+<p><code>cin.getline(name,20)</code>:读取整行的字串到name,最多20个<br>cin.get()：类似，但下一次调用开头会带有换行(换行缓存到下次get)，顺便检查了上一次输入的正确程度。</p>
+<p>针对string类的getline(cin, string); 与cin混合使用时，在cin&gt;&gt;完成后，getline前需要通过getline(cin,”\n”)清除缓存，否则不进入getline输入。</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 清除缓存</span></span><br><span class="line">string str=<span class="string">&quot;\n&quot;</span>;</span><br><span class="line"><span class="built_in">getline</span>(cin,str);</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="string类"><a href="#string类" class="headerlink" title="string类"></a>string类</h3><figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string&gt;</span></span></span><br><span class="line">std::string</span><br></pre></td></tr></table></figure>
+<p>更方便，也更安全。像vector一样管理char.</p>
+<h3 id="struct和union"><a href="#struct和union" class="headerlink" title="struct和union"></a>struct和union</h3><p>union只能同时存储<strong>一种</strong>类型，其他类型的会lost</p>
+<h3 id="new和delete"><a href="#new和delete" class="headerlink" title="new和delete"></a>new和delete</h3><ul>
+<li>不要delete释放不是new的内存</li>
+<li>不要delete同一块内存两次</li>
+<li>new[]数组应当用delete []释放</li>
+<li>若用new[]为单一实体分配内存，应使用delete（不带方括号）释放</li>
+<li>对空指针delete是安全的</li>
+</ul>
+<h3 id="cin与cin-getline区别"><a href="#cin与cin-getline区别" class="headerlink" title="cin与cin.getline区别"></a>cin与cin.getline区别</h3><p>cin.getline(addr,80) 与cin&gt;&gt;addr<br>getline:读整行直到‘回车’<br>cin:首先跳过‘空格’，读取字串，再次遇‘空格’停止；即跳过前面的空格，读取单个单词。</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line">cin&gt;&gt;ch;</span><br><span class="line">cin.<span class="built_in">get</span>(ch);</span><br><span class="line">ch=cin.<span class="built_in">get</span>();</span><br></pre></td></tr></table></figure>
+<p>上面区别主要是cin&gt;&gt;ch直接跳过空格换行以及制表符</p>
+<h3 id="string格式化输出4位数字-前面补0，多用于文件名操作"><a href="#string格式化输出4位数字-前面补0，多用于文件名操作" class="headerlink" title="string格式化输出4位数字,前面补0，多用于文件名操作"></a>string格式化输出4位数字,前面补0，多用于文件名操作</h3><figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="keyword">int</span> num_zero = <span class="number">4</span>;</span><br><span class="line">string num = <span class="built_in">to_string</span>(int_val);</span><br><span class="line">string new_num = <span class="built_in">string</span>(num_zero-num.<span class="built_in">length</span>(),<span class="string">&#x27;0&#x27;</span>) + num;</span><br></pre></td></tr></table></figure>
+<p>注意int_val长度小于num_zero。</p>
+]]></content>
+      <categories>
+        <category>c++</category>
+      </categories>
+      <tags>
+        <tag>c++ primer</tag>
       </tags>
   </entry>
   <entry>
@@ -413,37 +447,114 @@
       </tags>
   </entry>
   <entry>
-    <title>字符串</title>
-    <url>/2021/12/15/cpp/%E5%AD%97%E7%AC%A6%E4%B8%B2/</url>
-    <content><![CDATA[<h3 id="C-style字符串"><a href="#C-style字符串" class="headerlink" title="C-style字符串"></a>C-style字符串</h3><p>结尾带’\0’,这对于很多处理字符串的函数很关键。#include <cstring>包含大量C语言字串的操作函数如strlen, strcpy, strcat…</p>
-<p>strlen():只计算数组或者指针中的字符个数，不带结尾</p>
-<p><code>cin.getline(name,20)</code>:读取整行的字串到name,最多20个<br>cin.get()：类似，但下一次调用开头会带有换行(换行缓存到下次get)，顺便检查了上一次输入的正确程度。</p>
-<p>针对string类的getline(cin, string); 与cin混合使用时，在cin&gt;&gt;完成后，getline前需要通过getline(cin,”\n”)清除缓存，否则不进入getline输入。</p>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 清除缓存</span></span><br><span class="line">string str=<span class="string">&quot;\n&quot;</span>;</span><br><span class="line"><span class="built_in">getline</span>(cin,str);</span><br></pre></td></tr></table></figure>
+    <title>逻辑控制</title>
+    <url>/2021/12/16/cpp/%E9%80%BB%E8%BE%91%E6%8E%A7%E5%88%B6/</url>
+    <content><![CDATA[<h3 id="do…while…-至少会执行一次的循环逻辑"><a href="#do…while…-至少会执行一次的循环逻辑" class="headerlink" title="do…while… 至少会执行一次的循环逻辑"></a>do…while… 至少会执行一次的循环逻辑</h3><p>哨兵(sentinel)字符: 一直读取，直到’他‘为止</p>
+<h3 id="检查文件是否正确打开很关键"><a href="#检查文件是否正确打开很关键" class="headerlink" title="检查文件是否正确打开很关键"></a>检查文件是否正确打开很关键</h3><p>用string读ifstream数据</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;fstream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string&gt;</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line">    ifstream inFile;</span><br><span class="line">    inFile.<span class="built_in">open</span>(filename);</span><br><span class="line">    <span class="keyword">if</span>(!inFile.<span class="built_in">is_open</span>())</span><br><span class="line">    &#123;</span><br><span class="line">        cout &lt;&lt;<span class="string">&quot;Failed Open&quot;</span>;</span><br><span class="line">        <span class="built_in">exit</span>(EXIT_FAILURE);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 逐行读放在string</span></span><br><span class="line">    string str;</span><br><span class="line">    <span class="built_in">getline</span>(inFile, str);</span><br><span class="line">    <span class="comment">//stoi, stof, stod </span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 
-
-<h3 id="string类"><a href="#string类" class="headerlink" title="string类"></a>string类</h3><figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string&gt;</span></span></span><br><span class="line">std::string</span><br></pre></td></tr></table></figure>
-<p>更方便，也更安全。像vector一样管理char.</p>
-<h3 id="struct和union"><a href="#struct和union" class="headerlink" title="struct和union"></a>struct和union</h3><p>union只能同时存储<strong>一种</strong>类型，其他类型的会lost</p>
-<h3 id="new和delete"><a href="#new和delete" class="headerlink" title="new和delete"></a>new和delete</h3><ul>
-<li>不要delete释放不是new的内存</li>
-<li>不要delete同一块内存两次</li>
-<li>new[]数组应当用delete []释放</li>
-<li>若用new[]为单一实体分配内存，应使用delete（不带方括号）释放</li>
-<li>对空指针delete是安全的</li>
-</ul>
-<h3 id="cin与cin-getline区别"><a href="#cin与cin-getline区别" class="headerlink" title="cin与cin.getline区别"></a>cin与cin.getline区别</h3><p>cin.getline(addr,80) 与cin&gt;&gt;addr<br>getline:读整行直到‘回车’<br>cin:首先跳过‘空格’，读取字串，再次遇‘空格’停止；即跳过前面的空格，读取单个单词。</p>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line">cin&gt;&gt;ch;</span><br><span class="line">cin.<span class="built_in">get</span>(ch);</span><br><span class="line">ch=cin.<span class="built_in">get</span>();</span><br></pre></td></tr></table></figure>
-<p>上面区别主要是cin&gt;&gt;ch直接跳过空格换行以及制表符</p>
-<h3 id="string格式化输出4位数字-前面补0，多用于文件名操作"><a href="#string格式化输出4位数字-前面补0，多用于文件名操作" class="headerlink" title="string格式化输出4位数字,前面补0，多用于文件名操作"></a>string格式化输出4位数字,前面补0，多用于文件名操作</h3><figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="keyword">int</span> num_zero = <span class="number">4</span>;</span><br><span class="line">string num = <span class="built_in">to_string</span>(int_val);</span><br><span class="line">string new_num = <span class="built_in">string</span>(num_zero-num.<span class="built_in">length</span>(),<span class="string">&#x27;0&#x27;</span>) + num;</span><br></pre></td></tr></table></figure>
-<p>注意int_val长度小于num_zero。</p>
+<h3 id="关于函数，真正的乐趣在于编写自己的函数，函数库"><a href="#关于函数，真正的乐趣在于编写自己的函数，函数库" class="headerlink" title="关于函数，真正的乐趣在于编写自己的函数，函数库"></a>关于函数，真正的乐趣在于编写自己的函数，函数库</h3><h3 id="指向const的指针以及const指针"><a href="#指向const的指针以及const指针" class="headerlink" title="指向const的指针以及const指针"></a>指向const的指针以及const指针</h3><p><img src="/images/12_17_1.png"></p>
+<h3 id="递归使用"><a href="#递归使用" class="headerlink" title="递归使用"></a>递归使用</h3><figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">recurs</span><span class="params">(arg)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="function">stat1</span></span><br><span class="line"><span class="function">    <span class="title">if</span><span class="params">(test)</span></span></span><br><span class="line"><span class="function">        <span class="title">recurs</span><span class="params">(arg)</span></span></span><br><span class="line"><span class="function">    stat2</span></span><br><span class="line"><span class="function">&#125;</span></span><br></pre></td></tr></table></figure>
+<p>先执行stat1,打开满足条件，打开新的递归；直到新的递归不满足条件，逐步执行stat2并关闭当前函数；直到所有打开的函数都关闭了。</p>
+<h3 id="函数指针"><a href="#函数指针" class="headerlink" title="函数指针"></a>函数指针</h3><p>用函数指针将第一函数找到第二函数，而非直接调用；虽然笨拙，但好处是可以在不同时间传递不同的函数地址；<br>语法：double (*pf)(int);</p>
+<h3 id="应尽量使用const"><a href="#应尽量使用const" class="headerlink" title="应尽量使用const"></a>应尽量使用const</h3><p>1.使用const可以避免无意中修改数据的失误<br>2.使用const使函数能够处理const和非const实参，否则将不能处理const实参<br>3.使用const引用使函数能够正确生成并使用临时变量</p>
+<h3 id="引用非常适合用于结构和类"><a href="#引用非常适合用于结构和类" class="headerlink" title="引用非常适合用于结构和类"></a>引用非常适合用于<strong>结构和类</strong></h3><p>何时使用引用参数：1.能够修改调用函数中的数据对象 2.通过传递引用而非拷贝提高程序运行速度</p>
+<h3 id="语法糖：函数默认参数从右往左"><a href="#语法糖：函数默认参数从右往左" class="headerlink" title="语法糖：函数默认参数从右往左"></a>语法糖：函数默认参数从右往左</h3><h3 id="函数多态：重载函数"><a href="#函数多态：重载函数" class="headerlink" title="函数多态：重载函数"></a>函数多态：重载函数</h3><p>不应滥用，适用于不同参数类型输入，完成基本一致功能的多个函数使用，const与非const也不一样</p>
+<h3 id="函数多态：模板编程"><a href="#函数多态：模板编程" class="headerlink" title="函数多态：模板编程"></a>函数多态：模板编程</h3><figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;  <span class="comment">// typename -&gt; class is ok</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Swap</span><span class="params">(T &amp;a, T &amp;b)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    T temp;</span><br><span class="line">    temp = a;</span><br><span class="line">    a = b;</span><br><span class="line">    b = temp;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>编译器如何匹配最佳函数是一个复杂而完备的过程，大致规则如下：<br>1.完全匹配，但常规函数优于模板<br>2.提升转换（char/shorts提升至int, float提升至double)<br>3.标准转换（int 转换char, long 转换double)<br>4.用户定义的转换，如类声明</p>
 ]]></content>
       <categories>
         <category>c++</category>
       </categories>
       <tags>
         <tag>c++ primer</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>异常处理</title>
+    <url>/2021/12/23/cpp/%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86/</url>
+    <content><![CDATA[<h3 id="处理可能出现异常的方法"><a href="#处理可能出现异常的方法" class="headerlink" title="处理可能出现异常的方法"></a>处理可能出现异常的方法</h3><ul>
+<li>调用abort()或exit()结束程序</li>
+<li>返回错误码</li>
+<li>异常机制：1.使用try块执行可能出现异常的代码段 2.throw引发异常 3.catch捕获并处理对应情况</li>
+</ul>
+<h3 id="throw机制"><a href="#throw机制" class="headerlink" title="throw机制"></a>throw机制</h3><p>若throw引发异常后，匹配对应catch。而后不是将控制权返回调用程序，而是引导程序沿着函数调用序列后退，直到找到try块中的函数<br>若没有throw出异常，则catch被跳过.<br>一般而言后退多步，再在main()中寻找与引发异常<strong>类型匹配</strong>的处理程序作处理。</p>
+<h3 id="通常用对象作为异常类型处理"><a href="#通常用对象作为异常类型处理" class="headerlink" title="通常用对象作为异常类型处理"></a>通常用对象作为异常类型处理</h3><p>好处是：直接根据类型区分异常，另外对象可以携带信息确定原因，catch根据信息来执行对应的操作</p>
+<h3 id="堆栈解退（unwinding-the-stack）"><a href="#堆栈解退（unwinding-the-stack）" class="headerlink" title="堆栈解退（unwinding the stack）"></a>堆栈解退（unwinding the stack）</h3><p>假设函数出现异常，而不是正确返回而终止。程序释放堆栈中的内存，但不会在释放堆栈的第一个返回地址后停止，而是继续释放堆栈，直到找到位于try块的返回地质。程序进行堆栈解退以回到能够捕获异常的地方时，将释放堆栈中的自动存储型变量。</p>
+<p><img src="/images/12_23_1.png"></p>
+<h3 id="文件IO"><a href="#文件IO" class="headerlink" title="文件IO"></a>文件IO</h3><figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;fstream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    ifstream inFile;</span><br><span class="line">    inFile.<span class="built_in">open</span>(<span class="string">&quot;file.txt&quot;</span>);</span><br><span class="line">    <span class="keyword">if</span>(!inFile.<span class="built_in">is_open</span>())</span><br><span class="line">    &#123;</span><br><span class="line">        cerr &lt;&lt;<span class="string">&quot;Failed open file.txt\n&quot;</span>;</span><br><span class="line">        <span class="built_in">exit</span>(<span class="number">0</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">char</span> ch;</span><br><span class="line">    <span class="keyword">int</span> cnt=<span class="number">0</span>;</span><br><span class="line">    <span class="keyword">while</span>(inFile&gt;&gt;ch)</span><br><span class="line">    &#123;</span><br><span class="line">        cnt++;</span><br><span class="line">    &#125;</span><br><span class="line">    cout &lt;&lt; cnt &lt;&lt;endl;</span><br><span class="line">    inFile.<span class="built_in">close</span>();</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>下面程序为harmony mean的除0错误，抛出const char *类型，匹配输出错误信息的代码。一般抛出错误类型通常为类。</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;cstdlib&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">double</span> <span class="title">hmean</span><span class="params">(<span class="keyword">double</span> a, <span class="keyword">double</span> b)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (a == -b)</span><br><span class="line">        <span class="keyword">throw</span> <span class="string">&quot;bad hmean() arguments: a = -b not allowed&quot;</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">2.0</span> * a * b / (a + b);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">double</span> x, y, z;</span><br><span class="line">    cout &lt;&lt; <span class="string">&quot;Enter two numbers:&quot;</span>;</span><br><span class="line">    <span class="keyword">while</span> (cin &gt;&gt; x &gt;&gt; y)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">try</span></span><br><span class="line">        &#123;</span><br><span class="line">            z = <span class="built_in">hmean</span>(x, y);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="built_in"><span class="keyword">catch</span></span>(<span class="keyword">const</span> <span class="keyword">char</span> * s)</span><br><span class="line">        &#123;</span><br><span class="line">            cout &lt;&lt; s &lt;&lt; endl;</span><br><span class="line">            cout &lt;&lt;<span class="string">&quot;Enter a new pair of numbers: &quot;</span>;</span><br><span class="line">            <span class="keyword">continue</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        cout &lt;&lt; <span class="string">&quot;Harmonic mean of &quot;</span> &lt;&lt; x &lt;&lt; <span class="string">&quot; and &quot;</span> &lt;&lt; y &lt;&lt; <span class="string">&quot;. is &quot;</span> &lt;&lt; z &lt;&lt; endl;</span><br><span class="line">        cout &lt;&lt; <span class="string">&quot;Enter next set of numbers &lt;q to quit&gt;:&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    cout &lt;&lt; <span class="string">&quot;Bye!&quot;</span> &lt;&lt; endl;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="throw-catch机制和函数参数以及函数返回机制的区别"><a href="#throw-catch机制和函数参数以及函数返回机制的区别" class="headerlink" title="throw-catch机制和函数参数以及函数返回机制的区别"></a>throw-catch机制和函数参数以及函数返回机制的区别</h3><p>1.函数控制权返回到调用函数的函数，throw语句控制权向上返回到第一个包含能够捕获相应异常的try-catch组合<br>2.引发异常时，编译器总是创建一个临时拷贝，彻底避免了函数机制指向不存在的临时变量的问题。<br>3.经常可见catch(problem &amp; p)，使用了引用，主要是针对通过继承关联起来的异常类型；此时使用基类引用即可执行派生类对象。此时层次结构最下面的异常类的catch语句应当放在最前面。</p>
+<p>catch (…)表示捕获任何异常</p>
+<h3 id="异常处理的注意事项"><a href="#异常处理的注意事项" class="headerlink" title="异常处理的注意事项"></a>异常处理的注意事项</h3><p>1.使用异常，应在设计程序时就加入，而不是以后才添加。<br>2.使用异常会增加程序代码，降低程序运行速度。<br>3.异常规范不适用于模板，异常和动态内存分配不能总是协同工作<br>因此，虽然异常处理对于某些项目极为重要，但也会增加编程的工作量、增大程序以及降低程序的速度。另外编译器对异常的支持以及用户的经验还没有达到成熟的程度，应有节制地使用这一特性。</p>
+<p>如无堆栈解退，则会出现内存泄漏，如下</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">test</span><span class="params">(<span class="keyword">int</span> n)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">double</span> * ar = <span class="keyword">new</span> <span class="keyword">double</span>[n];</span><br><span class="line">    <span class="keyword">if</span>(oh_no)</span><br><span class="line">        <span class="keyword">throw</span> <span class="built_in">exception</span>();</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">delete</span> [] ar;</span><br><span class="line">    <span class="keyword">return</span> ;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>throw了，则delete[]被忽略，ar指针消失了，内存块未释放且不可访问。</p>
+<h3 id="RTTI（RunTime-Type-Identification"><a href="#RTTI（RunTime-Type-Identification" class="headerlink" title="RTTI（RunTime Type Identification)"></a>RTTI（RunTime Type Identification)</h3><p>三个支持RTTI的元素：</p>
+<ul>
+<li>dynamic_cast操作符将基类指针生成派生指针：回答是否可以安全将对象的地址赋给特定类型的指针？如可，返回对象地址；否则，返回空指针。这对比“指向哪个类型的对象”，这更通用且有用。</li>
+<li>typeid操作符返回对象的类型</li>
+<li>type_info存储特定类型的信息<br>注意：RTTI只适用于包含虚函数的类</li>
+</ul>
+<p>与通用转换机制相比，dynamic_cast、static_cast、const_cast、reinterpret_cast提供了更安全和明确的类型转换。</p>
+<h3 id="STL"><a href="#STL" class="headerlink" title="STL"></a>STL</h3><p>通用编程技术，迭代器概念。<br>操作复杂度：固定时间、线性时间、随机时间<br>线性容器以及联合容器(set、map、multiset、multimap)<br>()函数符functor的概念,STL使用模板让for_each原型看上去像</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">template</span>&lt;class InputIterator, class Function&gt;</span></span><br><span class="line"><span class="function">Function <span class="title">for_each</span><span class="params">(InputIterator first, InputIterator last, Function f)</span></span>;</span><br></pre></td></tr></table></figure>
+
+<h3 id="STL算法库"><a href="#STL算法库" class="headerlink" title="STL算法库"></a>STL算法库</h3><p>分为四大类</p>
+<ul>
+<li>非修改式序列操作</li>
+<li>修改式序列操作</li>
+<li>排序和相关操作</li>
+<li>通用数字运算<br>就地算法：在原始数据位置上操作；复制算法：在新的位置操作</li>
+</ul>
+<h3 id="IO"><a href="#IO" class="headerlink" title="IO"></a>IO</h3><p>cout不会截断数据，会尽量全部打印内容。</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line">cout.<span class="built_in">width</span>(<span class="keyword">int</span> n); <span class="comment">// 单次有效</span></span><br><span class="line">cout.<span class="built_in">fill</span>(<span class="keyword">char</span> c); <span class="comment">// 一直有效</span></span><br><span class="line">cout.<span class="built_in">precision</span>(<span class="keyword">int</span> n); <span class="comment">// 一直有效</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>c++</category>
+      </categories>
+      <tags>
+        <tag>c++</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>腾讯课堂-C++11多线程</title>
+    <url>/2021/12/28/cpp/%E8%85%BE%E8%AE%AF%E8%AF%BE%E5%A0%82-C-11%E5%A4%9A%E7%BA%BF%E7%A8%8B/</url>
+    <content><![CDATA[<h3 id="线程管理"><a href="#线程管理" class="headerlink" title="线程管理"></a>线程管理</h3><p>多线程的执行函数尽量用传引用，以减少不必要资源开销；根据hardware_concurrency得到核心数来决定开多线程的数量；</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;thread&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;unistd.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 传入操作类，重载运算符()</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Fctor</span>&#123;</span></span><br><span class="line">  <span class="keyword">public</span>:    <span class="comment">// 参数使用引用减少多线程资源拷贝</span></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">operator</span><span class="params">()</span><span class="params">(string&amp; msg)</span>     <span class="comment">// opt: string msg</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">      cout &lt;&lt;<span class="string">&quot;from f1:&quot;</span> &lt;&lt; msg&lt;&lt;endl;</span><br><span class="line">      msg = <span class="string">&quot;changed&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  string s = <span class="string">&quot;not changed&quot;</span>;</span><br><span class="line">  cout &lt;&lt; this_thread::<span class="built_in">get_id</span>()&lt;&lt;endl;</span><br><span class="line">  <span class="function">thread <span class="title">t1</span><span class="params">((Fctor()), ref(s))</span></span>;    <span class="comment">// move(s),此时最后输出的s为空。</span></span><br><span class="line">  t1.<span class="built_in">join</span>();</span><br><span class="line"></span><br><span class="line">  cout &lt;&lt; s &lt;&lt; endl;</span><br><span class="line">  cout &lt;&lt; thread::<span class="built_in">hardware_concurrency</span>() &lt;&lt; endl; <span class="comment">//当前设备核心数</span></span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// output</span></span><br><span class="line"><span class="comment">// thread_id</span></span><br><span class="line"><span class="comment">// from f1:not changed</span></span><br><span class="line"><span class="comment">// not changed</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="数据竞争及互斥对象"><a href="#数据竞争及互斥对象" class="headerlink" title="数据竞争及互斥对象"></a>数据竞争及互斥对象</h3><p>避免数据竞争,用lock_guard解决抛出异常的问题;lock_guard<mutex>保证线程独占资源而安全</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;thread&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;mutex&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;fstream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="comment">// lock_guard构建f单例，保证独占fout资源，从而保证线程安全</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">LofFile</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">    <span class="keyword">public</span>:</span><br><span class="line">    <span class="built_in">LofFile</span>()&#123;</span><br><span class="line">        f.<span class="built_in">open</span>(<span class="string">&quot;log.txt&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">shared_print</span><span class="params">(string id, <span class="keyword">int</span> value)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="function">lock_guard&lt;mutex&gt; <span class="title">locker</span><span class="params">(m_mutex)</span></span>;</span><br><span class="line">        f&lt;&lt; <span class="string">&quot;From&quot;</span> &lt;&lt; id &lt;&lt;<span class="string">&quot;: &quot;</span> &lt;&lt; value &lt;&lt; endl;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span>:</span><br><span class="line">        mutex m_mutex;</span><br><span class="line">        ofstream f;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="comment">/*  cout资源为全局所有，即使加入互斥对象依然不能完全保护</span></span><br><span class="line"><span class="comment">mutex mu;</span></span><br><span class="line"><span class="comment">void shared_print(string msg, int id)</span></span><br><span class="line"><span class="comment">&#123;</span></span><br><span class="line"><span class="comment">    lock_guard&lt;mutex&gt; guard(mu);</span></span><br><span class="line"><span class="comment">    // mu.lock();</span></span><br><span class="line"><span class="comment">    cout &lt;&lt; msg &lt;&lt; id &lt;&lt; endl;</span></span><br><span class="line"><span class="comment">    // mu.unlock();</span></span><br><span class="line"><span class="comment">&#125;</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">function_1</span><span class="params">(LofFile&amp; log)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>; i&gt;<span class="number">-100</span>; i--)</span><br><span class="line">        log.<span class="built_in">shared_print</span>(<span class="string">&quot;From t1:&quot;</span>,i);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    LofFile log;</span><br><span class="line">    <span class="function">thread <span class="title">t1</span><span class="params">(function_1, ref(log))</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>; i&lt; <span class="number">100</span>; i++)</span><br><span class="line">        log.<span class="built_in">shared_print</span>(<span class="string">&quot;from main: &quot;</span>, i);</span><br><span class="line"></span><br><span class="line">    t1.<span class="built_in">join</span>();</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+<h3 id="死锁"><a href="#死锁" class="headerlink" title="死锁"></a>死锁</h3><p>避免死锁：</p>
+<ul>
+<li>评估线程是否需要两个或以上的互斥对象</li>
+<li>避免在锁住资源的同时去调用一些不熟悉的函数</li>
+<li>使用lock函数帮助mutex顺序一致</li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;thread&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;mutex&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;fstream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 循环依赖产生的死锁</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">LofFile</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="built_in">LofFile</span>() &#123;&#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">shared_print</span><span class="params">(string id, <span class="keyword">int</span> value)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="built_in">lock</span>(m_mutex, m_mutex2);  </span><br><span class="line">        <span class="function">lock_guard&lt;mutex&gt; <span class="title">locker</span><span class="params">(m_mutex, adopt_lock)</span></span>;</span><br><span class="line">        <span class="function">lock_guard&lt;mutex&gt; <span class="title">locker2</span><span class="params">(m_mutex2, adopt_lock)</span></span>;</span><br><span class="line">        cout &lt;&lt; <span class="string">&quot;From&quot;</span> &lt;&lt; id &lt;&lt; <span class="string">&quot;: &quot;</span> &lt;&lt; value &lt;&lt; endl;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">shared_print2</span><span class="params">(string id, <span class="keyword">int</span> value)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="built_in">lock</span>(m_mutex, m_mutex2); <span class="comment">// 用lock确保互斥顺序一致</span></span><br><span class="line"></span><br><span class="line">        <span class="function">lock_guard&lt;mutex&gt; <span class="title">locker2</span><span class="params">(m_mutex2, adopt_lock)</span></span>; <span class="comment">// 若调换，则可避免</span></span><br><span class="line">        <span class="function">lock_guard&lt;mutex&gt; <span class="title">locker</span><span class="params">(m_mutex, adopt_lock)</span></span>;</span><br><span class="line">        cout &lt;&lt; <span class="string">&quot;From&quot;</span> &lt;&lt; id &lt;&lt; <span class="string">&quot;: &quot;</span> &lt;&lt; value &lt;&lt; endl;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    mutex m_mutex;</span><br><span class="line">    mutex m_mutex2;</span><br><span class="line">    ofstream f; <span class="comment">// 被m_mutex保护的对象</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">function_1</span><span class="params">(LofFile &amp;log)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &gt; <span class="number">-100</span>; i--)</span><br><span class="line">        log.<span class="built_in">shared_print</span>(<span class="string">&quot;From t1:&quot;</span>, i);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    LofFile log;</span><br><span class="line">    <span class="function">thread <span class="title">t1</span><span class="params">(function_1, ref(log))</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">100</span>; i++)</span><br><span class="line">        log.<span class="built_in">shared_print2</span>(<span class="string">&quot;from main: &quot;</span>, i);</span><br><span class="line"></span><br><span class="line">    t1.<span class="built_in">join</span>();</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="Unique-Lock和lazy-Initialization"><a href="#Unique-Lock和lazy-Initialization" class="headerlink" title="Unique Lock和lazy Initialization"></a>Unique Lock和lazy Initialization</h3><p>加锁的方式：</p>
+<ol>
+<li>lock_guard<mutex></li>
+<li>mutex.lock</li>
+<li>unique_lock(推荐，但占用更多系统资源)</li>
+</ol>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;thread&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;mutex&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;fstream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 所占用的资源</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">LofFile</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">    <span class="keyword">public</span>:</span><br><span class="line">    <span class="built_in">LofFile</span>()&#123;</span><br><span class="line">        f.<span class="built_in">open</span>(<span class="string">&quot;log.txt&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">shared_print</span><span class="params">(string id, <span class="keyword">int</span> value)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="comment">// lock_guard&lt;mutex&gt; locker(m_mutex);  </span></span><br><span class="line">        <span class="function">unique_lock&lt;mutex&gt; <span class="title">locker</span><span class="params">(m_mutex, defer_lock)</span></span>; <span class="comment">// unique_lock占用更多系统资源</span></span><br><span class="line">        <span class="comment">// do_sth()  unlock</span></span><br><span class="line">        <span class="comment">// ...        </span></span><br><span class="line"></span><br><span class="line">        locker.<span class="built_in">lock</span>();</span><br><span class="line">        f &lt;&lt; id &lt;&lt;<span class="string">&quot;: &quot;</span> &lt;&lt; value &lt;&lt; endl;</span><br><span class="line">        locker.<span class="built_in">unlock</span>();</span><br><span class="line">        <span class="comment">// ...</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        locker.<span class="built_in">lock</span>(); <span class="comment">// another unique_lock</span></span><br><span class="line"></span><br><span class="line">        unique_lock&lt;mutex&gt; locker2 = <span class="built_in">move</span>(locker);</span><br><span class="line">    </span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span>:</span><br><span class="line">        mutex m_mutex;</span><br><span class="line">        ofstream f;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">function_1</span><span class="params">(LofFile&amp; log)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>; i&gt;<span class="number">-100</span>; i--)</span><br><span class="line">        log.<span class="built_in">shared_print</span>(<span class="string">&quot;From t1:&quot;</span>,i);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    LofFile log;</span><br><span class="line">    <span class="function">thread <span class="title">t1</span><span class="params">(function_1, ref(log))</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>; i&lt; <span class="number">100</span>; i++)</span><br><span class="line">        log.<span class="built_in">shared_print</span>(<span class="string">&quot;From main: &quot;</span>, i);</span><br><span class="line"></span><br><span class="line">    t1.<span class="built_in">join</span>();</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="生产者和消费者问题"><a href="#生产者和消费者问题" class="headerlink" title="生产者和消费者问题"></a>生产者和消费者问题</h3><p>结合unique_lock和lambda，让线程之间高效相互响应执行</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;functional&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;fstream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;mutex&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;thread&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;deque&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;condition_variable&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line">deque&lt;<span class="keyword">int</span>&gt; q;</span><br><span class="line">mutex mu;</span><br><span class="line">condition_variable cond;  <span class="comment">// 条件变量</span></span><br><span class="line"><span class="comment">// 生产者</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">function_1</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> count = <span class="number">10</span>;</span><br><span class="line">    <span class="keyword">while</span>(count &gt; <span class="number">0</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="function">unique_lock&lt;mutex&gt; <span class="title">locker</span><span class="params">(mu)</span></span>;</span><br><span class="line">        q.<span class="built_in">push_front</span>(count);</span><br><span class="line">        locker.<span class="built_in">unlock</span>();</span><br><span class="line">        cond.<span class="built_in">notify_one</span>();</span><br><span class="line">        this_thread::<span class="built_in">sleep_for</span>(chrono::<span class="built_in">seconds</span>(<span class="number">1</span>));</span><br><span class="line">        count--;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 消费者：条件变量</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">function_2</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> data = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">while</span>(data!=<span class="number">1</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="function">unique_lock&lt;mutex&gt; <span class="title">locker</span><span class="params">(mu)</span></span>;</span><br><span class="line">        cond.<span class="built_in">wait</span>(locker, []()&#123; <span class="keyword">return</span> !q.<span class="built_in">empty</span>(); &#125;); <span class="comment">// 只能搭配unique_lock使用，用Lambda函数避免自解锁</span></span><br><span class="line">        data = q.<span class="built_in">back</span>();</span><br><span class="line">        q.<span class="built_in">pop_back</span>();</span><br><span class="line">        locker.<span class="built_in">unlock</span>();</span><br><span class="line">        cout &lt;&lt;<span class="string">&quot;t2 got a value from t1: &quot;</span> &lt;&lt; data&lt;&lt;endl;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* 不优雅</span></span><br><span class="line"><span class="comment">void function_2()</span></span><br><span class="line"><span class="comment">&#123;</span></span><br><span class="line"><span class="comment">    int data = 0;</span></span><br><span class="line"><span class="comment">    while(data!=1)</span></span><br><span class="line"><span class="comment">    &#123;</span></span><br><span class="line"><span class="comment">        unique_lock&lt;mutex&gt; locker(mu);</span></span><br><span class="line"><span class="comment">        if(!q.empty())</span></span><br><span class="line"><span class="comment">        &#123;</span></span><br><span class="line"><span class="comment">            data = q.back();</span></span><br><span class="line"><span class="comment">            q.pop_back();</span></span><br><span class="line"><span class="comment">            locker.unlock();</span></span><br><span class="line"><span class="comment">            cout &lt;&lt;&quot;t2 got a value from t1: &quot; &lt;&lt; data&lt;&lt;endl;</span></span><br><span class="line"><span class="comment">        &#125;</span></span><br><span class="line"><span class="comment">        else &#123;</span></span><br><span class="line"><span class="comment">            locker.unlock();</span></span><br><span class="line"><span class="comment">            // this_thread::sleep_for(chrono::milliseconds(10));  若无数据，一直解锁locker;此时加入sleep缓解不停释放的行为</span></span><br><span class="line"><span class="comment">        &#125;</span></span><br><span class="line"><span class="comment">    &#125;</span></span><br><span class="line"><span class="comment">&#125;</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="function">thread <span class="title">t1</span><span class="params">(function_1)</span></span>;</span><br><span class="line">    <span class="function">thread <span class="title">t2</span><span class="params">(function_2)</span></span>;</span><br><span class="line">    t1.<span class="built_in">join</span>();</span><br><span class="line">    t2.<span class="built_in">join</span>();</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>c++</category>
+      </categories>
+      <tags>
+        <tag>C++ 多线程 并发</tag>
       </tags>
   </entry>
   <entry>
@@ -514,105 +625,6 @@
       </tags>
   </entry>
   <entry>
-    <title>异常处理</title>
-    <url>/2021/12/23/cpp/%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86/</url>
-    <content><![CDATA[<h3 id="处理可能出现异常的方法"><a href="#处理可能出现异常的方法" class="headerlink" title="处理可能出现异常的方法"></a>处理可能出现异常的方法</h3><ul>
-<li>调用abort()或exit()结束程序</li>
-<li>返回错误码</li>
-<li>异常机制：1.使用try块执行可能出现异常的代码段 2.throw引发异常 3.catch捕获并处理对应情况</li>
-</ul>
-<h3 id="throw机制"><a href="#throw机制" class="headerlink" title="throw机制"></a>throw机制</h3><p>若throw引发异常后，匹配对应catch。而后不是将控制权返回调用程序，而是引导程序沿着函数调用序列后退，直到找到try块中的函数<br>若没有throw出异常，则catch被跳过.<br>一般而言后退多步，再在main()中寻找与引发异常<strong>类型匹配</strong>的处理程序作处理。</p>
-<h3 id="通常用对象作为异常类型处理"><a href="#通常用对象作为异常类型处理" class="headerlink" title="通常用对象作为异常类型处理"></a>通常用对象作为异常类型处理</h3><p>好处是：直接根据类型区分异常，另外对象可以携带信息确定原因，catch根据信息来执行对应的操作</p>
-<h3 id="堆栈解退（unwinding-the-stack）"><a href="#堆栈解退（unwinding-the-stack）" class="headerlink" title="堆栈解退（unwinding the stack）"></a>堆栈解退（unwinding the stack）</h3><p>假设函数出现异常，而不是正确返回而终止。程序释放堆栈中的内存，但不会在释放堆栈的第一个返回地址后停止，而是继续释放堆栈，直到找到位于try块的返回地质。程序进行堆栈解退以回到能够捕获异常的地方时，将释放堆栈中的自动存储型变量。</p>
-<p><img src="/images/12_23_1.png"></p>
-<h3 id="文件IO"><a href="#文件IO" class="headerlink" title="文件IO"></a>文件IO</h3><figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;fstream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    ifstream inFile;</span><br><span class="line">    inFile.<span class="built_in">open</span>(<span class="string">&quot;file.txt&quot;</span>);</span><br><span class="line">    <span class="keyword">if</span>(!inFile.<span class="built_in">is_open</span>())</span><br><span class="line">    &#123;</span><br><span class="line">        cerr &lt;&lt;<span class="string">&quot;Failed open file.txt\n&quot;</span>;</span><br><span class="line">        <span class="built_in">exit</span>(<span class="number">0</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">char</span> ch;</span><br><span class="line">    <span class="keyword">int</span> cnt=<span class="number">0</span>;</span><br><span class="line">    <span class="keyword">while</span>(inFile&gt;&gt;ch)</span><br><span class="line">    &#123;</span><br><span class="line">        cnt++;</span><br><span class="line">    &#125;</span><br><span class="line">    cout &lt;&lt; cnt &lt;&lt;endl;</span><br><span class="line">    inFile.<span class="built_in">close</span>();</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<p>下面程序为harmony mean的除0错误，抛出const char *类型，匹配输出错误信息的代码。一般抛出错误类型通常为类。</p>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;cstdlib&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">double</span> <span class="title">hmean</span><span class="params">(<span class="keyword">double</span> a, <span class="keyword">double</span> b)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (a == -b)</span><br><span class="line">        <span class="keyword">throw</span> <span class="string">&quot;bad hmean() arguments: a = -b not allowed&quot;</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">2.0</span> * a * b / (a + b);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">double</span> x, y, z;</span><br><span class="line">    cout &lt;&lt; <span class="string">&quot;Enter two numbers:&quot;</span>;</span><br><span class="line">    <span class="keyword">while</span> (cin &gt;&gt; x &gt;&gt; y)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">try</span></span><br><span class="line">        &#123;</span><br><span class="line">            z = <span class="built_in">hmean</span>(x, y);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="built_in"><span class="keyword">catch</span></span>(<span class="keyword">const</span> <span class="keyword">char</span> * s)</span><br><span class="line">        &#123;</span><br><span class="line">            cout &lt;&lt; s &lt;&lt; endl;</span><br><span class="line">            cout &lt;&lt;<span class="string">&quot;Enter a new pair of numbers: &quot;</span>;</span><br><span class="line">            <span class="keyword">continue</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        cout &lt;&lt; <span class="string">&quot;Harmonic mean of &quot;</span> &lt;&lt; x &lt;&lt; <span class="string">&quot; and &quot;</span> &lt;&lt; y &lt;&lt; <span class="string">&quot;. is &quot;</span> &lt;&lt; z &lt;&lt; endl;</span><br><span class="line">        cout &lt;&lt; <span class="string">&quot;Enter next set of numbers &lt;q to quit&gt;:&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    cout &lt;&lt; <span class="string">&quot;Bye!&quot;</span> &lt;&lt; endl;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<h3 id="throw-catch机制和函数参数以及函数返回机制的区别"><a href="#throw-catch机制和函数参数以及函数返回机制的区别" class="headerlink" title="throw-catch机制和函数参数以及函数返回机制的区别"></a>throw-catch机制和函数参数以及函数返回机制的区别</h3><p>1.函数控制权返回到调用函数的函数，throw语句控制权向上返回到第一个包含能够捕获相应异常的try-catch组合<br>2.引发异常时，编译器总是创建一个临时拷贝，彻底避免了函数机制指向不存在的临时变量的问题。<br>3.经常可见catch(problem &amp; p)，使用了引用，主要是针对通过继承关联起来的异常类型；此时使用基类引用即可执行派生类对象。此时层次结构最下面的异常类的catch语句应当放在最前面。</p>
-<p>catch (…)表示捕获任何异常</p>
-<h3 id="异常处理的注意事项"><a href="#异常处理的注意事项" class="headerlink" title="异常处理的注意事项"></a>异常处理的注意事项</h3><p>1.使用异常，应在设计程序时就加入，而不是以后才添加。<br>2.使用异常会增加程序代码，降低程序运行速度。<br>3.异常规范不适用于模板，异常和动态内存分配不能总是协同工作<br>因此，虽然异常处理对于某些项目极为重要，但也会增加编程的工作量、增大程序以及降低程序的速度。另外编译器对异常的支持以及用户的经验还没有达到成熟的程度，应有节制地使用这一特性。</p>
-<p>如无堆栈解退，则会出现内存泄漏，如下</p>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">test</span><span class="params">(<span class="keyword">int</span> n)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">double</span> * ar = <span class="keyword">new</span> <span class="keyword">double</span>[n];</span><br><span class="line">    <span class="keyword">if</span>(oh_no)</span><br><span class="line">        <span class="keyword">throw</span> <span class="built_in">exception</span>();</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">delete</span> [] ar;</span><br><span class="line">    <span class="keyword">return</span> ;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>throw了，则delete[]被忽略，ar指针消失了，内存块未释放且不可访问。</p>
-<h3 id="RTTI（RunTime-Type-Identification"><a href="#RTTI（RunTime-Type-Identification" class="headerlink" title="RTTI（RunTime Type Identification)"></a>RTTI（RunTime Type Identification)</h3><p>三个支持RTTI的元素：</p>
-<ul>
-<li>dynamic_cast操作符将基类指针生成派生指针：回答是否可以安全将对象的地址赋给特定类型的指针？如可，返回对象地址；否则，返回空指针。这对比“指向哪个类型的对象”，这更通用且有用。</li>
-<li>typeid操作符返回对象的类型</li>
-<li>type_info存储特定类型的信息<br>注意：RTTI只适用于包含虚函数的类</li>
-</ul>
-<p>与通用转换机制相比，dynamic_cast、static_cast、const_cast、reinterpret_cast提供了更安全和明确的类型转换。</p>
-]]></content>
-      <categories>
-        <category>c++</category>
-      </categories>
-      <tags>
-        <tag>c++</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>逻辑控制</title>
-    <url>/2021/12/16/cpp/%E9%80%BB%E8%BE%91%E6%8E%A7%E5%88%B6/</url>
-    <content><![CDATA[<h3 id="do…while…-至少会执行一次的循环逻辑"><a href="#do…while…-至少会执行一次的循环逻辑" class="headerlink" title="do…while… 至少会执行一次的循环逻辑"></a>do…while… 至少会执行一次的循环逻辑</h3><p>哨兵(sentinel)字符: 一直读取，直到’他‘为止</p>
-<h3 id="检查文件是否正确打开很关键"><a href="#检查文件是否正确打开很关键" class="headerlink" title="检查文件是否正确打开很关键"></a>检查文件是否正确打开很关键</h3><p>用string读ifstream数据</p>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;fstream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string&gt;</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line">    ifstream inFile;</span><br><span class="line">    inFile.<span class="built_in">open</span>(filename);</span><br><span class="line">    <span class="keyword">if</span>(!inFile.<span class="built_in">is_open</span>())</span><br><span class="line">    &#123;</span><br><span class="line">        cout &lt;&lt;<span class="string">&quot;Failed Open&quot;</span>;</span><br><span class="line">        <span class="built_in">exit</span>(EXIT_FAILURE);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 逐行读放在string</span></span><br><span class="line">    string str;</span><br><span class="line">    <span class="built_in">getline</span>(inFile, str);</span><br><span class="line">    <span class="comment">//stoi, stof, stod </span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-<h3 id="关于函数，真正的乐趣在于编写自己的函数，函数库"><a href="#关于函数，真正的乐趣在于编写自己的函数，函数库" class="headerlink" title="关于函数，真正的乐趣在于编写自己的函数，函数库"></a>关于函数，真正的乐趣在于编写自己的函数，函数库</h3><h3 id="指向const的指针以及const指针"><a href="#指向const的指针以及const指针" class="headerlink" title="指向const的指针以及const指针"></a>指向const的指针以及const指针</h3><p><img src="/images/12_17_1.png"></p>
-<h3 id="递归使用"><a href="#递归使用" class="headerlink" title="递归使用"></a>递归使用</h3><figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">recurs</span><span class="params">(arg)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="function">stat1</span></span><br><span class="line"><span class="function">    <span class="title">if</span><span class="params">(test)</span></span></span><br><span class="line"><span class="function">        <span class="title">recurs</span><span class="params">(arg)</span></span></span><br><span class="line"><span class="function">    stat2</span></span><br><span class="line"><span class="function">&#125;</span></span><br></pre></td></tr></table></figure>
-<p>先执行stat1,打开满足条件，打开新的递归；直到新的递归不满足条件，逐步执行stat2并关闭当前函数；直到所有打开的函数都关闭了。</p>
-<h3 id="函数指针"><a href="#函数指针" class="headerlink" title="函数指针"></a>函数指针</h3><p>用函数指针将第一函数找到第二函数，而非直接调用；虽然笨拙，但好处是可以在不同时间传递不同的函数地址；<br>语法：double (*pf)(int);</p>
-<h3 id="应尽量使用const"><a href="#应尽量使用const" class="headerlink" title="应尽量使用const"></a>应尽量使用const</h3><p>1.使用const可以避免无意中修改数据的失误<br>2.使用const使函数能够处理const和非const实参，否则将不能处理const实参<br>3.使用const引用使函数能够正确生成并使用临时变量</p>
-<h3 id="引用非常适合用于结构和类"><a href="#引用非常适合用于结构和类" class="headerlink" title="引用非常适合用于结构和类"></a>引用非常适合用于<strong>结构和类</strong></h3><p>何时使用引用参数：1.能够修改调用函数中的数据对象 2.通过传递引用而非拷贝提高程序运行速度</p>
-<h3 id="语法糖：函数默认参数从右往左"><a href="#语法糖：函数默认参数从右往左" class="headerlink" title="语法糖：函数默认参数从右往左"></a>语法糖：函数默认参数从右往左</h3><h3 id="函数多态：重载函数"><a href="#函数多态：重载函数" class="headerlink" title="函数多态：重载函数"></a>函数多态：重载函数</h3><p>不应滥用，适用于不同参数类型输入，完成基本一致功能的多个函数使用，const与非const也不一样</p>
-<h3 id="函数多态：模板编程"><a href="#函数多态：模板编程" class="headerlink" title="函数多态：模板编程"></a>函数多态：模板编程</h3><figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;  <span class="comment">// typename -&gt; class is ok</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Swap</span><span class="params">(T &amp;a, T &amp;b)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    T temp;</span><br><span class="line">    temp = a;</span><br><span class="line">    a = b;</span><br><span class="line">    b = temp;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<p>编译器如何匹配最佳函数是一个复杂而完备的过程，大致规则如下：<br>1.完全匹配，但常规函数优于模板<br>2.提升转换（char/shorts提升至int, float提升至double)<br>3.标准转换（int 转换char, long 转换double)<br>4.用户定义的转换，如类声明</p>
-]]></content>
-      <categories>
-        <category>c++</category>
-      </categories>
-      <tags>
-        <tag>c++ primer</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>腾讯课堂-C++11多线程</title>
-    <url>/2021/12/28/cpp/%E8%85%BE%E8%AE%AF%E8%AF%BE%E5%A0%82-C-11%E5%A4%9A%E7%BA%BF%E7%A8%8B/</url>
-    <content><![CDATA[<h3 id="线程管理"><a href="#线程管理" class="headerlink" title="线程管理"></a>线程管理</h3><p>多线程的执行函数尽量用传引用，以减少不必要资源开销；根据hardware_concurrency得到核心数来决定开多线程的数量；</p>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;thread&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;unistd.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 传入操作类，重载运算符()</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Fctor</span>&#123;</span></span><br><span class="line">  <span class="keyword">public</span>:    <span class="comment">// 参数使用引用减少多线程资源拷贝</span></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">operator</span><span class="params">()</span><span class="params">(string&amp; msg)</span>     <span class="comment">// opt: string msg</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">      cout &lt;&lt;<span class="string">&quot;from f1:&quot;</span> &lt;&lt; msg&lt;&lt;endl;</span><br><span class="line">      msg = <span class="string">&quot;changed&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  string s = <span class="string">&quot;not changed&quot;</span>;</span><br><span class="line">  cout &lt;&lt; this_thread::<span class="built_in">get_id</span>()&lt;&lt;endl;</span><br><span class="line">  <span class="function">thread <span class="title">t1</span><span class="params">((Fctor()), ref(s))</span></span>;    <span class="comment">// move(s),此时最后输出的s为空。</span></span><br><span class="line">  t1.<span class="built_in">join</span>();</span><br><span class="line"></span><br><span class="line">  cout &lt;&lt; s &lt;&lt; endl;</span><br><span class="line">  cout &lt;&lt; thread::<span class="built_in">hardware_concurrency</span>() &lt;&lt; endl; <span class="comment">//当前设备核心数</span></span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// output</span></span><br><span class="line"><span class="comment">// thread_id</span></span><br><span class="line"><span class="comment">// from f1:not changed</span></span><br><span class="line"><span class="comment">// not changed</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<h3 id="数据竞争及互斥对象"><a href="#数据竞争及互斥对象" class="headerlink" title="数据竞争及互斥对象"></a>数据竞争及互斥对象</h3><p>避免数据竞争,用lock_guard解决抛出异常的问题;lock_guard<mutex>保证线程独占资源而安全</p>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;thread&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;mutex&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;fstream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="comment">// lock_guard构建f单例，保证独占fout资源，从而保证线程安全</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">LofFile</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">    <span class="keyword">public</span>:</span><br><span class="line">    <span class="built_in">LofFile</span>()&#123;</span><br><span class="line">        f.<span class="built_in">open</span>(<span class="string">&quot;log.txt&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">shared_print</span><span class="params">(string id, <span class="keyword">int</span> value)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="function">lock_guard&lt;mutex&gt; <span class="title">locker</span><span class="params">(m_mutex)</span></span>;</span><br><span class="line">        f&lt;&lt; <span class="string">&quot;From&quot;</span> &lt;&lt; id &lt;&lt;<span class="string">&quot;: &quot;</span> &lt;&lt; value &lt;&lt; endl;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span>:</span><br><span class="line">        mutex m_mutex;</span><br><span class="line">        ofstream f;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="comment">/*  cout资源为全局所有，即使加入互斥对象依然不能完全保护</span></span><br><span class="line"><span class="comment">mutex mu;</span></span><br><span class="line"><span class="comment">void shared_print(string msg, int id)</span></span><br><span class="line"><span class="comment">&#123;</span></span><br><span class="line"><span class="comment">    lock_guard&lt;mutex&gt; guard(mu);</span></span><br><span class="line"><span class="comment">    // mu.lock();</span></span><br><span class="line"><span class="comment">    cout &lt;&lt; msg &lt;&lt; id &lt;&lt; endl;</span></span><br><span class="line"><span class="comment">    // mu.unlock();</span></span><br><span class="line"><span class="comment">&#125;</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">function_1</span><span class="params">(LofFile&amp; log)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>; i&gt;<span class="number">-100</span>; i--)</span><br><span class="line">        log.<span class="built_in">shared_print</span>(<span class="string">&quot;From t1:&quot;</span>,i);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    LofFile log;</span><br><span class="line">    <span class="function">thread <span class="title">t1</span><span class="params">(function_1, ref(log))</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>; i&lt; <span class="number">100</span>; i++)</span><br><span class="line">        log.<span class="built_in">shared_print</span>(<span class="string">&quot;from main: &quot;</span>, i);</span><br><span class="line"></span><br><span class="line">    t1.<span class="built_in">join</span>();</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-
-<h3 id="死锁"><a href="#死锁" class="headerlink" title="死锁"></a>死锁</h3><p>避免死锁：</p>
-<ul>
-<li>评估线程是否需要两个或以上的互斥对象</li>
-<li>避免在锁住资源的同时去调用一些不熟悉的函数</li>
-<li>使用lock函数帮助mutex顺序一致</li>
-</ul>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;thread&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;mutex&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;fstream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 循环依赖产生的死锁</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">LofFile</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="built_in">LofFile</span>() &#123;&#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">shared_print</span><span class="params">(string id, <span class="keyword">int</span> value)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="built_in">lock</span>(m_mutex, m_mutex2);  </span><br><span class="line">        <span class="function">lock_guard&lt;mutex&gt; <span class="title">locker</span><span class="params">(m_mutex, adopt_lock)</span></span>;</span><br><span class="line">        <span class="function">lock_guard&lt;mutex&gt; <span class="title">locker2</span><span class="params">(m_mutex2, adopt_lock)</span></span>;</span><br><span class="line">        cout &lt;&lt; <span class="string">&quot;From&quot;</span> &lt;&lt; id &lt;&lt; <span class="string">&quot;: &quot;</span> &lt;&lt; value &lt;&lt; endl;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">shared_print2</span><span class="params">(string id, <span class="keyword">int</span> value)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="built_in">lock</span>(m_mutex, m_mutex2); <span class="comment">// 用lock确保互斥顺序一致</span></span><br><span class="line"></span><br><span class="line">        <span class="function">lock_guard&lt;mutex&gt; <span class="title">locker2</span><span class="params">(m_mutex2, adopt_lock)</span></span>; <span class="comment">// 若调换，则可避免</span></span><br><span class="line">        <span class="function">lock_guard&lt;mutex&gt; <span class="title">locker</span><span class="params">(m_mutex, adopt_lock)</span></span>;</span><br><span class="line">        cout &lt;&lt; <span class="string">&quot;From&quot;</span> &lt;&lt; id &lt;&lt; <span class="string">&quot;: &quot;</span> &lt;&lt; value &lt;&lt; endl;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    mutex m_mutex;</span><br><span class="line">    mutex m_mutex2;</span><br><span class="line">    ofstream f; <span class="comment">// 被m_mutex保护的对象</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">function_1</span><span class="params">(LofFile &amp;log)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &gt; <span class="number">-100</span>; i--)</span><br><span class="line">        log.<span class="built_in">shared_print</span>(<span class="string">&quot;From t1:&quot;</span>, i);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    LofFile log;</span><br><span class="line">    <span class="function">thread <span class="title">t1</span><span class="params">(function_1, ref(log))</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">100</span>; i++)</span><br><span class="line">        log.<span class="built_in">shared_print2</span>(<span class="string">&quot;from main: &quot;</span>, i);</span><br><span class="line"></span><br><span class="line">    t1.<span class="built_in">join</span>();</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<h3 id="Unique-Lock和lazy-Initialization"><a href="#Unique-Lock和lazy-Initialization" class="headerlink" title="Unique Lock和lazy Initialization"></a>Unique Lock和lazy Initialization</h3><p>加锁的方式：</p>
-<ol>
-<li>lock_guard<mutex></li>
-<li>mutex.lock</li>
-<li>unique_lock(推荐，但占用更多系统资源)</li>
-</ol>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;thread&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;mutex&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;fstream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 所占用的资源</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">LofFile</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">    <span class="keyword">public</span>:</span><br><span class="line">    <span class="built_in">LofFile</span>()&#123;</span><br><span class="line">        f.<span class="built_in">open</span>(<span class="string">&quot;log.txt&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">shared_print</span><span class="params">(string id, <span class="keyword">int</span> value)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="comment">// lock_guard&lt;mutex&gt; locker(m_mutex);  </span></span><br><span class="line">        <span class="function">unique_lock&lt;mutex&gt; <span class="title">locker</span><span class="params">(m_mutex, defer_lock)</span></span>; <span class="comment">// unique_lock占用更多系统资源</span></span><br><span class="line">        <span class="comment">// do_sth()  unlock</span></span><br><span class="line">        <span class="comment">// ...        </span></span><br><span class="line"></span><br><span class="line">        locker.<span class="built_in">lock</span>();</span><br><span class="line">        f &lt;&lt; id &lt;&lt;<span class="string">&quot;: &quot;</span> &lt;&lt; value &lt;&lt; endl;</span><br><span class="line">        locker.<span class="built_in">unlock</span>();</span><br><span class="line">        <span class="comment">// ...</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        locker.<span class="built_in">lock</span>(); <span class="comment">// another unique_lock</span></span><br><span class="line"></span><br><span class="line">        unique_lock&lt;mutex&gt; locker2 = <span class="built_in">move</span>(locker);</span><br><span class="line">    </span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span>:</span><br><span class="line">        mutex m_mutex;</span><br><span class="line">        ofstream f;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">function_1</span><span class="params">(LofFile&amp; log)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>; i&gt;<span class="number">-100</span>; i--)</span><br><span class="line">        log.<span class="built_in">shared_print</span>(<span class="string">&quot;From t1:&quot;</span>,i);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    LofFile log;</span><br><span class="line">    <span class="function">thread <span class="title">t1</span><span class="params">(function_1, ref(log))</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>; i&lt; <span class="number">100</span>; i++)</span><br><span class="line">        log.<span class="built_in">shared_print</span>(<span class="string">&quot;From main: &quot;</span>, i);</span><br><span class="line"></span><br><span class="line">    t1.<span class="built_in">join</span>();</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<h3 id="生产者和消费者问题"><a href="#生产者和消费者问题" class="headerlink" title="生产者和消费者问题"></a>生产者和消费者问题</h3><p>结合unique_lock和lambda，让线程之间高效相互响应执行</p>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;functional&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;fstream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;mutex&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;thread&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;deque&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;condition_variable&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line">deque&lt;<span class="keyword">int</span>&gt; q;</span><br><span class="line">mutex mu;</span><br><span class="line">condition_variable cond;  <span class="comment">// 条件变量</span></span><br><span class="line"><span class="comment">// 生产者</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">function_1</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> count = <span class="number">10</span>;</span><br><span class="line">    <span class="keyword">while</span>(count &gt; <span class="number">0</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="function">unique_lock&lt;mutex&gt; <span class="title">locker</span><span class="params">(mu)</span></span>;</span><br><span class="line">        q.<span class="built_in">push_front</span>(count);</span><br><span class="line">        locker.<span class="built_in">unlock</span>();</span><br><span class="line">        cond.<span class="built_in">notify_one</span>();</span><br><span class="line">        this_thread::<span class="built_in">sleep_for</span>(chrono::<span class="built_in">seconds</span>(<span class="number">1</span>));</span><br><span class="line">        count--;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 消费者：条件变量</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">function_2</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> data = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">while</span>(data!=<span class="number">1</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="function">unique_lock&lt;mutex&gt; <span class="title">locker</span><span class="params">(mu)</span></span>;</span><br><span class="line">        cond.<span class="built_in">wait</span>(locker, []()&#123; <span class="keyword">return</span> !q.<span class="built_in">empty</span>(); &#125;); <span class="comment">// 只能搭配unique_lock使用，用Lambda函数避免自解锁</span></span><br><span class="line">        data = q.<span class="built_in">back</span>();</span><br><span class="line">        q.<span class="built_in">pop_back</span>();</span><br><span class="line">        locker.<span class="built_in">unlock</span>();</span><br><span class="line">        cout &lt;&lt;<span class="string">&quot;t2 got a value from t1: &quot;</span> &lt;&lt; data&lt;&lt;endl;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* 不优雅</span></span><br><span class="line"><span class="comment">void function_2()</span></span><br><span class="line"><span class="comment">&#123;</span></span><br><span class="line"><span class="comment">    int data = 0;</span></span><br><span class="line"><span class="comment">    while(data!=1)</span></span><br><span class="line"><span class="comment">    &#123;</span></span><br><span class="line"><span class="comment">        unique_lock&lt;mutex&gt; locker(mu);</span></span><br><span class="line"><span class="comment">        if(!q.empty())</span></span><br><span class="line"><span class="comment">        &#123;</span></span><br><span class="line"><span class="comment">            data = q.back();</span></span><br><span class="line"><span class="comment">            q.pop_back();</span></span><br><span class="line"><span class="comment">            locker.unlock();</span></span><br><span class="line"><span class="comment">            cout &lt;&lt;&quot;t2 got a value from t1: &quot; &lt;&lt; data&lt;&lt;endl;</span></span><br><span class="line"><span class="comment">        &#125;</span></span><br><span class="line"><span class="comment">        else &#123;</span></span><br><span class="line"><span class="comment">            locker.unlock();</span></span><br><span class="line"><span class="comment">            // this_thread::sleep_for(chrono::milliseconds(10));  若无数据，一直解锁locker;此时加入sleep缓解不停释放的行为</span></span><br><span class="line"><span class="comment">        &#125;</span></span><br><span class="line"><span class="comment">    &#125;</span></span><br><span class="line"><span class="comment">&#125;</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="function">thread <span class="title">t1</span><span class="params">(function_1)</span></span>;</span><br><span class="line">    <span class="function">thread <span class="title">t2</span><span class="params">(function_2)</span></span>;</span><br><span class="line">    t1.<span class="built_in">join</span>();</span><br><span class="line">    t2.<span class="built_in">join</span>();</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-]]></content>
-      <categories>
-        <category>c++</category>
-      </categories>
-      <tags>
-        <tag>C++ 多线程 并发</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>EIGEN_1 HELLO_WOLRD</title>
     <url>/2022/01/20/eigen/eigen-1/</url>
     <content><![CDATA[<h3 id="EIGEN简介"><a href="#EIGEN简介" class="headerlink" title="EIGEN简介"></a>EIGEN简介</h3><p>FROM WIKI: Eigen is a high-level C++ library of template headers for linear algebra, matrix and vector operations, geometrical transformations, numerical solvers and related algorithms.<br>简而言之C++开源模板库，支持线性代数、矩阵矢量运算和数值分析，是个方便好用的数学库。</p>
@@ -655,27 +667,21 @@
       </tags>
   </entry>
   <entry>
-    <title>墙面分割</title>
-    <url>/2022/01/14/pcl/%E5%A2%99%E9%9D%A2%E5%88%86%E5%89%B2/</url>
-    <content><![CDATA[<h3 id="区域生长分割region-growing-segmentation"><a href="#区域生长分割region-growing-segmentation" class="headerlink" title="区域生长分割region growing segmentation"></a>区域生长分割region growing segmentation</h3><p>算法核心：基于点法线之间角度的比较，尽量将满足平滑约束的相邻点合并在一起，以一簇点集的形式输出，视为相同平面</p>
-<p>工作原理：区域增长从有最小曲率值curvature的点。则需要计算所有曲率值并进行排序；因为曲率最小的点位于平坦区域，从平坦区域增长可以减少区域的总数。（曲率与法线的求解方法类似,法线描述点在表面的法向，曲率则是法线间协方差矩阵的特征值，描述法向一致性)</p>
-<p>具体过程：</p>
-<ol>
-<li>对未标记点的曲率排序，将最小曲率点放入种子集</li>
-<li>对每个种子的所有邻点计算</li>
-<li>1 每个近邻点与当前点的法线角度差(reg.setSmoothnessThreshold),如果小于阈值则重点考虑，进入2.2判断</li>
-<li>2 该点通过2.1法线角度差检验，如果曲率小于设定的阈值(reg.setCurvatureThreshold)，这个点即被添加到种子点集，属于当前平面</li>
-<li>通过两次检验的点，被从原始点云去除</li>
-<li>设置最小点簇的点数reg.setMinClusterSize,以及最大簇reg.segMaxClusterSize</li>
-<li>重复1-3生成min~max个点数的所有平面，并对不同平面标记颜色区分</li>
-<li>直到算法在剩余点中生成的点簇不能满足min,停止工作</li>
-</ol>
+    <title>皮肤的秘密</title>
+    <url>/2022/01/19/reading/%E7%9A%AE%E8%82%A4%E7%9A%84%E7%A7%98%E5%AF%86/</url>
+    <content><![CDATA[<h3 id="认识皮肤"><a href="#认识皮肤" class="headerlink" title="认识皮肤"></a>认识皮肤</h3><p>皮肤是人体最大的器官，展开达两平方米，是人体之于外界环境的保护膜，同时也是零距离感受外界的第一道关卡，所以每一寸都遍布了神经细胞。</p>
+<p>皮肤主要由三层构成：表皮，真皮以及皮下组合。其中表皮与真皮间的基底膜带决定了皮肤的弹性紧致，而且是在1岁形成不可逆的衰老，无法重生所以只能好好保护延缓其衰老。皮肤细胞从底层出生，衰老于真皮并死亡在表皮并成为保护屏障，正常周期为4周。患有皮肤病的可能会加速该过程至5天，导致表皮的屏障并不完整。</p>
+<h3 id="表皮"><a href="#表皮" class="headerlink" title="表皮"></a>表皮</h3><p>由于皮肤表面存在着大量微生物群，所以保持皮肤的pH值是非常重要的，应当合理维持完好无损的酸性保护膜，人工清洁剂约5.5，另外对于皮下脂肪过厚的皮肤褶皱，唯一有效办法是减肥。可以用抗真菌软膏，另外带锌软膏可缓解皮肤炎症，带走多余水分。</p>
+<p><img src="/images/01_19_1.png"></p>
+<p>生长纹无足轻重，关于肤色，是有黑色素影响的。研究表明，橙色皮肤最具吸引力，可多摄入胡萝卜素B达到。颠痕主要由基底膜带大面积受损，表皮过度损耗引起的。对于渗水伤口可用硅霜或贴上硅凝胶伤口贴。治疗疙瘩需要强效疗法如：激光疗法、热针、冷冻疗法以及X射线放射疗法。</p>
+<h3 id="真皮"><a href="#真皮" class="headerlink" title="真皮"></a>真皮</h3><p>真皮充满紧致的结缔组织，带来稳固性以及拉伸性，任何的日晒、日光浴、烟草、压力、睡眠不足、营养不良以及缺乏运动等会加速弹性纤维的流失。臀部皮肤就是自然老化的参考，面部等受光照影响较大是老化较快的皮肤。另外，皮肤在4度就开始出现冻疮，而冬天皮肤也能适应，所以只在晚上睡前使用保湿即可，白天冬天保湿使皮肤含水量升高，反而容易冻伤。</p>
+<p>真皮层拥有大量神经，使皮肤成为最大的神经器官，抚摸有调节中枢神经和社交等作用。同时含有腺体，会分泌激素气味等。</p>
 ]]></content>
       <categories>
-        <category>pcl</category>
+        <category>读书笔记</category>
       </categories>
       <tags>
-        <tag>pcl</tag>
+        <tag>读书笔记</tag>
       </tags>
   </entry>
   <entry>
@@ -702,26 +708,8 @@
         <category>读书</category>
       </categories>
       <tags>
+        <tag>读书笔记</tag>
         <tag>心得</tag>
-        <tag>读书笔记</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>皮肤的秘密</title>
-    <url>/2022/01/19/reading/%E7%9A%AE%E8%82%A4%E7%9A%84%E7%A7%98%E5%AF%86/</url>
-    <content><![CDATA[<h3 id="认识皮肤"><a href="#认识皮肤" class="headerlink" title="认识皮肤"></a>认识皮肤</h3><p>皮肤是人体最大的器官，展开达两平方米，是人体之于外界环境的保护膜，同时也是零距离感受外界的第一道关卡，所以每一寸都遍布了神经细胞。</p>
-<p>皮肤主要由三层构成：表皮，真皮以及皮下组合。其中表皮与真皮间的基底膜带决定了皮肤的弹性紧致，而且是在1岁形成不可逆的衰老，无法重生所以只能好好保护延缓其衰老。皮肤细胞从底层出生，衰老于真皮并死亡在表皮并成为保护屏障，正常周期为4周。患有皮肤病的可能会加速该过程至5天，导致表皮的屏障并不完整。</p>
-<h3 id="表皮"><a href="#表皮" class="headerlink" title="表皮"></a>表皮</h3><p>由于皮肤表面存在着大量微生物群，所以保持皮肤的pH值是非常重要的，应当合理维持完好无损的酸性保护膜，人工清洁剂约5.5，另外对于皮下脂肪过厚的皮肤褶皱，唯一有效办法是减肥。可以用抗真菌软膏，另外带锌软膏可缓解皮肤炎症，带走多余水分。</p>
-<p><img src="/images/01_19_1.png"></p>
-<p>生长纹无足轻重，关于肤色，是有黑色素影响的。研究表明，橙色皮肤最具吸引力，可多摄入胡萝卜素B达到。颠痕主要由基底膜带大面积受损，表皮过度损耗引起的。对于渗水伤口可用硅霜或贴上硅凝胶伤口贴。治疗疙瘩需要强效疗法如：激光疗法、热针、冷冻疗法以及X射线放射疗法。</p>
-<h3 id="真皮"><a href="#真皮" class="headerlink" title="真皮"></a>真皮</h3><p>真皮充满紧致的结缔组织，带来稳固性以及拉伸性，任何的日晒、日光浴、烟草、压力、睡眠不足、营养不良以及缺乏运动等会加速弹性纤维的流失。臀部皮肤就是自然老化的参考，面部等受光照影响较大是老化较快的皮肤。另外，皮肤在4度就开始出现冻疮，而冬天皮肤也能适应，所以只在晚上睡前使用保湿即可，白天冬天保湿使皮肤含水量升高，反而容易冻伤。</p>
-<p>真皮层拥有大量神经，使皮肤成为最大的神经器官，抚摸有调节中枢神经和社交等作用。同时含有腺体，会分泌激素气味等。</p>
-]]></content>
-      <categories>
-        <category>读书笔记</category>
-      </categories>
-      <tags>
-        <tag>读书笔记</tag>
       </tags>
   </entry>
   <entry>
@@ -751,6 +739,35 @@
       <categories>
         <category>年终总结</category>
       </categories>
+  </entry>
+  <entry>
+    <title>六年前的自己</title>
+    <url>/2021/12/22/rizhi/%E5%85%AD%E5%B9%B4%E5%89%8D%E7%9A%84%E8%87%AA%E5%B7%B1/</url>
+    <content><![CDATA[<p><a href="https://csrjtan.github.io/">https://csrjtan.github.io/</a><br>回看六年前的自己，摘录一些当时有意义的文段</p>
+<h3 id="23岁的生日"><a href="#23岁的生日" class="headerlink" title="23岁的生日"></a>23岁的生日</h3><p>重读六年前的自己，用文字记录对这个世界的感受和认知，那时候的自己充满了希望，虽然能力配不上欲望而渐渐失落，但依然希望找到那种年轻的感觉。</p>
+<h3 id=""><a href="#" class="headerlink" title=""></a></h3><p>当年的愿望：</p>
+<ul>
+<li>工作上：提高编程和学术能力</li>
+<li>生活上：爱家人，爱生活，爱伴侣</li>
+<li>日常上：坚持读，坚持写，坚持学，坚持感受，坚持表达</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">《成长的天空》 </span><br><span class="line">我沉浸在自己的世界里</span><br><span class="line">写着无关是非的歌谣</span><br><span class="line">点蓝的笔触</span><br><span class="line">划过了年轻的天空</span><br><span class="line">一只飞鸟带走我的青春</span><br><span class="line">还我，岁月沉淀的帽子</span><br><span class="line">轻声说道</span><br><span class="line">年轻总不是永远的借口</span><br></pre></td></tr></table></figure>
+
+<h3 id="回看中秋自省的自己"><a href="#回看中秋自省的自己" class="headerlink" title="回看中秋自省的自己"></a>回看中秋自省的自己</h3><p>经过5年起起落落，心态转变得很明显甚至于有点得过且过的样子，现在自己比年轻的自己多了一点能力和资源，却失去了做大梦的勇气和毅力。希望自己能依然不断找到人生的兴奋点，勇往直前地去追寻探索，从今天开始，真正的为自己而活，不在乎别人的眼光，不在乎可能会失去的安逸。</p>
+<h3 id="家人信息简要"><a href="#家人信息简要" class="headerlink" title="家人信息简要"></a>家人信息简要</h3><p>爸：1961.7.8，牛，会计。爱好军事政治经济唱歌。性格硬朗好面子。优点：精神好，能干，勤勉<br>妈：1961.11.12，牛，仓管（退休）。爱好家庭家人养生。优点：节俭，爱戴我们，慈祥<br>哥：1987.8.9，兔，前端全栈，爱好广泛潮流酷玩。优点：工程能力强，迁就随和<br>为：1992.08.13，猴，算法攻城狮。爱好：声乐，运动，游戏。优点：耐受力，随和</p>
+<h3 id="选书策略"><a href="#选书策略" class="headerlink" title="选书策略"></a>选书策略</h3><p>出版社-&gt;作者-&gt;版次-&gt;印次-&gt;印数</p>
+<h3 id="追逐幸福的要素"><a href="#追逐幸福的要素" class="headerlink" title="追逐幸福的要素"></a>追逐幸福的要素</h3><ul>
+<li>找到喜欢的工作，有收入又受到社会尊重</li>
+<li>减少上下班耗费的时间，有充足的社交时间</li>
+<li>对国家和社会有政治热情，有参与度</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">不论曾经的彼此多么幼稚，多么可笑</span><br><span class="line">终有一天我们都变得成熟；</span><br><span class="line">也终有一天，我们都会老去；</span><br><span class="line">可是，却没有人可以永远不长大，</span><br><span class="line">却没有人可以永远年轻，</span><br><span class="line">成熟，有时候会让人心痛、很无奈。</span><br><span class="line">那个时候才会懂得：</span><br><span class="line">爱情本不是件该执着的事情。</span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>日常</category>
+      </categories>
+      <tags>
+        <tag>博客迁移</tag>
+      </tags>
   </entry>
   <entry>
     <title>经典话术</title>
@@ -796,6 +813,30 @@
       </tags>
   </entry>
   <entry>
+    <title>墙面分割</title>
+    <url>/2022/01/14/pcl/%E5%A2%99%E9%9D%A2%E5%88%86%E5%89%B2/</url>
+    <content><![CDATA[<h3 id="区域生长分割region-growing-segmentation"><a href="#区域生长分割region-growing-segmentation" class="headerlink" title="区域生长分割region growing segmentation"></a>区域生长分割region growing segmentation</h3><p>算法核心：基于点法线之间角度的比较，尽量将满足平滑约束的相邻点合并在一起，以一簇点集的形式输出，视为相同平面</p>
+<p>工作原理：区域增长从有最小曲率值curvature的点。则需要计算所有曲率值并进行排序；因为曲率最小的点位于平坦区域，从平坦区域增长可以减少区域的总数。（曲率与法线的求解方法类似,法线描述点在表面的法向，曲率则是法线间协方差矩阵的特征值，描述法向一致性)</p>
+<p>具体过程：</p>
+<ol>
+<li>对未标记点的曲率排序，将最小曲率点放入种子集</li>
+<li>对每个种子的所有邻点计算</li>
+<li>1 每个近邻点与当前点的法线角度差(reg.setSmoothnessThreshold),如果小于阈值则重点考虑，进入2.2判断</li>
+<li>2 该点通过2.1法线角度差检验，如果曲率小于设定的阈值(reg.setCurvatureThreshold)，这个点即被添加到种子点集，属于当前平面</li>
+<li>通过两次检验的点，被从原始点云去除</li>
+<li>设置最小点簇的点数reg.setMinClusterSize,以及最大簇reg.segMaxClusterSize</li>
+<li>重复1-3生成min~max个点数的所有平面，并对不同平面标记颜色区分</li>
+<li>直到算法在剩余点中生成的点簇不能满足min,停止工作</li>
+</ol>
+]]></content>
+      <categories>
+        <category>pcl</category>
+      </categories>
+      <tags>
+        <tag>pcl</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>努力方向之正解</title>
     <url>/2021/12/21/shisan/%E5%8A%AA%E5%8A%9B%E6%96%B9%E5%90%91%E4%B9%8B%E6%AD%A3%E8%A7%A3/</url>
     <content><![CDATA[<p><code>文章摘自微信公众号：十三先生手记</code></p>
@@ -809,35 +850,6 @@
       </categories>
       <tags>
         <tag>十三手记</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>六年前的自己</title>
-    <url>/2021/12/22/rizhi/%E5%85%AD%E5%B9%B4%E5%89%8D%E7%9A%84%E8%87%AA%E5%B7%B1/</url>
-    <content><![CDATA[<p><a href="https://csrjtan.github.io/">https://csrjtan.github.io/</a><br>回看六年前的自己，摘录一些当时有意义的文段</p>
-<h3 id="23岁的生日"><a href="#23岁的生日" class="headerlink" title="23岁的生日"></a>23岁的生日</h3><p>重读六年前的自己，用文字记录对这个世界的感受和认知，那时候的自己充满了希望，虽然能力配不上欲望而渐渐失落，但依然希望找到那种年轻的感觉。</p>
-<h3 id=""><a href="#" class="headerlink" title=""></a></h3><p>当年的愿望：</p>
-<ul>
-<li>工作上：提高编程和学术能力</li>
-<li>生活上：爱家人，爱生活，爱伴侣</li>
-<li>日常上：坚持读，坚持写，坚持学，坚持感受，坚持表达</li>
-</ul>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">《成长的天空》 </span><br><span class="line">我沉浸在自己的世界里</span><br><span class="line">写着无关是非的歌谣</span><br><span class="line">点蓝的笔触</span><br><span class="line">划过了年轻的天空</span><br><span class="line">一只飞鸟带走我的青春</span><br><span class="line">还我，岁月沉淀的帽子</span><br><span class="line">轻声说道</span><br><span class="line">年轻总不是永远的借口</span><br></pre></td></tr></table></figure>
-
-<h3 id="回看中秋自省的自己"><a href="#回看中秋自省的自己" class="headerlink" title="回看中秋自省的自己"></a>回看中秋自省的自己</h3><p>经过5年起起落落，心态转变得很明显甚至于有点得过且过的样子，现在自己比年轻的自己多了一点能力和资源，却失去了做大梦的勇气和毅力。希望自己能依然不断找到人生的兴奋点，勇往直前地去追寻探索，从今天开始，真正的为自己而活，不在乎别人的眼光，不在乎可能会失去的安逸。</p>
-<h3 id="家人信息简要"><a href="#家人信息简要" class="headerlink" title="家人信息简要"></a>家人信息简要</h3><p>爸：1961.7.8，牛，会计。爱好军事政治经济唱歌。性格硬朗好面子。优点：精神好，能干，勤勉<br>妈：1961.11.12，牛，仓管（退休）。爱好家庭家人养生。优点：节俭，爱戴我们，慈祥<br>哥：1987.8.9，兔，前端全栈，爱好广泛潮流酷玩。优点：工程能力强，迁就随和<br>为：1992.08.13，猴，算法攻城狮。爱好：声乐，运动，游戏。优点：耐受力，随和</p>
-<h3 id="选书策略"><a href="#选书策略" class="headerlink" title="选书策略"></a>选书策略</h3><p>出版社-&gt;作者-&gt;版次-&gt;印次-&gt;印数</p>
-<h3 id="追逐幸福的要素"><a href="#追逐幸福的要素" class="headerlink" title="追逐幸福的要素"></a>追逐幸福的要素</h3><ul>
-<li>找到喜欢的工作，有收入又受到社会尊重</li>
-<li>减少上下班耗费的时间，有充足的社交时间</li>
-<li>对国家和社会有政治热情，有参与度</li>
-</ul>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">不论曾经的彼此多么幼稚，多么可笑</span><br><span class="line">终有一天我们都变得成熟；</span><br><span class="line">也终有一天，我们都会老去；</span><br><span class="line">可是，却没有人可以永远不长大，</span><br><span class="line">却没有人可以永远年轻，</span><br><span class="line">成熟，有时候会让人心痛、很无奈。</span><br><span class="line">那个时候才会懂得：</span><br><span class="line">爱情本不是件该执着的事情。</span><br></pre></td></tr></table></figure>]]></content>
-      <categories>
-        <category>日常</category>
-      </categories>
-      <tags>
-        <tag>博客迁移</tag>
       </tags>
   </entry>
   <entry>
@@ -859,6 +871,21 @@
       </tags>
   </entry>
   <entry>
+    <title>恐惧之破</title>
+    <url>/2022/01/05/shisan/%E6%81%90%E6%83%A7%E4%B9%8B%E7%A0%B4/</url>
+    <content><![CDATA[<p>你有恐惧吗？  想必有的<br>你想解除恐惧吗？  必定想的<br>可为什么你无法真正解除？  因为你不知道恐惧从何而来，更不知道什么是恐惧。</p>
+<h3 id="那么恐惧从何而来？"><a href="#那么恐惧从何而来？" class="headerlink" title="那么恐惧从何而来？"></a>那么恐惧从何而来？</h3><p>从曲解真相而来</p>
+<h3 id="恐惧是什么？"><a href="#恐惧是什么？" class="headerlink" title="恐惧是什么？"></a>恐惧是什么？</h3><p>是你的人生大礼给你的提醒。</p>
+<h3 id="此刻要你深深明白"><a href="#此刻要你深深明白" class="headerlink" title="此刻要你深深明白"></a>此刻要你深深明白</h3><p>二元有相世界，恐惧来自于你对真相的无视或者曲解。如此，只要你无视或者曲解了真相，必定会形成相应的恐惧；如此，你内心恐惧的形成是为了提醒你搞清楚恐惧背后的真相；如此，若是你逃避真相，你必定会反复感受到恐惧；如此，当你心有恐惧，请直面你所恐惧的东西，并搞清楚其真相，当你一旦真正清楚真相，恐惧必定就会随之而消失；与此同时，必定你就能在搞清楚真相的过程中收获到你人生的大礼。</p>
+]]></content>
+      <categories>
+        <category>十三手记</category>
+      </categories>
+      <tags>
+        <tag>十三手记</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>接纳麻烦</title>
     <url>/2022/01/18/shisan/%E6%8E%A5%E7%BA%B3%E9%BA%BB%E7%83%A6/</url>
     <content><![CDATA[<p><code>摘自微信号十三手记</code></p>
@@ -869,21 +896,6 @@
 <p>如此一来，不解决麻烦的结果是什么？<br>你始终不能真正感受自己内心的智慧与力量。</p>
 <h3 id="此刻你要明白"><a href="#此刻你要明白" class="headerlink" title="此刻你要明白"></a>此刻你要明白</h3><p>在你的人生旅程中，你与别人的整体差距，就是你们解决麻烦的程度的差距，如此，当你遇到你以为的麻烦，请不要嫌弃和忽略，请你力所能及的去具体解决，尽量到位，因为在这些解决行为里，不仅有你值得提升的认知，也有你智慧与力量的创造，也有你生命活性的体验，更加你累积人生成就的大礼。</p>
 <h3 id="个人感悟"><a href="#个人感悟" class="headerlink" title="个人感悟"></a>个人感悟</h3><p>虽然我们需要惜时，但也要耐心解决问题，大大小小的问题都是提升自我的途径，尽管麻烦也要去接纳。如果重复度大的则可以考虑自动化去解决。</p>
-]]></content>
-      <categories>
-        <category>十三手记</category>
-      </categories>
-      <tags>
-        <tag>十三手记</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>恐惧之破</title>
-    <url>/2022/01/05/shisan/%E6%81%90%E6%83%A7%E4%B9%8B%E7%A0%B4/</url>
-    <content><![CDATA[<p>你有恐惧吗？  想必有的<br>你想解除恐惧吗？  必定想的<br>可为什么你无法真正解除？  因为你不知道恐惧从何而来，更不知道什么是恐惧。</p>
-<h3 id="那么恐惧从何而来？"><a href="#那么恐惧从何而来？" class="headerlink" title="那么恐惧从何而来？"></a>那么恐惧从何而来？</h3><p>从曲解真相而来</p>
-<h3 id="恐惧是什么？"><a href="#恐惧是什么？" class="headerlink" title="恐惧是什么？"></a>恐惧是什么？</h3><p>是你的人生大礼给你的提醒。</p>
-<h3 id="此刻要你深深明白"><a href="#此刻要你深深明白" class="headerlink" title="此刻要你深深明白"></a>此刻要你深深明白</h3><p>二元有相世界，恐惧来自于你对真相的无视或者曲解。如此，只要你无视或者曲解了真相，必定会形成相应的恐惧；如此，你内心恐惧的形成是为了提醒你搞清楚恐惧背后的真相；如此，若是你逃避真相，你必定会反复感受到恐惧；如此，当你心有恐惧，请直面你所恐惧的东西，并搞清楚其真相，当你一旦真正清楚真相，恐惧必定就会随之而消失；与此同时，必定你就能在搞清楚真相的过程中收获到你人生的大礼。</p>
 ]]></content>
       <categories>
         <category>十三手记</category>
@@ -916,28 +928,17 @@
       </tags>
   </entry>
   <entry>
-    <title>能量朗读</title>
-    <url>/2021/12/20/shisan/%E8%83%BD%E9%87%8F%E6%9C%97%E8%AF%BB/</url>
+    <title>需求正解</title>
+    <url>/2022/01/10/shisan/%E9%9C%80%E6%B1%82%E6%AD%A3%E8%A7%A3/</url>
     <content><![CDATA[<p><code>文章摘自微信公众号：十三先生手记</code></p>
-<p>小时候，我就一直渴望幸福，一直渴望坚强；<br>小时候，我就一直渴望正直，一直渴望善良；<br>小时候，为就一直渴望快乐，一直渴望成长；<br>现在，我几乎丢失了我的信心，我几乎丢失了我的梦想！<br>我知道，我不能再这样消极的逃避。<br>我知道，我不能再这样平庸的彷徨。<br>我知道，我要全力迸发我的热情；我要勇敢的收复我的希望。<br>我知道，我要真诚的对待身边每一个人，这样，我才能被每一个人真诚的对待；<br>我知道，我要用心的对待每天的时光，这样，我才能收获每天的力量；<br>我知道，我要帮助身边每一个人达成心愿，这样，大家才能帮助我实现梦想。<br>从今天起，我要打败我的懒惰，重拾我的阳光；<br>从今天起，我要改变我的粗俗，提升我的修养；<br>从今天起，我要挑战我的懦弱，找回我的坚强；</p>
-<p>我是为爱这个世界而来<br>我要让世界因我的爱而更加美丽，<br>我要让世界因我的爱而更加安康，<br>我要让世界因我的爱而更加真诚，<br>我要让世界因我的爱而更加和畅。</p>
-]]></content>
-      <categories>
-        <category>十三手记</category>
-      </categories>
-      <tags>
-        <tag>十三手记</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>金钱的实际价值</title>
-    <url>/2021/12/24/shisan/%E9%87%91%E9%92%B1%E7%9A%84%E5%AE%9E%E9%99%85%E4%BB%B7%E5%80%BC/</url>
-    <content><![CDATA[<p><code>摘自十三手记</code></p>
-<p>若是认真观察自己过往对金钱的感受，必定发现一个现象：钱来得容易的时候，也花得容易；钱来得艰难，也就比较耐用。</p>
-<p>但大多数时候，我们不愿面对这样的真相：金钱实际价值的背后有自己投机取巧的小心思。</p>
-<p>此时，十三先生要你深深的明白：二元有相世界，金钱的实际价值必定等于你诚意付出之时创造出的相应实际价值，但是你却一直有种想付出更少收获更多金钱的想法，所以你不自知的不愿搞清楚。因为一旦你搞清楚了这个核心原理，你就无法继续投机取巧，就无法继续偷懒了。但是，只要你真正诚意看懂并接纳了这个关键点，你就能更加务实的面对自己所面对的一切人和事，你才能因此而尽可能减少多余的动作，你才能因减少多余动作而减少障碍环节，你才能因减少障碍环节而减少不必要的消耗，如此，你整体的行动才能更加高效，反而你才能走上人生各种成功的捷径。</p>
-<h3 id="个人感悟"><a href="#个人感悟" class="headerlink" title="个人感悟"></a>个人感悟</h3><p>回忆过去，确有种种如此的感觉。上高中和大学的时候，每一分钱都来自父母，舍不得多花乱花。出来工作后，可能得益于名校光环，匹配一些不太核心的岗位时候，工作的艰辛就远不及当初，于是感觉金钱就来得容易了，殊不知金钱其实也流入并不富裕，只因个人消费比较简单，只花该花的钱，只享受该享受的事。于是渐渐，也失去了赚大钱的欲望，虽说不能没有，但明显不及年少时的强烈，花钱也比较随意，一直没有大的积蓄，理财也是三天打鱼四天撒网的状态。希望认真对待工作中的每一件事，认清金钱来之不易，努力增长自己的财富，也能合理地用度。</p>
-<p>另外，而立之年，却没有多余的精力和财产赡养父母，更多的是让父母为自己忧心忡忡，目前为止，依然算不上才社会能游刃有余，立足四方。此后，应<strong>挖掘自己的兴趣目标，提升个人在社会中的价值</strong>。</p>
+<h3 id="何谓需求"><a href="#何谓需求" class="headerlink" title="何谓需求"></a>何谓需求</h3><p>你清晰什么是真正的需求吗？<br>必定不清晰</p>
+<p>那什么是真正的需求？<br>对境需求，不是过去的需求，更不是未来的需求。</p>
+<p>什么是境的需求？<br>是适合你当时的实际需求。</p>
+<p>需求有几种？<br>两种：人事物本身，以及附加给人事物的概念</p>
+<p>人事物本身是什么意思？<br>是人事物本来的功能和价值。</p>
+<p>概念需求是什么意思？<br>是附加到人事物的功能和价值上的概念，是让你产生欲望后误以为自己需求的迷障。</p>
+<p>谁附加的概念？<br>是你自己或者是外界。</p>
+<h3 id="此刻要你深深的明白"><a href="#此刻要你深深的明白" class="headerlink" title="此刻要你深深的明白"></a>此刻要你深深的明白</h3><p>由于你的贪心，你分不清自己真正的需求。所以，你过去总被人事物的附加概念牵动而消耗了大量资源和精力，所以只有你真正懂得了你要的是人事物本身的功能和价值，你才不会被这些附加的概念干扰和误导，你才真正懂得了珍惜物命，你才真正懂得了珍惜缘分，你才真正懂得了珍惜人生。</p>
 ]]></content>
       <categories>
         <category>十三手记</category>
@@ -970,17 +971,11 @@
       </tags>
   </entry>
   <entry>
-    <title>需求正解</title>
-    <url>/2022/01/10/shisan/%E9%9C%80%E6%B1%82%E6%AD%A3%E8%A7%A3/</url>
+    <title>能量朗读</title>
+    <url>/2021/12/20/shisan/%E8%83%BD%E9%87%8F%E6%9C%97%E8%AF%BB/</url>
     <content><![CDATA[<p><code>文章摘自微信公众号：十三先生手记</code></p>
-<h3 id="何谓需求"><a href="#何谓需求" class="headerlink" title="何谓需求"></a>何谓需求</h3><p>你清晰什么是真正的需求吗？<br>必定不清晰</p>
-<p>那什么是真正的需求？<br>对境需求，不是过去的需求，更不是未来的需求。</p>
-<p>什么是境的需求？<br>是适合你当时的实际需求。</p>
-<p>需求有几种？<br>两种：人事物本身，以及附加给人事物的概念</p>
-<p>人事物本身是什么意思？<br>是人事物本来的功能和价值。</p>
-<p>概念需求是什么意思？<br>是附加到人事物的功能和价值上的概念，是让你产生欲望后误以为自己需求的迷障。</p>
-<p>谁附加的概念？<br>是你自己或者是外界。</p>
-<h3 id="此刻要你深深的明白"><a href="#此刻要你深深的明白" class="headerlink" title="此刻要你深深的明白"></a>此刻要你深深的明白</h3><p>由于你的贪心，你分不清自己真正的需求。所以，你过去总被人事物的附加概念牵动而消耗了大量资源和精力，所以只有你真正懂得了你要的是人事物本身的功能和价值，你才不会被这些附加的概念干扰和误导，你才真正懂得了珍惜物命，你才真正懂得了珍惜缘分，你才真正懂得了珍惜人生。</p>
+<p>小时候，我就一直渴望幸福，一直渴望坚强；<br>小时候，我就一直渴望正直，一直渴望善良；<br>小时候，为就一直渴望快乐，一直渴望成长；<br>现在，我几乎丢失了我的信心，我几乎丢失了我的梦想！<br>我知道，我不能再这样消极的逃避。<br>我知道，我不能再这样平庸的彷徨。<br>我知道，我要全力迸发我的热情；我要勇敢的收复我的希望。<br>我知道，我要真诚的对待身边每一个人，这样，我才能被每一个人真诚的对待；<br>我知道，我要用心的对待每天的时光，这样，我才能收获每天的力量；<br>我知道，我要帮助身边每一个人达成心愿，这样，大家才能帮助我实现梦想。<br>从今天起，我要打败我的懒惰，重拾我的阳光；<br>从今天起，我要改变我的粗俗，提升我的修养；<br>从今天起，我要挑战我的懦弱，找回我的坚强；</p>
+<p>我是为爱这个世界而来<br>我要让世界因我的爱而更加美丽，<br>我要让世界因我的爱而更加安康，<br>我要让世界因我的爱而更加真诚，<br>我要让世界因我的爱而更加和畅。</p>
 ]]></content>
       <categories>
         <category>十三手记</category>
@@ -999,6 +994,23 @@
 <p>多余动作会产生什么效果？<br>你以为会让事态进展更高效，但，其实必定会生出更多跟事件发展本身无关的新问题，进而形成层层阻碍。</p>
 <h3 id="此刻你要明白"><a href="#此刻你要明白" class="headerlink" title="此刻你要明白"></a>此刻你要明白</h3><p>在事情发展过程中，只有你的行为尽量实事求是的直接着力于事件本身，你才能尽量减少多余动作产生的能耗，你才能让事件在发展过程中更加清晰的优化，你才能让事件的进展更加高效。</p>
 <h3 id="个人感悟"><a href="#个人感悟" class="headerlink" title="个人感悟"></a>个人感悟</h3><p>对于自我而言，其实是逃避真正问题的根因。有时候明知道面前有必须要解决的问题，但是总是希望从外界或者其他不相关的内容中得到方法，而非从自身出发努力去解决问题。因此往往会偏离有价值的行为，以及有效的解决真正问题，因此才一直无法有效解决问题。</p>
+]]></content>
+      <categories>
+        <category>十三手记</category>
+      </categories>
+      <tags>
+        <tag>十三手记</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>金钱的实际价值</title>
+    <url>/2021/12/24/shisan/%E9%87%91%E9%92%B1%E7%9A%84%E5%AE%9E%E9%99%85%E4%BB%B7%E5%80%BC/</url>
+    <content><![CDATA[<p><code>摘自十三手记</code></p>
+<p>若是认真观察自己过往对金钱的感受，必定发现一个现象：钱来得容易的时候，也花得容易；钱来得艰难，也就比较耐用。</p>
+<p>但大多数时候，我们不愿面对这样的真相：金钱实际价值的背后有自己投机取巧的小心思。</p>
+<p>此时，十三先生要你深深的明白：二元有相世界，金钱的实际价值必定等于你诚意付出之时创造出的相应实际价值，但是你却一直有种想付出更少收获更多金钱的想法，所以你不自知的不愿搞清楚。因为一旦你搞清楚了这个核心原理，你就无法继续投机取巧，就无法继续偷懒了。但是，只要你真正诚意看懂并接纳了这个关键点，你就能更加务实的面对自己所面对的一切人和事，你才能因此而尽可能减少多余的动作，你才能因减少多余动作而减少障碍环节，你才能因减少障碍环节而减少不必要的消耗，如此，你整体的行动才能更加高效，反而你才能走上人生各种成功的捷径。</p>
+<h3 id="个人感悟"><a href="#个人感悟" class="headerlink" title="个人感悟"></a>个人感悟</h3><p>回忆过去，确有种种如此的感觉。上高中和大学的时候，每一分钱都来自父母，舍不得多花乱花。出来工作后，可能得益于名校光环，匹配一些不太核心的岗位时候，工作的艰辛就远不及当初，于是感觉金钱就来得容易了，殊不知金钱其实也流入并不富裕，只因个人消费比较简单，只花该花的钱，只享受该享受的事。于是渐渐，也失去了赚大钱的欲望，虽说不能没有，但明显不及年少时的强烈，花钱也比较随意，一直没有大的积蓄，理财也是三天打鱼四天撒网的状态。希望认真对待工作中的每一件事，认清金钱来之不易，努力增长自己的财富，也能合理地用度。</p>
+<p>另外，而立之年，却没有多余的精力和财产赡养父母，更多的是让父母为自己忧心忡忡，目前为止，依然算不上才社会能游刃有余，立足四方。此后，应<strong>挖掘自己的兴趣目标，提升个人在社会中的价值</strong>。</p>
 ]]></content>
       <categories>
         <category>十三手记</category>
