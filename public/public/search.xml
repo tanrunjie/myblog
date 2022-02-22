@@ -186,32 +186,6 @@
       </tags>
   </entry>
   <entry>
-    <title>SLAM十四讲（一）预备及初识</title>
-    <url>/2022/01/07/SLAMBOOK2/SLAMBOOK-1/</url>
-    <content><![CDATA[<h4 id="SLAM：Simultaneous-Localization-and-Mapping"><a href="#SLAM：Simultaneous-Localization-and-Mapping" class="headerlink" title="SLAM：Simultaneous Localization and Mapping"></a>SLAM：Simultaneous Localization and Mapping</h4><p>同步定位及建图：搭载特定传感器的主体，在没有环境先验信息情况下，在运动过程中建立环境模型，同时估计自己位姿的过程。根据传感器分为深度相机，RGB相机和激光。不同传感器特点不一样，应用环境以及遇到的难点不同。本书主要是视觉SLAM：围绕RGB相机，也会引入Depth相机。</p>
-<p>CV之初，人们想象有一天计算机将和人一样，通过眼睛去观察世界，理解周围的物体，探索未知的环境–这是一个美妙而又充满浪漫色彩的梦想，让无数科研人员日夜为之奋斗。</p>
-<p>SLAM相关的应用点：室内扫地机，移动机器人；户外的自动驾驶以及空中无人机；乃至虚拟现实和增强现实设备。</p>
-<p>SLAM研究的三十年，将主干分为四个大模块：</p>
-<ul>
-<li>前端里程计（求pose)：估计相邻图像相机的运动以及局部地图样子</li>
-<li>后端优化（优化pose)：根据多个时刻的相机位姿以及回环检测进行优化，得到全局一致的轨迹和地图</li>
-<li>建图：根据轨迹建立与任务要求对应的地图</li>
-<li>回环检测（优化全局pose)：判断是否到达过先前的位置</li>
-</ul>
-<p>1.定位问题：我在什么地方？<br>2.建图问题：周围环境是什么样？<br>方法很多：室内可以在地板铺设导引线，在墙上贴二维码，在桌子放置无线电定位设备；室外可以安装定位设备（GPS）等<br>传感器主要两类：1.安装在本体上，如轮式编码器，IMU，相机，激光； 2.安装在环境上，上述提到的</p>
-<h4 id="不同传感器的特性以及SLAM的影响"><a href="#不同传感器的特性以及SLAM的影响" class="headerlink" title="不同传感器的特性以及SLAM的影响"></a>不同传感器的特性以及SLAM的影响</h4><p>单目：图像是三维空间的二维投影，必须移动(Motion)才能估计结构(Structure).motion后只能根据视差估计相对的值，具有尺度不确定性。<br>问题：平移才能计算深度以及无法确定真实尺度，导致单目SLAM困难多多，但是成本较低。</p>
-<p>双目：利于基线解决尺度不确定性，但视差的匹配依然效率不高，需要引入GPU和FPGA加速才能实时输出整张图的距离信息。双目测量距离受基线大小影响，所以无人车上一般搭载很大的家伙<br>问题：对于SLAM而言，传感器的配置与标定较为复杂。</p>
-<p>RGB-D相机：通过TOF物理测量手段直接获得全图的深度信息<br>问题：低端TOF测量范围窄，噪声大，视野小；普遍存在日光干扰、无法测量投射材质以及高反高吸收率材质；所以主要用于室内应用，室外难以使用。</p>
-<p>目前而言，如果工作环境理想：静态、刚体、光照变化小、没有人为干扰的场景，SLAM是相当成熟。</p>
-]]></content>
-      <categories>
-        <category>SLAM十四讲</category>
-      </categories>
-      <tags>
-        <tag>SLAMBOOK</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>盐选健康</title>
     <url>/2022/01/21/%E7%9B%90%E9%80%89%E5%81%A5%E5%BA%B7/</url>
     <content><![CDATA[<h3 id="优雅起床"><a href="#优雅起床" class="headerlink" title="优雅起床"></a>优雅起床</h3><p>熬夜:睡眠不规律,睡眠不足以及整夜不睡.而非指定睡觉时间,当然中医养生的角度应该是需要早睡早起,早上练功升阳.</p>
@@ -275,6 +249,51 @@
       </tags>
   </entry>
   <entry>
+    <title>SLAM十四讲（一）预备及初识</title>
+    <url>/2022/01/07/SLAMBOOK2/SLAMBOOK-1/</url>
+    <content><![CDATA[<h4 id="SLAM：Simultaneous-Localization-and-Mapping"><a href="#SLAM：Simultaneous-Localization-and-Mapping" class="headerlink" title="SLAM：Simultaneous Localization and Mapping"></a>SLAM：Simultaneous Localization and Mapping</h4><p>同步定位及建图：搭载特定传感器的主体，在没有环境先验信息情况下，在运动过程中建立环境模型，同时估计自己位姿的过程。根据传感器分为深度相机，RGB相机和激光。不同传感器特点不一样，应用环境以及遇到的难点不同。本书主要是视觉SLAM：围绕RGB相机，也会引入Depth相机。</p>
+<p>CV之初，人们想象有一天计算机将和人一样，通过眼睛去观察世界，理解周围的物体，探索未知的环境–这是一个美妙而又充满浪漫色彩的梦想，让无数科研人员日夜为之奋斗。</p>
+<p>SLAM相关的应用点：室内扫地机，移动机器人；户外的自动驾驶以及空中无人机；乃至虚拟现实和增强现实设备。</p>
+<p>SLAM研究的三十年，将主干分为四个大模块：</p>
+<ul>
+<li>前端里程计（求pose)：估计相邻图像相机的运动以及局部地图样子</li>
+<li>后端优化（优化pose)：根据多个时刻的相机位姿以及回环检测进行优化，得到全局一致的轨迹和地图</li>
+<li>建图：根据轨迹建立与任务要求对应的地图</li>
+<li>回环检测（优化全局pose)：判断是否到达过先前的位置</li>
+</ul>
+<p>1.定位问题：我在什么地方？<br>2.建图问题：周围环境是什么样？<br>方法很多：室内可以在地板铺设导引线，在墙上贴二维码，在桌子放置无线电定位设备；室外可以安装定位设备（GPS）等<br>传感器主要两类：1.安装在本体上，如轮式编码器，IMU，相机，激光； 2.安装在环境上，上述提到的</p>
+<h4 id="不同传感器的特性以及SLAM的影响"><a href="#不同传感器的特性以及SLAM的影响" class="headerlink" title="不同传感器的特性以及SLAM的影响"></a>不同传感器的特性以及SLAM的影响</h4><p>单目：图像是三维空间的二维投影，必须移动(Motion)才能估计结构(Structure).motion后只能根据视差估计相对的值，具有尺度不确定性。<br>问题：平移才能计算深度以及无法确定真实尺度，导致单目SLAM困难多多，但是成本较低。</p>
+<p>双目：利于基线解决尺度不确定性，但视差的匹配依然效率不高，需要引入GPU和FPGA加速才能实时输出整张图的距离信息。双目测量距离受基线大小影响，所以无人车上一般搭载很大的家伙<br>问题：对于SLAM而言，传感器的配置与标定较为复杂。</p>
+<p>RGB-D相机：通过TOF物理测量手段直接获得全图的深度信息<br>问题：低端TOF测量范围窄，噪声大，视野小；普遍存在日光干扰、无法测量投射材质以及高反高吸收率材质；所以主要用于室内应用，室外难以使用。</p>
+<p>目前而言，如果工作环境理想：静态、刚体、光照变化小、没有人为干扰的场景，SLAM是相当成熟。</p>
+<h4 id="整书结构"><a href="#整书结构" class="headerlink" title="整书结构"></a>整书结构</h4><p>1.数学基础</p>
+<ul>
+<li>SLAM概述</li>
+<li>三维空间运动</li>
+<li>李群和李代数</li>
+<li>针孔模型及opencv</li>
+<li>非线性优化</li>
+</ul>
+<p>2.技术实践</p>
+<ul>
+<li>特征点法的视觉里程计</li>
+<li>直接法的视觉里程计</li>
+<li>里程计实践</li>
+<li>后端优化BA</li>
+<li>后端优化位姿图</li>
+<li>回环检测</li>
+<li>地图构建</li>
+<li>SLAM的未来</li>
+</ul>
+]]></content>
+      <categories>
+        <category>SLAM十四讲</category>
+      </categories>
+      <tags>
+        <tag>SLAMBOOK</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>c++并发实战</title>
     <url>/2021/12/28/cpp/c-%E5%B9%B6%E5%8F%91%E5%AE%9E%E6%88%98/</url>
     <content><![CDATA[<h3 id="chap1-c-并发世界"><a href="#chap1-c-并发世界" class="headerlink" title="chap1 c++并发世界"></a>chap1 c++并发世界</h3><p>C++98的13年后，2011的C++11成为新的规范，同时确认了每三年发布新的扩展技术规范。<br>在C++11中，c++ standard第一次承认多线程存在于C++语言中，意味CPP编写与平台无关的多线程程序成为可能。以往编写多线程并发需要针对运行平台部署依赖扩展库，如今可移植性成为可能。</p>
@@ -317,6 +336,21 @@
       </tags>
   </entry>
   <entry>
+    <title>cpp生成代码及数据类型</title>
+    <url>/2021/12/14/cpp/cpp%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/</url>
+    <content><![CDATA[<p>c++基本数据类型主要有<em>bool, char, int, float, double</em>。具体如下：</p>
+<p><img src="/images/12_14_2.png" alt="basic data structure"><br><img src="/images/12_14_3.png" alt="basic data structure2"></p>
+<p>另外，C++<strong>生成代码的过程</strong>是：1.程序员编写源代码 2.编译器正确翻译C++为目标代码 3.链接器将环境启动的代码以及引入库的代码与目标代码正确链接 4.最后才输出机器认识的可执行代码<br><img src="/images/12_14_1.png" alt="code procedure"></p>
+<p>整型提升(integral promotion): 计算表达式时，bool, char, unsigned char, signed char short会转换为int，即int为计算机最自然的类型，也是运算速度可能最快的。较小与较大运算也可能提升。</p>
+]]></content>
+      <categories>
+        <category>c++</category>
+      </categories>
+      <tags>
+        <tag>c++ primer</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>代码重用</title>
     <url>/2022/01/26/cpp/%E4%BB%A3%E7%A0%81%E9%87%8D%E7%94%A8/</url>
     <content><![CDATA[<h3 id="类的复用"><a href="#类的复用" class="headerlink" title="类的复用"></a>类的复用</h3><p>上一节了解了public继承是is-a关系;C++ PRIMER第十四章重用讲解包含has-a的两种用法：1.组件包含 2.私有继承包含<br>大多数人会倾向于使用包含，一方面方便理解，另一方面多重继承容易引起问题；私有继承主要区别在于私有成员变成了继承而来的无名成员，调用成员时依赖this的类型转换。</p>
@@ -337,55 +371,6 @@
       </categories>
       <tags>
         <tag>c++</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>cpp生成代码及数据类型</title>
-    <url>/2021/12/14/cpp/cpp%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/</url>
-    <content><![CDATA[<p>c++基本数据类型主要有<em>bool, char, int, float, double</em>。具体如下：</p>
-<p><img src="/images/12_14_2.png" alt="basic data structure"><br><img src="/images/12_14_3.png" alt="basic data structure2"></p>
-<p>另外，C++<strong>生成代码的过程</strong>是：1.程序员编写源代码 2.编译器正确翻译C++为目标代码 3.链接器将环境启动的代码以及引入库的代码与目标代码正确链接 4.最后才输出机器认识的可执行代码<br><img src="/images/12_14_1.png" alt="code procedure"></p>
-<p>整型提升(integral promotion): 计算表达式时，bool, char, unsigned char, signed char short会转换为int，即int为计算机最自然的类型，也是运算速度可能最快的。较小与较大运算也可能提升。</p>
-]]></content>
-      <categories>
-        <category>c++</category>
-      </categories>
-      <tags>
-        <tag>c++ primer</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>字符串</title>
-    <url>/2021/12/15/cpp/%E5%AD%97%E7%AC%A6%E4%B8%B2/</url>
-    <content><![CDATA[<h3 id="C-style字符串"><a href="#C-style字符串" class="headerlink" title="C-style字符串"></a>C-style字符串</h3><p>结尾带’\0’,这对于很多处理字符串的函数很关键。#include <cstring>包含大量C语言字串的操作函数如strlen, strcpy, strcat…</p>
-<p>strlen():只计算数组或者指针中的字符个数，不带结尾</p>
-<p><code>cin.getline(name,20)</code>:读取整行的字串到name,最多20个<br>cin.get()：类似，但下一次调用开头会带有换行(换行缓存到下次get)，顺便检查了上一次输入的正确程度。</p>
-<p>针对string类的getline(cin, string); 与cin混合使用时，在cin&gt;&gt;完成后，getline前需要通过getline(cin,”\n”)清除缓存，否则不进入getline输入。</p>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 清除缓存</span></span><br><span class="line">string str=<span class="string">&quot;\n&quot;</span>;</span><br><span class="line"><span class="built_in">getline</span>(cin,str);</span><br></pre></td></tr></table></figure>
-
-
-
-<h3 id="string类"><a href="#string类" class="headerlink" title="string类"></a>string类</h3><figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string&gt;</span></span></span><br><span class="line">std::string</span><br></pre></td></tr></table></figure>
-<p>更方便，也更安全。像vector一样管理char.</p>
-<h3 id="struct和union"><a href="#struct和union" class="headerlink" title="struct和union"></a>struct和union</h3><p>union只能同时存储<strong>一种</strong>类型，其他类型的会lost</p>
-<h3 id="new和delete"><a href="#new和delete" class="headerlink" title="new和delete"></a>new和delete</h3><ul>
-<li>不要delete释放不是new的内存</li>
-<li>不要delete同一块内存两次</li>
-<li>new[]数组应当用delete []释放</li>
-<li>若用new[]为单一实体分配内存，应使用delete（不带方括号）释放</li>
-<li>对空指针delete是安全的</li>
-</ul>
-<h3 id="cin与cin-getline区别"><a href="#cin与cin-getline区别" class="headerlink" title="cin与cin.getline区别"></a>cin与cin.getline区别</h3><p>cin.getline(addr,80) 与cin&gt;&gt;addr<br>getline:读整行直到‘回车’<br>cin:首先跳过‘空格’，读取字串，再次遇‘空格’停止；即跳过前面的空格，读取单个单词。</p>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line">cin&gt;&gt;ch;</span><br><span class="line">cin.<span class="built_in">get</span>(ch);</span><br><span class="line">ch=cin.<span class="built_in">get</span>();</span><br></pre></td></tr></table></figure>
-<p>上面区别主要是cin&gt;&gt;ch直接跳过空格换行以及制表符</p>
-<h3 id="string格式化输出4位数字-前面补0，多用于文件名操作"><a href="#string格式化输出4位数字-前面补0，多用于文件名操作" class="headerlink" title="string格式化输出4位数字,前面补0，多用于文件名操作"></a>string格式化输出4位数字,前面补0，多用于文件名操作</h3><figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="keyword">int</span> num_zero = <span class="number">4</span>;</span><br><span class="line">string num = <span class="built_in">to_string</span>(int_val);</span><br><span class="line">string new_num = <span class="built_in">string</span>(num_zero-num.<span class="built_in">length</span>(),<span class="string">&#x27;0&#x27;</span>) + num;</span><br></pre></td></tr></table></figure>
-<p>注意int_val长度小于num_zero。</p>
-]]></content>
-      <categories>
-        <category>c++</category>
-      </categories>
-      <tags>
-        <tag>c++ primer</tag>
       </tags>
   </entry>
   <entry>
@@ -447,28 +432,104 @@
       </tags>
   </entry>
   <entry>
-    <title>逻辑控制</title>
-    <url>/2021/12/16/cpp/%E9%80%BB%E8%BE%91%E6%8E%A7%E5%88%B6/</url>
-    <content><![CDATA[<h3 id="do…while…-至少会执行一次的循环逻辑"><a href="#do…while…-至少会执行一次的循环逻辑" class="headerlink" title="do…while… 至少会执行一次的循环逻辑"></a>do…while… 至少会执行一次的循环逻辑</h3><p>哨兵(sentinel)字符: 一直读取，直到’他‘为止</p>
-<h3 id="检查文件是否正确打开很关键"><a href="#检查文件是否正确打开很关键" class="headerlink" title="检查文件是否正确打开很关键"></a>检查文件是否正确打开很关键</h3><p>用string读ifstream数据</p>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;fstream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string&gt;</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line">    ifstream inFile;</span><br><span class="line">    inFile.<span class="built_in">open</span>(filename);</span><br><span class="line">    <span class="keyword">if</span>(!inFile.<span class="built_in">is_open</span>())</span><br><span class="line">    &#123;</span><br><span class="line">        cout &lt;&lt;<span class="string">&quot;Failed Open&quot;</span>;</span><br><span class="line">        <span class="built_in">exit</span>(EXIT_FAILURE);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 逐行读放在string</span></span><br><span class="line">    string str;</span><br><span class="line">    <span class="built_in">getline</span>(inFile, str);</span><br><span class="line">    <span class="comment">//stoi, stof, stod </span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+    <title>字符串</title>
+    <url>/2021/12/15/cpp/%E5%AD%97%E7%AC%A6%E4%B8%B2/</url>
+    <content><![CDATA[<h3 id="C-style字符串"><a href="#C-style字符串" class="headerlink" title="C-style字符串"></a>C-style字符串</h3><p>结尾带’\0’,这对于很多处理字符串的函数很关键。#include <cstring>包含大量C语言字串的操作函数如strlen, strcpy, strcat…</p>
+<p>strlen():只计算数组或者指针中的字符个数，不带结尾</p>
+<p><code>cin.getline(name,20)</code>:读取整行的字串到name,最多20个<br>cin.get()：类似，但下一次调用开头会带有换行(换行缓存到下次get)，顺便检查了上一次输入的正确程度。</p>
+<p>针对string类的getline(cin, string); 与cin混合使用时，在cin&gt;&gt;完成后，getline前需要通过getline(cin,”\n”)清除缓存，否则不进入getline输入。</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 清除缓存</span></span><br><span class="line">string str=<span class="string">&quot;\n&quot;</span>;</span><br><span class="line"><span class="built_in">getline</span>(cin,str);</span><br></pre></td></tr></table></figure>
 
 
-<h3 id="关于函数，真正的乐趣在于编写自己的函数，函数库"><a href="#关于函数，真正的乐趣在于编写自己的函数，函数库" class="headerlink" title="关于函数，真正的乐趣在于编写自己的函数，函数库"></a>关于函数，真正的乐趣在于编写自己的函数，函数库</h3><h3 id="指向const的指针以及const指针"><a href="#指向const的指针以及const指针" class="headerlink" title="指向const的指针以及const指针"></a>指向const的指针以及const指针</h3><p><img src="/images/12_17_1.png"></p>
-<h3 id="递归使用"><a href="#递归使用" class="headerlink" title="递归使用"></a>递归使用</h3><figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">recurs</span><span class="params">(arg)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="function">stat1</span></span><br><span class="line"><span class="function">    <span class="title">if</span><span class="params">(test)</span></span></span><br><span class="line"><span class="function">        <span class="title">recurs</span><span class="params">(arg)</span></span></span><br><span class="line"><span class="function">    stat2</span></span><br><span class="line"><span class="function">&#125;</span></span><br></pre></td></tr></table></figure>
-<p>先执行stat1,打开满足条件，打开新的递归；直到新的递归不满足条件，逐步执行stat2并关闭当前函数；直到所有打开的函数都关闭了。</p>
-<h3 id="函数指针"><a href="#函数指针" class="headerlink" title="函数指针"></a>函数指针</h3><p>用函数指针将第一函数找到第二函数，而非直接调用；虽然笨拙，但好处是可以在不同时间传递不同的函数地址；<br>语法：double (*pf)(int);</p>
-<h3 id="应尽量使用const"><a href="#应尽量使用const" class="headerlink" title="应尽量使用const"></a>应尽量使用const</h3><p>1.使用const可以避免无意中修改数据的失误<br>2.使用const使函数能够处理const和非const实参，否则将不能处理const实参<br>3.使用const引用使函数能够正确生成并使用临时变量</p>
-<h3 id="引用非常适合用于结构和类"><a href="#引用非常适合用于结构和类" class="headerlink" title="引用非常适合用于结构和类"></a>引用非常适合用于<strong>结构和类</strong></h3><p>何时使用引用参数：1.能够修改调用函数中的数据对象 2.通过传递引用而非拷贝提高程序运行速度</p>
-<h3 id="语法糖：函数默认参数从右往左"><a href="#语法糖：函数默认参数从右往左" class="headerlink" title="语法糖：函数默认参数从右往左"></a>语法糖：函数默认参数从右往左</h3><h3 id="函数多态：重载函数"><a href="#函数多态：重载函数" class="headerlink" title="函数多态：重载函数"></a>函数多态：重载函数</h3><p>不应滥用，适用于不同参数类型输入，完成基本一致功能的多个函数使用，const与非const也不一样</p>
-<h3 id="函数多态：模板编程"><a href="#函数多态：模板编程" class="headerlink" title="函数多态：模板编程"></a>函数多态：模板编程</h3><figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;  <span class="comment">// typename -&gt; class is ok</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Swap</span><span class="params">(T &amp;a, T &amp;b)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    T temp;</span><br><span class="line">    temp = a;</span><br><span class="line">    a = b;</span><br><span class="line">    b = temp;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<p>编译器如何匹配最佳函数是一个复杂而完备的过程，大致规则如下：<br>1.完全匹配，但常规函数优于模板<br>2.提升转换（char/shorts提升至int, float提升至double)<br>3.标准转换（int 转换char, long 转换double)<br>4.用户定义的转换，如类声明</p>
+
+<h3 id="string类"><a href="#string类" class="headerlink" title="string类"></a>string类</h3><figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string&gt;</span></span></span><br><span class="line">std::string</span><br></pre></td></tr></table></figure>
+<p>更方便，也更安全。像vector一样管理char.</p>
+<h3 id="struct和union"><a href="#struct和union" class="headerlink" title="struct和union"></a>struct和union</h3><p>union只能同时存储<strong>一种</strong>类型，其他类型的会lost</p>
+<h3 id="new和delete"><a href="#new和delete" class="headerlink" title="new和delete"></a>new和delete</h3><ul>
+<li>不要delete释放不是new的内存</li>
+<li>不要delete同一块内存两次</li>
+<li>new[]数组应当用delete []释放</li>
+<li>若用new[]为单一实体分配内存，应使用delete（不带方括号）释放</li>
+<li>对空指针delete是安全的</li>
+</ul>
+<h3 id="cin与cin-getline区别"><a href="#cin与cin-getline区别" class="headerlink" title="cin与cin.getline区别"></a>cin与cin.getline区别</h3><p>cin.getline(addr,80) 与cin&gt;&gt;addr<br>getline:读整行直到‘回车’<br>cin:首先跳过‘空格’，读取字串，再次遇‘空格’停止；即跳过前面的空格，读取单个单词。</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line">cin&gt;&gt;ch;</span><br><span class="line">cin.<span class="built_in">get</span>(ch);</span><br><span class="line">ch=cin.<span class="built_in">get</span>();</span><br></pre></td></tr></table></figure>
+<p>上面区别主要是cin&gt;&gt;ch直接跳过空格换行以及制表符</p>
+<h3 id="string格式化输出4位数字-前面补0，多用于文件名操作"><a href="#string格式化输出4位数字-前面补0，多用于文件名操作" class="headerlink" title="string格式化输出4位数字,前面补0，多用于文件名操作"></a>string格式化输出4位数字,前面补0，多用于文件名操作</h3><figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="keyword">int</span> num_zero = <span class="number">4</span>;</span><br><span class="line">string num = <span class="built_in">to_string</span>(int_val);</span><br><span class="line">string new_num = <span class="built_in">string</span>(num_zero-num.<span class="built_in">length</span>(),<span class="string">&#x27;0&#x27;</span>) + num;</span><br></pre></td></tr></table></figure>
+<p>注意int_val长度小于num_zero。</p>
 ]]></content>
       <categories>
         <category>c++</category>
       </categories>
       <tags>
         <tag>c++ primer</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>对象和类</title>
+    <url>/2021/12/31/cpp/%E5%AF%B9%E8%B1%A1%E5%92%8C%E7%B1%BB/</url>
+    <content><![CDATA[<p>OOP特性：</p>
+<ul>
+<li>抽象</li>
+<li>封装和数据隐藏</li>
+<li>多态</li>
+<li>继承</li>
+<li>代码的可重用性</li>
+</ul>
+<p>接口分离： 1.提供类的声明 2.提供类成员函数</p>
+<p>析构函数只有在构造函数用了new分配内存，才需要出来delete释放内存。否则无需工作。</p>
+<p><strong>const放在函数括号后</strong>：即为const成员函数，作用指不修改调用对象。</p>
+<p>this指针的引入： 用来指向调用当前成员函数的对象（this作为隐藏参数传递给方法）</p>
+<p>类静态成员变量： static const int Len = 30; 只能是整型或枚举的静态常量</p>
+<h4 id="类结合操作符重载"><a href="#类结合操作符重载" class="headerlink" title="类结合操作符重载"></a>类结合操作符重载</h4><p>成为多态的重要一部分，隐藏了内部操作，强调了抽象的实质意义。<br>C++操作符重载要点：</p>
+<ol>
+<li>重载后的操作符至少有一个操作数是用户定义的类型</li>
+<li>使用操作符不能违反该操作符原有的句法规则</li>
+<li>无法定义新的操作符</li>
+<li>不能重载sizeof . .* :: ?: typeid *_cast</li>
+</ol>
+<h4 id="友元包含函数，类和成员函数"><a href="#友元包含函数，类和成员函数" class="headerlink" title="友元包含函数，类和成员函数"></a>友元包含函数，类和成员函数</h4><p>为何需要？  在为类重载二元操作符时，需要用到友元关系，方便使用。<br>存在的主要目的是作为类扩展接口的组成部分。<br>e.g Time乘以double可以用成员函数重载，但double乘以Time时不能，除非要求用户不能如此调用。否则应该引入友元函数重载。<br>一个常用的友元重载则是  cout &lt;&lt; Time,而非用成员函数的 Time&lt;&lt; cout</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 前一种成员函数重载 Time*double</span></span><br><span class="line">Time Time::<span class="keyword">operator</span>*(<span class="keyword">double</span> mul) <span class="keyword">const</span></span><br><span class="line">&#123;</span><br><span class="line">  Time result;</span><br><span class="line">  <span class="keyword">long</span> totalminutes = hours * mul * <span class="number">60</span> + minutes * mul;</span><br><span class="line">  result.hours = totalminutes /<span class="number">60</span>;</span><br><span class="line">  result.minutes = totalminutes %<span class="number">60</span>;</span><br><span class="line">  <span class="keyword">return</span> result;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 后一种友元重载 double*Time</span></span><br><span class="line"><span class="comment">// 第一步：原型放入类的声明之中</span></span><br><span class="line"><span class="keyword">friend</span> Time <span class="keyword">operator</span>*(<span class="keyword">double</span> m, <span class="keyword">const</span> Time &amp; t);</span><br><span class="line"><span class="comment">// 第二步：定义编写</span></span><br><span class="line">Time <span class="keyword">operator</span>*(<span class="keyword">double</span> mul, <span class="keyword">const</span> Time &amp; t)</span><br><span class="line">&#123;</span><br><span class="line">   Time result;</span><br><span class="line">  <span class="keyword">long</span> totalminutes = t.hours * mul * <span class="number">60</span> + t.minutes * mul;</span><br><span class="line">  result.hours = totalminutes /<span class="number">60</span>;</span><br><span class="line">  result.minutes = totalminutes %<span class="number">60</span>;</span><br><span class="line">  <span class="keyword">return</span> result;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>为了cout &lt;&lt;连续可输出，友元声明如下：</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line">ostream &amp; <span class="keyword">operator</span>&lt;&lt; (ostream &amp; os, <span class="keyword">const</span> Time &amp; t)</span><br><span class="line">&#123;</span><br><span class="line">  os &lt;&lt; t.hours &lt;&lt; <span class="string">&quot; hours&quot;</span> &lt;&lt; t.minutes&lt;&lt; <span class="string">&quot; minutes&quot;</span>;</span><br><span class="line">  <span class="keyword">return</span> os;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="接受单一参数的构造函数为类的类型转换提供了蓝图-blueprint"><a href="#接受单一参数的构造函数为类的类型转换提供了蓝图-blueprint" class="headerlink" title="接受单一参数的构造函数为类的类型转换提供了蓝图(blueprint)"></a>接受单一参数的构造函数为类的类型转换提供了蓝图(blueprint)</h4><p>蓝图是一个有意思的词语，后续多态也会继续接触到，是一个隐性类型表征；在类的类型转换上，需要尤其注意编译器二义性转换的问题。<br>警告：谨慎地使用隐式转换函数。<strong>explicit</strong>定义类的构造函数，则相关对象的类型转换需要显式调用，不能隐式转换。</p>
+<h4 id="类声明描述了如何分配内存，但并不执行分配内存"><a href="#类声明描述了如何分配内存，但并不执行分配内存" class="headerlink" title="类声明描述了如何分配内存，但并不执行分配内存"></a>类声明描述了如何分配内存，但并不执行分配内存</h4><p>static int num;的初始化是在类声明之外，int className::num=0;</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line">StringBad sailor = sports;</span><br><span class="line"></span><br><span class="line"><span class="comment">//等价于</span></span><br><span class="line">StringBad sailor = <span class="built_in">StringBad</span>(sports);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 则原型为</span></span><br><span class="line"><span class="built_in">StringBad</span> (<span class="keyword">const</span> StringBad &amp;); <span class="comment">//由于不知道更新类静态变量，导致计数出问题</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="隐式成员函数"><a href="#隐式成员函数" class="headerlink" title="隐式成员函数"></a>隐式成员函数</h4><p>C++自动提供下列成员函数</p>
+<ul>
+<li>默认构造函数</li>
+<li>复制构造函数</li>
+<li>赋值操作符</li>
+<li>默认析构函数</li>
+<li>地址操作符<br>析构用了delete的类，所有对象生成的构造函数都应该使用new，否则会引起浅复制析构的错误。绝对避免试图删除已经删除的数据的行为！</li>
+</ul>
+<p>书中的解决方案：使用deep copy，每个对象有自己的数据，而不是引用。<br>增加复制构造函数和赋值操作符，使类正确管理对象使用的内存。</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 拷贝函数深复制</span></span><br><span class="line">StringBad::<span class="built_in">StringBad</span>(<span class="keyword">const</span> StringBad &amp; st)</span><br><span class="line">&#123;</span><br><span class="line">  num_strings++;</span><br><span class="line">  len = st.len;</span><br><span class="line">  str = <span class="keyword">new</span> <span class="keyword">char</span>[len+<span class="number">1</span>];</span><br><span class="line">  std::<span class="built_in">strcpy</span>(str, st.str);  <span class="comment">// 复制构造，深复制而非隐式浅复制</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 赋值深复制:并非创建对象，而是对已有对象操作</span></span><br><span class="line">StringBad &amp; StringBad::<span class="keyword">operator</span>=(<span class="keyword">const</span> StringBad &amp; st)</span><br><span class="line">&#123;</span><br><span class="line">  <span class="keyword">if</span>(<span class="keyword">this</span> == &amp;st)  <span class="comment">// assigned to itself</span></span><br><span class="line">    <span class="keyword">return</span> *<span class="keyword">this</span>;</span><br><span class="line">  <span class="keyword">delete</span> [] str; <span class="comment">// free old</span></span><br><span class="line">  len = st.len;</span><br><span class="line">  str = <span class="keyword">new</span> <span class="keyword">char</span> [len+<span class="number">1</span>];</span><br><span class="line">  <span class="built_in">strcpy</span>(str, st.str);</span><br><span class="line">  <span class="keyword">return</span> *<span class="keyword">this</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="适配数组指针的释放语法"><a href="#适配数组指针的释放语法" class="headerlink" title="适配数组指针的释放语法"></a>适配数组指针的释放语法</h4><figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="keyword">char</span> words[<span class="number">15</span>]=<span class="string">&quot;bad idea&quot;</span>;</span><br><span class="line"><span class="keyword">char</span> * p1 = words;</span><br><span class="line"><span class="keyword">char</span> * p2 = <span class="keyword">new</span> <span class="keyword">char</span>;</span><br><span class="line"><span class="keyword">char</span> * p3;</span><br><span class="line"><span class="comment">// delete p1,p2,p3; suitable way</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// insuitable way, undefined</span></span><br><span class="line"><span class="keyword">delete</span> [] p1;</span><br><span class="line"><span class="keyword">delete</span> [] p2;</span><br><span class="line"><span class="keyword">delete</span> [] p3;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>new 对应 delete, delete[] 对应new []</p>
+<h4 id="初始化列表"><a href="#初始化列表" class="headerlink" title="初始化列表"></a>初始化列表</h4><p>执行在构造函数之前，因此可用于对const常量进行赋值，对声明为引用的类成员也类似。</p>
+<ul>
+<li>只能用于构造函数</li>
+<li>必须以此初始化非静态const数据成员</li>
+<li>必须以此初始化引用数据成员</li>
+</ul>
+<h4 id="继承is-a"><a href="#继承is-a" class="headerlink" title="继承is-a"></a>继承is-a</h4><p>用virtual虚函数以及动态指针来实现多态（dynamic binding动态编译，需额外开销），派生可自动向基类类型转换，称为向上强制转换。反之则不可，需显式转换。<br>引出C++指导原则之一：不要为不使用的特性付出代价</p>
+<h4 id="虚函数工作原理"><a href="#虚函数工作原理" class="headerlink" title="虚函数工作原理"></a>虚函数工作原理</h4><p>编译器处理虚函数会增加一个隐藏成员指向该函数的地址，若派生重定义了虚函数，则该指针指向新的函数地址。<br>多态在内存和执行带来一定的成本：1.每个对象因存储地址而增大 2.编译器要为每个类创建虚函数地址表（数组） 3.每个函数调用需要额外查找表中的地址<br>重载的虚基函数在派生实现时改动需要全部一起改动，称为类型协变</p>
+<p>应当把所有派生重新定义的函数再基类设置为虚函数，如果强制需重新定义则=0成纯虚函数</p>
+<h4 id="public-protected-private继承"><a href="#public-protected-private继承" class="headerlink" title="public/protected/private继承"></a>public/protected/private继承</h4><p>派生公共继承关系是is-a，继承了基类的接口；其他两种是has-a关系，继承了成员成为私有，只可在声明内部使用；</p>
+<p>构造函数，析构函数，=号，友元不能自动继承，需重新声明并实现。<br>protect继承则派生声明不能直接访问基类私有成员，通过public方法调用</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="comment">//单例模式</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">TheOnlyInstance</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">  <span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">static</span> TheOnlyInstance * <span class="title">GetTheOnlyInstance</span><span class="params">()</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">      <span class="keyword">static</span> TheOnlyInstance obj;</span><br><span class="line">      <span class="keyword">return</span> &amp;obj;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">  protect:</span><br><span class="line">    <span class="built_in">TheOnlyInstance</span>()&#123;&#125;</span><br><span class="line">  <span class="keyword">private</span>:</span><br><span class="line">    <span class="comment">// other data</span></span><br><span class="line">&#125;;</span><br><span class="line"><span class="comment">// 调用时 TheOnlyInstance * p = TheOnlyInstance::GetTheOnlyInstance();</span></span><br></pre></td></tr></table></figure>
+
+<p>传对象函数尽量用引用，避免构造和析构的开销；可以将派生对象用等号赋给基类对象，但相反则需提前明确定义。传引用可明确派生对象的类型，否则值引用可能会被编译器自动类型转换，发生意想不到的事情。也可使用dynamic_cast&lt;const baseDMA &amp;&gt;(hs)的方式强制类型转换。</p>
+]]></content>
+      <categories>
+        <category>c++</category>
+      </categories>
+      <tags>
+        <tag>c++</tag>
       </tags>
   </entry>
   <entry>
@@ -558,70 +619,28 @@
       </tags>
   </entry>
   <entry>
-    <title>对象和类</title>
-    <url>/2021/12/31/cpp/%E5%AF%B9%E8%B1%A1%E5%92%8C%E7%B1%BB/</url>
-    <content><![CDATA[<p>OOP特性：</p>
-<ul>
-<li>抽象</li>
-<li>封装和数据隐藏</li>
-<li>多态</li>
-<li>继承</li>
-<li>代码的可重用性</li>
-</ul>
-<p>接口分离： 1.提供类的声明 2.提供类成员函数</p>
-<p>析构函数只有在构造函数用了new分配内存，才需要出来delete释放内存。否则无需工作。</p>
-<p><strong>const放在函数括号后</strong>：即为const成员函数，作用指不修改调用对象。</p>
-<p>this指针的引入： 用来指向调用当前成员函数的对象（this作为隐藏参数传递给方法）</p>
-<p>类静态成员变量： static const int Len = 30; 只能是整型或枚举的静态常量</p>
-<h4 id="类结合操作符重载"><a href="#类结合操作符重载" class="headerlink" title="类结合操作符重载"></a>类结合操作符重载</h4><p>成为多态的重要一部分，隐藏了内部操作，强调了抽象的实质意义。<br>C++操作符重载要点：</p>
-<ol>
-<li>重载后的操作符至少有一个操作数是用户定义的类型</li>
-<li>使用操作符不能违反该操作符原有的句法规则</li>
-<li>无法定义新的操作符</li>
-<li>不能重载sizeof . .* :: ?: typeid *_cast</li>
-</ol>
-<h4 id="友元包含函数，类和成员函数"><a href="#友元包含函数，类和成员函数" class="headerlink" title="友元包含函数，类和成员函数"></a>友元包含函数，类和成员函数</h4><p>为何需要？  在为类重载二元操作符时，需要用到友元关系，方便使用。<br>存在的主要目的是作为类扩展接口的组成部分。<br>e.g Time乘以double可以用成员函数重载，但double乘以Time时不能，除非要求用户不能如此调用。否则应该引入友元函数重载。<br>一个常用的友元重载则是  cout &lt;&lt; Time,而非用成员函数的 Time&lt;&lt; cout</p>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 前一种成员函数重载 Time*double</span></span><br><span class="line">Time Time::<span class="keyword">operator</span>*(<span class="keyword">double</span> mul) <span class="keyword">const</span></span><br><span class="line">&#123;</span><br><span class="line">  Time result;</span><br><span class="line">  <span class="keyword">long</span> totalminutes = hours * mul * <span class="number">60</span> + minutes * mul;</span><br><span class="line">  result.hours = totalminutes /<span class="number">60</span>;</span><br><span class="line">  result.minutes = totalminutes %<span class="number">60</span>;</span><br><span class="line">  <span class="keyword">return</span> result;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 后一种友元重载 double*Time</span></span><br><span class="line"><span class="comment">// 第一步：原型放入类的声明之中</span></span><br><span class="line"><span class="keyword">friend</span> Time <span class="keyword">operator</span>*(<span class="keyword">double</span> m, <span class="keyword">const</span> Time &amp; t);</span><br><span class="line"><span class="comment">// 第二步：定义编写</span></span><br><span class="line">Time <span class="keyword">operator</span>*(<span class="keyword">double</span> mul, <span class="keyword">const</span> Time &amp; t)</span><br><span class="line">&#123;</span><br><span class="line">   Time result;</span><br><span class="line">  <span class="keyword">long</span> totalminutes = t.hours * mul * <span class="number">60</span> + t.minutes * mul;</span><br><span class="line">  result.hours = totalminutes /<span class="number">60</span>;</span><br><span class="line">  result.minutes = totalminutes %<span class="number">60</span>;</span><br><span class="line">  <span class="keyword">return</span> result;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+    <title>逻辑控制</title>
+    <url>/2021/12/16/cpp/%E9%80%BB%E8%BE%91%E6%8E%A7%E5%88%B6/</url>
+    <content><![CDATA[<h3 id="do…while…-至少会执行一次的循环逻辑"><a href="#do…while…-至少会执行一次的循环逻辑" class="headerlink" title="do…while… 至少会执行一次的循环逻辑"></a>do…while… 至少会执行一次的循环逻辑</h3><p>哨兵(sentinel)字符: 一直读取，直到’他‘为止</p>
+<h3 id="检查文件是否正确打开很关键"><a href="#检查文件是否正确打开很关键" class="headerlink" title="检查文件是否正确打开很关键"></a>检查文件是否正确打开很关键</h3><p>用string读ifstream数据</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;fstream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string&gt;</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line">    ifstream inFile;</span><br><span class="line">    inFile.<span class="built_in">open</span>(filename);</span><br><span class="line">    <span class="keyword">if</span>(!inFile.<span class="built_in">is_open</span>())</span><br><span class="line">    &#123;</span><br><span class="line">        cout &lt;&lt;<span class="string">&quot;Failed Open&quot;</span>;</span><br><span class="line">        <span class="built_in">exit</span>(EXIT_FAILURE);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 逐行读放在string</span></span><br><span class="line">    string str;</span><br><span class="line">    <span class="built_in">getline</span>(inFile, str);</span><br><span class="line">    <span class="comment">//stoi, stof, stod </span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<p>为了cout &lt;&lt;连续可输出，友元声明如下：</p>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line">ostream &amp; <span class="keyword">operator</span>&lt;&lt; (ostream &amp; os, <span class="keyword">const</span> Time &amp; t)</span><br><span class="line">&#123;</span><br><span class="line">  os &lt;&lt; t.hours &lt;&lt; <span class="string">&quot; hours&quot;</span> &lt;&lt; t.minutes&lt;&lt; <span class="string">&quot; minutes&quot;</span>;</span><br><span class="line">  <span class="keyword">return</span> os;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<h4 id="接受单一参数的构造函数为类的类型转换提供了蓝图-blueprint"><a href="#接受单一参数的构造函数为类的类型转换提供了蓝图-blueprint" class="headerlink" title="接受单一参数的构造函数为类的类型转换提供了蓝图(blueprint)"></a>接受单一参数的构造函数为类的类型转换提供了蓝图(blueprint)</h4><p>蓝图是一个有意思的词语，后续多态也会继续接触到，是一个隐性类型表征；在类的类型转换上，需要尤其注意编译器二义性转换的问题。<br>警告：谨慎地使用隐式转换函数。<strong>explicit</strong>定义类的构造函数，则相关对象的类型转换需要显式调用，不能隐式转换。</p>
-<h4 id="类声明描述了如何分配内存，但并不执行分配内存"><a href="#类声明描述了如何分配内存，但并不执行分配内存" class="headerlink" title="类声明描述了如何分配内存，但并不执行分配内存"></a>类声明描述了如何分配内存，但并不执行分配内存</h4><p>static int num;的初始化是在类声明之外，int className::num=0;</p>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line">StringBad sailor = sports;</span><br><span class="line"></span><br><span class="line"><span class="comment">//等价于</span></span><br><span class="line">StringBad sailor = <span class="built_in">StringBad</span>(sports);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 则原型为</span></span><br><span class="line"><span class="built_in">StringBad</span> (<span class="keyword">const</span> StringBad &amp;); <span class="comment">//由于不知道更新类静态变量，导致计数出问题</span></span><br></pre></td></tr></table></figure>
-
-<h4 id="隐式成员函数"><a href="#隐式成员函数" class="headerlink" title="隐式成员函数"></a>隐式成员函数</h4><p>C++自动提供下列成员函数</p>
-<ul>
-<li>默认构造函数</li>
-<li>复制构造函数</li>
-<li>赋值操作符</li>
-<li>默认析构函数</li>
-<li>地址操作符<br>析构用了delete的类，所有对象生成的构造函数都应该使用new，否则会引起浅复制析构的错误。绝对避免试图删除已经删除的数据的行为！</li>
-</ul>
-<p>书中的解决方案：使用deep copy，每个对象有自己的数据，而不是引用。<br>增加复制构造函数和赋值操作符，使类正确管理对象使用的内存。</p>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 拷贝函数深复制</span></span><br><span class="line">StringBad::<span class="built_in">StringBad</span>(<span class="keyword">const</span> StringBad &amp; st)</span><br><span class="line">&#123;</span><br><span class="line">  num_strings++;</span><br><span class="line">  len = st.len;</span><br><span class="line">  str = <span class="keyword">new</span> <span class="keyword">char</span>[len+<span class="number">1</span>];</span><br><span class="line">  std::<span class="built_in">strcpy</span>(str, st.str);  <span class="comment">// 复制构造，深复制而非隐式浅复制</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 赋值深复制:并非创建对象，而是对已有对象操作</span></span><br><span class="line">StringBad &amp; StringBad::<span class="keyword">operator</span>=(<span class="keyword">const</span> StringBad &amp; st)</span><br><span class="line">&#123;</span><br><span class="line">  <span class="keyword">if</span>(<span class="keyword">this</span> == &amp;st)  <span class="comment">// assigned to itself</span></span><br><span class="line">    <span class="keyword">return</span> *<span class="keyword">this</span>;</span><br><span class="line">  <span class="keyword">delete</span> [] str; <span class="comment">// free old</span></span><br><span class="line">  len = st.len;</span><br><span class="line">  str = <span class="keyword">new</span> <span class="keyword">char</span> [len+<span class="number">1</span>];</span><br><span class="line">  <span class="built_in">strcpy</span>(str, st.str);</span><br><span class="line">  <span class="keyword">return</span> *<span class="keyword">this</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h4 id="适配数组指针的释放语法"><a href="#适配数组指针的释放语法" class="headerlink" title="适配数组指针的释放语法"></a>适配数组指针的释放语法</h4><figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="keyword">char</span> words[<span class="number">15</span>]=<span class="string">&quot;bad idea&quot;</span>;</span><br><span class="line"><span class="keyword">char</span> * p1 = words;</span><br><span class="line"><span class="keyword">char</span> * p2 = <span class="keyword">new</span> <span class="keyword">char</span>;</span><br><span class="line"><span class="keyword">char</span> * p3;</span><br><span class="line"><span class="comment">// delete p1,p2,p3; suitable way</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// insuitable way, undefined</span></span><br><span class="line"><span class="keyword">delete</span> [] p1;</span><br><span class="line"><span class="keyword">delete</span> [] p2;</span><br><span class="line"><span class="keyword">delete</span> [] p3;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<p>new 对应 delete, delete[] 对应new []</p>
-<h4 id="初始化列表"><a href="#初始化列表" class="headerlink" title="初始化列表"></a>初始化列表</h4><p>执行在构造函数之前，因此可用于对const常量进行赋值，对声明为引用的类成员也类似。</p>
-<ul>
-<li>只能用于构造函数</li>
-<li>必须以此初始化非静态const数据成员</li>
-<li>必须以此初始化引用数据成员</li>
-</ul>
-<h4 id="继承is-a"><a href="#继承is-a" class="headerlink" title="继承is-a"></a>继承is-a</h4><p>用virtual虚函数以及动态指针来实现多态（dynamic binding动态编译，需额外开销），派生可自动向基类类型转换，称为向上强制转换。反之则不可，需显式转换。<br>引出C++指导原则之一：不要为不使用的特性付出代价</p>
-<h4 id="虚函数工作原理"><a href="#虚函数工作原理" class="headerlink" title="虚函数工作原理"></a>虚函数工作原理</h4><p>编译器处理虚函数会增加一个隐藏成员指向该函数的地址，若派生重定义了虚函数，则该指针指向新的函数地址。<br>多态在内存和执行带来一定的成本：1.每个对象因存储地址而增大 2.编译器要为每个类创建虚函数地址表（数组） 3.每个函数调用需要额外查找表中的地址<br>重载的虚基函数在派生实现时改动需要全部一起改动，称为类型协变</p>
-<p>应当把所有派生重新定义的函数再基类设置为虚函数，如果强制需重新定义则=0成纯虚函数</p>
-<h4 id="public-protected-private继承"><a href="#public-protected-private继承" class="headerlink" title="public/protected/private继承"></a>public/protected/private继承</h4><p>派生公共继承关系是is-a，继承了基类的接口；其他两种是has-a关系，继承了成员成为私有，只可在声明内部使用；</p>
-<p>构造函数，析构函数，=号，友元不能自动继承，需重新声明并实现。<br>protect继承则派生声明不能直接访问基类私有成员，通过public方法调用</p>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="comment">//单例模式</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">TheOnlyInstance</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">  <span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">static</span> TheOnlyInstance * <span class="title">GetTheOnlyInstance</span><span class="params">()</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">      <span class="keyword">static</span> TheOnlyInstance obj;</span><br><span class="line">      <span class="keyword">return</span> &amp;obj;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">  protect:</span><br><span class="line">    <span class="built_in">TheOnlyInstance</span>()&#123;&#125;</span><br><span class="line">  <span class="keyword">private</span>:</span><br><span class="line">    <span class="comment">// other data</span></span><br><span class="line">&#125;;</span><br><span class="line"><span class="comment">// 调用时 TheOnlyInstance * p = TheOnlyInstance::GetTheOnlyInstance();</span></span><br></pre></td></tr></table></figure>
-
-<p>传对象函数尽量用引用，避免构造和析构的开销；可以将派生对象用等号赋给基类对象，但相反则需提前明确定义。传引用可明确派生对象的类型，否则值引用可能会被编译器自动类型转换，发生意想不到的事情。也可使用dynamic_cast&lt;const baseDMA &amp;&gt;(hs)的方式强制类型转换。</p>
+<h3 id="关于函数，真正的乐趣在于编写自己的函数，函数库"><a href="#关于函数，真正的乐趣在于编写自己的函数，函数库" class="headerlink" title="关于函数，真正的乐趣在于编写自己的函数，函数库"></a>关于函数，真正的乐趣在于编写自己的函数，函数库</h3><h3 id="指向const的指针以及const指针"><a href="#指向const的指针以及const指针" class="headerlink" title="指向const的指针以及const指针"></a>指向const的指针以及const指针</h3><p><img src="/images/12_17_1.png"></p>
+<h3 id="递归使用"><a href="#递归使用" class="headerlink" title="递归使用"></a>递归使用</h3><figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">recurs</span><span class="params">(arg)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="function">stat1</span></span><br><span class="line"><span class="function">    <span class="title">if</span><span class="params">(test)</span></span></span><br><span class="line"><span class="function">        <span class="title">recurs</span><span class="params">(arg)</span></span></span><br><span class="line"><span class="function">    stat2</span></span><br><span class="line"><span class="function">&#125;</span></span><br></pre></td></tr></table></figure>
+<p>先执行stat1,打开满足条件，打开新的递归；直到新的递归不满足条件，逐步执行stat2并关闭当前函数；直到所有打开的函数都关闭了。</p>
+<h3 id="函数指针"><a href="#函数指针" class="headerlink" title="函数指针"></a>函数指针</h3><p>用函数指针将第一函数找到第二函数，而非直接调用；虽然笨拙，但好处是可以在不同时间传递不同的函数地址；<br>语法：double (*pf)(int);</p>
+<h3 id="应尽量使用const"><a href="#应尽量使用const" class="headerlink" title="应尽量使用const"></a>应尽量使用const</h3><p>1.使用const可以避免无意中修改数据的失误<br>2.使用const使函数能够处理const和非const实参，否则将不能处理const实参<br>3.使用const引用使函数能够正确生成并使用临时变量</p>
+<h3 id="引用非常适合用于结构和类"><a href="#引用非常适合用于结构和类" class="headerlink" title="引用非常适合用于结构和类"></a>引用非常适合用于<strong>结构和类</strong></h3><p>何时使用引用参数：1.能够修改调用函数中的数据对象 2.通过传递引用而非拷贝提高程序运行速度</p>
+<h3 id="语法糖：函数默认参数从右往左"><a href="#语法糖：函数默认参数从右往左" class="headerlink" title="语法糖：函数默认参数从右往左"></a>语法糖：函数默认参数从右往左</h3><h3 id="函数多态：重载函数"><a href="#函数多态：重载函数" class="headerlink" title="函数多态：重载函数"></a>函数多态：重载函数</h3><p>不应滥用，适用于不同参数类型输入，完成基本一致功能的多个函数使用，const与非const也不一样</p>
+<h3 id="函数多态：模板编程"><a href="#函数多态：模板编程" class="headerlink" title="函数多态：模板编程"></a>函数多态：模板编程</h3><figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;  <span class="comment">// typename -&gt; class is ok</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Swap</span><span class="params">(T &amp;a, T &amp;b)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    T temp;</span><br><span class="line">    temp = a;</span><br><span class="line">    a = b;</span><br><span class="line">    b = temp;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>编译器如何匹配最佳函数是一个复杂而完备的过程，大致规则如下：<br>1.完全匹配，但常规函数优于模板<br>2.提升转换（char/shorts提升至int, float提升至double)<br>3.标准转换（int 转换char, long 转换double)<br>4.用户定义的转换，如类声明</p>
 ]]></content>
       <categories>
         <category>c++</category>
       </categories>
       <tags>
-        <tag>c++</tag>
+        <tag>c++ primer</tag>
       </tags>
   </entry>
   <entry>
@@ -667,21 +686,27 @@
       </tags>
   </entry>
   <entry>
-    <title>皮肤的秘密</title>
-    <url>/2022/01/19/reading/%E7%9A%AE%E8%82%A4%E7%9A%84%E7%A7%98%E5%AF%86/</url>
-    <content><![CDATA[<h3 id="认识皮肤"><a href="#认识皮肤" class="headerlink" title="认识皮肤"></a>认识皮肤</h3><p>皮肤是人体最大的器官，展开达两平方米，是人体之于外界环境的保护膜，同时也是零距离感受外界的第一道关卡，所以每一寸都遍布了神经细胞。</p>
-<p>皮肤主要由三层构成：表皮，真皮以及皮下组合。其中表皮与真皮间的基底膜带决定了皮肤的弹性紧致，而且是在1岁形成不可逆的衰老，无法重生所以只能好好保护延缓其衰老。皮肤细胞从底层出生，衰老于真皮并死亡在表皮并成为保护屏障，正常周期为4周。患有皮肤病的可能会加速该过程至5天，导致表皮的屏障并不完整。</p>
-<h3 id="表皮"><a href="#表皮" class="headerlink" title="表皮"></a>表皮</h3><p>由于皮肤表面存在着大量微生物群，所以保持皮肤的pH值是非常重要的，应当合理维持完好无损的酸性保护膜，人工清洁剂约5.5，另外对于皮下脂肪过厚的皮肤褶皱，唯一有效办法是减肥。可以用抗真菌软膏，另外带锌软膏可缓解皮肤炎症，带走多余水分。</p>
-<p><img src="/images/01_19_1.png"></p>
-<p>生长纹无足轻重，关于肤色，是有黑色素影响的。研究表明，橙色皮肤最具吸引力，可多摄入胡萝卜素B达到。颠痕主要由基底膜带大面积受损，表皮过度损耗引起的。对于渗水伤口可用硅霜或贴上硅凝胶伤口贴。治疗疙瘩需要强效疗法如：激光疗法、热针、冷冻疗法以及X射线放射疗法。</p>
-<h3 id="真皮"><a href="#真皮" class="headerlink" title="真皮"></a>真皮</h3><p>真皮充满紧致的结缔组织，带来稳固性以及拉伸性，任何的日晒、日光浴、烟草、压力、睡眠不足、营养不良以及缺乏运动等会加速弹性纤维的流失。臀部皮肤就是自然老化的参考，面部等受光照影响较大是老化较快的皮肤。另外，皮肤在4度就开始出现冻疮，而冬天皮肤也能适应，所以只在晚上睡前使用保湿即可，白天冬天保湿使皮肤含水量升高，反而容易冻伤。</p>
-<p>真皮层拥有大量神经，使皮肤成为最大的神经器官，抚摸有调节中枢神经和社交等作用。同时含有腺体，会分泌激素气味等。</p>
+    <title>墙面分割</title>
+    <url>/2022/01/14/pcl/%E5%A2%99%E9%9D%A2%E5%88%86%E5%89%B2/</url>
+    <content><![CDATA[<h3 id="区域生长分割region-growing-segmentation"><a href="#区域生长分割region-growing-segmentation" class="headerlink" title="区域生长分割region growing segmentation"></a>区域生长分割region growing segmentation</h3><p>算法核心：基于点法线之间角度的比较，尽量将满足平滑约束的相邻点合并在一起，以一簇点集的形式输出，视为相同平面</p>
+<p>工作原理：区域增长从有最小曲率值curvature的点。则需要计算所有曲率值并进行排序；因为曲率最小的点位于平坦区域，从平坦区域增长可以减少区域的总数。（曲率与法线的求解方法类似,法线描述点在表面的法向，曲率则是法线间协方差矩阵的特征值，描述法向一致性)</p>
+<p>具体过程：</p>
+<ol>
+<li>对未标记点的曲率排序，将最小曲率点放入种子集</li>
+<li>对每个种子的所有邻点计算</li>
+<li>1 每个近邻点与当前点的法线角度差(reg.setSmoothnessThreshold),如果小于阈值则重点考虑，进入2.2判断</li>
+<li>2 该点通过2.1法线角度差检验，如果曲率小于设定的阈值(reg.setCurvatureThreshold)，这个点即被添加到种子点集，属于当前平面</li>
+<li>通过两次检验的点，被从原始点云去除</li>
+<li>设置最小点簇的点数reg.setMinClusterSize,以及最大簇reg.segMaxClusterSize</li>
+<li>重复1-3生成min~max个点数的所有平面，并对不同平面标记颜色区分</li>
+<li>直到算法在剩余点中生成的点簇不能满足min,停止工作</li>
+</ol>
 ]]></content>
       <categories>
-        <category>读书笔记</category>
+        <category>pcl</category>
       </categories>
       <tags>
-        <tag>读书笔记</tag>
+        <tag>pcl</tag>
       </tags>
   </entry>
   <entry>
@@ -708,8 +733,76 @@
         <category>读书</category>
       </categories>
       <tags>
-        <tag>读书笔记</tag>
         <tag>心得</tag>
+        <tag>读书笔记</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>皮肤的秘密</title>
+    <url>/2022/01/19/reading/%E7%9A%AE%E8%82%A4%E7%9A%84%E7%A7%98%E5%AF%86/</url>
+    <content><![CDATA[<h3 id="认识皮肤"><a href="#认识皮肤" class="headerlink" title="认识皮肤"></a>认识皮肤</h3><p>皮肤是人体最大的器官，展开达两平方米，是人体之于外界环境的保护膜，同时也是零距离感受外界的第一道关卡，所以每一寸都遍布了神经细胞。</p>
+<p>皮肤主要由三层构成：表皮，真皮以及皮下组合。其中表皮与真皮间的基底膜带决定了皮肤的弹性紧致，而且是在1岁形成不可逆的衰老，无法重生所以只能好好保护延缓其衰老。皮肤细胞从底层出生，衰老于真皮并死亡在表皮并成为保护屏障，正常周期为4周。患有皮肤病的可能会加速该过程至5天，导致表皮的屏障并不完整。</p>
+<h3 id="表皮"><a href="#表皮" class="headerlink" title="表皮"></a>表皮</h3><p>由于皮肤表面存在着大量微生物群，所以保持皮肤的pH值是非常重要的，应当合理维持完好无损的酸性保护膜，人工清洁剂约5.5，另外对于皮下脂肪过厚的皮肤褶皱，唯一有效办法是减肥。可以用抗真菌软膏，另外带锌软膏可缓解皮肤炎症，带走多余水分。</p>
+<p><img src="/images/01_19_1.png"></p>
+<p>生长纹无足轻重，关于肤色，是有黑色素影响的。研究表明，橙色皮肤最具吸引力，可多摄入胡萝卜素B达到。颠痕主要由基底膜带大面积受损，表皮过度损耗引起的。对于渗水伤口可用硅霜或贴上硅凝胶伤口贴。治疗疙瘩需要强效疗法如：激光疗法、热针、冷冻疗法以及X射线放射疗法。</p>
+<h3 id="真皮"><a href="#真皮" class="headerlink" title="真皮"></a>真皮</h3><p>真皮充满紧致的结缔组织，带来稳固性以及拉伸性，任何的日晒、日光浴、烟草、压力、睡眠不足、营养不良以及缺乏运动等会加速弹性纤维的流失。臀部皮肤就是自然老化的参考，面部等受光照影响较大是老化较快的皮肤。另外，皮肤在4度就开始出现冻疮，而冬天皮肤也能适应，所以只在晚上睡前使用保湿即可，白天冬天保湿使皮肤含水量升高，反而容易冻伤。</p>
+<p>真皮层拥有大量神经，使皮肤成为最大的神经器官，抚摸有调节中枢神经和社交等作用。同时含有腺体，会分泌激素气味等。</p>
+]]></content>
+      <categories>
+        <category>读书笔记</category>
+      </categories>
+      <tags>
+        <tag>读书笔记</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>软技能</title>
+    <url>/2022/02/21/reading/%E8%BD%AF%E6%8A%80%E8%83%BD/</url>
+    <content><![CDATA[<p>主要内容部分：职业生涯、自我营销、自我学习、生产力、理财、健康、精神。</p>
+<h3 id="职业篇"><a href="#职业篇" class="headerlink" title="职业篇"></a>职业篇</h3><p><code>你所能犯的最大错误就是相信自己是在为别人工作。这样一来你对工作的安全感已然丧失。职业发展的驱动力一定是来自个体本身。记住：工作属于公司的，而职业生涯却属于你自己的。 -- 厄尔.南丁格尔</code></p>
+<h4 id="自我驱动"><a href="#自我驱动" class="headerlink" title="自我驱动"></a>自我驱动</h4><p>拥有商业心态：时刻将自己的软件开发事业当作一桩生意来对待，不要被愚弄了。当你为了谋生一头扎进代码世界时，其实你和中世纪小镇开铁匠铺的铁匠没有什么差别。不要让特定的岗位或者角色固化了你和你的整个职业生涯。转变心态，从卖身契的仆人转变为拥有自己生意的商人，从仰人鼻息的弱势地位转换成自我治理和自我引导的主动地位。</p>
+<p>要做到：</p>
+<ul>
+<li>专注于你正在提供怎样的服务，以及如何营销这项服务；</li>
+<li>想方设法提升你的服务；</li>
+<li>思考你可以专注为哪一特定类型的客户或行业提供特定的服务；</li>
+<li>集中精力成为专家，专门为某一特定类型的客户提供专业的整体服务；（只有真正专注于一类客户，才能找到非常好的工作）<br>再者，如何更好地宣传你的服务，更好地找到你的客户。</li>
+</ul>
+<h4 id="沟通能力"><a href="#沟通能力" class="headerlink" title="沟通能力"></a>沟通能力</h4><p>建议阅读《人性的弱点》–Dale Camegie</p>
+<p>每个人都希望自己重要，永远不要批评，学会换位思考，思考他人而言什么才最重要。将注意力转移到他们身上，用他们的角度思考问题，什么让他们索然无味，什么让他们聚精会神。你的建议出发点理由可能是“让软件更稳定”或者“让软件按时交付”。</p>
+<p>当你学会了如何以令人愉悦的方式与他人互动和交往时，自己的生活也越来越愉快，通过习得这些技能，积累了让自己获益终生的财富，这样的价值无法用金钱衡量。</p>
+<p>还要学会逃离“毒瘤”，争吵时试着果断站在对手一边，结果可能会大吃一惊。</p>
+<h4 id="关于面试"><a href="#关于面试" class="headerlink" title="关于面试"></a>关于面试</h4><p>高级的入职流程：<br>从期待加入的公司里找到联系人-&gt;与联系人建立紧密关系-&gt;获得个人推荐-&gt;面试</p>
+<p>正式面试：自信的展示自己的能力，展示工作需要做的内容</p>
+<p>从雇主的角度，招聘员工是一项投资，需要花费时间和金钱，当然希望看到良好的投资回报率。<br>明确知道自己要做什么以及怎样去做，需要集中精力证明自己是无需督促也能发自做好事情的员工。<br>确保自己技术能力，一直阅读技术书籍和博客，花时间提升自己的技能。<br>为了获得面试经验，也要去面试，多多练习。</p>
+<p>采取行动：</p>
+<ul>
+<li>即使无需努力找工作，也要整理一份清单，列出想去的公司以及你认识的这些公司的人。</li>
+<li>如果公司一个人都不认识，那么制定计划至少去认识其中的一位员工并与之建立联系。</li>
+<li>在所在领域找出至少一个本地用户组，参与聚会，把自己介绍给尽可能多的人。</li>
+</ul>
+<p>关于职业的选择：雇员、独立咨询师（外包服务）、创业者，从雇员稳定开始，结识各类型的朋友并向他们了解如何走上以及走好他们的路。</p>
+<p>关于求职：缩小工作机会池，提高被录取的机会；如何选择专业：</p>
+<ul>
+<li>现在或以前工作的公司里，有哪些主要痛点？你能成为一名专门解决这些痛点的专家吗？</li>
+<li>有没有一种特定的工作无人能做，或者缺乏经验丰富的人？成为这个领域的专家，你会获得大量业务。</li>
+<li>在各种会议上和用户组中哪些话题最常出现？</li>
+<li>哪类问题你回复得最多，无论是针对同事还是Stack Overflow这样的网站上？<br>尽可能地具体，使得在细分市场上更抢手。</li>
+</ul>
+<p>采取行动：</p>
+<ul>
+<li>列出想到所有软件开发的专业领域，从广义范畴逐一细分，看看你能细化到多具体</li>
+<li>当前的专业领域是什么？如果没有，希望选择专攻哪个领域</li>
+<li>主流的招聘网站看看自己的专业领域市场行情如何，确定专业化道路让自己受益还是限制了自己的选择</li>
+</ul>
+<p>关于公司<br>| 公司规模 | 优点 | 缺点 |<br>| — | — | — |<br>| 小 | 承担多种责任，工作影响力大 | 没法安静写代码，稳定性差 |</p>
+<p> 你好<br> | 标题1 | 标题2 | 标题3 |<br>| —— | —— | —— |<br>| 文本好短 | 文本不短也不长 | 文本好长文本好长文本好长 |<br>| 文本好长文本好长文本好长 | 文本好短 | 文本不短也不长 |</p>
+]]></content>
+      <categories>
+        <category>读书笔记</category>
+      </categories>
+      <tags>
+        <tag>读书笔记</tag>
       </tags>
   </entry>
   <entry>
@@ -813,30 +906,6 @@
       </tags>
   </entry>
   <entry>
-    <title>墙面分割</title>
-    <url>/2022/01/14/pcl/%E5%A2%99%E9%9D%A2%E5%88%86%E5%89%B2/</url>
-    <content><![CDATA[<h3 id="区域生长分割region-growing-segmentation"><a href="#区域生长分割region-growing-segmentation" class="headerlink" title="区域生长分割region growing segmentation"></a>区域生长分割region growing segmentation</h3><p>算法核心：基于点法线之间角度的比较，尽量将满足平滑约束的相邻点合并在一起，以一簇点集的形式输出，视为相同平面</p>
-<p>工作原理：区域增长从有最小曲率值curvature的点。则需要计算所有曲率值并进行排序；因为曲率最小的点位于平坦区域，从平坦区域增长可以减少区域的总数。（曲率与法线的求解方法类似,法线描述点在表面的法向，曲率则是法线间协方差矩阵的特征值，描述法向一致性)</p>
-<p>具体过程：</p>
-<ol>
-<li>对未标记点的曲率排序，将最小曲率点放入种子集</li>
-<li>对每个种子的所有邻点计算</li>
-<li>1 每个近邻点与当前点的法线角度差(reg.setSmoothnessThreshold),如果小于阈值则重点考虑，进入2.2判断</li>
-<li>2 该点通过2.1法线角度差检验，如果曲率小于设定的阈值(reg.setCurvatureThreshold)，这个点即被添加到种子点集，属于当前平面</li>
-<li>通过两次检验的点，被从原始点云去除</li>
-<li>设置最小点簇的点数reg.setMinClusterSize,以及最大簇reg.segMaxClusterSize</li>
-<li>重复1-3生成min~max个点数的所有平面，并对不同平面标记颜色区分</li>
-<li>直到算法在剩余点中生成的点簇不能满足min,停止工作</li>
-</ol>
-]]></content>
-      <categories>
-        <category>pcl</category>
-      </categories>
-      <tags>
-        <tag>pcl</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>努力方向之正解</title>
     <url>/2021/12/21/shisan/%E5%8A%AA%E5%8A%9B%E6%96%B9%E5%90%91%E4%B9%8B%E6%AD%A3%E8%A7%A3/</url>
     <content><![CDATA[<p><code>文章摘自微信公众号：十三先生手记</code></p>
@@ -928,17 +997,11 @@
       </tags>
   </entry>
   <entry>
-    <title>需求正解</title>
-    <url>/2022/01/10/shisan/%E9%9C%80%E6%B1%82%E6%AD%A3%E8%A7%A3/</url>
+    <title>能量朗读</title>
+    <url>/2021/12/20/shisan/%E8%83%BD%E9%87%8F%E6%9C%97%E8%AF%BB/</url>
     <content><![CDATA[<p><code>文章摘自微信公众号：十三先生手记</code></p>
-<h3 id="何谓需求"><a href="#何谓需求" class="headerlink" title="何谓需求"></a>何谓需求</h3><p>你清晰什么是真正的需求吗？<br>必定不清晰</p>
-<p>那什么是真正的需求？<br>对境需求，不是过去的需求，更不是未来的需求。</p>
-<p>什么是境的需求？<br>是适合你当时的实际需求。</p>
-<p>需求有几种？<br>两种：人事物本身，以及附加给人事物的概念</p>
-<p>人事物本身是什么意思？<br>是人事物本来的功能和价值。</p>
-<p>概念需求是什么意思？<br>是附加到人事物的功能和价值上的概念，是让你产生欲望后误以为自己需求的迷障。</p>
-<p>谁附加的概念？<br>是你自己或者是外界。</p>
-<h3 id="此刻要你深深的明白"><a href="#此刻要你深深的明白" class="headerlink" title="此刻要你深深的明白"></a>此刻要你深深的明白</h3><p>由于你的贪心，你分不清自己真正的需求。所以，你过去总被人事物的附加概念牵动而消耗了大量资源和精力，所以只有你真正懂得了你要的是人事物本身的功能和价值，你才不会被这些附加的概念干扰和误导，你才真正懂得了珍惜物命，你才真正懂得了珍惜缘分，你才真正懂得了珍惜人生。</p>
+<p>小时候，我就一直渴望幸福，一直渴望坚强；<br>小时候，我就一直渴望正直，一直渴望善良；<br>小时候，为就一直渴望快乐，一直渴望成长；<br>现在，我几乎丢失了我的信心，我几乎丢失了我的梦想！<br>我知道，我不能再这样消极的逃避。<br>我知道，我不能再这样平庸的彷徨。<br>我知道，我要全力迸发我的热情；我要勇敢的收复我的希望。<br>我知道，我要真诚的对待身边每一个人，这样，我才能被每一个人真诚的对待；<br>我知道，我要用心的对待每天的时光，这样，我才能收获每天的力量；<br>我知道，我要帮助身边每一个人达成心愿，这样，大家才能帮助我实现梦想。<br>从今天起，我要打败我的懒惰，重拾我的阳光；<br>从今天起，我要改变我的粗俗，提升我的修养；<br>从今天起，我要挑战我的懦弱，找回我的坚强；</p>
+<p>我是为爱这个世界而来<br>我要让世界因我的爱而更加美丽，<br>我要让世界因我的爱而更加安康，<br>我要让世界因我的爱而更加真诚，<br>我要让世界因我的爱而更加和畅。</p>
 ]]></content>
       <categories>
         <category>十三手记</category>
@@ -971,11 +1034,34 @@
       </tags>
   </entry>
   <entry>
-    <title>能量朗读</title>
-    <url>/2021/12/20/shisan/%E8%83%BD%E9%87%8F%E6%9C%97%E8%AF%BB/</url>
+    <title>金钱的实际价值</title>
+    <url>/2021/12/24/shisan/%E9%87%91%E9%92%B1%E7%9A%84%E5%AE%9E%E9%99%85%E4%BB%B7%E5%80%BC/</url>
+    <content><![CDATA[<p><code>摘自十三手记</code></p>
+<p>若是认真观察自己过往对金钱的感受，必定发现一个现象：钱来得容易的时候，也花得容易；钱来得艰难，也就比较耐用。</p>
+<p>但大多数时候，我们不愿面对这样的真相：金钱实际价值的背后有自己投机取巧的小心思。</p>
+<p>此时，十三先生要你深深的明白：二元有相世界，金钱的实际价值必定等于你诚意付出之时创造出的相应实际价值，但是你却一直有种想付出更少收获更多金钱的想法，所以你不自知的不愿搞清楚。因为一旦你搞清楚了这个核心原理，你就无法继续投机取巧，就无法继续偷懒了。但是，只要你真正诚意看懂并接纳了这个关键点，你就能更加务实的面对自己所面对的一切人和事，你才能因此而尽可能减少多余的动作，你才能因减少多余动作而减少障碍环节，你才能因减少障碍环节而减少不必要的消耗，如此，你整体的行动才能更加高效，反而你才能走上人生各种成功的捷径。</p>
+<h3 id="个人感悟"><a href="#个人感悟" class="headerlink" title="个人感悟"></a>个人感悟</h3><p>回忆过去，确有种种如此的感觉。上高中和大学的时候，每一分钱都来自父母，舍不得多花乱花。出来工作后，可能得益于名校光环，匹配一些不太核心的岗位时候，工作的艰辛就远不及当初，于是感觉金钱就来得容易了，殊不知金钱其实也流入并不富裕，只因个人消费比较简单，只花该花的钱，只享受该享受的事。于是渐渐，也失去了赚大钱的欲望，虽说不能没有，但明显不及年少时的强烈，花钱也比较随意，一直没有大的积蓄，理财也是三天打鱼四天撒网的状态。希望认真对待工作中的每一件事，认清金钱来之不易，努力增长自己的财富，也能合理地用度。</p>
+<p>另外，而立之年，却没有多余的精力和财产赡养父母，更多的是让父母为自己忧心忡忡，目前为止，依然算不上才社会能游刃有余，立足四方。此后，应<strong>挖掘自己的兴趣目标，提升个人在社会中的价值</strong>。</p>
+]]></content>
+      <categories>
+        <category>十三手记</category>
+      </categories>
+      <tags>
+        <tag>十三手记</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>需求正解</title>
+    <url>/2022/01/10/shisan/%E9%9C%80%E6%B1%82%E6%AD%A3%E8%A7%A3/</url>
     <content><![CDATA[<p><code>文章摘自微信公众号：十三先生手记</code></p>
-<p>小时候，我就一直渴望幸福，一直渴望坚强；<br>小时候，我就一直渴望正直，一直渴望善良；<br>小时候，为就一直渴望快乐，一直渴望成长；<br>现在，我几乎丢失了我的信心，我几乎丢失了我的梦想！<br>我知道，我不能再这样消极的逃避。<br>我知道，我不能再这样平庸的彷徨。<br>我知道，我要全力迸发我的热情；我要勇敢的收复我的希望。<br>我知道，我要真诚的对待身边每一个人，这样，我才能被每一个人真诚的对待；<br>我知道，我要用心的对待每天的时光，这样，我才能收获每天的力量；<br>我知道，我要帮助身边每一个人达成心愿，这样，大家才能帮助我实现梦想。<br>从今天起，我要打败我的懒惰，重拾我的阳光；<br>从今天起，我要改变我的粗俗，提升我的修养；<br>从今天起，我要挑战我的懦弱，找回我的坚强；</p>
-<p>我是为爱这个世界而来<br>我要让世界因我的爱而更加美丽，<br>我要让世界因我的爱而更加安康，<br>我要让世界因我的爱而更加真诚，<br>我要让世界因我的爱而更加和畅。</p>
+<h3 id="何谓需求"><a href="#何谓需求" class="headerlink" title="何谓需求"></a>何谓需求</h3><p>你清晰什么是真正的需求吗？<br>必定不清晰</p>
+<p>那什么是真正的需求？<br>对境需求，不是过去的需求，更不是未来的需求。</p>
+<p>什么是境的需求？<br>是适合你当时的实际需求。</p>
+<p>需求有几种？<br>两种：人事物本身，以及附加给人事物的概念</p>
+<p>人事物本身是什么意思？<br>是人事物本来的功能和价值。</p>
+<p>概念需求是什么意思？<br>是附加到人事物的功能和价值上的概念，是让你产生欲望后误以为自己需求的迷障。</p>
+<p>谁附加的概念？<br>是你自己或者是外界。</p>
+<h3 id="此刻要你深深的明白"><a href="#此刻要你深深的明白" class="headerlink" title="此刻要你深深的明白"></a>此刻要你深深的明白</h3><p>由于你的贪心，你分不清自己真正的需求。所以，你过去总被人事物的附加概念牵动而消耗了大量资源和精力，所以只有你真正懂得了你要的是人事物本身的功能和价值，你才不会被这些附加的概念干扰和误导，你才真正懂得了珍惜物命，你才真正懂得了珍惜缘分，你才真正懂得了珍惜人生。</p>
 ]]></content>
       <categories>
         <category>十三手记</category>
@@ -994,23 +1080,6 @@
 <p>多余动作会产生什么效果？<br>你以为会让事态进展更高效，但，其实必定会生出更多跟事件发展本身无关的新问题，进而形成层层阻碍。</p>
 <h3 id="此刻你要明白"><a href="#此刻你要明白" class="headerlink" title="此刻你要明白"></a>此刻你要明白</h3><p>在事情发展过程中，只有你的行为尽量实事求是的直接着力于事件本身，你才能尽量减少多余动作产生的能耗，你才能让事件在发展过程中更加清晰的优化，你才能让事件的进展更加高效。</p>
 <h3 id="个人感悟"><a href="#个人感悟" class="headerlink" title="个人感悟"></a>个人感悟</h3><p>对于自我而言，其实是逃避真正问题的根因。有时候明知道面前有必须要解决的问题，但是总是希望从外界或者其他不相关的内容中得到方法，而非从自身出发努力去解决问题。因此往往会偏离有价值的行为，以及有效的解决真正问题，因此才一直无法有效解决问题。</p>
-]]></content>
-      <categories>
-        <category>十三手记</category>
-      </categories>
-      <tags>
-        <tag>十三手记</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>金钱的实际价值</title>
-    <url>/2021/12/24/shisan/%E9%87%91%E9%92%B1%E7%9A%84%E5%AE%9E%E9%99%85%E4%BB%B7%E5%80%BC/</url>
-    <content><![CDATA[<p><code>摘自十三手记</code></p>
-<p>若是认真观察自己过往对金钱的感受，必定发现一个现象：钱来得容易的时候，也花得容易；钱来得艰难，也就比较耐用。</p>
-<p>但大多数时候，我们不愿面对这样的真相：金钱实际价值的背后有自己投机取巧的小心思。</p>
-<p>此时，十三先生要你深深的明白：二元有相世界，金钱的实际价值必定等于你诚意付出之时创造出的相应实际价值，但是你却一直有种想付出更少收获更多金钱的想法，所以你不自知的不愿搞清楚。因为一旦你搞清楚了这个核心原理，你就无法继续投机取巧，就无法继续偷懒了。但是，只要你真正诚意看懂并接纳了这个关键点，你就能更加务实的面对自己所面对的一切人和事，你才能因此而尽可能减少多余的动作，你才能因减少多余动作而减少障碍环节，你才能因减少障碍环节而减少不必要的消耗，如此，你整体的行动才能更加高效，反而你才能走上人生各种成功的捷径。</p>
-<h3 id="个人感悟"><a href="#个人感悟" class="headerlink" title="个人感悟"></a>个人感悟</h3><p>回忆过去，确有种种如此的感觉。上高中和大学的时候，每一分钱都来自父母，舍不得多花乱花。出来工作后，可能得益于名校光环，匹配一些不太核心的岗位时候，工作的艰辛就远不及当初，于是感觉金钱就来得容易了，殊不知金钱其实也流入并不富裕，只因个人消费比较简单，只花该花的钱，只享受该享受的事。于是渐渐，也失去了赚大钱的欲望，虽说不能没有，但明显不及年少时的强烈，花钱也比较随意，一直没有大的积蓄，理财也是三天打鱼四天撒网的状态。希望认真对待工作中的每一件事，认清金钱来之不易，努力增长自己的财富，也能合理地用度。</p>
-<p>另外，而立之年，却没有多余的精力和财产赡养父母，更多的是让父母为自己忧心忡忡，目前为止，依然算不上才社会能游刃有余，立足四方。此后，应<strong>挖掘自己的兴趣目标，提升个人在社会中的价值</strong>。</p>
 ]]></content>
       <categories>
         <category>十三手记</category>
