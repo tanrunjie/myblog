@@ -583,6 +583,52 @@
       </tags>
   </entry>
   <entry>
+    <title>EIGEN_1 HELLO_WOLRD</title>
+    <url>/2022/01/20/eigen/eigen-1/</url>
+    <content><![CDATA[<h3 id="EIGEN简介"><a href="#EIGEN简介" class="headerlink" title="EIGEN简介"></a>EIGEN简介</h3><p>FROM WIKI: Eigen is a high-level C++ library of template headers for linear algebra, matrix and vector operations, geometrical transformations, numerical solvers and related algorithms.<br>简而言之C++开源模板库，支持线性代数、矩阵矢量运算和数值分析，是个方便好用的数学库。</p>
+<p>更绝的是，EIGEN所有源码用头文件编写，所以只需要Include,无需编译链接过程，直接与平台无关，非常通用！</p>
+<h3 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h3><p>安装过程也很简单，在UBUNTU下直接</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line">sudo apt-get install libeigen3-dev</span><br></pre></td></tr></table></figure>
+<p>一般安装在/usr/include目录下</p>
+<p>使用直接与标准库类似，#include &lt;Eigen/Dense&gt;等</p>
+<h3 id="主要模块"><a href="#主要模块" class="headerlink" title="主要模块"></a>主要模块</h3><p><img src="/images/01_20_1.png"></p>
+<h3 id="简单例子"><a href="#简单例子" class="headerlink" title="简单例子"></a>简单例子</h3><figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;eigen3/Eigen/Dense&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> Eigen;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line"></span><br><span class="line">    Matrix3d m = Matrix3d::<span class="built_in">Random</span>();</span><br><span class="line">    m = ( m + Matrix3d::<span class="built_in">Constant</span>(<span class="number">1.2</span>)) * <span class="number">50</span>;</span><br><span class="line"></span><br><span class="line">    cout &lt;&lt; m &lt;&lt; endl;</span><br><span class="line">    <span class="function">Vector3d <span class="title">v</span><span class="params">(<span class="number">3</span>)</span></span>;</span><br><span class="line">    v &lt;&lt; <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>;</span><br><span class="line">    cout &lt;&lt;m*v &lt;&lt; endl;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>这是fix_sized定义的写法，一般4*4以下的矩阵矢量用固定大小写法，对于比较大的才用不定量写法MatirxXd, VectorXd;</p>
+<p>主要结构为1D对象Vector, Array和2D对象Matrix</p>
+]]></content>
+      <categories>
+        <category>EIGEN</category>
+      </categories>
+      <tags>
+        <tag>EIGEN</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>逻辑控制</title>
+    <url>/2021/12/16/cpp/%E9%80%BB%E8%BE%91%E6%8E%A7%E5%88%B6/</url>
+    <content><![CDATA[<h3 id="do…while…-至少会执行一次的循环逻辑"><a href="#do…while…-至少会执行一次的循环逻辑" class="headerlink" title="do…while… 至少会执行一次的循环逻辑"></a>do…while… 至少会执行一次的循环逻辑</h3><p>哨兵(sentinel)字符: 一直读取，直到’他‘为止</p>
+<h3 id="检查文件是否正确打开很关键"><a href="#检查文件是否正确打开很关键" class="headerlink" title="检查文件是否正确打开很关键"></a>检查文件是否正确打开很关键</h3><p>用string读ifstream数据</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;fstream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string&gt;</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line">    ifstream inFile;</span><br><span class="line">    inFile.<span class="built_in">open</span>(filename);</span><br><span class="line">    <span class="keyword">if</span>(!inFile.<span class="built_in">is_open</span>())</span><br><span class="line">    &#123;</span><br><span class="line">        cout &lt;&lt;<span class="string">&quot;Failed Open&quot;</span>;</span><br><span class="line">        <span class="built_in">exit</span>(EXIT_FAILURE);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 逐行读放在string</span></span><br><span class="line">    string str;</span><br><span class="line">    <span class="built_in">getline</span>(inFile, str);</span><br><span class="line">    <span class="comment">//stoi, stof, stod </span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<h3 id="关于函数，真正的乐趣在于编写自己的函数，函数库"><a href="#关于函数，真正的乐趣在于编写自己的函数，函数库" class="headerlink" title="关于函数，真正的乐趣在于编写自己的函数，函数库"></a>关于函数，真正的乐趣在于编写自己的函数，函数库</h3><h3 id="指向const的指针以及const指针"><a href="#指向const的指针以及const指针" class="headerlink" title="指向const的指针以及const指针"></a>指向const的指针以及const指针</h3><p><img src="/images/12_17_1.png"></p>
+<h3 id="递归使用"><a href="#递归使用" class="headerlink" title="递归使用"></a>递归使用</h3><figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">recurs</span><span class="params">(arg)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="function">stat1</span></span><br><span class="line"><span class="function">    <span class="title">if</span><span class="params">(test)</span></span></span><br><span class="line"><span class="function">        <span class="title">recurs</span><span class="params">(arg)</span></span></span><br><span class="line"><span class="function">    stat2</span></span><br><span class="line"><span class="function">&#125;</span></span><br></pre></td></tr></table></figure>
+<p>先执行stat1,打开满足条件，打开新的递归；直到新的递归不满足条件，逐步执行stat2并关闭当前函数；直到所有打开的函数都关闭了。</p>
+<h3 id="函数指针"><a href="#函数指针" class="headerlink" title="函数指针"></a>函数指针</h3><p>用函数指针将第一函数找到第二函数，而非直接调用；虽然笨拙，但好处是可以在不同时间传递不同的函数地址；<br>语法：double (*pf)(int);</p>
+<h3 id="应尽量使用const"><a href="#应尽量使用const" class="headerlink" title="应尽量使用const"></a>应尽量使用const</h3><p>1.使用const可以避免无意中修改数据的失误<br>2.使用const使函数能够处理const和非const实参，否则将不能处理const实参<br>3.使用const引用使函数能够正确生成并使用临时变量</p>
+<h3 id="引用非常适合用于结构和类"><a href="#引用非常适合用于结构和类" class="headerlink" title="引用非常适合用于结构和类"></a>引用非常适合用于<strong>结构和类</strong></h3><p>何时使用引用参数：1.能够修改调用函数中的数据对象 2.通过传递引用而非拷贝提高程序运行速度</p>
+<h3 id="语法糖：函数默认参数从右往左"><a href="#语法糖：函数默认参数从右往左" class="headerlink" title="语法糖：函数默认参数从右往左"></a>语法糖：函数默认参数从右往左</h3><h3 id="函数多态：重载函数"><a href="#函数多态：重载函数" class="headerlink" title="函数多态：重载函数"></a>函数多态：重载函数</h3><p>不应滥用，适用于不同参数类型输入，完成基本一致功能的多个函数使用，const与非const也不一样</p>
+<h3 id="函数多态：模板编程"><a href="#函数多态：模板编程" class="headerlink" title="函数多态：模板编程"></a>函数多态：模板编程</h3><figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;  <span class="comment">// typename -&gt; class is ok</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Swap</span><span class="params">(T &amp;a, T &amp;b)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    T temp;</span><br><span class="line">    temp = a;</span><br><span class="line">    a = b;</span><br><span class="line">    b = temp;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>编译器如何匹配最佳函数是一个复杂而完备的过程，大致规则如下：<br>1.完全匹配，但常规函数优于模板<br>2.提升转换（char/shorts提升至int, float提升至double)<br>3.标准转换（int 转换char, long 转换double)<br>4.用户定义的转换，如类声明</p>
+]]></content>
+      <categories>
+        <category>c++</category>
+      </categories>
+      <tags>
+        <tag>c++ primer</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>腾讯课堂-C++11多线程</title>
     <url>/2021/12/28/cpp/%E8%85%BE%E8%AE%AF%E8%AF%BE%E5%A0%82-C-11%E5%A4%9A%E7%BA%BF%E7%A8%8B/</url>
     <content><![CDATA[<h3 id="线程管理"><a href="#线程管理" class="headerlink" title="线程管理"></a>线程管理</h3><p>多线程的执行函数尽量用传引用，以减少不必要资源开销；根据hardware_concurrency得到核心数来决定开多线程的数量；</p>
@@ -619,49 +665,27 @@
       </tags>
   </entry>
   <entry>
-    <title>逻辑控制</title>
-    <url>/2021/12/16/cpp/%E9%80%BB%E8%BE%91%E6%8E%A7%E5%88%B6/</url>
-    <content><![CDATA[<h3 id="do…while…-至少会执行一次的循环逻辑"><a href="#do…while…-至少会执行一次的循环逻辑" class="headerlink" title="do…while… 至少会执行一次的循环逻辑"></a>do…while… 至少会执行一次的循环逻辑</h3><p>哨兵(sentinel)字符: 一直读取，直到’他‘为止</p>
-<h3 id="检查文件是否正确打开很关键"><a href="#检查文件是否正确打开很关键" class="headerlink" title="检查文件是否正确打开很关键"></a>检查文件是否正确打开很关键</h3><p>用string读ifstream数据</p>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;fstream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string&gt;</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line">    ifstream inFile;</span><br><span class="line">    inFile.<span class="built_in">open</span>(filename);</span><br><span class="line">    <span class="keyword">if</span>(!inFile.<span class="built_in">is_open</span>())</span><br><span class="line">    &#123;</span><br><span class="line">        cout &lt;&lt;<span class="string">&quot;Failed Open&quot;</span>;</span><br><span class="line">        <span class="built_in">exit</span>(EXIT_FAILURE);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 逐行读放在string</span></span><br><span class="line">    string str;</span><br><span class="line">    <span class="built_in">getline</span>(inFile, str);</span><br><span class="line">    <span class="comment">//stoi, stof, stod </span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-<h3 id="关于函数，真正的乐趣在于编写自己的函数，函数库"><a href="#关于函数，真正的乐趣在于编写自己的函数，函数库" class="headerlink" title="关于函数，真正的乐趣在于编写自己的函数，函数库"></a>关于函数，真正的乐趣在于编写自己的函数，函数库</h3><h3 id="指向const的指针以及const指针"><a href="#指向const的指针以及const指针" class="headerlink" title="指向const的指针以及const指针"></a>指向const的指针以及const指针</h3><p><img src="/images/12_17_1.png"></p>
-<h3 id="递归使用"><a href="#递归使用" class="headerlink" title="递归使用"></a>递归使用</h3><figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">recurs</span><span class="params">(arg)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="function">stat1</span></span><br><span class="line"><span class="function">    <span class="title">if</span><span class="params">(test)</span></span></span><br><span class="line"><span class="function">        <span class="title">recurs</span><span class="params">(arg)</span></span></span><br><span class="line"><span class="function">    stat2</span></span><br><span class="line"><span class="function">&#125;</span></span><br></pre></td></tr></table></figure>
-<p>先执行stat1,打开满足条件，打开新的递归；直到新的递归不满足条件，逐步执行stat2并关闭当前函数；直到所有打开的函数都关闭了。</p>
-<h3 id="函数指针"><a href="#函数指针" class="headerlink" title="函数指针"></a>函数指针</h3><p>用函数指针将第一函数找到第二函数，而非直接调用；虽然笨拙，但好处是可以在不同时间传递不同的函数地址；<br>语法：double (*pf)(int);</p>
-<h3 id="应尽量使用const"><a href="#应尽量使用const" class="headerlink" title="应尽量使用const"></a>应尽量使用const</h3><p>1.使用const可以避免无意中修改数据的失误<br>2.使用const使函数能够处理const和非const实参，否则将不能处理const实参<br>3.使用const引用使函数能够正确生成并使用临时变量</p>
-<h3 id="引用非常适合用于结构和类"><a href="#引用非常适合用于结构和类" class="headerlink" title="引用非常适合用于结构和类"></a>引用非常适合用于<strong>结构和类</strong></h3><p>何时使用引用参数：1.能够修改调用函数中的数据对象 2.通过传递引用而非拷贝提高程序运行速度</p>
-<h3 id="语法糖：函数默认参数从右往左"><a href="#语法糖：函数默认参数从右往左" class="headerlink" title="语法糖：函数默认参数从右往左"></a>语法糖：函数默认参数从右往左</h3><h3 id="函数多态：重载函数"><a href="#函数多态：重载函数" class="headerlink" title="函数多态：重载函数"></a>函数多态：重载函数</h3><p>不应滥用，适用于不同参数类型输入，完成基本一致功能的多个函数使用，const与非const也不一样</p>
-<h3 id="函数多态：模板编程"><a href="#函数多态：模板编程" class="headerlink" title="函数多态：模板编程"></a>函数多态：模板编程</h3><figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;  <span class="comment">// typename -&gt; class is ok</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Swap</span><span class="params">(T &amp;a, T &amp;b)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    T temp;</span><br><span class="line">    temp = a;</span><br><span class="line">    a = b;</span><br><span class="line">    b = temp;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<p>编译器如何匹配最佳函数是一个复杂而完备的过程，大致规则如下：<br>1.完全匹配，但常规函数优于模板<br>2.提升转换（char/shorts提升至int, float提升至double)<br>3.标准转换（int 转换char, long 转换double)<br>4.用户定义的转换，如类声明</p>
+    <title>墙面分割</title>
+    <url>/2022/01/14/pcl/%E5%A2%99%E9%9D%A2%E5%88%86%E5%89%B2/</url>
+    <content><![CDATA[<h3 id="区域生长分割region-growing-segmentation"><a href="#区域生长分割region-growing-segmentation" class="headerlink" title="区域生长分割region growing segmentation"></a>区域生长分割region growing segmentation</h3><p>算法核心：基于点法线之间角度的比较，尽量将满足平滑约束的相邻点合并在一起，以一簇点集的形式输出，视为相同平面</p>
+<p>工作原理：区域增长从有最小曲率值curvature的点。则需要计算所有曲率值并进行排序；因为曲率最小的点位于平坦区域，从平坦区域增长可以减少区域的总数。（曲率与法线的求解方法类似,法线描述点在表面的法向，曲率则是法线间协方差矩阵的特征值，描述法向一致性)</p>
+<p>具体过程：</p>
+<ol>
+<li>对未标记点的曲率排序，将最小曲率点放入种子集</li>
+<li>对每个种子的所有邻点计算</li>
+<li>1 每个近邻点与当前点的法线角度差(reg.setSmoothnessThreshold),如果小于阈值则重点考虑，进入2.2判断</li>
+<li>2 该点通过2.1法线角度差检验，如果曲率小于设定的阈值(reg.setCurvatureThreshold)，这个点即被添加到种子点集，属于当前平面</li>
+<li>通过两次检验的点，被从原始点云去除</li>
+<li>设置最小点簇的点数reg.setMinClusterSize,以及最大簇reg.segMaxClusterSize</li>
+<li>重复1-3生成min~max个点数的所有平面，并对不同平面标记颜色区分</li>
+<li>直到算法在剩余点中生成的点簇不能满足min,停止工作</li>
+</ol>
 ]]></content>
       <categories>
-        <category>c++</category>
+        <category>pcl</category>
       </categories>
       <tags>
-        <tag>c++ primer</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>EIGEN_1 HELLO_WOLRD</title>
-    <url>/2022/01/20/eigen/eigen-1/</url>
-    <content><![CDATA[<h3 id="EIGEN简介"><a href="#EIGEN简介" class="headerlink" title="EIGEN简介"></a>EIGEN简介</h3><p>FROM WIKI: Eigen is a high-level C++ library of template headers for linear algebra, matrix and vector operations, geometrical transformations, numerical solvers and related algorithms.<br>简而言之C++开源模板库，支持线性代数、矩阵矢量运算和数值分析，是个方便好用的数学库。</p>
-<p>更绝的是，EIGEN所有源码用头文件编写，所以只需要Include,无需编译链接过程，直接与平台无关，非常通用！</p>
-<h3 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h3><p>安装过程也很简单，在UBUNTU下直接</p>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line">sudo apt-get install libeigen3-dev</span><br></pre></td></tr></table></figure>
-<p>一般安装在/usr/include目录下</p>
-<p>使用直接与标准库类似，#include &lt;Eigen/Dense&gt;等</p>
-<h3 id="主要模块"><a href="#主要模块" class="headerlink" title="主要模块"></a>主要模块</h3><p><img src="/images/01_20_1.png"></p>
-<h3 id="简单例子"><a href="#简单例子" class="headerlink" title="简单例子"></a>简单例子</h3><figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;eigen3/Eigen/Dense&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> Eigen;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line"></span><br><span class="line">    Matrix3d m = Matrix3d::<span class="built_in">Random</span>();</span><br><span class="line">    m = ( m + Matrix3d::<span class="built_in">Constant</span>(<span class="number">1.2</span>)) * <span class="number">50</span>;</span><br><span class="line"></span><br><span class="line">    cout &lt;&lt; m &lt;&lt; endl;</span><br><span class="line">    <span class="function">Vector3d <span class="title">v</span><span class="params">(<span class="number">3</span>)</span></span>;</span><br><span class="line">    v &lt;&lt; <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>;</span><br><span class="line">    cout &lt;&lt;m*v &lt;&lt; endl;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<p>这是fix_sized定义的写法，一般4*4以下的矩阵矢量用固定大小写法，对于比较大的才用不定量写法MatirxXd, VectorXd;</p>
-<p>主要结构为1D对象Vector, Array和2D对象Matrix</p>
-]]></content>
-      <categories>
-        <category>EIGEN</category>
-      </categories>
-      <tags>
-        <tag>EIGEN</tag>
+        <tag>pcl</tag>
       </tags>
   </entry>
   <entry>
@@ -686,27 +710,21 @@
       </tags>
   </entry>
   <entry>
-    <title>墙面分割</title>
-    <url>/2022/01/14/pcl/%E5%A2%99%E9%9D%A2%E5%88%86%E5%89%B2/</url>
-    <content><![CDATA[<h3 id="区域生长分割region-growing-segmentation"><a href="#区域生长分割region-growing-segmentation" class="headerlink" title="区域生长分割region growing segmentation"></a>区域生长分割region growing segmentation</h3><p>算法核心：基于点法线之间角度的比较，尽量将满足平滑约束的相邻点合并在一起，以一簇点集的形式输出，视为相同平面</p>
-<p>工作原理：区域增长从有最小曲率值curvature的点。则需要计算所有曲率值并进行排序；因为曲率最小的点位于平坦区域，从平坦区域增长可以减少区域的总数。（曲率与法线的求解方法类似,法线描述点在表面的法向，曲率则是法线间协方差矩阵的特征值，描述法向一致性)</p>
-<p>具体过程：</p>
-<ol>
-<li>对未标记点的曲率排序，将最小曲率点放入种子集</li>
-<li>对每个种子的所有邻点计算</li>
-<li>1 每个近邻点与当前点的法线角度差(reg.setSmoothnessThreshold),如果小于阈值则重点考虑，进入2.2判断</li>
-<li>2 该点通过2.1法线角度差检验，如果曲率小于设定的阈值(reg.setCurvatureThreshold)，这个点即被添加到种子点集，属于当前平面</li>
-<li>通过两次检验的点，被从原始点云去除</li>
-<li>设置最小点簇的点数reg.setMinClusterSize,以及最大簇reg.segMaxClusterSize</li>
-<li>重复1-3生成min~max个点数的所有平面，并对不同平面标记颜色区分</li>
-<li>直到算法在剩余点中生成的点簇不能满足min,停止工作</li>
-</ol>
+    <title>皮肤的秘密</title>
+    <url>/2022/01/19/reading/%E7%9A%AE%E8%82%A4%E7%9A%84%E7%A7%98%E5%AF%86/</url>
+    <content><![CDATA[<h3 id="认识皮肤"><a href="#认识皮肤" class="headerlink" title="认识皮肤"></a>认识皮肤</h3><p>皮肤是人体最大的器官，展开达两平方米，是人体之于外界环境的保护膜，同时也是零距离感受外界的第一道关卡，所以每一寸都遍布了神经细胞。</p>
+<p>皮肤主要由三层构成：表皮，真皮以及皮下组合。其中表皮与真皮间的基底膜带决定了皮肤的弹性紧致，而且是在1岁形成不可逆的衰老，无法重生所以只能好好保护延缓其衰老。皮肤细胞从底层出生，衰老于真皮并死亡在表皮并成为保护屏障，正常周期为4周。患有皮肤病的可能会加速该过程至5天，导致表皮的屏障并不完整。</p>
+<h3 id="表皮"><a href="#表皮" class="headerlink" title="表皮"></a>表皮</h3><p>由于皮肤表面存在着大量微生物群，所以保持皮肤的pH值是非常重要的，应当合理维持完好无损的酸性保护膜，人工清洁剂约5.5，另外对于皮下脂肪过厚的皮肤褶皱，唯一有效办法是减肥。可以用抗真菌软膏，另外带锌软膏可缓解皮肤炎症，带走多余水分。</p>
+<p><img src="/images/01_19_1.png"></p>
+<p>生长纹无足轻重，关于肤色，是有黑色素影响的。研究表明，橙色皮肤最具吸引力，可多摄入胡萝卜素B达到。颠痕主要由基底膜带大面积受损，表皮过度损耗引起的。对于渗水伤口可用硅霜或贴上硅凝胶伤口贴。治疗疙瘩需要强效疗法如：激光疗法、热针、冷冻疗法以及X射线放射疗法。</p>
+<h3 id="真皮"><a href="#真皮" class="headerlink" title="真皮"></a>真皮</h3><p>真皮充满紧致的结缔组织，带来稳固性以及拉伸性，任何的日晒、日光浴、烟草、压力、睡眠不足、营养不良以及缺乏运动等会加速弹性纤维的流失。臀部皮肤就是自然老化的参考，面部等受光照影响较大是老化较快的皮肤。另外，皮肤在4度就开始出现冻疮，而冬天皮肤也能适应，所以只在晚上睡前使用保湿即可，白天冬天保湿使皮肤含水量升高，反而容易冻伤。</p>
+<p>真皮层拥有大量神经，使皮肤成为最大的神经器官，抚摸有调节中枢神经和社交等作用。同时含有腺体，会分泌激素气味等。</p>
 ]]></content>
       <categories>
-        <category>pcl</category>
+        <category>读书笔记</category>
       </categories>
       <tags>
-        <tag>pcl</tag>
+        <tag>读书笔记</tag>
       </tags>
   </entry>
   <entry>
@@ -733,27 +751,66 @@
         <category>读书</category>
       </categories>
       <tags>
-        <tag>心得</tag>
         <tag>读书笔记</tag>
+        <tag>心得</tag>
       </tags>
   </entry>
   <entry>
-    <title>皮肤的秘密</title>
-    <url>/2022/01/19/reading/%E7%9A%AE%E8%82%A4%E7%9A%84%E7%A7%98%E5%AF%86/</url>
-    <content><![CDATA[<h3 id="认识皮肤"><a href="#认识皮肤" class="headerlink" title="认识皮肤"></a>认识皮肤</h3><p>皮肤是人体最大的器官，展开达两平方米，是人体之于外界环境的保护膜，同时也是零距离感受外界的第一道关卡，所以每一寸都遍布了神经细胞。</p>
-<p>皮肤主要由三层构成：表皮，真皮以及皮下组合。其中表皮与真皮间的基底膜带决定了皮肤的弹性紧致，而且是在1岁形成不可逆的衰老，无法重生所以只能好好保护延缓其衰老。皮肤细胞从底层出生，衰老于真皮并死亡在表皮并成为保护屏障，正常周期为4周。患有皮肤病的可能会加速该过程至5天，导致表皮的屏障并不完整。</p>
-<h3 id="表皮"><a href="#表皮" class="headerlink" title="表皮"></a>表皮</h3><p>由于皮肤表面存在着大量微生物群，所以保持皮肤的pH值是非常重要的，应当合理维持完好无损的酸性保护膜，人工清洁剂约5.5，另外对于皮下脂肪过厚的皮肤褶皱，唯一有效办法是减肥。可以用抗真菌软膏，另外带锌软膏可缓解皮肤炎症，带走多余水分。</p>
-<p><img src="/images/01_19_1.png"></p>
-<p>生长纹无足轻重，关于肤色，是有黑色素影响的。研究表明，橙色皮肤最具吸引力，可多摄入胡萝卜素B达到。颠痕主要由基底膜带大面积受损，表皮过度损耗引起的。对于渗水伤口可用硅霜或贴上硅凝胶伤口贴。治疗疙瘩需要强效疗法如：激光疗法、热针、冷冻疗法以及X射线放射疗法。</p>
-<h3 id="真皮"><a href="#真皮" class="headerlink" title="真皮"></a>真皮</h3><p>真皮充满紧致的结缔组织，带来稳固性以及拉伸性，任何的日晒、日光浴、烟草、压力、睡眠不足、营养不良以及缺乏运动等会加速弹性纤维的流失。臀部皮肤就是自然老化的参考，面部等受光照影响较大是老化较快的皮肤。另外，皮肤在4度就开始出现冻疮，而冬天皮肤也能适应，所以只在晚上睡前使用保湿即可，白天冬天保湿使皮肤含水量升高，反而容易冻伤。</p>
-<p>真皮层拥有大量神经，使皮肤成为最大的神经器官，抚摸有调节中枢神经和社交等作用。同时含有腺体，会分泌激素气味等。</p>
-]]></content>
+    <title>六年前的自己</title>
+    <url>/2021/12/22/rizhi/%E5%85%AD%E5%B9%B4%E5%89%8D%E7%9A%84%E8%87%AA%E5%B7%B1/</url>
+    <content><![CDATA[<p><a href="https://csrjtan.github.io/">https://csrjtan.github.io/</a><br>回看六年前的自己，摘录一些当时有意义的文段</p>
+<h3 id="23岁的生日"><a href="#23岁的生日" class="headerlink" title="23岁的生日"></a>23岁的生日</h3><p>重读六年前的自己，用文字记录对这个世界的感受和认知，那时候的自己充满了希望，虽然能力配不上欲望而渐渐失落，但依然希望找到那种年轻的感觉。</p>
+<h3 id=""><a href="#" class="headerlink" title=""></a></h3><p>当年的愿望：</p>
+<ul>
+<li>工作上：提高编程和学术能力</li>
+<li>生活上：爱家人，爱生活，爱伴侣</li>
+<li>日常上：坚持读，坚持写，坚持学，坚持感受，坚持表达</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">《成长的天空》 </span><br><span class="line">我沉浸在自己的世界里</span><br><span class="line">写着无关是非的歌谣</span><br><span class="line">点蓝的笔触</span><br><span class="line">划过了年轻的天空</span><br><span class="line">一只飞鸟带走我的青春</span><br><span class="line">还我，岁月沉淀的帽子</span><br><span class="line">轻声说道</span><br><span class="line">年轻总不是永远的借口</span><br></pre></td></tr></table></figure>
+
+<h3 id="回看中秋自省的自己"><a href="#回看中秋自省的自己" class="headerlink" title="回看中秋自省的自己"></a>回看中秋自省的自己</h3><p>经过5年起起落落，心态转变得很明显甚至于有点得过且过的样子，现在自己比年轻的自己多了一点能力和资源，却失去了做大梦的勇气和毅力。希望自己能依然不断找到人生的兴奋点，勇往直前地去追寻探索，从今天开始，真正的为自己而活，不在乎别人的眼光，不在乎可能会失去的安逸。</p>
+<h3 id="家人信息简要"><a href="#家人信息简要" class="headerlink" title="家人信息简要"></a>家人信息简要</h3><p>爸：1961.7.8，牛，会计。爱好军事政治经济唱歌。性格硬朗好面子。优点：精神好，能干，勤勉<br>妈：1961.11.12，牛，仓管（退休）。爱好家庭家人养生。优点：节俭，爱戴我们，慈祥<br>哥：1987.8.9，兔，前端全栈，爱好广泛潮流酷玩。优点：工程能力强，迁就随和<br>为：1992.08.13，猴，算法攻城狮。爱好：声乐，运动，游戏。优点：耐受力，随和</p>
+<h3 id="选书策略"><a href="#选书策略" class="headerlink" title="选书策略"></a>选书策略</h3><p>出版社-&gt;作者-&gt;版次-&gt;印次-&gt;印数</p>
+<h3 id="追逐幸福的要素"><a href="#追逐幸福的要素" class="headerlink" title="追逐幸福的要素"></a>追逐幸福的要素</h3><ul>
+<li>找到喜欢的工作，有收入又受到社会尊重</li>
+<li>减少上下班耗费的时间，有充足的社交时间</li>
+<li>对国家和社会有政治热情，有参与度</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">不论曾经的彼此多么幼稚，多么可笑</span><br><span class="line">终有一天我们都变得成熟；</span><br><span class="line">也终有一天，我们都会老去；</span><br><span class="line">可是，却没有人可以永远不长大，</span><br><span class="line">却没有人可以永远年轻，</span><br><span class="line">成熟，有时候会让人心痛、很无奈。</span><br><span class="line">那个时候才会懂得：</span><br><span class="line">爱情本不是件该执着的事情。</span><br></pre></td></tr></table></figure>]]></content>
       <categories>
-        <category>读书笔记</category>
+        <category>日常</category>
       </categories>
       <tags>
-        <tag>读书笔记</tag>
+        <tag>博客迁移</tag>
       </tags>
+  </entry>
+  <entry>
+    <title>2021_年终总结</title>
+    <url>/2021/12/31/rizhi/2021-%E5%B9%B4%E7%BB%88%E6%80%BB%E7%BB%93/</url>
+    <content><![CDATA[<p>回顾今年的自己，提出个人思见和应该执行改进的点。</p>
+<h3 id="工作上"><a href="#工作上" class="headerlink" title="工作上"></a>工作上</h3><p>年初从测量机器人这个项目跳出来，主要是派发的需求集中在基于opencv的图表绘制上，另外一个是基于opencv的户型图分割项目。由于数据来源没有统一化，基于图像的户型分割较大的不稳定因素；关于图表绘制核心的功能就是解决文本碰撞的问题；期间还用网页自动化点击脚本完成了一个疫情一日一表的自动填表功能，节省了每日必做的无用行为。之前看到python基于桌面图像识别可以自动匹配鼠标行为，这是原来项目的高级方法。作为一个程序员，生活中如果出现较多的重复度大的行为与操作时，就应该开始考虑自动化脚本或者程序去自动执行。</p>
+<p>跳出在顺德的工作后，由于皮肤问题变本加厉，有很长的一段时间我是在家休养，每天除了睡得非常多以外，大部分时间都在宅家度过，让老父母亲着实担心不浅。这个坏毛病是在香港最后几年养成的，当时的这个研究生和本科的一些坏习惯让我最终渐渐失去了对自我的自律以及对自我的期待，对自我的希望。我当时像泄了气的气球，一泻千里，由此深深的陷入人生以来的低谷。也许是我的叛逆期晚到了，从那一刻我才开始体会到一点点的自由，自我开始向这个世界抗争拉扯。大学以前，一直认为只要读书好就可报答家人，这种被动的内驱力面对真正的困难和社会的残酷竞争时是多么的无力。</p>
+<p>害怕失败，害怕白眼，害怕接受自己的无能，于是我有点像堕落的高材生，开始逃避，开始偷懒。一些不良的嗜好也让我的人格不再高尚，比如毫无意义重复的游戏世界,比如深陷情绪的孤独，<a href="%EF%BC%8C%E6%AF%94%E5%A6%82%E5%94%BE%E6%89%8B%E5%8F%AF%E5%BE%97%E7%9A%84%E9%BB%84%E8%89%B2%E5%BF%AB%E4%B9%90%EF%BC%8C"></a>还好从没接触直达灵魂的药品了。值得庆幸的是，我自小深深的记住了外婆反复强调的千万不能碰毒品。这句话是外婆对孙辈们的苦口婆心，也是最低最低的要求了。经历的这一切，我深知自己自制力的脆弱，应减少对不良事物的好奇与冒险，希望我这一辈子都能与成瘾性隔绝，否则我很容易预见到自己再一次的堕落。</p>
+<p>这一切就发生在今年上，直到年中我也发现自己不能再给自己找借口了，在香港的时候无人约束，我可以随意的挥霍光阴。在家里宅的话，亲戚朋友尤其家里人很是担心，特别是我生命中最重要的两个女人：母亲和媳妇。于是到了年中，虽然皮肤病依然没有康复，但我已经厌倦了作为一个毫无价值的人存在于世。心底里，我渴望世界听到我的声音，因我存在而改变，而不是一直作为一个边缘人物存在着。但很多时候我还是会给自我设限，会介怀于我虚度的光阴，介怀于我曾经的失败，介怀于我那并不闪闪发光的履历。但无论如何，我收拾行囊，重新出发了，以一个更谦卑的姿态。</p>
+<p>在boss上，我海投以及面笔了好些公司，最终我依然没有自信的奔赴大公司，我选择了一家智能硬件作为自我调整的起点。6月15日我再次翻开人生的新篇章，来到了深圳塘朗，追逐体面的生活，希望用自己的文字，代码以及思想发光发亮。至此，在HOLA已然半年，早期为算法组开展论文研讨学习，后续是全程跟进云台项目的算法实现：包括SLAM，三维重建以及点云墙面分割的核心模块。目前为止虽然基本的核心功能已然完成，但仍然有很多内容需要补齐学习，为后续真正的工程化作知识储备。另外如CTO所说，HOLA这个平台是否适合我继续发展个人的职业规划以及技术路径。工作这半年，大部分时间是孤身负重前行的，业务最相似的还是算法组的兄弟朋友们：研发一哥，世攀；玩乐达人，炯彬；斯文大汉，啸天；苦比打工人，东勇；除此还有系统大佬jazzy以及CTO聪哥。基本上，公司内部对三维这块是一片空白的，所以产生了硬币的两端：无人监管我的工作，无人能准确评价我的工作；无人关注我的工作，无人协同我的工作。未来的一年希望能加快项目的落地应用，产生实际的价值。</p>
+<h4 id="2022上半年的工作指标"><a href="#2022上半年的工作指标" class="headerlink" title="2022上半年的工作指标"></a>2022上半年的工作指标</h4><ul>
+<li>薪资至少上调20%</li>
+<li>SLAM 14讲的book &amp; homework</li>
+<li>PCL的系统学习</li>
+</ul>
+<h3 id="学习上"><a href="#学习上" class="headerlink" title="学习上"></a>学习上</h3><p>关于今年的学习，从上文就可知确实进步较慢，但要相信人生是个不断经历的过程，如同重看五年前的自己一样，当时虽然稚嫩但充满阳光和希望；如今的自己，虽有初老心态，但尚未暮年，重新出发，为时未晚。</p>
+<p>已读书单：《浪潮之巅》，《为我的身体养阳气》，《C++ Primer》</p>
+<p>在读书单：《SLAM 14讲》，《三十岁，一切刚刚开始》</p>
+<p>学习方向&amp;主题： C++， SLAM， 三维重建， std标准库， STL模板， 算法导论， LEETCODE</p>
+<p>重新开始经营我的github,以及我的个人博客，记录生活的点点滴滴，一部一脚印。三十年以来的输入足够我输出一些东西了，积极认真地输出自己的观点，去和这个可爱的世界碰撞摩擦吧！马上要三十岁了，走在这个重要的节点上，希望自己成为有担当，值得信任，靠谱的人。更希望自己打破自我设限的枷锁，去勇敢探索生活，探索生命，去冒险，去舞蹈，去歌唱，这是每个人唯一一次的人生阿，已然安然度过了30年了，没有什么再让你值得畏惧了，那就放手去做吧。</p>
+<h3 id="生活上"><a href="#生活上" class="headerlink" title="生活上"></a>生活上</h3><p>首先是运动和减肥！！！</p>
+<p>关于生活，最大的关键字可能是安逸，但影响最大的词应该是疾病。无论精神上还是身体上，长时间缺乏对生活的激情与热情容易致抑。更进一步引起睡眠紊乱，身体亚健康的各种慢性病也冒出来，比如湿疹，这两年简直痛苦不堪，夜不能寐。战胜严重的皮肤慢性病，需要持之以恒的耐心，需要强颜欢笑的乐观，需要时刻注意控制行为。多少次深夜里，我甚至愿意用各种誓言，只为换来自己的身体健康。年轻时拥有的一切是如此轻而易举而又在后来失去时觉得弥足珍贵。</p>
+<p>困扰我工作生活生命已经两年的湿疹，在近期终于在积极阳光的生活中得到一丝丝的控制，明年我并不奢望和贪心康复，只希望面积能缩小至不影响作息，毕竟良好的作息和生活习惯是每一天元气能量的源泉。</p>
+<p>另一方面，说到生活，最应该被提起的就是家人与朋友。关于朋友，虽然有丝许的进步，得到现在算法组同事的互动来往，但可能是自身技术不够牛逼或者是不苟言笑，或者是不够真挚待人。虽然入职半年，但真正有互动能见面言笑的人可能两个手也数得完，希望新的一年也继续勇敢表达自我，真挚对待别人。然后就是最重要的家人，来到深圳后，在顺德待的时间大幅减少，一个月能有两次回家看看就不错了。另外和珊珊结婚后尚未育儿，随着年岁渐长，年近30的我们迫切需要生儿育女了，而这一点更是双方家长最迫切的事情了，希望明年能有新的突破。说实话，没有完美的工作，只有称心如意的工作，在HOLA的工作让我慢慢走出自己人生的低谷，work-life balance的双休与无加班节奏也很好的平衡我身体上遇到的种种问题。虽然作为程序员毫无忠诚度可言，但我从心底感激和感恩HOLA，让我重新支棱起了自己，不再是瘫倒地上的烂泥，明年愿自己慢慢成为高飞天际的雄鹰。</p>
+]]></content>
+      <categories>
+        <category>年终总结</category>
+      </categories>
   </entry>
   <entry>
     <title>软技能</title>
@@ -795,71 +852,63 @@
 <li>当前的专业领域是什么？如果没有，希望选择专攻哪个领域</li>
 <li>主流的招聘网站看看自己的专业领域市场行情如何，确定专业化道路让自己受益还是限制了自己的选择</li>
 </ul>
-<p>关于公司<br>| 公司规模 | 优点 | 缺点 |<br>| — | — | — |<br>| 小 | 承担多种责任，工作影响力大 | 没法安静写代码，稳定性差 |</p>
-<p> 你好<br> | 标题1 | 标题2 | 标题3 |<br>| —— | —— | —— |<br>| 文本好短 | 文本不短也不长 | 文本好长文本好长文本好长 |<br>| 文本好长文本好长文本好长 | 文本好短 | 文本不短也不长 |</p>
-]]></content>
+<p>关于公司<br>| 公司规模 | 优点 | 缺点 |<br>| 小 | 承担多种责任，工作影响力大 | 没法安静写代码，稳定性差 |<br>| 中 | 稳定，加班少 | 变化慢，难涉及前沿技术 |<br>| 大 | 完备的流程和规范，培训以及大型有影响力的项目 | 官僚主义，只负责代码库的小部分，难受关注 |</p>
+<h4 id="晋升之路"><a href="#晋升之路" class="headerlink" title="晋升之路"></a>晋升之路</h4><p>在更多金钱还是更多责任的选择上，长远看，正确选择几乎是更多责任。</p>
+<p>如何让自己承担更多责任：</p>
+<ul>
+<li>不受重视的项目，你能负责它吗</li>
+<li>你能帮助团队里的新人快速成长吗</li>
+<li>你能负责文档制作流程，并保证及时更新文档吗</li>
+<li>哪项工作没有人愿意做，你愿意承担并将其简化或者自动化吗</li>
+</ul>
+<p>如何让自己引人注目:</p>
+<ul>
+<li>每天记录自己的活动日志-把日志以周报的形式发送给经理</li>
+<li>提供演讲或培训-选择一个对团队有用的话题</li>
+<li>发表意见-只要在会议上就这么做，或者只要你能得到的机会就这么做</li>
+<li>保证“曝光度”-定期与老板会面，确保你经常被注意到</li>
+</ul>
+<h4 id="如何成为专业人士"><a href="#如何成为专业人士" class="headerlink" title="如何成为专业人士"></a>如何成为专业人士</h4><p><code>The War of Art: 成为专业人士是一种心态。如果我们总是与恐惧、自毁、拖延和自我怀疑作斗争，那么问题就是：我们正在像外行那样思考问题。外行毫不起眼，外行人废话连篇，外行屈从于逆境。专业人士可不这么想。不管怎样，他引人注目，他恪尽职守，他始终如一。</code></p>
+<p>认真规划自己的：已经做了什么、计划做什么、有哪些障碍</p>
+<p>培养正确的习惯，推荐阅读《习惯的力量》</p>
+<h4 id="关于赢得自由：为自己工作"><a href="#关于赢得自由：为自己工作" class="headerlink" title="关于赢得自由：为自己工作"></a>关于赢得自由：为自己工作</h4><p>辞掉之前需要一个切实可行的计划，强烈推荐用业余时间启动想创建的业务，等从该业务中产生足以维持生计的收入时，你再转为全职。迫于现实现金流的问题，制订一个计划：什么时候就得认怂做回雇员。以后总可以东山再起，只要没有巨额信用卡债务，没有房屋抵押，没有从亲朋好友借钱而影响到自己的未来。</p>
+<p>为自己工作的意义：1.会比为别人工作时更努力 2.你会更热爱在做的事情，但不要指望持续很久，时间的流逝会使热情变得捉摸不定甚至消逝殆尽 3.突如的工作量使得不止工作8小时<br>推荐书目《So Good They Can’t Ignore You》</p>
+<p>如何行动<br>1.减每月开支并累积资金:确保生存<br>2.保障常规工作之余每周投入15小时做自己的事情，并坚持执行半年以上，确保收入<br>3.提前计算好确切日期，早在一年前做好准备</p>
+<h4 id="关于创业"><a href="#关于创业" class="headerlink" title="关于创业"></a>关于创业</h4><p>了解孵化器或者加速器，注入小额资金换取公司小量股份，通常只持续数月并快速成长。<br>采取行动：</p>
+<ul>
+<li>研究以下一两家心仪的创业公司历史，注意它们是如何开始以及获得融资的</li>
+<li>创立时是单创始人还是多创始人</li>
+<li>创始人还成功创立过其他公司吗</li>
+<li>什么时候开始获得融资的，获得了多少</li>
+<li>这些公司启动时是否加入加速器计划</li>
+</ul>
+<h4 id="关于远程办公"><a href="#关于远程办公" class="headerlink" title="关于远程办公"></a>关于远程办公</h4><p>接受新的工作模式以及迎接新挑战</p>
+<ul>
+<li>时间管理上：建立缜密规律的时间管理，提前计划安排，迎接变化</li>
+<li>自我激励上：建议阅读《驱动力》-Daniel Pink,用习惯驱动自己，排除干扰</li>
+<li>孤独感：周而复始孤独一个人肯定会产生负面影响，走出去，寻找社交生活：参与本地的软件开发者小组聚会，到咖啡馆或者书店工作，规律性到健身房或者运动<br>开始关注允许远程工作的公司，或者完全分布式工作的团队</li>
+</ul>
+<h4 id="关于成功"><a href="#关于成功" class="headerlink" title="关于成功"></a>关于成功</h4><p>“假装自己能成功”，进行自我心理暗示：</p>
+<ul>
+<li>你仿佛已经具备了成功完成任务的技能和天分</li>
+<li>你仿佛已经成为自己想成为的那类人</li>
+<li>仿佛战斗已经结束，而你大获全胜，因为你深知如果自己坚持不懈，胜利就在眼前</li>
+<li>你仿佛已经对即将踏上的未知道路驾轻就熟</li>
+</ul>
+<p>这是有意识地让自己身处逆境，迫使自己学会拼搏。正是在生活中有这样的心态，带领自己勇敢走向未知领域，坚信挑战与机会并存。如果想学会“假装自己能成功”，你就必须拥有破釜沉舟的勇气。</p>
+<p>采取行动：</p>
+<ul>
+<li>诚实地评估一下自己。面对困境，你的心态如何？当遭遇新问题或者不熟悉的问题时，你会怎样做？回想以下，上一次面对困难或者不熟悉的形势时，你是怎么做的？</li>
+<li>你该怎样树立一种自信而不自负的心态？自信与自负之间的区别是什么？为了强化“假装自己能成功”的能力，你现在应该做什么？</li>
+<li>小练习：有目的地将自己置于困境，演练以下自己既定的应对策略。</li>
+<li>Fake it till you make it</li>
+</ul>
+<h4 id="乏味的简历"><a href="#乏味的简历" class="headerlink" title="乏味的简历"></a>乏味的简历</h4>]]></content>
       <categories>
         <category>读书笔记</category>
       </categories>
       <tags>
         <tag>读书笔记</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>2021_年终总结</title>
-    <url>/2021/12/31/rizhi/2021-%E5%B9%B4%E7%BB%88%E6%80%BB%E7%BB%93/</url>
-    <content><![CDATA[<p>回顾今年的自己，提出个人思见和应该执行改进的点。</p>
-<h3 id="工作上"><a href="#工作上" class="headerlink" title="工作上"></a>工作上</h3><p>年初从测量机器人这个项目跳出来，主要是派发的需求集中在基于opencv的图表绘制上，另外一个是基于opencv的户型图分割项目。由于数据来源没有统一化，基于图像的户型分割较大的不稳定因素；关于图表绘制核心的功能就是解决文本碰撞的问题；期间还用网页自动化点击脚本完成了一个疫情一日一表的自动填表功能，节省了每日必做的无用行为。之前看到python基于桌面图像识别可以自动匹配鼠标行为，这是原来项目的高级方法。作为一个程序员，生活中如果出现较多的重复度大的行为与操作时，就应该开始考虑自动化脚本或者程序去自动执行。</p>
-<p>跳出在顺德的工作后，由于皮肤问题变本加厉，有很长的一段时间我是在家休养，每天除了睡得非常多以外，大部分时间都在宅家度过，让老父母亲着实担心不浅。这个坏毛病是在香港最后几年养成的，当时的这个研究生和本科的一些坏习惯让我最终渐渐失去了对自我的自律以及对自我的期待，对自我的希望。我当时像泄了气的气球，一泻千里，由此深深的陷入人生以来的低谷。也许是我的叛逆期晚到了，从那一刻我才开始体会到一点点的自由，自我开始向这个世界抗争拉扯。大学以前，一直认为只要读书好就可报答家人，这种被动的内驱力面对真正的困难和社会的残酷竞争时是多么的无力。</p>
-<p>害怕失败，害怕白眼，害怕接受自己的无能，于是我有点像堕落的高材生，开始逃避，开始偷懒。一些不良的嗜好也让我的人格不再高尚，比如毫无意义重复的游戏世界,比如深陷情绪的孤独，<a href="%EF%BC%8C%E6%AF%94%E5%A6%82%E5%94%BE%E6%89%8B%E5%8F%AF%E5%BE%97%E7%9A%84%E9%BB%84%E8%89%B2%E5%BF%AB%E4%B9%90%EF%BC%8C"></a>还好从没接触直达灵魂的药品了。值得庆幸的是，我自小深深的记住了外婆反复强调的千万不能碰毒品。这句话是外婆对孙辈们的苦口婆心，也是最低最低的要求了。经历的这一切，我深知自己自制力的脆弱，应减少对不良事物的好奇与冒险，希望我这一辈子都能与成瘾性隔绝，否则我很容易预见到自己再一次的堕落。</p>
-<p>这一切就发生在今年上，直到年中我也发现自己不能再给自己找借口了，在香港的时候无人约束，我可以随意的挥霍光阴。在家里宅的话，亲戚朋友尤其家里人很是担心，特别是我生命中最重要的两个女人：母亲和媳妇。于是到了年中，虽然皮肤病依然没有康复，但我已经厌倦了作为一个毫无价值的人存在于世。心底里，我渴望世界听到我的声音，因我存在而改变，而不是一直作为一个边缘人物存在着。但很多时候我还是会给自我设限，会介怀于我虚度的光阴，介怀于我曾经的失败，介怀于我那并不闪闪发光的履历。但无论如何，我收拾行囊，重新出发了，以一个更谦卑的姿态。</p>
-<p>在boss上，我海投以及面笔了好些公司，最终我依然没有自信的奔赴大公司，我选择了一家智能硬件作为自我调整的起点。6月15日我再次翻开人生的新篇章，来到了深圳塘朗，追逐体面的生活，希望用自己的文字，代码以及思想发光发亮。至此，在HOLA已然半年，早期为算法组开展论文研讨学习，后续是全程跟进云台项目的算法实现：包括SLAM，三维重建以及点云墙面分割的核心模块。目前为止虽然基本的核心功能已然完成，但仍然有很多内容需要补齐学习，为后续真正的工程化作知识储备。另外如CTO所说，HOLA这个平台是否适合我继续发展个人的职业规划以及技术路径。工作这半年，大部分时间是孤身负重前行的，业务最相似的还是算法组的兄弟朋友们：研发一哥，世攀；玩乐达人，炯彬；斯文大汉，啸天；苦比打工人，东勇；除此还有系统大佬jazzy以及CTO聪哥。基本上，公司内部对三维这块是一片空白的，所以产生了硬币的两端：无人监管我的工作，无人能准确评价我的工作；无人关注我的工作，无人协同我的工作。未来的一年希望能加快项目的落地应用，产生实际的价值。</p>
-<h4 id="2022上半年的工作指标"><a href="#2022上半年的工作指标" class="headerlink" title="2022上半年的工作指标"></a>2022上半年的工作指标</h4><ul>
-<li>薪资至少上调20%</li>
-<li>SLAM 14讲的book &amp; homework</li>
-<li>PCL的系统学习</li>
-</ul>
-<h3 id="学习上"><a href="#学习上" class="headerlink" title="学习上"></a>学习上</h3><p>关于今年的学习，从上文就可知确实进步较慢，但要相信人生是个不断经历的过程，如同重看五年前的自己一样，当时虽然稚嫩但充满阳光和希望；如今的自己，虽有初老心态，但尚未暮年，重新出发，为时未晚。</p>
-<p>已读书单：《浪潮之巅》，《为我的身体养阳气》，《C++ Primer》</p>
-<p>在读书单：《SLAM 14讲》，《三十岁，一切刚刚开始》</p>
-<p>学习方向&amp;主题： C++， SLAM， 三维重建， std标准库， STL模板， 算法导论， LEETCODE</p>
-<p>重新开始经营我的github,以及我的个人博客，记录生活的点点滴滴，一部一脚印。三十年以来的输入足够我输出一些东西了，积极认真地输出自己的观点，去和这个可爱的世界碰撞摩擦吧！马上要三十岁了，走在这个重要的节点上，希望自己成为有担当，值得信任，靠谱的人。更希望自己打破自我设限的枷锁，去勇敢探索生活，探索生命，去冒险，去舞蹈，去歌唱，这是每个人唯一一次的人生阿，已然安然度过了30年了，没有什么再让你值得畏惧了，那就放手去做吧。</p>
-<h3 id="生活上"><a href="#生活上" class="headerlink" title="生活上"></a>生活上</h3><p>首先是运动和减肥！！！</p>
-<p>关于生活，最大的关键字可能是安逸，但影响最大的词应该是疾病。无论精神上还是身体上，长时间缺乏对生活的激情与热情容易致抑。更进一步引起睡眠紊乱，身体亚健康的各种慢性病也冒出来，比如湿疹，这两年简直痛苦不堪，夜不能寐。战胜严重的皮肤慢性病，需要持之以恒的耐心，需要强颜欢笑的乐观，需要时刻注意控制行为。多少次深夜里，我甚至愿意用各种誓言，只为换来自己的身体健康。年轻时拥有的一切是如此轻而易举而又在后来失去时觉得弥足珍贵。</p>
-<p>困扰我工作生活生命已经两年的湿疹，在近期终于在积极阳光的生活中得到一丝丝的控制，明年我并不奢望和贪心康复，只希望面积能缩小至不影响作息，毕竟良好的作息和生活习惯是每一天元气能量的源泉。</p>
-<p>另一方面，说到生活，最应该被提起的就是家人与朋友。关于朋友，虽然有丝许的进步，得到现在算法组同事的互动来往，但可能是自身技术不够牛逼或者是不苟言笑，或者是不够真挚待人。虽然入职半年，但真正有互动能见面言笑的人可能两个手也数得完，希望新的一年也继续勇敢表达自我，真挚对待别人。然后就是最重要的家人，来到深圳后，在顺德待的时间大幅减少，一个月能有两次回家看看就不错了。另外和珊珊结婚后尚未育儿，随着年岁渐长，年近30的我们迫切需要生儿育女了，而这一点更是双方家长最迫切的事情了，希望明年能有新的突破。说实话，没有完美的工作，只有称心如意的工作，在HOLA的工作让我慢慢走出自己人生的低谷，work-life balance的双休与无加班节奏也很好的平衡我身体上遇到的种种问题。虽然作为程序员毫无忠诚度可言，但我从心底感激和感恩HOLA，让我重新支棱起了自己，不再是瘫倒地上的烂泥，明年愿自己慢慢成为高飞天际的雄鹰。</p>
-]]></content>
-      <categories>
-        <category>年终总结</category>
-      </categories>
-  </entry>
-  <entry>
-    <title>六年前的自己</title>
-    <url>/2021/12/22/rizhi/%E5%85%AD%E5%B9%B4%E5%89%8D%E7%9A%84%E8%87%AA%E5%B7%B1/</url>
-    <content><![CDATA[<p><a href="https://csrjtan.github.io/">https://csrjtan.github.io/</a><br>回看六年前的自己，摘录一些当时有意义的文段</p>
-<h3 id="23岁的生日"><a href="#23岁的生日" class="headerlink" title="23岁的生日"></a>23岁的生日</h3><p>重读六年前的自己，用文字记录对这个世界的感受和认知，那时候的自己充满了希望，虽然能力配不上欲望而渐渐失落，但依然希望找到那种年轻的感觉。</p>
-<h3 id=""><a href="#" class="headerlink" title=""></a></h3><p>当年的愿望：</p>
-<ul>
-<li>工作上：提高编程和学术能力</li>
-<li>生活上：爱家人，爱生活，爱伴侣</li>
-<li>日常上：坚持读，坚持写，坚持学，坚持感受，坚持表达</li>
-</ul>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">《成长的天空》 </span><br><span class="line">我沉浸在自己的世界里</span><br><span class="line">写着无关是非的歌谣</span><br><span class="line">点蓝的笔触</span><br><span class="line">划过了年轻的天空</span><br><span class="line">一只飞鸟带走我的青春</span><br><span class="line">还我，岁月沉淀的帽子</span><br><span class="line">轻声说道</span><br><span class="line">年轻总不是永远的借口</span><br></pre></td></tr></table></figure>
-
-<h3 id="回看中秋自省的自己"><a href="#回看中秋自省的自己" class="headerlink" title="回看中秋自省的自己"></a>回看中秋自省的自己</h3><p>经过5年起起落落，心态转变得很明显甚至于有点得过且过的样子，现在自己比年轻的自己多了一点能力和资源，却失去了做大梦的勇气和毅力。希望自己能依然不断找到人生的兴奋点，勇往直前地去追寻探索，从今天开始，真正的为自己而活，不在乎别人的眼光，不在乎可能会失去的安逸。</p>
-<h3 id="家人信息简要"><a href="#家人信息简要" class="headerlink" title="家人信息简要"></a>家人信息简要</h3><p>爸：1961.7.8，牛，会计。爱好军事政治经济唱歌。性格硬朗好面子。优点：精神好，能干，勤勉<br>妈：1961.11.12，牛，仓管（退休）。爱好家庭家人养生。优点：节俭，爱戴我们，慈祥<br>哥：1987.8.9，兔，前端全栈，爱好广泛潮流酷玩。优点：工程能力强，迁就随和<br>为：1992.08.13，猴，算法攻城狮。爱好：声乐，运动，游戏。优点：耐受力，随和</p>
-<h3 id="选书策略"><a href="#选书策略" class="headerlink" title="选书策略"></a>选书策略</h3><p>出版社-&gt;作者-&gt;版次-&gt;印次-&gt;印数</p>
-<h3 id="追逐幸福的要素"><a href="#追逐幸福的要素" class="headerlink" title="追逐幸福的要素"></a>追逐幸福的要素</h3><ul>
-<li>找到喜欢的工作，有收入又受到社会尊重</li>
-<li>减少上下班耗费的时间，有充足的社交时间</li>
-<li>对国家和社会有政治热情，有参与度</li>
-</ul>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">不论曾经的彼此多么幼稚，多么可笑</span><br><span class="line">终有一天我们都变得成熟；</span><br><span class="line">也终有一天，我们都会老去；</span><br><span class="line">可是，却没有人可以永远不长大，</span><br><span class="line">却没有人可以永远年轻，</span><br><span class="line">成熟，有时候会让人心痛、很无奈。</span><br><span class="line">那个时候才会懂得：</span><br><span class="line">爱情本不是件该执着的事情。</span><br></pre></td></tr></table></figure>]]></content>
-      <categories>
-        <category>日常</category>
-      </categories>
-      <tags>
-        <tag>博客迁移</tag>
       </tags>
   </entry>
   <entry>
@@ -1051,6 +1100,24 @@
       </tags>
   </entry>
   <entry>
+    <title>高效行动</title>
+    <url>/2022/01/18/shisan/%E9%AB%98%E6%95%88%E8%A1%8C%E5%8A%A8/</url>
+    <content><![CDATA[<p><code>摘自微信号十三手记</code></p>
+<h3 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h3><p>为什么那么忙，却没有达到想要的效果？<br>因为多余动作太多</p>
+<p>什么是多余动作？<br>对事情发展本身不直接着力的动作</p>
+<p>多余动作为什么会出现？<br>因为你害怕不利的结果来得太快，所以，你内心的恐惧感让你不自知的搞了这些动作来减缓进展的速度，虽然你以为这样做可以更好的优化过程，可以更快得到有利的结果。</p>
+<p>多余动作会产生什么效果？<br>你以为会让事态进展更高效，但，其实必定会生出更多跟事件发展本身无关的新问题，进而形成层层阻碍。</p>
+<h3 id="此刻你要明白"><a href="#此刻你要明白" class="headerlink" title="此刻你要明白"></a>此刻你要明白</h3><p>在事情发展过程中，只有你的行为尽量实事求是的直接着力于事件本身，你才能尽量减少多余动作产生的能耗，你才能让事件在发展过程中更加清晰的优化，你才能让事件的进展更加高效。</p>
+<h3 id="个人感悟"><a href="#个人感悟" class="headerlink" title="个人感悟"></a>个人感悟</h3><p>对于自我而言，其实是逃避真正问题的根因。有时候明知道面前有必须要解决的问题，但是总是希望从外界或者其他不相关的内容中得到方法，而非从自身出发努力去解决问题。因此往往会偏离有价值的行为，以及有效的解决真正问题，因此才一直无法有效解决问题。</p>
+]]></content>
+      <categories>
+        <category>十三手记</category>
+      </categories>
+      <tags>
+        <tag>十三手记</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>需求正解</title>
     <url>/2022/01/10/shisan/%E9%9C%80%E6%B1%82%E6%AD%A3%E8%A7%A3/</url>
     <content><![CDATA[<p><code>文章摘自微信公众号：十三先生手记</code></p>
@@ -1062,24 +1129,6 @@
 <p>概念需求是什么意思？<br>是附加到人事物的功能和价值上的概念，是让你产生欲望后误以为自己需求的迷障。</p>
 <p>谁附加的概念？<br>是你自己或者是外界。</p>
 <h3 id="此刻要你深深的明白"><a href="#此刻要你深深的明白" class="headerlink" title="此刻要你深深的明白"></a>此刻要你深深的明白</h3><p>由于你的贪心，你分不清自己真正的需求。所以，你过去总被人事物的附加概念牵动而消耗了大量资源和精力，所以只有你真正懂得了你要的是人事物本身的功能和价值，你才不会被这些附加的概念干扰和误导，你才真正懂得了珍惜物命，你才真正懂得了珍惜缘分，你才真正懂得了珍惜人生。</p>
-]]></content>
-      <categories>
-        <category>十三手记</category>
-      </categories>
-      <tags>
-        <tag>十三手记</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>高效行动</title>
-    <url>/2022/01/18/shisan/%E9%AB%98%E6%95%88%E8%A1%8C%E5%8A%A8/</url>
-    <content><![CDATA[<p><code>摘自微信号十三手记</code></p>
-<h3 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h3><p>为什么那么忙，却没有达到想要的效果？<br>因为多余动作太多</p>
-<p>什么是多余动作？<br>对事情发展本身不直接着力的动作</p>
-<p>多余动作为什么会出现？<br>因为你害怕不利的结果来得太快，所以，你内心的恐惧感让你不自知的搞了这些动作来减缓进展的速度，虽然你以为这样做可以更好的优化过程，可以更快得到有利的结果。</p>
-<p>多余动作会产生什么效果？<br>你以为会让事态进展更高效，但，其实必定会生出更多跟事件发展本身无关的新问题，进而形成层层阻碍。</p>
-<h3 id="此刻你要明白"><a href="#此刻你要明白" class="headerlink" title="此刻你要明白"></a>此刻你要明白</h3><p>在事情发展过程中，只有你的行为尽量实事求是的直接着力于事件本身，你才能尽量减少多余动作产生的能耗，你才能让事件在发展过程中更加清晰的优化，你才能让事件的进展更加高效。</p>
-<h3 id="个人感悟"><a href="#个人感悟" class="headerlink" title="个人感悟"></a>个人感悟</h3><p>对于自我而言，其实是逃避真正问题的根因。有时候明知道面前有必须要解决的问题，但是总是希望从外界或者其他不相关的内容中得到方法，而非从自身出发努力去解决问题。因此往往会偏离有价值的行为，以及有效的解决真正问题，因此才一直无法有效解决问题。</p>
 ]]></content>
       <categories>
         <category>十三手记</category>
