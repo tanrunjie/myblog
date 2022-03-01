@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"tanrunjie.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"./public/search.xml"};
+  </script>
+
+  <meta name="description" content="三维空间刚体运动目标：  理解三维空间的刚体运动描述方式：旋转、变换、四元数和欧拉角 掌握Eigen库的矩阵和几何模块  基本概念：坐标：一方面与向量本身有关，另一方面与坐标系选取有关。向量：可以是空间中的一样东西外积可表示旋转：右手系叉乘欧式变换：保证同一个向量在各个坐标系下的长度和夹角都不会变化，则可由一个旋转和平移组成旋转矩阵的性质：行列式为1的正交矩阵，SO(n)是特殊正交群齐次坐标：把旋">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SLAMBOOK_3_4">
+<meta property="og:url" content="http://tanrunjie.github.io/2022/02/28/SLAMBOOK2/SLAMBOOK_3/index.html">
+<meta property="og:site_name" content="奇幻物语">
+<meta property="og:description" content="三维空间刚体运动目标：  理解三维空间的刚体运动描述方式：旋转、变换、四元数和欧拉角 掌握Eigen库的矩阵和几何模块  基本概念：坐标：一方面与向量本身有关，另一方面与坐标系选取有关。向量：可以是空间中的一样东西外积可表示旋转：右手系叉乘欧式变换：保证同一个向量在各个坐标系下的长度和夹角都不会变化，则可由一个旋转和平移组成旋转矩阵的性质：行列式为1的正交矩阵，SO(n)是特殊正交群齐次坐标：把旋">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-02-28T03:22:57.000Z">
+<meta property="article:modified_time" content="2022-03-01T08:33:04.926Z">
+<meta property="article:author" content="神秘囚徒">
+<meta property="article:tag" content="SLAMBOOK">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://tanrunjie.github.io/2022/02/28/SLAMBOOK2/SLAMBOOK_3/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>SLAMBOOK_3_4 | 奇幻物语</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><link rel="alternate" href="/atom.xml" title="奇幻物语" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">奇幻物语</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">诗酒趁年华!</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://tanrunjie.github.io/2022/02/28/SLAMBOOK2/SLAMBOOK_3/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpeg">
+      <meta itemprop="name" content="神秘囚徒">
+      <meta itemprop="description" content="你太习惯这个世界了，才会对任何事情都不感到惊奇。">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="奇幻物语">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          SLAMBOOK_3_4
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-02-28 11:22:57" itemprop="dateCreated datePublished" datetime="2022-02-28T11:22:57+08:00">2022-02-28</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-03-01 16:33:04" itemprop="dateModified" datetime="2022-03-01T16:33:04+08:00">2022-03-01</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/SLAMBOOK/" itemprop="url" rel="index"><span itemprop="name">SLAMBOOK</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span><br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>1.8k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>2 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h3 id="三维空间刚体运动"><a href="#三维空间刚体运动" class="headerlink" title="三维空间刚体运动"></a>三维空间刚体运动</h3><p>目标：</p>
+<ul>
+<li>理解三维空间的刚体运动描述方式：旋转、变换、四元数和欧拉角</li>
+<li>掌握Eigen库的矩阵和几何模块</li>
+</ul>
+<p>基本概念：<br>坐标：一方面与向量本身有关，另一方面与坐标系选取有关。<br>向量：可以是空间中的一样东西<br>外积可表示旋转：右手系叉乘<br>欧式变换：保证同一个向量在各个坐标系下的长度和夹角都不会变化，则可由一个旋转和平移组成<br>旋转矩阵的性质：行列式为1的正交矩阵，SO(n)是特殊正交群<br>齐次坐标：把旋转和平移写入一个矩阵，且保持整个关系为线性关系<br>变换矩阵T：左上为旋转，右侧为平移，左下为0，右下为1的特殊欧式群</p>
+<h4 id="旋转的表达"><a href="#旋转的表达" class="headerlink" title="旋转的表达"></a>旋转的表达</h4><p>1.旋转矩阵：正交阵且行列式为1,行列向量相互正交；内积为0；</p>
+<p>2.三个旋转轴和旋转角：使用一个向量，方向与旋转轴一致，长度等于旋转角，即李代数。由Rodrigues’s Formula可得：$R = cos\theta I + (1-cos\theta)nn^T + sin\theta n^`$ 其中n’是向量到反对称的转换符，从旋转矩阵到旋转向量转换$\theta = arccos(\frac{tr(R)-1}{2})$<br>转轴n是矩阵R特征值1对应的特征向量。解此方程归一化可得旋转轴。</p>
+<p>3.欧拉角：分离成三次绕坐标轴旋转即yaw-pitch-roll.注意著名的<strong>万向锁</strong>问题，+-90度时，丢失一个自由度，产生奇异性问题。因此不适于插值和迭代，往往只用于人机交互。</p>
+<p>4.四元数：既是紧凑的，也没有奇异性的旋转表达。缺点不够直观和运算复杂。<br>熟悉相互表达之间的转换。</p>
+<h4 id="相似、仿射、射影变换"><a href="#相似、仿射、射影变换" class="headerlink" title="相似、仿射、射影变换"></a>相似、仿射、射影变换</h4><p>1.相似： $T_s = [sR t]$, 7个自由度，xyz坐标上均匀缩放<br>2.仿射： $T_A = [A t]$, 12个自由度，A是可逆矩阵而不必是正交矩阵<br>3.射影： $T_p $, 15个自由度，最不规则的</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Eigen rotate data structure</span></span><br><span class="line">Eigen::Matrix3d;  <span class="comment">// 3*3 R matrix</span></span><br><span class="line">Eigen::AngleAxisd;  <span class="comment">// 3*1 R vector</span></span><br><span class="line">Eigen::Vector3d;   <span class="comment">// 3*1 Euler Angle</span></span><br><span class="line">Eigen::Quaterniond;  <span class="comment">// 4*1 quaternion</span></span><br><span class="line">Eigen::Isometry3d;  <span class="comment">// 4*4 T transformed</span></span><br><span class="line">Eigen::Affine3d;   <span class="comment">// 4*4 affine matrix</span></span><br><span class="line">Eigen::Projective3d;  <span class="comment">// 4*4 projective matrix</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="李群与李代数"><a href="#李群与李代数" class="headerlink" title="李群与李代数"></a>李群与李代数</h3><p>目标：</p>
+<ul>
+<li>理解概念，掌握SO(3),SE(3)</li>
+<li>理解BCH近似意义</li>
+<li>李代数的扰动模型</li>
+<li>运用Sohpus对李代数运算</li>
+</ul>
+<p>什么是Sophus? Sophus是Eigen的拓展，李代数库</p>
+<p>为何引入李代数？ 旋转矩阵自身带有正交和行列式为1的约束，作为优化变量引入额外的约束使得优化困难。通过李群和李代数的转换关系，使位姿估计变成无约束的优化问题，简化求解方式。</p>
+<h4 id="数学基础"><a href="#数学基础" class="headerlink" title="数学基础"></a>数学基础</h4><p>什么是群？ 一种集合加上一种运算的代数结构。封结幺逆<br>可以验证：</p>
+<ul>
+<li>旋转矩阵集合和矩阵乘法构成群</li>
+<li>变换矩阵和矩阵乘法也构成群</li>
+<li>因此它们为旋转矩阵群和交换矩阵群</li>
+</ul>
+<p>矩阵中常见的群：</p>
+<ul>
+<li>一般线性群GL(n) : n*n的可逆矩阵，对矩阵乘法成群</li>
+<li>特殊正交群SO(n) : 旋转矩阵群SO(2)和SO(3)</li>
+<li>特殊欧式群SE(n) : 前面的n维欧式变换， SE(2)和SE(3)</li>
+</ul>
+<p>什么是李群Lie Group？ 指具有连续（光滑）性质的群，既是群也是流形。整数群是离散的，不属于。而SO和SE在实数空间连续运动，所以属于李群。SO(3)和SE(3)只有定义良好的乘法，没有加法所以难以进行取极限和求导的操作。将旋转矩阵用李代数逼近迭代优化。</p>
+<p>一种李代数（小写）对应一种李群（大写）。</p>
+<p>$RR^T = I$ 对连续时间求导得 $ R^, R^T = -(R^, R^T )^T $, $R^,$为对时间t的导数。即满足反对称矩阵。最后得$R(t) = exp(\phi_0t)$<br>这表示：</p>
+<ul>
+<li>1.给定某时刻的R，我们能求一个$\phi$描述R在局部的导数关系，正切空间邻域。$\phi$正是SO(3)上的李代数so(3)</li>
+<li>2.矩阵指数如何计算？事实上这正是李群与李代数之间的指数/对数映射</li>
+</ul>
+<p>什么是李代数？ 每个李群对应一个李代数，描述了李群单位元数的正切空间性质。满足封闭性、双线性、自反性、雅可比等价</p>
+<p>什么是李括号？二元运算，表达了两个元素的差异。</p>
+<h4 id="指数与对数映射"><a href="#指数与对数映射" class="headerlink" title="指数与对数映射"></a>指数与对数映射</h4>
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/SLAMBOOK/" rel="tag"># SLAMBOOK</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/02/25/reading/CMAKE%E5%AE%9E%E8%B7%B5/" rel="prev" title="CMAKE实践">
+      <i class="fa fa-chevron-left"></i> CMAKE实践
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    <div class="comments" id="gitalk-container"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%89%E7%BB%B4%E7%A9%BA%E9%97%B4%E5%88%9A%E4%BD%93%E8%BF%90%E5%8A%A8"><span class="nav-number">1.</span> <span class="nav-text">三维空间刚体运动</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%97%8B%E8%BD%AC%E7%9A%84%E8%A1%A8%E8%BE%BE"><span class="nav-number">1.1.</span> <span class="nav-text">旋转的表达</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%9B%B8%E4%BC%BC%E3%80%81%E4%BB%BF%E5%B0%84%E3%80%81%E5%B0%84%E5%BD%B1%E5%8F%98%E6%8D%A2"><span class="nav-number">1.2.</span> <span class="nav-text">相似、仿射、射影变换</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9D%8E%E7%BE%A4%E4%B8%8E%E6%9D%8E%E4%BB%A3%E6%95%B0"><span class="nav-number">2.</span> <span class="nav-text">李群与李代数</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80"><span class="nav-number">2.1.</span> <span class="nav-text">数学基础</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%8C%87%E6%95%B0%E4%B8%8E%E5%AF%B9%E6%95%B0%E6%98%A0%E5%B0%84"><span class="nav-number">2.2.</span> <span class="nav-text">指数与对数映射</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="神秘囚徒"
+      src="/images/avatar.jpeg">
+  <p class="site-author-name" itemprop="name">神秘囚徒</p>
+  <div class="site-description" itemprop="description">你太习惯这个世界了，才会对任何事情都不感到惊奇。</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">36</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">13</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">17</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/tanrunjie" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;tanrunjie" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">神秘囚徒</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+    <span title="站点总字数">58k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">53 分钟</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.css">
+
+<script>
+NexT.utils.loadComments(document.querySelector('#gitalk-container'), () => {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js', () => {
+    var gitalk = new Gitalk({
+      clientID    : 'c35a4e8470097c7abdc8',
+      clientSecret: 'd734917083536f13168ca62c2a2698254d1483c1',
+      repo        : 'tanrunjie.github.io',
+      owner       : 'tanrunjie',
+      admin       : ['tanrunjie'],
+      id          : '1287fbf6f86b03c854bdcada8d4e31e0',
+        language: 'zh-CN',
+      distractionFreeMode: false
+    });
+    gitalk.render('gitalk-container');
+  }, window.Gitalk);
+});
+</script>
+
+</body>
+</html>

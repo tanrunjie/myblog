@@ -1,7 +1,7 @@
 ---
 title: SLAM十四讲_一预备及初识
 categories:
-  - SLAM十四讲
+  - SLAMBOOK
 mathjax: true
 date: 2022-01-07 16:52:46
 tags: SLAMBOOK

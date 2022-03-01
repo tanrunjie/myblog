@@ -196,6 +196,241 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://tanrunjie.github.io/2022/02/28/SLAMBOOK2/SLAMBOOK_3/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpeg">
+      <meta itemprop="name" content="神秘囚徒">
+      <meta itemprop="description" content="你太习惯这个世界了，才会对任何事情都不感到惊奇。">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="奇幻物语">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/02/28/SLAMBOOK2/SLAMBOOK_3/" class="post-title-link" itemprop="url">SLAMBOOK_3_4</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-02-28 11:22:57" itemprop="dateCreated datePublished" datetime="2022-02-28T11:22:57+08:00">2022-02-28</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-03-01 16:33:04" itemprop="dateModified" datetime="2022-03-01T16:33:04+08:00">2022-03-01</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/SLAMBOOK/" itemprop="url" rel="index"><span itemprop="name">SLAMBOOK</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>1.8k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>2 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h3 id="三维空间刚体运动"><a href="#三维空间刚体运动" class="headerlink" title="三维空间刚体运动"></a>三维空间刚体运动</h3><p>目标：</p>
+<ul>
+<li>理解三维空间的刚体运动描述方式：旋转、变换、四元数和欧拉角</li>
+<li>掌握Eigen库的矩阵和几何模块</li>
+</ul>
+<p>基本概念：<br>坐标：一方面与向量本身有关，另一方面与坐标系选取有关。<br>向量：可以是空间中的一样东西<br>外积可表示旋转：右手系叉乘<br>欧式变换：保证同一个向量在各个坐标系下的长度和夹角都不会变化，则可由一个旋转和平移组成<br>旋转矩阵的性质：行列式为1的正交矩阵，SO(n)是特殊正交群<br>齐次坐标：把旋转和平移写入一个矩阵，且保持整个关系为线性关系<br>变换矩阵T：左上为旋转，右侧为平移，左下为0，右下为1的特殊欧式群</p>
+<h4 id="旋转的表达"><a href="#旋转的表达" class="headerlink" title="旋转的表达"></a>旋转的表达</h4><p>1.旋转矩阵：正交阵且行列式为1,行列向量相互正交；内积为0；</p>
+<p>2.三个旋转轴和旋转角：使用一个向量，方向与旋转轴一致，长度等于旋转角，即李代数。由Rodrigues’s Formula可得：$R = cos\theta I + (1-cos\theta)nn^T + sin\theta n^`$ 其中n’是向量到反对称的转换符，从旋转矩阵到旋转向量转换$\theta = arccos(\frac{tr(R)-1}{2})$<br>转轴n是矩阵R特征值1对应的特征向量。解此方程归一化可得旋转轴。</p>
+<p>3.欧拉角：分离成三次绕坐标轴旋转即yaw-pitch-roll.注意著名的<strong>万向锁</strong>问题，+-90度时，丢失一个自由度，产生奇异性问题。因此不适于插值和迭代，往往只用于人机交互。</p>
+<p>4.四元数：既是紧凑的，也没有奇异性的旋转表达。缺点不够直观和运算复杂。<br>熟悉相互表达之间的转换。</p>
+<h4 id="相似、仿射、射影变换"><a href="#相似、仿射、射影变换" class="headerlink" title="相似、仿射、射影变换"></a>相似、仿射、射影变换</h4><p>1.相似： $T_s = [sR t]$, 7个自由度，xyz坐标上均匀缩放<br>2.仿射： $T_A = [A t]$, 12个自由度，A是可逆矩阵而不必是正交矩阵<br>3.射影： $T_p $, 15个自由度，最不规则的</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Eigen rotate data structure</span></span><br><span class="line">Eigen::Matrix3d;  <span class="comment">// 3*3 R matrix</span></span><br><span class="line">Eigen::AngleAxisd;  <span class="comment">// 3*1 R vector</span></span><br><span class="line">Eigen::Vector3d;   <span class="comment">// 3*1 Euler Angle</span></span><br><span class="line">Eigen::Quaterniond;  <span class="comment">// 4*1 quaternion</span></span><br><span class="line">Eigen::Isometry3d;  <span class="comment">// 4*4 T transformed</span></span><br><span class="line">Eigen::Affine3d;   <span class="comment">// 4*4 affine matrix</span></span><br><span class="line">Eigen::Projective3d;  <span class="comment">// 4*4 projective matrix</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="李群与李代数"><a href="#李群与李代数" class="headerlink" title="李群与李代数"></a>李群与李代数</h3><p>目标：</p>
+<ul>
+<li>理解概念，掌握SO(3),SE(3)</li>
+<li>理解BCH近似意义</li>
+<li>李代数的扰动模型</li>
+<li>运用Sohpus对李代数运算</li>
+</ul>
+<p>什么是Sophus? Sophus是Eigen的拓展，李代数库</p>
+<p>为何引入李代数？ 旋转矩阵自身带有正交和行列式为1的约束，作为优化变量引入额外的约束使得优化困难。通过李群和李代数的转换关系，使位姿估计变成无约束的优化问题，简化求解方式。</p>
+<h4 id="数学基础"><a href="#数学基础" class="headerlink" title="数学基础"></a>数学基础</h4><p>什么是群？ 一种集合加上一种运算的代数结构。封结幺逆<br>可以验证：</p>
+<ul>
+<li>旋转矩阵集合和矩阵乘法构成群</li>
+<li>变换矩阵和矩阵乘法也构成群</li>
+<li>因此它们为旋转矩阵群和交换矩阵群</li>
+</ul>
+<p>矩阵中常见的群：</p>
+<ul>
+<li>一般线性群GL(n) : n*n的可逆矩阵，对矩阵乘法成群</li>
+<li>特殊正交群SO(n) : 旋转矩阵群SO(2)和SO(3)</li>
+<li>特殊欧式群SE(n) : 前面的n维欧式变换， SE(2)和SE(3)</li>
+</ul>
+<p>什么是李群Lie Group？ 指具有连续（光滑）性质的群，既是群也是流形。整数群是离散的，不属于。而SO和SE在实数空间连续运动，所以属于李群。SO(3)和SE(3)只有定义良好的乘法，没有加法所以难以进行取极限和求导的操作。将旋转矩阵用李代数逼近迭代优化。</p>
+<p>一种李代数（小写）对应一种李群（大写）。</p>
+<p>$RR^T = I$ 对连续时间求导得 $ R^, R^T = -(R^, R^T )^T $, $R^,$为对时间t的导数。即满足反对称矩阵。最后得$R(t) = exp(\phi_0t)$<br>这表示：</p>
+<ul>
+<li>1.给定某时刻的R，我们能求一个$\phi$描述R在局部的导数关系，正切空间邻域。$\phi$正是SO(3)上的李代数so(3)</li>
+<li>2.矩阵指数如何计算？事实上这正是李群与李代数之间的指数/对数映射</li>
+</ul>
+<p>什么是李代数？ 每个李群对应一个李代数，描述了李群单位元数的正切空间性质。满足封闭性、双线性、自反性、雅可比等价</p>
+<p>什么是李括号？二元运算，表达了两个元素的差异。</p>
+<h4 id="指数与对数映射"><a href="#指数与对数映射" class="headerlink" title="指数与对数映射"></a>指数与对数映射</h4>
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://tanrunjie.github.io/2022/02/25/reading/CMAKE%E5%AE%9E%E8%B7%B5/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpeg">
+      <meta itemprop="name" content="神秘囚徒">
+      <meta itemprop="description" content="你太习惯这个世界了，才会对任何事情都不感到惊奇。">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="奇幻物语">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/02/25/reading/CMAKE%E5%AE%9E%E8%B7%B5/" class="post-title-link" itemprop="url">CMAKE实践</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2022-02-25 16:49:17 / 修改时间：17:58:46" itemprop="dateCreated datePublished" datetime="2022-02-25T16:49:17+08:00">2022-02-25</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">读书笔记</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>575</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>1 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h3 id="初识cmake"><a href="#初识cmake" class="headerlink" title="初识cmake"></a>初识cmake</h3><p>主要特点：</p>
+<ul>
+<li>1.开放源代码</li>
+<li>2.跨平台，可生成native编译配置文件，在linux/unix平台生成makefile;在IOS平台生成xcode;在windows平台生成MSVC工程文件</li>
+<li>3.可管理大型项目，如KDE4</li>
+<li>4.简化编译构建过程和编译过程。工具链简单：cmake+make</li>
+<li>5.高效率，cmake构建KDE4的kdelibs要比autotools快40%，因为cmake工具链中没有libtool</li>
+<li>6.可拓展性，可以为cmake编写特定功能模块，扩展功能</li>
+</ul>
+<p>缺点：</p>
+<ul>
+<li>1.相对简单，但是没有听起来或者想象简单</li>
+<li>2.cmake编写过程实际上是编程过程，使用的是cmake语言和语法</li>
+<li>3.cmake与已有体系配合不算理想如pkgconfig</li>
+</ul>
+<p>作者建议：</p>
+<ul>
+<li>1.如果没有实际的项目需求，那么看到这里就可以停下来，因为cmake学习过程就是实践过程，没有实践读多少天也会忘记</li>
+<li>2.如果你的工程只有几个文件，直接编写Makefile是最好的选择</li>
+<li>3.如果使用c/c++/java以外的语言，请不要使用cmake</li>
+<li>4.如果使用的语言有非常完备的构建体系，如java的ant，也不需要学习cmake</li>
+<li>5.如果项目已经采用非常完备的工程管理工具，且不存在维护问题，没有必要迁移到cmake</li>
+<li>6.如果仅仅使用qt，没必要使用cmake。因为qmake在QT的专业性和自动化程度更高</li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://tanrunjie.github.io/2022/02/21/reading/%E8%BD%AF%E6%8A%80%E8%83%BD/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -227,7 +462,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-02-24 18:01:46" itemprop="dateModified" datetime="2022-02-24T18:01:46+08:00">2022-02-24</time>
+                <time title="修改时间：2022-03-01 17:04:22" itemprop="dateModified" datetime="2022-03-01T17:04:22+08:00">2022-03-01</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -245,14 +480,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>3k</span>
+              <span>8k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>3 分钟</span>
+              <span>7 分钟</span>
             </span>
 
         </div>
@@ -352,7 +587,157 @@
 <li>小练习：有目的地将自己置于困境，演练以下自己既定的应对策略。</li>
 <li>Fake it till you make it</li>
 </ul>
-<h4 id="乏味的简历"><a href="#乏味的简历" class="headerlink" title="乏味的简历"></a>乏味的简历</h4>
+<h4 id="关于技术"><a href="#关于技术" class="headerlink" title="关于技术"></a>关于技术</h4><p>很多情况下，解决问题并不只有一个好的或者是最好的方法。同理，最好的编程语言、框架、操作系统甚至是文本编辑器都不会只有一种，你可找到最适合自己的技术和编程语言以及工具。</p>
+<p>采取行动：</p>
+<ul>
+<li>列出你钟爱的所有技术，或者你觉得更胜一筹的技术</li>
+<li>针对表的每一项，想想它为什么吸引你，你做了哪些比较确定它确实“更胜一筹”？你真的使用过它们的竞争对手吗？</li>
+<li>挑选一门你厌恶的技术，找几个喜欢它的人，开诚布公讨论为什么他们喜欢，更进一步，你试着去使用</li>
+</ul>
+<h3 id="自我营销"><a href="#自我营销" class="headerlink" title="自我营销"></a>自我营销</h3><p>营销追求“实现价值在先，要求回报在后”，你的营销越好，你的才华才能表现得越发淋漓尽致，自我营销的正确方式是为他人提供价值。</p>
+<p>自我营销无非就是学习如何控制好要传达的信息，塑造好自己的形象，扩展信息传达的人群。当开始营销自己的时候，你就是在积极地管理自己的职业生涯，有目的地选择好如何塑造自己，以及将塑造好的自己主动推送给那些对你感兴趣的人。</p>
+<p>采取行动：</p>
+<ul>
+<li>如果你还没有博客，开通一个吧。想想看，你会专注在哪些主题上？</li>
+<li>给你的新博客至少想出20篇文章</li>
+<li>现在做一个时间表，列出开通博客的具体时间以及内容编排</li>
+</ul>
+<h4 id="打造引人注目的品牌"><a href="#打造引人注目的品牌" class="headerlink" title="打造引人注目的品牌"></a>打造引人注目的品牌</h4><p>品牌的四要素：要传递的信息、品牌一致性、品牌的视觉符号、品牌的曝光率</p>
+<p>信息是目的性，传达承载的情感诉求;一致性、视觉符号以及曝光容易增强影响力；</p>
+<p>步骤：</p>
+<ul>
+<li>明确传达的品牌信息</li>
+<li>挑选细分市场</li>
+<li>创建品牌口号</li>
+<li>创建电梯内销售概要：电梯时间介绍完自我</li>
+<li>创建视觉符号</li>
+</ul>
+<h4 id="博客的重要性"><a href="#博客的重要性" class="headerlink" title="博客的重要性"></a>博客的重要性</h4><p>一方面面试评估技术技能非常困难，博客包含丰富的相关信息，代码示例以及深入分析；另一方面流量足够大可以用于推销自己产品的平台；带来一定的业界声望，提高你的沟通能力以及组织自己的思想转化成能力。提高内容的质量，尽量尝试编写高质量的博客文章。</p>
+<p>提高访问量：尝试建设性的评论，并附上个人链接。增加方便分享的功能。</p>
+<h3 id="为他人增加价值"><a href="#为他人增加价值" class="headerlink" title="为他人增加价值"></a>为他人增加价值</h3><p><code>不要努力成为一个成功的人，而要努力成为一个有价值的人   --阿尔伯特.爱因斯坦</code></p>
+<h4 id="给人们想要的东西"><a href="#给人们想要的东西" class="headerlink" title="给人们想要的东西"></a>给人们想要的东西</h4><p>通过现象看本质，找到方法来提供自己的价值。唯一的标准是通过你的方法，可以有效解决真实的问题。</p>
+<p>采取行动</p>
+<ul>
+<li>什么样的内容会让你觉得最有价值？有没有哪个特别的博客会让你每周都去阅读，或者哪个博客的内容如此有价值让你欲罢不能，以至于一点都不想落下</li>
+<li>你可以提供给自己的受众或者你的细分市场最大价值是什么？你认为什么样的内容对于你的受众群体而言最有价值的？</li>
+<li>善于运用社交媒体：如何界定价值：你认为有用或有趣的。</li>
+</ul>
+<p>通过社交媒体分享的内容</p>
+<ul>
+<li>博客文章：转帖一些博客文章或者自己的博客</li>
+<li>新闻报道：转载一些有趣的文章，尽量与自己的细分领域有关，或者与软件开发相关</li>
+<li>励志名言：名人名言，特别是鼓舞人心、非常流行的名言警句</li>
+<li>技巧、小窍门：任何你所了解的特殊技巧或者知识，别人会很欣赏</li>
+<li>幽默故事：发一点幽默故事挺不错的，但是一定要确保好笑，另外千万别冒犯别人</li>
+<li>吸引人的问题：这是一个很棒的吸引你的听众并和他们互动的方法</li>
+<li>自己的一些推广方式活动：别太多，并且跟其他内容混合在一起<br>正如产品和服务90%免费一样，分享的内容也要90%有价值的</li>
+</ul>
+<h4 id="保持活跃度"><a href="#保持活跃度" class="headerlink" title="保持活跃度"></a>保持活跃度</h4><p>社交媒体一大挑战需保持活跃度，如若没有持之以恒，很容易丢掉大量粉丝。选择一到两个心仪的平台，不同社交具有不同的功能划分。</p>
+<p>演讲的地雷：对公众面前演讲怀有恐惧<br>没关系，大部分人都有此症，公共演讲恐惧症是最常见的一种恐惧症。对此你可以做什么呢？好的，有相关组织让你在舒适的氛围中克服公共演讲的恐惧，你可以加入他们。也可以从较小规模场合的演讲做起，比如会议上站起来发言，或者在一群你熟知的人面前做讲座。当你对此越来越轻车熟路，你就可以到更令人生畏的地方公开演讲了。<br>你要记住，作为人类，我们拥有良好的适应能力。只要你把一件事情重复足够多次，你自然就会接纳它。伞兵第一次跳出机舱时候都很害怕，但是经过成功跳伞之后，恐惧最终都会消失。如果你一直坚持公共场合发表演说，你一定会应对自如，恐惧感终将消散。</p>
+<h4 id="做培训"><a href="#做培训" class="headerlink" title="做培训"></a>做培训</h4><p>刚开始可以在免费视频网站youtube做一些教学，然后写书或者开展课程。<br>采取行动：</p>
+<ul>
+<li>列出你所在地区的所有用户组清单，同时列出你能去发表演讲的代码训练营清单。挑选一个自己觉得比较有把握的专题发表一次演讲</li>
+<li>列出网上提供的哪些针对软件开发人员的培训课程，无论是付费的还是免费的，关注并记录找出成功的培训师是怎么做的</li>
+<li>试着以截屏视频的形式创建自己的短时培训课程，然后在免费网站上发布</li>
+<li>创建一个列表，列出所有你可以发表演讲的主题</li>
+</ul>
+<h4 id="关于写书"><a href="#关于写书" class="headerlink" title="关于写书"></a>关于写书</h4><p>如果某人在某特定主题写过书或者发表过文章，那么他们可能是这方面的专家。当人们坐下来读你写的书时，你会长期被他们关注。</p>
+<p>一方面，书籍畅销带来收入；更重要的是，通过出版，你能获得更广泛的知名度和声望。</p>
+<p>明确一个有市场需求的主题，同时能充分展示你作为该领域专家的学识。主题越聚焦越专注，越容易证明你的专业能力。准备一份翔实的写作提纲，清晰概括自己的写作目的，明确本书的目标读者，以及为何认为本书会成功，为何你是写作本书的最佳人选。最后就是每天坚持去写，开始主要是写些博客文章，随着实践推移你的写作技能终将会得到提升。</p>
+<p>采取行动：</p>
+<ul>
+<li>查看亚马逊与软件开发相关的畅销书列表，找出哪种类型的书销量最好</li>
+<li>写长篇大作之前，先从杂志文章这样的短篇着手。找出一些发行量不高的软件开发类杂志，提交一篇文章摘要。</li>
+</ul>
+<h4 id="关于脆弱的自尊心"><a href="#关于脆弱的自尊心" class="headerlink" title="关于脆弱的自尊心"></a>关于脆弱的自尊心</h4><p>如果你想成功，你必须要学会收起自己脆弱的自尊心，勇敢走出去，别害怕让自己出丑。每一个著名的演员、音乐家、专业运动员和公共演说家都曾有过表现不佳的时候，他们自觉地选择了出走困境，尽力而为。成功终将会来，你不可能专注做某件事而毫无长进，你只要坚持足够长的时间就会有所收获。你的生存之道就是不必太在意，别害怕被人看作傻瓜。</p>
+<p>采取行动：</p>
+<ul>
+<li>让自己勇敢起来，今天就是你的大日子。走出去做一些令你害怕的事情，大小都不要紧，迫使自己处于不自在的环境，并提醒自己“这没什么大不了的”</li>
+<li>现在，重复上一步，至少每周一次</li>
+</ul>
+<h3 id="学习篇"><a href="#学习篇" class="headerlink" title="学习篇"></a>学习篇</h3><p><code>教育就是当一个人把在学校所学全部忘光之后剩下的东西 -爱因斯坦</code></p>
+<p>代码世界变化万千，每天都有新的技术出现，昨天学的东西今天可能没有意义。<br>如何学习成为当代最重要的课题。动手实践和教会他人让我们学得更好。</p>
+<h4 id="快速学习"><a href="#快速学习" class="headerlink" title="快速学习"></a>快速学习</h4><p><code>教育的首要目标，并不在于“知”而在于&quot;行&quot;   -赫伯特.斯宾塞</code></p>
+<p>可以把学到的新知识重新应用于实践，看看新方法能否解决已有问题。你可以继续探索新领域，发现需要解决的新问题。<strong>以解决实践过程中发现的问题</strong>为目标，在向着知识前进的道路上重复这个循环，周而复始。</p>
+<p>采取行动</p>
+<ul>
+<li>你最近一次自学了什么？你的学习过程是怎样的？</li>
+<li>你上一次对兴趣爱好感到激动是在什么时候？你对此爱好了解多少？你是经过刻苦学习才培养此兴趣的，还是通过玩耍自然而然地就学会了？</li>
+</ul>
+<p>快速学习三个要点：</p>
+<ul>
+<li>如何开始：想要开始使用自己所学的，我需要掌握哪些基本知识</li>
+<li>学科范围：我现在学的东西有多宏大？我应该怎么做？在开始阶段，我不需要了解每个细节，但是如果我能对该学科的轮廓有大致的了解，那么将来我就能发现更多细节</li>
+<li>基础知识：不止在开始阶段，要想使用一项特定的技术，我需要了解基本的用户案例和最常见的问题，也需要知道自己学的哪20%就能满足80%的日常应用</li>
+</ul>
+<h4 id="十步学习法体系"><a href="#十步学习法体系" class="headerlink" title="十步学习法体系"></a>十步学习法体系</h4><p>基本思想：要对自己要学的内容有个基本了解，了解自己不知道什么足矣。然后利用这些信息勾勒出学习的范围，即需要学哪些内容，以及学成之后又会收获什么。依靠这些知识，你可以找出各种资源来帮助自己学习。最后你可以创建自己的学习计划，列出要去学习哪些相关课程，筛选学习材料，只保留能帮助自己达成目标的优质内容。</p>
+<p>一旦如此，你就可以把控自己的学习计划中的每个关键点，通过学习-实践-掌握-教授（Learning Doing Learning and Teaching, LDLT)的过程获得对该学科的深刻理解，也向着自己的目标前进。</p>
+<p>十步学习法：</p>
+<ul>
+<li>1.了解全局</li>
+<li>2.确定范围</li>
+<li>3.定义目标</li>
+<li>4.寻找资源</li>
+<li>5.创建学习计划</li>
+<li>6.筛选资源</li>
+<li>7.开始学习，浅尝即止</li>
+<li>8.动手操作，边学边玩</li>
+<li>9.全面掌握，学以致用</li>
+<li>10.乐为人师，融会贯通<br>这是通过“聚焦学习范围，让你关注重点内容”的快速学习方法，迫使你通过“自我探索”和“主动教学”的方式将真正重要的内容印刻在自己的大脑中。</li>
+</ul>
+<p>采取行动：挑选一项你已经烂熟于胸的技术，看看你能否明确以下几点</p>
+<ul>
+<li>如何开始使用它</li>
+<li>该技术的应用广度如何</li>
+<li>利用你需要知道的20%发挥出80%功效</li>
+</ul>
+<h4 id="1-6只做一次"><a href="#1-6只做一次" class="headerlink" title="1-6只做一次"></a>1-6只做一次</h4><p>第一步需要对学的课题做一些基础性研究，有一个全局性的了解。第二步聚焦一个范围，尽可能保持专注。第三步清晰定义成功的标准。第四步查阅尽可能多的与自己所选主题相关的资源，此时无需考虑资源的质量。第五步学习是自然的过程，层层递进。需要<strong>找出最短的时间从A到Z的正确路径，并且到达沿途的重要地标</strong>。另一个好方法就是观察别人是如何教你这个感兴趣的主题的，此时可以翻看第四步中的图书目录，如果五位不同的作者都把内容分解为相同的模块和顺序，那我就会遵循这样的方法制订自己的学习计划。</p>
+<p>至此你知道自己要学什么以及以什么顺序学，那么就是时候决定使用哪些资源来完成自己的学习任务了。在收集了与研究主题相关的所有资源，制订了个人学习计划后，对资源筛选并挑选最有价值的几项来帮助实现自己的目标。</p>
+<p>采取行动：</p>
+<ul>
+<li>挑选你想要了解的一项课题，实际演练上述六个步骤。可以从规模较小的课题开始，以让自己习惯这一过程。注意的是，一定要实际运用。</li>
+</ul>
+<h4 id="7-10循环往复"><a href="#7-10循环往复" class="headerlink" title="7-10循环往复"></a>7-10循环往复</h4><p>学习到这一步开始最有趣的部分，你从掌握恰到好处可以开始的基础知识开始，然后通过操作来学习，同时也通过自我探索收集问题。之后，你掌握了足够多有用的知识。最后你能将自己学到的教给他人，以此来弥补自己在学习过程中的不足，同时通过深入思考巩固知识。</p>
+<p>第七步谨慎两种错误：1.在知之不多的情况下盲目开始，即行动太快； 2.行动之前准备过多，即行动太晚。 要取得平衡，你掌握的知识恰到好处足以让你开始学习，但又不会多到让你无力探索。</p>
+<p>第八步边玩边学，无需提前了解全部内容，首要的事就是亲自操作和亲身体验。通过探索和实践来学习，这个过程中你的大脑自然地产生各种问题：它是如何工作的？如果我这么做，会发生什么？我该如何解决这个问题？这些问题引导你走向真正重要的方向。回头寻找问题答案时，不只这些问题迎刃而解，你记得的东西比学习的要多得多。不要担心结果，勇敢探索。把一些暂时没有答案的问题记录下来，下一步有机会找出这些问题的答案。</p>
+<p>第九步：好奇心时学习特别是自学的重要组成部分，通过动手操作法线的一些没有答案的问题，利用先前收集的资料深入学习，满足自我的好奇心。这一步阅读文字、观看视频、与人交流都是必要的手段，不要害怕回头去操作。给自己足够多的时间去深入理解自己的主题。</p>
+<p>第十步： <code>你告诉我的，我都忘了。你教会我的，我都记得。让我乐在其中，我就一定能学会  -富兰克林</code></p>
+<p>用多种方式将自己所学教给别人，可以是博客，可以是视频，也可以是探讨，将自己所学解释给他。重点在于要花实践将自己学到的东西从大脑提取出来，以别人能够理解的方式组织起来。经历整个过程之后会法线，有很多你以为自己明白了的知识点其实并没有摸透，于是之前没太明白的东西联系起来，简化已有的信息，将它们浓缩并经常复习。</p>
+<p>教授知识的途径：</p>
+<ul>
+<li>撰写博客文章</li>
+<li>创建YOUTUBE视频教程</li>
+<li>发表演讲</li>
+<li>与朋友或爱人进行对话探讨</li>
+<li>在线上论坛回答问题</li>
+</ul>
+<p>最后的思考：学会自我教育需要奉献精神和辛勤工作，但你也能从中收获无比丰厚的回报。十步学习法不能让你瞬间聪明伶俐，但可以让你的学习过程结构化，而非漫无目的地扎进浩渺的知识海洋中。这利用人天生的好奇心来帮助你吸收更多的知识，而我们大多数人正是通过好奇心驱使才学到很多本领的。</p>
+<p>采取行动：</p>
+<ul>
+<li>针对学习计划的每一个模块执行7-10，完成学习实验</li>
+<li>现在不要跳过任何步骤，研究以下如何让该方法奏效，然后尝试优化它</li>
+</ul>
+<h4 id="寻找导师"><a href="#寻找导师" class="headerlink" title="寻找导师"></a>寻找导师</h4><p>检查单：</p>
+<ul>
+<li>他们做到了我想要去做的？</li>
+<li>他们曾经帮助他人做到了我想做的？</li>
+<li>他们现在取得了什么可以展示的成就？</li>
+<li>你能和这个人和睦相处？他充满智慧吗？</li>
+</ul>
+<p>寻找导师的方式最好从自己的熟人、家人和密友推荐。<br>采取行动：</p>
+<ul>
+<li>在寻找之前，必须明确，需要导师帮忙解决什么问题？思考为何需要导师，希望从中获得什么</li>
+<li>列出所有你认识的人作为导师，希望别人也帮忙列出</li>
+<li>想一想为了换取导师帮助，你能给他提供什么</li>
+</ul>
+<p>做导师的好处：</p>
+<ul>
+<li>帮助他人时的成就感</li>
+<li>深入学习和领悟知识的途径</li>
+<li>你的徒弟有朝一日会帮到你</li>
+<li>自身的成长。帮助别人成长的过程也就是你成长的过程</li>
+</ul>
+
       
     </div>
 
@@ -1077,197 +1462,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://tanrunjie.github.io/2022/01/14/pcl/%E5%A2%99%E9%9D%A2%E5%88%86%E5%89%B2/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpeg">
-      <meta itemprop="name" content="神秘囚徒">
-      <meta itemprop="description" content="你太习惯这个世界了，才会对任何事情都不感到惊奇。">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="奇幻物语">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/01/14/pcl/%E5%A2%99%E9%9D%A2%E5%88%86%E5%89%B2/" class="post-title-link" itemprop="url">墙面分割</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2022-01-14 14:12:27" itemprop="dateCreated datePublished" datetime="2022-01-14T14:12:27+08:00">2022-01-14</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-01-17 17:21:51" itemprop="dateModified" datetime="2022-01-17T17:21:51+08:00">2022-01-17</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/pcl/" itemprop="url" rel="index"><span itemprop="name">pcl</span></a>
-                </span>
-            </span>
-
-          <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>524</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h3 id="区域生长分割region-growing-segmentation"><a href="#区域生长分割region-growing-segmentation" class="headerlink" title="区域生长分割region growing segmentation"></a>区域生长分割region growing segmentation</h3><p>算法核心：基于点法线之间角度的比较，尽量将满足平滑约束的相邻点合并在一起，以一簇点集的形式输出，视为相同平面</p>
-<p>工作原理：区域增长从有最小曲率值curvature的点。则需要计算所有曲率值并进行排序；因为曲率最小的点位于平坦区域，从平坦区域增长可以减少区域的总数。（曲率与法线的求解方法类似,法线描述点在表面的法向，曲率则是法线间协方差矩阵的特征值，描述法向一致性)</p>
-<p>具体过程：</p>
-<ol>
-<li>对未标记点的曲率排序，将最小曲率点放入种子集</li>
-<li>对每个种子的所有邻点计算</li>
-<li>1 每个近邻点与当前点的法线角度差(reg.setSmoothnessThreshold),如果小于阈值则重点考虑，进入2.2判断</li>
-<li>2 该点通过2.1法线角度差检验，如果曲率小于设定的阈值(reg.setCurvatureThreshold)，这个点即被添加到种子点集，属于当前平面</li>
-<li>通过两次检验的点，被从原始点云去除</li>
-<li>设置最小点簇的点数reg.setMinClusterSize,以及最大簇reg.segMaxClusterSize</li>
-<li>重复1-3生成min~max个点数的所有平面，并对不同平面标记颜色区分</li>
-<li>直到算法在剩余点中生成的点簇不能满足min,停止工作</li>
-</ol>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://tanrunjie.github.io/2022/01/13/opencv/%E7%89%B9%E5%BE%81%E5%8C%B9%E9%85%8D/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpeg">
-      <meta itemprop="name" content="神秘囚徒">
-      <meta itemprop="description" content="你太习惯这个世界了，才会对任何事情都不感到惊奇。">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="奇幻物语">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/01/13/opencv/%E7%89%B9%E5%BE%81%E5%8C%B9%E9%85%8D/" class="post-title-link" itemprop="url">特征匹配</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2022-01-13 17:32:27 / 修改时间：17:49:45" itemprop="dateCreated datePublished" datetime="2022-01-13T17:32:27+08:00">2022-01-13</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/opencv/" itemprop="url" rel="index"><span itemprop="name">opencv</span></a>
-                </span>
-            </span>
-
-          <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>4.1k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>4 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h4 id="ubuntu下opencv-CMakeList文件"><a href="#ubuntu下opencv-CMakeList文件" class="headerlink" title="ubuntu下opencv CMakeList文件"></a>ubuntu下opencv CMakeList文件</h4><p>通过terminal直接apt安装opencv，一般挂载在/usr/local/lib下；此时find_package即可找到</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="meta"># cmake needs this <span class="meta-keyword">line</span></span></span><br><span class="line"><span class="built_in">cmake_minimum_required</span>(VERSION <span class="number">3.1</span>)</span><br><span class="line"></span><br><span class="line"># <span class="function">Define project name</span></span><br><span class="line"><span class="function"><span class="title">project</span><span class="params">(FeatureMapping)</span></span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function"># Find OpenCV, you may need to set OpenCV_DIR variable</span></span><br><span class="line"><span class="function"><span class="meta"># to the absolute path to the directory containing OpenCVConfig.cmake file</span></span></span><br><span class="line"><span class="function"><span class="meta"># via the command <span class="meta-keyword">line</span> or GUI</span></span></span><br><span class="line"><span class="function"><span class="title">find_package</span><span class="params">(OpenCV REQUIRED)</span></span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function"># Enable C++11</span></span><br><span class="line"><span class="function"><span class="title">set</span><span class="params">(CMAKE_CXX_STANDARD <span class="number">11</span>)</span></span></span><br><span class="line"><span class="function"><span class="title">set</span><span class="params">(CMAKE_CXX_STANDARD_REQUIRED TRUE)</span></span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function"># Declare the executable target built from your sources</span></span><br><span class="line"><span class="function"><span class="title">add_executable</span><span class="params">(main main.cpp)</span></span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function"># Link your application with OpenCV libraries</span></span><br><span class="line"><span class="function"><span class="title">target_link_libraries</span><span class="params">(main PRIVATE $&#123;OpenCV_LIBS&#125;)</span></span></span><br><span class="line"><span class="function"></span></span><br></pre></td></tr></table></figure>
-
-
-<h4 id="两RGB图间的特征匹配"><a href="#两RGB图间的特征匹配" class="headerlink" title="两RGB图间的特征匹配"></a>两RGB图间的特征匹配</h4><p>具体可参考官方教程<a target="_blank" rel="noopener" href="https://docs.opencv.org/4.x/d7/dff/tutorial_feature_homography.html">https://docs.opencv.org/4.x/d7/dff/tutorial_feature_homography.html</a></p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;opencv4/opencv2/highgui.hpp&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;opencv4/opencv2/opencv.hpp&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;opencv4/opencv2/imgproc.hpp&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;opencv4/opencv2/features2d.hpp&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;opencv4/opencv2/core.hpp&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;opencv4/opencv2/calib3d.hpp&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> cv;</span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span> **argv)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    cout &lt;&lt; CV_VERSION &lt;&lt; endl;</span><br><span class="line"></span><br><span class="line">    Mat img1 = <span class="built_in">imread</span>(<span class="string">&quot;001.JPG&quot;</span>);</span><br><span class="line">    Mat img2 = <span class="built_in">imread</span>(<span class="string">&quot;002.JPG&quot;</span>);</span><br><span class="line"></span><br><span class="line">    Ptr&lt;SIFT&gt; detector = SIFT::<span class="built_in">create</span>();</span><br><span class="line">    vector&lt;KeyPoint&gt; keypoints1, keypoints2;</span><br><span class="line">    Mat descriptors1, descriptors2;</span><br><span class="line">    detector-&gt;<span class="built_in">detectAndCompute</span>(img1, <span class="built_in">noArray</span>(), keypoints1, descriptors1);</span><br><span class="line">    detector-&gt;<span class="built_in">detectAndCompute</span>(img2, <span class="built_in">noArray</span>(), keypoints2, descriptors2);</span><br><span class="line"></span><br><span class="line">    Ptr&lt;DescriptorMatcher&gt; matcher = DescriptorMatcher::<span class="built_in">create</span>(DescriptorMatcher::FLANNBASED);</span><br><span class="line"></span><br><span class="line">    vector&lt;vector&lt;DMatch&gt;&gt; knn_matches;</span><br><span class="line">    matcher-&gt;<span class="built_in">knnMatch</span>(descriptors1, descriptors2, knn_matches, <span class="number">2</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">const</span> <span class="keyword">float</span> ratio_thresh = <span class="number">0.5f</span>;</span><br><span class="line">    vector&lt;DMatch&gt; good_matches;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">size_t</span> i=<span class="number">0</span>; i&lt;knn_matches.<span class="built_in">size</span>();i++)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span>(knn_matches[i][<span class="number">0</span>].distance &lt; ratio_thresh * knn_matches[i][<span class="number">1</span>].distance)</span><br><span class="line">        &#123;</span><br><span class="line">            good_matches.<span class="built_in">push_back</span>(knn_matches[i][<span class="number">0</span>]);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    Mat img_matches;</span><br><span class="line">    <span class="built_in">drawMatches</span>(img1, keypoints1, img2, keypoints2, good_matches, img_matches);</span><br><span class="line">    </span><br><span class="line">    </span><br><span class="line">    <span class="comment">//-- Localize the object</span></span><br><span class="line">    std::vector&lt;Point2f&gt; obj;</span><br><span class="line">    std::vector&lt;Point2f&gt; scene;</span><br><span class="line">    <span class="keyword">for</span>( <span class="keyword">size_t</span> i = <span class="number">0</span>; i &lt; good_matches.<span class="built_in">size</span>(); i++ )</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment">//-- Get the keypoints from the good matches</span></span><br><span class="line">        obj.<span class="built_in">push_back</span>( keypoints1[ good_matches[i].queryIdx ].pt );</span><br><span class="line">        scene.<span class="built_in">push_back</span>( keypoints2[ good_matches[i].trainIdx ].pt );</span><br><span class="line">    &#125;</span><br><span class="line">    Mat H = <span class="built_in">findHomography</span>( obj, scene, RANSAC );</span><br><span class="line">    cout &lt;&lt; H &lt;&lt; endl;</span><br><span class="line">    <span class="comment">//-- Get the corners from the image_1 ( the object to be &quot;detected&quot; )</span></span><br><span class="line">    <span class="function">std::vector&lt;Point2f&gt; <span class="title">obj_corners</span><span class="params">(<span class="number">4</span>)</span></span>;</span><br><span class="line">    obj_corners[<span class="number">0</span>] = <span class="built_in">Point2f</span>(<span class="number">0</span>, <span class="number">0</span>);</span><br><span class="line">    obj_corners[<span class="number">1</span>] = <span class="built_in">Point2f</span>( (<span class="keyword">float</span>)img1.cols, <span class="number">0</span> );</span><br><span class="line">    obj_corners[<span class="number">2</span>] = <span class="built_in">Point2f</span>( (<span class="keyword">float</span>)img1.cols, (<span class="keyword">float</span>)img1.rows );</span><br><span class="line">    obj_corners[<span class="number">3</span>] = <span class="built_in">Point2f</span>( <span class="number">0</span>, (<span class="keyword">float</span>)img1.rows );</span><br><span class="line">    <span class="function">std::vector&lt;Point2f&gt; <span class="title">scene_corners</span><span class="params">(<span class="number">4</span>)</span></span>;</span><br><span class="line">    <span class="built_in">perspectiveTransform</span>( obj_corners, scene_corners, H);</span><br><span class="line">    <span class="comment">//-- Draw lines between the corners (the mapped object in the scene - image_2 )</span></span><br><span class="line">    <span class="built_in">line</span>( img_matches, scene_corners[<span class="number">0</span>] + <span class="built_in">Point2f</span>((<span class="keyword">float</span>)img1.cols, <span class="number">0</span>),</span><br><span class="line">          scene_corners[<span class="number">1</span>] + <span class="built_in">Point2f</span>((<span class="keyword">float</span>)img1.cols, <span class="number">0</span>), <span class="built_in">Scalar</span>(<span class="number">0</span>, <span class="number">255</span>, <span class="number">0</span>), <span class="number">4</span> );</span><br><span class="line">    <span class="built_in">line</span>( img_matches, scene_corners[<span class="number">1</span>] + <span class="built_in">Point2f</span>((<span class="keyword">float</span>)img1.cols, <span class="number">0</span>),</span><br><span class="line">          scene_corners[<span class="number">2</span>] + <span class="built_in">Point2f</span>((<span class="keyword">float</span>)img1.cols, <span class="number">0</span>), <span class="built_in">Scalar</span>( <span class="number">0</span>, <span class="number">255</span>, <span class="number">0</span>), <span class="number">4</span> );</span><br><span class="line">    <span class="built_in">line</span>( img_matches, scene_corners[<span class="number">2</span>] + <span class="built_in">Point2f</span>((<span class="keyword">float</span>)img1.cols, <span class="number">0</span>),</span><br><span class="line">          scene_corners[<span class="number">3</span>] + <span class="built_in">Point2f</span>((<span class="keyword">float</span>)img1.cols, <span class="number">0</span>), <span class="built_in">Scalar</span>( <span class="number">0</span>, <span class="number">255</span>, <span class="number">0</span>), <span class="number">4</span> );</span><br><span class="line">    <span class="built_in">line</span>( img_matches, scene_corners[<span class="number">3</span>] + <span class="built_in">Point2f</span>((<span class="keyword">float</span>)img1.cols, <span class="number">0</span>),</span><br><span class="line">          scene_corners[<span class="number">0</span>] + <span class="built_in">Point2f</span>((<span class="keyword">float</span>)img1.cols, <span class="number">0</span>), <span class="built_in">Scalar</span>( <span class="number">0</span>, <span class="number">255</span>, <span class="number">0</span>), <span class="number">4</span> );</span><br><span class="line">    <span class="comment">//-- Show detected matches</span></span><br><span class="line"></span><br><span class="line">    <span class="built_in">namedWindow</span>(<span class="string">&quot;Matches&quot;</span>, WINDOW_NORMAL);</span><br><span class="line">    <span class="built_in">imshow</span>(<span class="string">&quot;Matches&quot;</span>, img_matches );</span><br><span class="line">    <span class="comment">// imwrite(&quot;good_res.jpg&quot;, img_matches);</span></span><br><span class="line">    </span><br><span class="line">   </span><br><span class="line">    <span class="built_in">waitKey</span>();</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">输出H：</span></span><br><span class="line"><span class="comment">[0.9771928708495958, -0.008932567941541457, 129.4806431662592;</span></span><br><span class="line"><span class="comment"> 0.0342771681684575, 0.9114878090650101, 163.0011063784843;</span></span><br><span class="line"><span class="comment"> 3.322036688562577e-05, -1.090291446290035e-05, 1]</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<p>值得注意的是，本版本是opencv 4.5,与Opencv2/3有很多语法不一样了；关于特征点和描述子最大的区别：特征点是特征坐标KeyPoint，描述子是描述邻域信息的Mat。</p>
-<p>特征匹配总体的流程：<br>1.首先读取图片，创建检测特征SIFT，ORB，SURF(xfeature)等<br>2.如果检测子包含描述子，则直接detectAndCompute<br>3.一般用BFMatcher直接对描述子点对vector<DMatch> 进行暴力匹配，这里是优化加速版用FLANN的knn，注意的是ORB可用HAMMING距离，其他则不可。<br>4.接着对KNN点对进行基于距离的筛选<br>5.对置信度高的点对进行RANSAC的单应变换矩阵求解</p>
-<p>至此基本完成特征匹配的功能，得到的单应矩阵描述了图片间的变换关系；这是很多CV高级应用的基础，如校正，拼接，SLAM等。</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1339,14 +1533,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">34</span>
+          <span class="site-state-item-count">36</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">14</span>
+        <span class="site-state-item-count">13</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
@@ -1393,12 +1587,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">49k</span>
+    <span title="站点总字数">58k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">44 分钟</span>
+    <span title="站点阅读时长">53 分钟</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
   </div>
