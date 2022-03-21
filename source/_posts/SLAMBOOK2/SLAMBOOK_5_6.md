@@ -1,5 +1,5 @@
 ---
-title: LSAMBOOK_5_6
+title: SLAMBOOK_5_6
 categories:
   - SLAMBOOK
 mathjax: true
