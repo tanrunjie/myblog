@@ -1,5 +1,5 @@
 ---
-title: class1
+title: class1_2
 categories:
   - 九章算法
 mathjax: true
@@ -57,3 +57,39 @@ class Solution{
 - 归类相似的题目
 - 找出适合的模板程序
 - 掌握递归算法，掌握区分度
+
+
+### 第二课
+
+#### 二分搜索通用模板
+``` cpp
+int binarySearch(vector<int> &A, int target)
+{
+  if(A.size()==0)
+    return -1;
+  
+  int start  = 0;
+  int end = A.size()-1;
+  int mid;
+
+  while(start+1 < end)
+  {
+    mid = start + (end-start)/ 2;
+    if(A[mid] == target)
+      end = mid;  // 为准确找到第一个出现的target
+    else if(A[mid] <target)
+      start = mid;
+    else
+      end = mid;
+  }
+  if(A[start] == target)
+    return start;
+  if(A[end] == target)
+    return end;
+  
+  return -1;
+}
+
+```
+
+相关题目：二分查找first order/ last order, 二分查找区域， 二分插入数值， 增长矩阵二分查找等
