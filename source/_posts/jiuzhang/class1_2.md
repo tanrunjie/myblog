@@ -93,3 +93,5 @@ int binarySearch(vector<int> &A, int target)
 ```
 
 相关题目：二分查找first order/ last order, 二分查找区域， 二分插入数值， 增长矩阵二分查找等
+注意带重复元素不能用二分
+三步翻转法
