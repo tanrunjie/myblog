@@ -1,25 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>TSDF算法</title>
-    <url>/2021/12/23/TSDF%E7%AE%97%E6%B3%95/</url>
-    <content><![CDATA[<p>具体学习于 <a href="https://github.com/andyzeng/tsdf-fusion">https://github.com/andyzeng/tsdf-fusion</a></p>
-<h3 id="Why-TSDF"><a href="#Why-TSDF" class="headerlink" title="Why TSDF"></a>Why TSDF</h3><p>三维重建首当其冲的问题是如何保存以及如何表示模型，通常而言会有点云，mesh等；<br>但是对于室内三维重建，TSDF是一个不错的选择，其优点是</p>
-<ul>
-<li>非常适合CUDA并行运算，从而达到实时。</li>
-<li>开辟固定的内存/显存，模型大小相对可控</li>
-<li>模型大小不随数据量变化，网格的细节比较好<br>缺点：CPU计算耗时，在边缘以及前后景交界出现拖尾现象（体素g在像素坐标系投影有一定的误差）</li>
-</ul>
-<h3 id="How-TSDF"><a href="#How-TSDF" class="headerlink" title="How TSDF"></a>How TSDF</h3><p>1.建立长方体包围盒（能包住房间，一般预设参数：可通过设定划分网格以及网格大小得到)<br>2.将每个体素v转化成三维座标点g(根据模型起点和网格推算)<br>3.对于新来的每一帧深度图：<br>    遍历每一个体素g：<br>        3.1.根据相机外参，将g在世界坐标系转换到相机坐标系的点c,再由相机内参转换到像素坐标系x;<br>        3.2.深度相机像素深度为value(x),点c到相机坐标原点的距离为distance(v)<br>        3.3.sdf(g) = value(x) - distance(v).<br>        3.4.求tsdf(g).<code>预设截断距离t = voxel_size * t_n, 则t以内，tsdf(g) = sdf(p)/|u|;在t以外时，if sdf(p)&gt;1, tsdf(p) = 1;if sdf(p)&lt;-1, tsdf(p)=-1;</code><br>        3.5.权重w(p) = cos(theta)/distance(v), theta为投影光线与表面法向的夹角<br>至此，得到当前帧所有体素的tsdf值以及权重值<br>4.当前帧与全局模型融合<br>    4.1 若当前帧为第一帧，即为融合结果；否则与之前的模型融合,公式如下，其中W(p)为融合权重，w(p)为当前帧权重<br><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy8xMTEzMzY5Ni02ZWY1Yzk2YWUwMWFlNTZmLnBuZw?x-oss-process=image/format,png"></p>
-<h3 id="Detail-and-Analysis"><a href="#Detail-and-Analysis" class="headerlink" title="Detail and Analysis"></a>Detail and Analysis</h3>]]></content>
-      <categories>
-        <category>SLAM</category>
-      </categories>
-      <tags>
-        <tag>SLAM</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>UNIX_Tutorial</title>
     <url>/2021/12/27/UNIX-Tutorial/</url>
     <content><![CDATA[<p>Unix和Linux的基本指令<br><a href="http://www.ee.surrey.ac.uk/Teaching/Unix/">http://www.ee.surrey.ac.uk/Teaching/Unix/</a></p>
@@ -186,6 +167,45 @@
       </tags>
   </entry>
   <entry>
+    <title>TSDF算法</title>
+    <url>/2021/12/23/TSDF%E7%AE%97%E6%B3%95/</url>
+    <content><![CDATA[<p>具体学习于 <a href="https://github.com/andyzeng/tsdf-fusion">https://github.com/andyzeng/tsdf-fusion</a></p>
+<h3 id="Why-TSDF"><a href="#Why-TSDF" class="headerlink" title="Why TSDF"></a>Why TSDF</h3><p>三维重建首当其冲的问题是如何保存以及如何表示模型，通常而言会有点云，mesh等；<br>但是对于室内三维重建，TSDF是一个不错的选择，其优点是</p>
+<ul>
+<li>非常适合CUDA并行运算，从而达到实时。</li>
+<li>开辟固定的内存/显存，模型大小相对可控</li>
+<li>模型大小不随数据量变化，网格的细节比较好<br>缺点：CPU计算耗时，在边缘以及前后景交界出现拖尾现象（体素g在像素坐标系投影有一定的误差）</li>
+</ul>
+<h3 id="How-TSDF"><a href="#How-TSDF" class="headerlink" title="How TSDF"></a>How TSDF</h3><p>1.建立长方体包围盒（能包住房间，一般预设参数：可通过设定划分网格以及网格大小得到)<br>2.将每个体素v转化成三维座标点g(根据模型起点和网格推算)<br>3.对于新来的每一帧深度图：<br>    遍历每一个体素g：<br>        3.1.根据相机外参，将g在世界坐标系转换到相机坐标系的点c,再由相机内参转换到像素坐标系x;<br>        3.2.深度相机像素深度为value(x),点c到相机坐标原点的距离为distance(v)<br>        3.3.sdf(g) = value(x) - distance(v).<br>        3.4.求tsdf(g).<code>预设截断距离t = voxel_size * t_n, 则t以内，tsdf(g) = sdf(p)/|u|;在t以外时，if sdf(p)&gt;1, tsdf(p) = 1;if sdf(p)&lt;-1, tsdf(p)=-1;</code><br>        3.5.权重w(p) = cos(theta)/distance(v), theta为投影光线与表面法向的夹角<br>至此，得到当前帧所有体素的tsdf值以及权重值<br>4.当前帧与全局模型融合<br>    4.1 若当前帧为第一帧，即为融合结果；否则与之前的模型融合,公式如下，其中W(p)为融合权重，w(p)为当前帧权重<br><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy8xMTEzMzY5Ni02ZWY1Yzk2YWUwMWFlNTZmLnBuZw?x-oss-process=image/format,png"></p>
+<h3 id="Detail-and-Analysis"><a href="#Detail-and-Analysis" class="headerlink" title="Detail and Analysis"></a>Detail and Analysis</h3>]]></content>
+      <categories>
+        <category>SLAM</category>
+      </categories>
+      <tags>
+        <tag>SLAM</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>SLAMBOOK_7_8</title>
+    <url>/2022/03/04/SLAMBOOK2/SLAMBOOK_7_8/</url>
+    <content><![CDATA[<h3 id="视觉里程计"><a href="#视觉里程计" class="headerlink" title="视觉里程计"></a>视觉里程计</h3><p>主要目标：</p>
+<ul>
+<li>理解图像特征点的意义，掌握单幅图像提取特征点及多幅图像中匹配特征点的方法</li>
+<li>理解对极几何原理，利用对极约束，恢复图像之间的camera位姿</li>
+<li>理解PnP问题，利用已知三维结构与图像对应关系，求解camera位姿</li>
+<li>理解ICP问题，利用点云匹配关系，求解camera位姿</li>
+<li>理解三角化获得二维图像上对应点的三维结构</li>
+</ul>
+<p>图像特征性质：多图可重复、可区别、高效率、本地性</p>
+]]></content>
+      <categories>
+        <category>SLAMBOOK</category>
+      </categories>
+      <tags>
+        <tag>SLAMBOOK</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>SLAMBOOK_3_4</title>
     <url>/2022/02/28/SLAMBOOK2/SLAMBOOK_3_4/</url>
     <content><![CDATA[<h3 id="三维空间刚体运动"><a href="#三维空间刚体运动" class="headerlink" title="三维空间刚体运动"></a>三维空间刚体运动</h3><p>目标：</p>
@@ -315,26 +335,6 @@
 <h4 id="SLAM数学建模"><a href="#SLAM数学建模" class="headerlink" title="SLAM数学建模"></a>SLAM数学建模</h4><p>主要分为运动方程和观测方程，根据这两个方程是否线性以及噪声是否服从高斯分布进行分类，主要信息是位姿以及观测的路标</p>
 <h4 id="CMAKE的使用"><a href="#CMAKE的使用" class="headerlink" title="CMAKE的使用"></a>CMAKE的使用</h4><figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="built_in">add_executable</span>(exe main.cpp) # 编译执行文件</span><br><span class="line"></span><br><span class="line"><span class="built_in">add_library</span>(lib lib.cpp)  # 编译静态库 .<span class="function">a</span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function"><span class="title">add_library</span><span class="params">(lib_shared SHARED lib.cpp)</span>  # 编译动态库 .so</span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function"><span class="title">add_executable</span><span class="params">(useLib useLib.cpp)</span>   <span class="meta"># cpp <span class="meta-keyword">include</span>动态库的头文件调用</span></span></span><br><span class="line"><span class="function"><span class="title">target_link_libraries</span><span class="params">(useLib lib_shared)</span>  # 将库文件链接到编译后的文件，最后链接生成最后的执行文件useLib</span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function"># 将库hello和共享库hello_shared安装到/usr/local/lib下</span></span><br><span class="line"><span class="function"><span class="title">INSTALL</span><span class="params">(TARGETS hello hello_shared</span></span></span><br><span class="line"><span class="params"><span class="function">LIBRARY DESTINATION lib</span></span></span><br><span class="line"><span class="params"><span class="function">ARCHIVE DESTINATION lib)</span></span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function"># 将库的头文件安装到/usr/local/include下</span></span><br><span class="line"><span class="function"><span class="title">INSTALL</span><span class="params">(FILES libHelloSLAM.h DESTINATION include/libHelloSLAM)</span></span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function"># 另外目录的项目调用，引入头文件</span></span><br><span class="line"><span class="function"><span class="title">include_directories</span><span class="params">(/usr/local/include/libHelloSLAM)</span></span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function"># 链接库文件</span></span><br><span class="line"><span class="function"><span class="title">target_link_libraries</span><span class="params">(useHello /usr/local/lib/libhello_shared.so)</span></span></span><br><span class="line"><span class="function"></span></span><br></pre></td></tr></table></figure>
 <p>库文件是压缩包，包含编译好的二进制函数，但不知道函数是什么样和调用形式，所以需要结合<strong>头文件</strong>使用。只有拿到头文件和库文件才可以调用库。</p>
-]]></content>
-      <categories>
-        <category>SLAMBOOK</category>
-      </categories>
-      <tags>
-        <tag>SLAMBOOK</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>SLAMBOOK_7_8</title>
-    <url>/2022/03/04/SLAMBOOK2/SLAMBOOK_7_8/</url>
-    <content><![CDATA[<h3 id="视觉里程计"><a href="#视觉里程计" class="headerlink" title="视觉里程计"></a>视觉里程计</h3><p>主要目标：</p>
-<ul>
-<li>理解图像特征点的意义，掌握单幅图像提取特征点及多幅图像中匹配特征点的方法</li>
-<li>理解对极几何原理，利用对极约束，恢复图像之间的camera位姿</li>
-<li>理解PnP问题，利用已知三维结构与图像对应关系，求解camera位姿</li>
-<li>理解ICP问题，利用点云匹配关系，求解camera位姿</li>
-<li>理解三角化获得二维图像上对应点的三维结构</li>
-</ul>
-<p>图像特征性质：多图可重复、可区别、高效率、本地性</p>
 ]]></content>
       <categories>
         <category>SLAMBOOK</category>
@@ -475,29 +475,6 @@
       </tags>
   </entry>
   <entry>
-    <title>代码重用</title>
-    <url>/2022/01/26/cpp/%E4%BB%A3%E7%A0%81%E9%87%8D%E7%94%A8/</url>
-    <content><![CDATA[<h3 id="类的复用"><a href="#类的复用" class="headerlink" title="类的复用"></a>类的复用</h3><p>上一节了解了public继承是is-a关系;C++ PRIMER第十四章重用讲解包含has-a的两种用法：1.组件包含 2.私有继承包含<br>大多数人会倾向于使用包含，一方面方便理解，另一方面多重继承容易引起问题；私有继承主要区别在于私有成员变成了继承而来的无名成员，调用成员时依赖this的类型转换。</p>
-<h3 id="多重继承"><a href="#多重继承" class="headerlink" title="多重继承"></a>多重继承</h3><p>MI会带来许多新问题：1.两个基类的同名方法； 2.多个相关基类继承同一个类的多个实例问题；为此大家对MI有喜忧参半不同的态度。</p>
-<p>祖先相同时，要用虚基类解决 class Singer:virtual public Worker，虚拟继承。禁止正常的信息再中间类自动传递。</p>
-<p>MI中间隐含较多问题，尽量减少使用，要么就不用。</p>
-<h3 id="类模板"><a href="#类模板" class="headerlink" title="类模板"></a>类模板</h3><p>模板主要作用是提供参数化类型，将类型关键名作为参数传递给模板类或函数，从而实现最大程度代码复用。</p>
-<p>模板类型使用指针时，代码实现上也得调整，所以一般减少依赖指针模板使用，尽量时bool,char,int,double,string，及一般对象等。</p>
-<p>为容器类提供可重用代码是引入模板的主要动机。非类型参数可以是int,枚举，引用或指针，因此double m 不合法，但double *m是合法的。</p>
-<p>模板多功能性，可用于基类，组件类以及其他模板的类型参数。</p>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="class"><span class="keyword">class</span> <span class="title">T</span>&gt;</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ARray</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">  <span class="keyword">private</span>:</span><br><span class="line">    T entry;</span><br><span class="line">    ...</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">template</span> &lt;<span class="class"><span class="keyword">class</span> <span class="title">Type</span>&gt;</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">GrowArray</span>:</span><span class="keyword">public</span> Array&lt;Type&gt; &#123;...&#125;; <span class="comment">// inheritance</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">template</span> &lt;calss Tp&gt;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Stack</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">  Array&lt;Tp&gt; ar;    <span class="comment">// use an Array&lt;&gt; as a component</span></span><br><span class="line">  ...</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// need a blank between &gt; &gt;, show differ from &gt;&gt; operator</span></span><br><span class="line">Array &lt; Stack&lt;<span class="keyword">int</span>&gt; &gt; asi; <span class="comment">// an array of stacks of int</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 模板也可传参</span></span><br><span class="line"><span class="keyword">template</span>&lt;<span class="class"><span class="keyword">class</span> <span class="title">T</span>, <span class="title">int</span> <span class="title">n</span>&gt;</span></span><br><span class="line">ArrayTP&lt;T, n&gt;::<span class="built_in">ArrayTP</span>(<span class="keyword">const</span> T &amp; v)</span><br><span class="line">&#123;</span><br><span class="line">  <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;n;i++&gt;)</span><br><span class="line">    ar[i] = v;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 显示具体化，用于专用定义，优先匹配</span></span><br><span class="line"><span class="keyword">template</span>&lt;&gt; <span class="class"><span class="keyword">class</span> <span class="title">Ic</span>&lt;</span><span class="keyword">char</span> *&gt;</span><br><span class="line">&#123;</span><br><span class="line">  <span class="keyword">private</span>:</span><br><span class="line">  <span class="keyword">public</span>:</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-
-<p>模板参数类似函数参数，带有隐式显式转换及参数匹配规则。</p>
-<h3 id="友元类"><a href="#友元类" class="headerlink" title="友元类"></a>友元类</h3><p>两个类关系既不是is-a也不是has-a，但存在控制的关系如电视和遥控。则可以定义遥控为电视的友元类，能够合理范围内修改电视的私有和保护的部分。相当于友元类需要直到朋友类的数据细节乃至实现细节。</p>
-]]></content>
-      <categories>
-        <category>c++</category>
-      </categories>
-      <tags>
-        <tag>c++</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>字符串</title>
     <url>/2021/12/15/cpp/%E5%AD%97%E7%AC%A6%E4%B8%B2/</url>
     <content><![CDATA[<h3 id="C-style字符串"><a href="#C-style字符串" class="headerlink" title="C-style字符串"></a>C-style字符串</h3><p>结尾带’\0’,这对于很多处理字符串的函数很关键。#include <cstring>包含大量C语言字串的操作函数如strlen, strcpy, strcat…</p>
@@ -529,6 +506,29 @@
       </categories>
       <tags>
         <tag>c++ primer</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>代码重用</title>
+    <url>/2022/01/26/cpp/%E4%BB%A3%E7%A0%81%E9%87%8D%E7%94%A8/</url>
+    <content><![CDATA[<h3 id="类的复用"><a href="#类的复用" class="headerlink" title="类的复用"></a>类的复用</h3><p>上一节了解了public继承是is-a关系;C++ PRIMER第十四章重用讲解包含has-a的两种用法：1.组件包含 2.私有继承包含<br>大多数人会倾向于使用包含，一方面方便理解，另一方面多重继承容易引起问题；私有继承主要区别在于私有成员变成了继承而来的无名成员，调用成员时依赖this的类型转换。</p>
+<h3 id="多重继承"><a href="#多重继承" class="headerlink" title="多重继承"></a>多重继承</h3><p>MI会带来许多新问题：1.两个基类的同名方法； 2.多个相关基类继承同一个类的多个实例问题；为此大家对MI有喜忧参半不同的态度。</p>
+<p>祖先相同时，要用虚基类解决 class Singer:virtual public Worker，虚拟继承。禁止正常的信息再中间类自动传递。</p>
+<p>MI中间隐含较多问题，尽量减少使用，要么就不用。</p>
+<h3 id="类模板"><a href="#类模板" class="headerlink" title="类模板"></a>类模板</h3><p>模板主要作用是提供参数化类型，将类型关键名作为参数传递给模板类或函数，从而实现最大程度代码复用。</p>
+<p>模板类型使用指针时，代码实现上也得调整，所以一般减少依赖指针模板使用，尽量时bool,char,int,double,string，及一般对象等。</p>
+<p>为容器类提供可重用代码是引入模板的主要动机。非类型参数可以是int,枚举，引用或指针，因此double m 不合法，但double *m是合法的。</p>
+<p>模板多功能性，可用于基类，组件类以及其他模板的类型参数。</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="class"><span class="keyword">class</span> <span class="title">T</span>&gt;</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ARray</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">  <span class="keyword">private</span>:</span><br><span class="line">    T entry;</span><br><span class="line">    ...</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">template</span> &lt;<span class="class"><span class="keyword">class</span> <span class="title">Type</span>&gt;</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">GrowArray</span>:</span><span class="keyword">public</span> Array&lt;Type&gt; &#123;...&#125;; <span class="comment">// inheritance</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">template</span> &lt;calss Tp&gt;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Stack</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">  Array&lt;Tp&gt; ar;    <span class="comment">// use an Array&lt;&gt; as a component</span></span><br><span class="line">  ...</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// need a blank between &gt; &gt;, show differ from &gt;&gt; operator</span></span><br><span class="line">Array &lt; Stack&lt;<span class="keyword">int</span>&gt; &gt; asi; <span class="comment">// an array of stacks of int</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 模板也可传参</span></span><br><span class="line"><span class="keyword">template</span>&lt;<span class="class"><span class="keyword">class</span> <span class="title">T</span>, <span class="title">int</span> <span class="title">n</span>&gt;</span></span><br><span class="line">ArrayTP&lt;T, n&gt;::<span class="built_in">ArrayTP</span>(<span class="keyword">const</span> T &amp; v)</span><br><span class="line">&#123;</span><br><span class="line">  <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;n;i++&gt;)</span><br><span class="line">    ar[i] = v;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 显示具体化，用于专用定义，优先匹配</span></span><br><span class="line"><span class="keyword">template</span>&lt;&gt; <span class="class"><span class="keyword">class</span> <span class="title">Ic</span>&lt;</span><span class="keyword">char</span> *&gt;</span><br><span class="line">&#123;</span><br><span class="line">  <span class="keyword">private</span>:</span><br><span class="line">  <span class="keyword">public</span>:</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>模板参数类似函数参数，带有隐式显式转换及参数匹配规则。</p>
+<h3 id="友元类"><a href="#友元类" class="headerlink" title="友元类"></a>友元类</h3><p>两个类关系既不是is-a也不是has-a，但存在控制的关系如电视和遥控。则可以定义遥控为电视的友元类，能够合理范围内修改电视的私有和保护的部分。相当于友元类需要直到朋友类的数据细节乃至实现细节。</p>
+]]></content>
+      <categories>
+        <category>c++</category>
+      </categories>
+      <tags>
+        <tag>c++</tag>
       </tags>
   </entry>
   <entry>
@@ -732,6 +732,27 @@
       </tags>
   </entry>
   <entry>
+    <title>EIGEN_1 HELLO_WOLRD</title>
+    <url>/2022/01/20/eigen/eigen-1/</url>
+    <content><![CDATA[<h3 id="EIGEN简介"><a href="#EIGEN简介" class="headerlink" title="EIGEN简介"></a>EIGEN简介</h3><p>FROM WIKI: Eigen is a high-level C++ library of template headers for linear algebra, matrix and vector operations, geometrical transformations, numerical solvers and related algorithms.<br>简而言之C++开源模板库，支持线性代数、矩阵矢量运算和数值分析，是个方便好用的数学库。</p>
+<p>更绝的是，EIGEN所有源码用头文件编写，所以只需要Include,无需编译链接过程，直接与平台无关，非常通用！</p>
+<h3 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h3><p>安装过程也很简单，在UBUNTU下直接</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line">sudo apt-get install libeigen3-dev</span><br></pre></td></tr></table></figure>
+<p>一般安装在/usr/include目录下</p>
+<p>使用直接与标准库类似，#include &lt;Eigen/Dense&gt;等</p>
+<h3 id="主要模块"><a href="#主要模块" class="headerlink" title="主要模块"></a>主要模块</h3><p><img src="/images/01_20_1.png"></p>
+<h3 id="简单例子"><a href="#简单例子" class="headerlink" title="简单例子"></a>简单例子</h3><figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;eigen3/Eigen/Dense&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> Eigen;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line"></span><br><span class="line">    Matrix3d m = Matrix3d::<span class="built_in">Random</span>();</span><br><span class="line">    m = ( m + Matrix3d::<span class="built_in">Constant</span>(<span class="number">1.2</span>)) * <span class="number">50</span>;</span><br><span class="line"></span><br><span class="line">    cout &lt;&lt; m &lt;&lt; endl;</span><br><span class="line">    <span class="function">Vector3d <span class="title">v</span><span class="params">(<span class="number">3</span>)</span></span>;</span><br><span class="line">    v &lt;&lt; <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>;</span><br><span class="line">    cout &lt;&lt;m*v &lt;&lt; endl;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>这是fix_sized定义的写法，一般4*4以下的矩阵矢量用固定大小写法，对于比较大的才用不定量写法MatirxXd, VectorXd;</p>
+<p>主要结构为1D对象Vector, Array和2D对象Matrix</p>
+]]></content>
+      <categories>
+        <category>EIGEN</category>
+      </categories>
+      <tags>
+        <tag>EIGEN</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>腾讯课堂-C++11多线程</title>
     <url>/2021/12/28/cpp/%E8%85%BE%E8%AE%AF%E8%AF%BE%E5%A0%82-C-11%E5%A4%9A%E7%BA%BF%E7%A8%8B/</url>
     <content><![CDATA[<h3 id="线程管理"><a href="#线程管理" class="headerlink" title="线程管理"></a>线程管理</h3><p>多线程的执行函数尽量用传引用，以减少不必要资源开销；根据hardware_concurrency得到核心数来决定开多线程的数量；</p>
@@ -765,27 +786,6 @@
       </categories>
       <tags>
         <tag>C++ 多线程 并发</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>EIGEN_1 HELLO_WOLRD</title>
-    <url>/2022/01/20/eigen/eigen-1/</url>
-    <content><![CDATA[<h3 id="EIGEN简介"><a href="#EIGEN简介" class="headerlink" title="EIGEN简介"></a>EIGEN简介</h3><p>FROM WIKI: Eigen is a high-level C++ library of template headers for linear algebra, matrix and vector operations, geometrical transformations, numerical solvers and related algorithms.<br>简而言之C++开源模板库，支持线性代数、矩阵矢量运算和数值分析，是个方便好用的数学库。</p>
-<p>更绝的是，EIGEN所有源码用头文件编写，所以只需要Include,无需编译链接过程，直接与平台无关，非常通用！</p>
-<h3 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h3><p>安装过程也很简单，在UBUNTU下直接</p>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line">sudo apt-get install libeigen3-dev</span><br></pre></td></tr></table></figure>
-<p>一般安装在/usr/include目录下</p>
-<p>使用直接与标准库类似，#include &lt;Eigen/Dense&gt;等</p>
-<h3 id="主要模块"><a href="#主要模块" class="headerlink" title="主要模块"></a>主要模块</h3><p><img src="/images/01_20_1.png"></p>
-<h3 id="简单例子"><a href="#简单例子" class="headerlink" title="简单例子"></a>简单例子</h3><figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;eigen3/Eigen/Dense&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> Eigen;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line"></span><br><span class="line">    Matrix3d m = Matrix3d::<span class="built_in">Random</span>();</span><br><span class="line">    m = ( m + Matrix3d::<span class="built_in">Constant</span>(<span class="number">1.2</span>)) * <span class="number">50</span>;</span><br><span class="line"></span><br><span class="line">    cout &lt;&lt; m &lt;&lt; endl;</span><br><span class="line">    <span class="function">Vector3d <span class="title">v</span><span class="params">(<span class="number">3</span>)</span></span>;</span><br><span class="line">    v &lt;&lt; <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>;</span><br><span class="line">    cout &lt;&lt;m*v &lt;&lt; endl;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<p>这是fix_sized定义的写法，一般4*4以下的矩阵矢量用固定大小写法，对于比较大的才用不定量写法MatirxXd, VectorXd;</p>
-<p>主要结构为1D对象Vector, Array和2D对象Matrix</p>
-]]></content>
-      <categories>
-        <category>EIGEN</category>
-      </categories>
-      <tags>
-        <tag>EIGEN</tag>
       </tags>
   </entry>
   <entry>
@@ -826,7 +826,7 @@
 </ul>
 <h3 id="第二课"><a href="#第二课" class="headerlink" title="第二课"></a>第二课</h3><h4 id="二分搜索通用模板"><a href="#二分搜索通用模板" class="headerlink" title="二分搜索通用模板"></a>二分搜索通用模板</h4><figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">binarySearch</span><span class="params">(vector&lt;<span class="keyword">int</span>&gt; &amp;A, <span class="keyword">int</span> target)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  <span class="keyword">if</span>(A.<span class="built_in">size</span>()==<span class="number">0</span>)</span><br><span class="line">    <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">  </span><br><span class="line">  <span class="keyword">int</span> start  = <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">int</span> end = A.<span class="built_in">size</span>()<span class="number">-1</span>;</span><br><span class="line">  <span class="keyword">int</span> mid;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">while</span>(start+<span class="number">1</span> &lt; end)</span><br><span class="line">  &#123;</span><br><span class="line">    mid = start + (end-start)/ <span class="number">2</span>;</span><br><span class="line">    <span class="keyword">if</span>(A[mid] == target)</span><br><span class="line">      end = mid;  <span class="comment">// 为准确找到第一个出现的target</span></span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span>(A[mid] &lt;target)</span><br><span class="line">      start = mid;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">      end = mid;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">if</span>(A[start] == target)</span><br><span class="line">    <span class="keyword">return</span> start;</span><br><span class="line">  <span class="keyword">if</span>(A[end] == target)</span><br><span class="line">    <span class="keyword">return</span> end;</span><br><span class="line">  </span><br><span class="line">  <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
-<p>相关题目：二分查找first order/ last order, 二分查找区域， 二分插入数值， 增长矩阵二分查找等</p>
+<p>相关题目：二分查找first order/ last order, 二分查找区域， 二分插入数值， 增长矩阵二分查找等<br>注意带重复元素不能用二分<br>三步翻转法</p>
 ]]></content>
       <categories>
         <category>九章算法</category>
@@ -836,62 +836,39 @@
       </tags>
   </entry>
   <entry>
-    <title>墙面分割</title>
-    <url>/2022/01/14/pcl/%E5%A2%99%E9%9D%A2%E5%88%86%E5%89%B2/</url>
-    <content><![CDATA[<h3 id="区域生长分割region-growing-segmentation"><a href="#区域生长分割region-growing-segmentation" class="headerlink" title="区域生长分割region growing segmentation"></a>区域生长分割region growing segmentation</h3><p>算法核心：基于点法线之间角度的比较，尽量将满足平滑约束的相邻点合并在一起，以一簇点集的形式输出，视为相同平面</p>
-<p>工作原理：区域增长从有最小曲率值curvature的点。则需要计算所有曲率值并进行排序；因为曲率最小的点位于平坦区域，从平坦区域增长可以减少区域的总数。（曲率与法线的求解方法类似,法线描述点在表面的法向，曲率则是法线间协方差矩阵的特征值，描述法向一致性)</p>
-<p>具体过程：</p>
-<ol>
-<li>对未标记点的曲率排序，将最小曲率点放入种子集</li>
-<li>对每个种子的所有邻点计算</li>
-<li>1 每个近邻点与当前点的法线角度差(reg.setSmoothnessThreshold),如果小于阈值则重点考虑，进入2.2判断</li>
-<li>2 该点通过2.1法线角度差检验，如果曲率小于设定的阈值(reg.setCurvatureThreshold)，这个点即被添加到种子点集，属于当前平面</li>
-<li>通过两次检验的点，被从原始点云去除</li>
-<li>设置最小点簇的点数reg.setMinClusterSize,以及最大簇reg.segMaxClusterSize</li>
-<li>重复1-3生成min~max个点数的所有平面，并对不同平面标记颜色区分</li>
-<li>直到算法在剩余点中生成的点簇不能满足min,停止工作</li>
-</ol>
-]]></content>
-      <categories>
-        <category>pcl</category>
-      </categories>
-      <tags>
-        <tag>pcl</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>CMAKE实践</title>
-    <url>/2022/02/25/reading/CMAKE%E5%AE%9E%E8%B7%B5/</url>
-    <content><![CDATA[<h3 id="初识cmake"><a href="#初识cmake" class="headerlink" title="初识cmake"></a>初识cmake</h3><p>主要特点：</p>
+    <title>class3_4</title>
+    <url>/2022/03/24/jiuzhang/class3_4/</url>
+    <content><![CDATA[<h3 id="class-3"><a href="#class-3" class="headerlink" title="class 3"></a>class 3</h3><h4 id="Binary-Tree-Traversal"><a href="#Binary-Tree-Traversal" class="headerlink" title="Binary Tree Traversal"></a>Binary Tree Traversal</h4><p>先序： 根 左 右<br>后序： 左 右 根<br>中序： 左 根 右</p>
+<p>遍历方法：</p>
 <ul>
-<li>1.开放源代码</li>
-<li>2.跨平台，可生成native编译配置文件，在linux/unix平台生成makefile;在IOS平台生成xcode;在windows平台生成MSVC工程文件</li>
-<li>3.可管理大型项目，如KDE4</li>
-<li>4.简化编译构建过程和编译过程。工具链简单：cmake+make</li>
-<li>5.高效率，cmake构建KDE4的kdelibs要比autotools快40%，因为cmake工具链中没有libtool</li>
-<li>6.可拓展性，可以为cmake编写特定功能模块，扩展功能</li>
+<li>递归方法：一句话描述递归函数，如把根节点放入res里；</li>
+<li>优化成非递归：借助栈的数据结构，动手背诵；</li>
+<li>分治，分解攻克：问题分成两半，或者多份，分别解决再合并答案；带return value的递归方法; 二叉树的通用解法</li>
 </ul>
-<p>缺点：</p>
+<p>递归方法：退出条件，节点为空如何处理；问题分成左右两半怎么处理；分治方法递归一般带相同返回类型参数。</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 递归法：</span></span><br><span class="line">    <span class="function">vector&lt;<span class="keyword">int</span>&gt; <span class="title">preorderTraversal</span><span class="params">(TreeNode *root)</span> </span>&#123;</span><br><span class="line">        <span class="comment">// write your code here</span></span><br><span class="line">        vector&lt;<span class="keyword">int</span>&gt; res;</span><br><span class="line">        <span class="built_in">preorder</span>(root, res);</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">     <span class="comment">// 递归方法：把根节点放入res里</span></span><br><span class="line">     <span class="function"><span class="keyword">void</span> <span class="title">preorder</span><span class="params">(TreeNode* root, vector&lt;<span class="keyword">int</span>&gt;&amp; res)</span></span></span><br><span class="line"><span class="function">     </span>&#123;</span><br><span class="line">         <span class="keyword">if</span>(root == <span class="literal">nullptr</span>)</span><br><span class="line">         &#123;</span><br><span class="line">             <span class="keyword">return</span> ;</span><br><span class="line">         &#125;</span><br><span class="line">         res.<span class="built_in">push_back</span>(root-&gt;val);</span><br><span class="line">         <span class="built_in">preorder</span>(root-&gt;left, res);</span><br><span class="line">         <span class="built_in">preorder</span>(root-&gt;right, res);</span><br><span class="line">     &#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 非递归法</span></span><br><span class="line"><span class="comment">// 分治法</span></span><br><span class="line"><span class="function">vector&lt;<span class="keyword">int</span>&gt; <span class="title">preorderTraversal</span><span class="params">(TreeNode *root)</span> </span>&#123;</span><br><span class="line">        <span class="comment">// write your code here</span></span><br><span class="line">        vector&lt;<span class="keyword">int</span>&gt; res;</span><br><span class="line">        <span class="keyword">if</span>(root == <span class="literal">nullptr</span>)</span><br><span class="line">            <span class="keyword">return</span> res;</span><br><span class="line">        </span><br><span class="line">        <span class="comment">// divide</span></span><br><span class="line">        vector&lt;<span class="keyword">int</span>&gt; left = <span class="built_in">preorderTraversal</span>(root-&gt;left);</span><br><span class="line">        vector&lt;<span class="keyword">int</span>&gt; right = <span class="built_in">preorderTraversal</span>(root-&gt;right);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// conquer</span></span><br><span class="line">        res.<span class="built_in">push_back</span>(root-&gt;val);</span><br><span class="line">        res.<span class="built_in">insert</span>(res.<span class="built_in">end</span>(), left.<span class="built_in">begin</span>(), left.<span class="built_in">end</span>());</span><br><span class="line">        res.<span class="built_in">insert</span>(res.<span class="built_in">end</span>(), right.<span class="built_in">begin</span>(), right.<span class="built_in">end</span>());</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p>DFS分治法解决归并排序，快速排序以及大部分二叉树问题。<br>树型分析法来分析复杂度:如归并排序为O(nlogn),logn层，每层合并需遍历每个元素n,O(1)分，O（n)治，需要额外O（N）空间，保证稳定排序；快速排序一样为O(nlogn),用O（n)分，O(1)治，不是稳定排序。一个先局部后整体，一个先整体后局部的分治方法。  </p>
+<h4 id="BFS广度优先搜索"><a href="#BFS广度优先搜索" class="headerlink" title="BFS广度优先搜索"></a>BFS广度优先搜索</h4><p>逐层执行的实现方法：</p>
 <ul>
-<li>1.相对简单，但是没有听起来或者想象简单</li>
-<li>2.cmake编写过程实际上是编程过程，使用的是cmake语言和语法</li>
-<li>3.cmake与已有体系配合不算理想如pkgconfig</li>
+<li>两个queue: 导来导去</li>
+<li>一个queue+dummy node:加入层分割符</li>
+<li>单queue(best)： 一层一层往下走</li>
 </ul>
-<p>作者建议：</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line">vector&lt;vector&lt;<span class="keyword">int</span>&gt;&gt; <span class="built_in">levelOrder</span>(TreeNode *root) &#123;</span><br><span class="line">        <span class="comment">// write your code here 基本功：唯手熟耳</span></span><br><span class="line">        vector&lt;vector&lt;<span class="keyword">int</span>&gt;&gt; res;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span>(root == <span class="literal">nullptr</span>)</span><br><span class="line">            <span class="keyword">return</span> res;</span><br><span class="line">        queue&lt;TreeNode*&gt; q;</span><br><span class="line">        q.<span class="built_in">push</span>(root);</span><br><span class="line">        <span class="keyword">while</span>(!q.<span class="built_in">empty</span>())</span><br><span class="line">        &#123;</span><br><span class="line">            vector&lt;<span class="keyword">int</span>&gt; level;</span><br><span class="line">            <span class="keyword">int</span> size = q.<span class="built_in">size</span>();  <span class="comment">// 提前取size,因为q.size()会变化</span></span><br><span class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span> ; i&lt; size; i++)</span><br><span class="line">            &#123;</span><br><span class="line">                TreeNode* head = q.<span class="built_in">front</span>();</span><br><span class="line">                q.<span class="built_in">pop</span>();</span><br><span class="line">                level.<span class="built_in">push_back</span>(head-&gt;val);</span><br><span class="line">                <span class="keyword">if</span>(head-&gt;left != <span class="literal">nullptr</span>)</span><br><span class="line">                    q.<span class="built_in">push</span>(head-&gt;left);</span><br><span class="line">                <span class="keyword">if</span>(head-&gt;right != <span class="literal">nullptr</span>)</span><br><span class="line">                    q.<span class="built_in">push</span>(head-&gt;right);</span><br><span class="line">            &#125;</span><br><span class="line">            res.<span class="built_in">push_back</span>(level);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p>要求掌握：</p>
 <ul>
-<li>1.如果没有实际的项目需求，那么看到这里就可以停下来，因为cmake学习过程就是实践过程，没有实践读多少天也会忘记</li>
-<li>2.如果你的工程只有几个文件，直接编写Makefile是最好的选择</li>
-<li>3.如果使用c/c++/java以外的语言，请不要使用cmake</li>
-<li>4.如果使用的语言有非常完备的构建体系，如java的ant，也不需要学习cmake</li>
-<li>5.如果项目已经采用非常完备的工程管理工具，且不存在维护问题，没有必要迁移到cmake</li>
-<li>6.如果仅仅使用qt，没必要使用cmake。因为qmake在QT的专业性和自动化程度更高</li>
+<li>递归：遍历和分治</li>
+<li>非递归实现： 前序和中序</li>
+<li>利用queue的BFS实现</li>
 </ul>
 ]]></content>
       <categories>
-        <category>读书笔记</category>
+        <category>九章算法</category>
       </categories>
       <tags>
-        <tag>读书笔记</tag>
+        <tag>九章算法</tag>
       </tags>
   </entry>
   <entry>
@@ -985,15 +962,56 @@
       </tags>
   </entry>
   <entry>
-    <title>皮肤的秘密</title>
-    <url>/2022/01/19/reading/%E7%9A%AE%E8%82%A4%E7%9A%84%E7%A7%98%E5%AF%86/</url>
-    <content><![CDATA[<h3 id="认识皮肤"><a href="#认识皮肤" class="headerlink" title="认识皮肤"></a>认识皮肤</h3><p>皮肤是人体最大的器官，展开达两平方米，是人体之于外界环境的保护膜，同时也是零距离感受外界的第一道关卡，所以每一寸都遍布了神经细胞。</p>
-<p>皮肤主要由三层构成：表皮，真皮以及皮下组合。其中表皮与真皮间的基底膜带决定了皮肤的弹性紧致，而且是在1岁形成不可逆的衰老，无法重生所以只能好好保护延缓其衰老。皮肤细胞从底层出生，衰老于真皮并死亡在表皮并成为保护屏障，正常周期为4周。患有皮肤病的可能会加速该过程至5天，导致表皮的屏障并不完整。</p>
-<h3 id="表皮"><a href="#表皮" class="headerlink" title="表皮"></a>表皮</h3><p>由于皮肤表面存在着大量微生物群，所以保持皮肤的pH值是非常重要的，应当合理维持完好无损的酸性保护膜，人工清洁剂约5.5，另外对于皮下脂肪过厚的皮肤褶皱，唯一有效办法是减肥。可以用抗真菌软膏，另外带锌软膏可缓解皮肤炎症，带走多余水分。</p>
-<p><img src="/images/01_19_1.png"></p>
-<p>生长纹无足轻重，关于肤色，是有黑色素影响的。研究表明，橙色皮肤最具吸引力，可多摄入胡萝卜素B达到。颠痕主要由基底膜带大面积受损，表皮过度损耗引起的。对于渗水伤口可用硅霜或贴上硅凝胶伤口贴。治疗疙瘩需要强效疗法如：激光疗法、热针、冷冻疗法以及X射线放射疗法。</p>
-<h3 id="真皮"><a href="#真皮" class="headerlink" title="真皮"></a>真皮</h3><p>真皮充满紧致的结缔组织，带来稳固性以及拉伸性，任何的日晒、日光浴、烟草、压力、睡眠不足、营养不良以及缺乏运动等会加速弹性纤维的流失。臀部皮肤就是自然老化的参考，面部等受光照影响较大是老化较快的皮肤。另外，皮肤在4度就开始出现冻疮，而冬天皮肤也能适应，所以只在晚上睡前使用保湿即可，白天冬天保湿使皮肤含水量升高，反而容易冻伤。</p>
-<p>真皮层拥有大量神经，使皮肤成为最大的神经器官，抚摸有调节中枢神经和社交等作用。同时含有腺体，会分泌激素气味等。</p>
+    <title>墙面分割</title>
+    <url>/2022/01/14/pcl/%E5%A2%99%E9%9D%A2%E5%88%86%E5%89%B2/</url>
+    <content><![CDATA[<h3 id="区域生长分割region-growing-segmentation"><a href="#区域生长分割region-growing-segmentation" class="headerlink" title="区域生长分割region growing segmentation"></a>区域生长分割region growing segmentation</h3><p>算法核心：基于点法线之间角度的比较，尽量将满足平滑约束的相邻点合并在一起，以一簇点集的形式输出，视为相同平面</p>
+<p>工作原理：区域增长从有最小曲率值curvature的点。则需要计算所有曲率值并进行排序；因为曲率最小的点位于平坦区域，从平坦区域增长可以减少区域的总数。（曲率与法线的求解方法类似,法线描述点在表面的法向，曲率则是法线间协方差矩阵的特征值，描述法向一致性)</p>
+<p>具体过程：</p>
+<ol>
+<li>对未标记点的曲率排序，将最小曲率点放入种子集</li>
+<li>对每个种子的所有邻点计算</li>
+<li>1 每个近邻点与当前点的法线角度差(reg.setSmoothnessThreshold),如果小于阈值则重点考虑，进入2.2判断</li>
+<li>2 该点通过2.1法线角度差检验，如果曲率小于设定的阈值(reg.setCurvatureThreshold)，这个点即被添加到种子点集，属于当前平面</li>
+<li>通过两次检验的点，被从原始点云去除</li>
+<li>设置最小点簇的点数reg.setMinClusterSize,以及最大簇reg.segMaxClusterSize</li>
+<li>重复1-3生成min~max个点数的所有平面，并对不同平面标记颜色区分</li>
+<li>直到算法在剩余点中生成的点簇不能满足min,停止工作</li>
+</ol>
+]]></content>
+      <categories>
+        <category>pcl</category>
+      </categories>
+      <tags>
+        <tag>pcl</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>CMAKE实践</title>
+    <url>/2022/02/25/reading/CMAKE%E5%AE%9E%E8%B7%B5/</url>
+    <content><![CDATA[<h3 id="初识cmake"><a href="#初识cmake" class="headerlink" title="初识cmake"></a>初识cmake</h3><p>主要特点：</p>
+<ul>
+<li>1.开放源代码</li>
+<li>2.跨平台，可生成native编译配置文件，在linux/unix平台生成makefile;在IOS平台生成xcode;在windows平台生成MSVC工程文件</li>
+<li>3.可管理大型项目，如KDE4</li>
+<li>4.简化编译构建过程和编译过程。工具链简单：cmake+make</li>
+<li>5.高效率，cmake构建KDE4的kdelibs要比autotools快40%，因为cmake工具链中没有libtool</li>
+<li>6.可拓展性，可以为cmake编写特定功能模块，扩展功能</li>
+</ul>
+<p>缺点：</p>
+<ul>
+<li>1.相对简单，但是没有听起来或者想象简单</li>
+<li>2.cmake编写过程实际上是编程过程，使用的是cmake语言和语法</li>
+<li>3.cmake与已有体系配合不算理想如pkgconfig</li>
+</ul>
+<p>作者建议：</p>
+<ul>
+<li>1.如果没有实际的项目需求，那么看到这里就可以停下来，因为cmake学习过程就是实践过程，没有实践读多少天也会忘记</li>
+<li>2.如果你的工程只有几个文件，直接编写Makefile是最好的选择</li>
+<li>3.如果使用c/c++/java以外的语言，请不要使用cmake</li>
+<li>4.如果使用的语言有非常完备的构建体系，如java的ant，也不需要学习cmake</li>
+<li>5.如果项目已经采用非常完备的工程管理工具，且不存在维护问题，没有必要迁移到cmake</li>
+<li>6.如果仅仅使用qt，没必要使用cmake。因为qmake在QT的专业性和自动化程度更高</li>
+</ul>
 ]]></content>
       <categories>
         <category>读书笔记</category>
@@ -1031,19 +1049,50 @@
       </tags>
   </entry>
   <entry>
-    <title>努力方向之正解</title>
-    <url>/2021/12/21/shisan/%E5%8A%AA%E5%8A%9B%E6%96%B9%E5%90%91%E4%B9%8B%E6%AD%A3%E8%A7%A3/</url>
-    <content><![CDATA[<p><code>文章摘自微信公众号：十三先生手记</code></p>
-<p>人们总是误以为”方向不对，努力白费“</p>
-<p>所以到底什么方向是努力的正确方向，是对事情方向性的选择吗？<br>看起来是这样的，其实不然，在事情没有出现结果之前，谁能确定方向对不对？<br>于是乎，在很长一段时间里，你在方向的选择上纠结，大量耗费了精力；久而久之，方向选择对你的意义就逐步降低；久而久之，你在没有了方向的努力中不断的迷茫，努力所收获到的就多半不如意；久而久之，你便自然逐步丧失了努力的动力。</p>
-<p>所以其中蕴含<em><strong>真正的智慧</strong></em>是什么呢？<br>此刻，十三先生要你深深的明白：对于你真正想要成就的方向而言，基于外在目标而牵引你的行动方向就是你的迷障，基于你内心真正愿意去做的方向才是真正利于你达成整体目标的方向。若是你在每次做选择之际，你都按你内心真正未权衡的意愿立刻去着手行动，并在行动的过程中，实事求是的不断优化解决遇到的问题，而不是在事前先拿你预设的可能遇到的问题去和你的资源做权衡匹配，在来做方向选择的决定，假以时日，必定你会不断收获到你真正想要收获到的利益。</p>
-<h3 id="个人感悟"><a href="#个人感悟" class="headerlink" title="个人感悟"></a>个人感悟</h3><p>与其纠结于方向正确，不如尽快行动起来，尽快在行动中感受自我。那些未经反复驱动，内心自发想要完成的事情就是你人生的正确方向了。</p>
+    <title>皮肤的秘密</title>
+    <url>/2022/01/19/reading/%E7%9A%AE%E8%82%A4%E7%9A%84%E7%A7%98%E5%AF%86/</url>
+    <content><![CDATA[<h3 id="认识皮肤"><a href="#认识皮肤" class="headerlink" title="认识皮肤"></a>认识皮肤</h3><p>皮肤是人体最大的器官，展开达两平方米，是人体之于外界环境的保护膜，同时也是零距离感受外界的第一道关卡，所以每一寸都遍布了神经细胞。</p>
+<p>皮肤主要由三层构成：表皮，真皮以及皮下组合。其中表皮与真皮间的基底膜带决定了皮肤的弹性紧致，而且是在1岁形成不可逆的衰老，无法重生所以只能好好保护延缓其衰老。皮肤细胞从底层出生，衰老于真皮并死亡在表皮并成为保护屏障，正常周期为4周。患有皮肤病的可能会加速该过程至5天，导致表皮的屏障并不完整。</p>
+<h3 id="表皮"><a href="#表皮" class="headerlink" title="表皮"></a>表皮</h3><p>由于皮肤表面存在着大量微生物群，所以保持皮肤的pH值是非常重要的，应当合理维持完好无损的酸性保护膜，人工清洁剂约5.5，另外对于皮下脂肪过厚的皮肤褶皱，唯一有效办法是减肥。可以用抗真菌软膏，另外带锌软膏可缓解皮肤炎症，带走多余水分。</p>
+<p><img src="/images/01_19_1.png"></p>
+<p>生长纹无足轻重，关于肤色，是有黑色素影响的。研究表明，橙色皮肤最具吸引力，可多摄入胡萝卜素B达到。颠痕主要由基底膜带大面积受损，表皮过度损耗引起的。对于渗水伤口可用硅霜或贴上硅凝胶伤口贴。治疗疙瘩需要强效疗法如：激光疗法、热针、冷冻疗法以及X射线放射疗法。</p>
+<h3 id="真皮"><a href="#真皮" class="headerlink" title="真皮"></a>真皮</h3><p>真皮充满紧致的结缔组织，带来稳固性以及拉伸性，任何的日晒、日光浴、烟草、压力、睡眠不足、营养不良以及缺乏运动等会加速弹性纤维的流失。臀部皮肤就是自然老化的参考，面部等受光照影响较大是老化较快的皮肤。另外，皮肤在4度就开始出现冻疮，而冬天皮肤也能适应，所以只在晚上睡前使用保湿即可，白天冬天保湿使皮肤含水量升高，反而容易冻伤。</p>
+<p>真皮层拥有大量神经，使皮肤成为最大的神经器官，抚摸有调节中枢神经和社交等作用。同时含有腺体，会分泌激素气味等。</p>
 ]]></content>
       <categories>
-        <category>十三手记</category>
+        <category>读书笔记</category>
       </categories>
       <tags>
-        <tag>十三手记</tag>
+        <tag>读书笔记</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>六年前的自己</title>
+    <url>/2021/12/22/rizhi/%E5%85%AD%E5%B9%B4%E5%89%8D%E7%9A%84%E8%87%AA%E5%B7%B1/</url>
+    <content><![CDATA[<p><a href="https://csrjtan.github.io/">https://csrjtan.github.io/</a><br>回看六年前的自己，摘录一些当时有意义的文段</p>
+<h3 id="23岁的生日"><a href="#23岁的生日" class="headerlink" title="23岁的生日"></a>23岁的生日</h3><p>重读六年前的自己，用文字记录对这个世界的感受和认知，那时候的自己充满了希望，虽然能力配不上欲望而渐渐失落，但依然希望找到那种年轻的感觉。</p>
+<h3 id=""><a href="#" class="headerlink" title=""></a></h3><p>当年的愿望：</p>
+<ul>
+<li>工作上：提高编程和学术能力</li>
+<li>生活上：爱家人，爱生活，爱伴侣</li>
+<li>日常上：坚持读，坚持写，坚持学，坚持感受，坚持表达</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">《成长的天空》 </span><br><span class="line">我沉浸在自己的世界里</span><br><span class="line">写着无关是非的歌谣</span><br><span class="line">点蓝的笔触</span><br><span class="line">划过了年轻的天空</span><br><span class="line">一只飞鸟带走我的青春</span><br><span class="line">还我，岁月沉淀的帽子</span><br><span class="line">轻声说道</span><br><span class="line">年轻总不是永远的借口</span><br></pre></td></tr></table></figure>
+
+<h3 id="回看中秋自省的自己"><a href="#回看中秋自省的自己" class="headerlink" title="回看中秋自省的自己"></a>回看中秋自省的自己</h3><p>经过5年起起落落，心态转变得很明显甚至于有点得过且过的样子，现在自己比年轻的自己多了一点能力和资源，却失去了做大梦的勇气和毅力。希望自己能依然不断找到人生的兴奋点，勇往直前地去追寻探索，从今天开始，真正的为自己而活，不在乎别人的眼光，不在乎可能会失去的安逸。</p>
+<h3 id="家人信息简要"><a href="#家人信息简要" class="headerlink" title="家人信息简要"></a>家人信息简要</h3><p>爸：1961.7.8，牛，会计。爱好军事政治经济唱歌。性格硬朗好面子。优点：精神好，能干，勤勉<br>妈：1961.11.12，牛，仓管（退休）。爱好家庭家人养生。优点：节俭，爱戴我们，慈祥<br>哥：1987.8.9，兔，前端全栈，爱好广泛潮流酷玩。优点：工程能力强，迁就随和<br>为：1992.08.13，猴，算法攻城狮。爱好：声乐，运动，游戏。优点：耐受力，随和</p>
+<h3 id="选书策略"><a href="#选书策略" class="headerlink" title="选书策略"></a>选书策略</h3><p>出版社-&gt;作者-&gt;版次-&gt;印次-&gt;印数</p>
+<h3 id="追逐幸福的要素"><a href="#追逐幸福的要素" class="headerlink" title="追逐幸福的要素"></a>追逐幸福的要素</h3><ul>
+<li>找到喜欢的工作，有收入又受到社会尊重</li>
+<li>减少上下班耗费的时间，有充足的社交时间</li>
+<li>对国家和社会有政治热情，有参与度</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">不论曾经的彼此多么幼稚，多么可笑</span><br><span class="line">终有一天我们都变得成熟；</span><br><span class="line">也终有一天，我们都会老去；</span><br><span class="line">可是，却没有人可以永远不长大，</span><br><span class="line">却没有人可以永远年轻，</span><br><span class="line">成熟，有时候会让人心痛、很无奈。</span><br><span class="line">那个时候才会懂得：</span><br><span class="line">爱情本不是件该执着的事情。</span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>日常</category>
+      </categories>
+      <tags>
+        <tag>博客迁移</tag>
       </tags>
   </entry>
   <entry>
@@ -1259,6 +1308,92 @@
       </tags>
   </entry>
   <entry>
+    <title>经典话术</title>
+    <url>/2021/12/21/rizhi/%E7%BB%8F%E5%85%B8%E8%AF%9D%E6%9C%AF/</url>
+    <content><![CDATA[<p><code>格林先生说</code></p>
+<p>1.yes and 法则<br>通常交流容易别人提一个观点，我们不认同会yes,but. 这样别人容易产生“那就这样吧，你说什么就是什么吧”</p>
+<p>正常回复应该尽量接纳对方一部分的内容，然后才一点点引出冲突。<br>e.g. …确实会…,不过有时候…</p>
+<p>2.即兴表达框架-PREP<br>Point-&gt;Reason-&gt;Example-&gt;Point</p>
+<p>3.SCQ-A<br>提出问题，寻求帮助。Situation-&gt;Conflict-&gt;Question-&gt;Answer<br>常用于工作汇报，包括问题背景，问题原因，主要问题，如何解决。</p>
+<p>4.FFC 赞美法则<br>Feel-&gt;Fact-&gt;Compare<br>（Feel）我觉得今天你搭配很有气质<br>（Fact）因为腰线能突出身形<br>(Compare) 这是我今年见到的最潮的连衣裙</p>
+<p>5.引导选择<br>模板：是…还是…/ 是否…/ 要不要…,好处是这样<br>提问封闭，只需选择，无需开放式思考</p>
+<p>6.万能表达：观察+感受+需求+请求<br>（观察）珊珊，你最近每晚都是凌晨才睡觉<br>（感受）我觉得有干扰<br>（需求）而且我希望你能身体健康，这样白天才精神<br>（请求）所以希望明天开始，能不能11点准时关灯</p>
+<p>7.汇报FFA法则<br>Fact-&gt;Feeling-&gt;Action<br>最近工作如何，我感觉主要是跟不上进度，接下来一周我会如何做。</p>
+<p><code>蛋蛋碎嘴子</code></p>
+<p>1.工作汇报老手<br>新项目砸了=进行了积极的试错，吸收了宝贵的经验<br>数据不好看=有较大的增长空间<br>啥也没干=稳定发展<br>接下来依旧打算啥也不干=保持现有成绩，稳定成果<br>数据稍微好看一点=取得了较大增长</p>
+<p>2.一个人一直墨迹跟你说话不好意思打断，可以尝试：<br>“好的”，“那确实不错”，“的确是这样”，“嗯你说的对”</p>
+<p>3.接到不想做的任务可以说<br>“领导，我仔细看了一下这个需求，我这里可能存在XXX方面的短板”<br>“想要推进这个事情的话，我可能需要XXX方面的支持”<br>暗含“我可说清楚了，办砸了可不赖我”</p>
+<p>4.当想刺探秘密时，先说结论，然后观察对方的反应<br>“我们公司下个月要发奖金你”</p>
+<p>5.汇报模板：<br>【日常在做什么】+【做这件事的目的】+【做这件事有什么困难】+【怎么做得更好】</p>
+<p>6.当别人布置杂活，不想做就死死的抠细节<br>“你说的这件事大概什么时候需要？”<br>“这个时间点具体到几点？”<br>“我是微信给你还是邮箱给你？”<br>“那我需要先出一个计划，你帮我看看安排合不合适？”<br>如此一来，极大增加之间的沟通成本，让对方崩溃而不想给你安排了。</p>
+<p><code>清闲的九夏</code></p>
+<p>1.别人求你办事，如果想要资源置换，就说：“这事儿不太好办阿”</p>
+<p>2.拒绝借钱：“你知道的，我最近XX，也没钱。”</p>
+<p>3.汇报话术：”这边，我们做了A，B两种方案，各有优势，希望给点意见，看选哪个做比较佳“</p>
+<p>4.经常使用分点叙述<br>我是这么认为的，第一，X；第二，X；第三，X。</p>
+<p>5.请求帮忙时，先提出自己的办法<br>”经过了解，遇到一些问题，我的解决办法是XX，大家看看还有没有更好的办法?”<br>不论多平庸都要提一个。</p>
+<p>6.请求帮忙“不好意思，可以插一下队吗？因为我真的很急”</p>
+<p>7.聊天想聊下去：揪住对方的关键词+延伸过往彼此交流过的信息</p>
+<p>“今天又加班，很烦”<br>“怎么又加班，又是上次那个领导吗”</p>
+<p>“我爱豆塌房子了”<br>“哪个，上回说的那个吗，我去”</p>
+<p>8.不想聊下去<br>“今天又加班”<br>“怎么又加班，这算啥事”</p>
+<p>“我爱豆塌房子了”<br>“又他”</p>
+<p>9.领导说“辛苦了”<br>你：“从中学到很多，很有收获。”</p>
+<p>10.领导的节日问候（也可不发，上班的时候再热情问候即可）：<br>尊称+感谢+互动+祝福</p>
+<p>11.说服别人，改变一个人的想法<br>认同立场，替换观点。</p>
+<p>自嘲： 是阿…而且…</p>
+]]></content>
+      <categories>
+        <category>日常</category>
+      </categories>
+      <tags>
+        <tag>知乎</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>2021_年终总结</title>
+    <url>/2021/12/31/rizhi/2021-%E5%B9%B4%E7%BB%88%E6%80%BB%E7%BB%93/</url>
+    <content><![CDATA[<p>回顾今年的自己，提出个人思见和应该执行改进的点。</p>
+<h3 id="工作上"><a href="#工作上" class="headerlink" title="工作上"></a>工作上</h3><p>年初从测量机器人这个项目跳出来，主要是派发的需求集中在基于opencv的图表绘制上，另外一个是基于opencv的户型图分割项目。由于数据来源没有统一化，基于图像的户型分割较大的不稳定因素；关于图表绘制核心的功能就是解决文本碰撞的问题；期间还用网页自动化点击脚本完成了一个疫情一日一表的自动填表功能，节省了每日必做的无用行为。之前看到python基于桌面图像识别可以自动匹配鼠标行为，这是原来项目的高级方法。作为一个程序员，生活中如果出现较多的重复度大的行为与操作时，就应该开始考虑自动化脚本或者程序去自动执行。</p>
+<p>跳出在顺德的工作后，由于皮肤问题变本加厉，有很长的一段时间我是在家休养，每天除了睡得非常多以外，大部分时间都在宅家度过，让老父母亲着实担心不浅。这个坏毛病是在香港最后几年养成的，当时的这个研究生和本科的一些坏习惯让我最终渐渐失去了对自我的自律以及对自我的期待，对自我的希望。我当时像泄了气的气球，一泻千里，由此深深的陷入人生以来的低谷。也许是我的叛逆期晚到了，从那一刻我才开始体会到一点点的自由，自我开始向这个世界抗争拉扯。大学以前，一直认为只要读书好就可报答家人，这种被动的内驱力面对真正的困难和社会的残酷竞争时是多么的无力。</p>
+<p>害怕失败，害怕白眼，害怕接受自己的无能，于是我有点像堕落的高材生，开始逃避，开始偷懒。一些不良的嗜好也让我的人格不再高尚，比如毫无意义重复的游戏世界,比如深陷情绪的孤独，<a href="%EF%BC%8C%E6%AF%94%E5%A6%82%E5%94%BE%E6%89%8B%E5%8F%AF%E5%BE%97%E7%9A%84%E9%BB%84%E8%89%B2%E5%BF%AB%E4%B9%90%EF%BC%8C"></a>还好从没接触直达灵魂的药品了。值得庆幸的是，我自小深深的记住了外婆反复强调的千万不能碰毒品。这句话是外婆对孙辈们的苦口婆心，也是最低最低的要求了。经历的这一切，我深知自己自制力的脆弱，应减少对不良事物的好奇与冒险，希望我这一辈子都能与成瘾性隔绝，否则我很容易预见到自己再一次的堕落。</p>
+<p>这一切就发生在今年上，直到年中我也发现自己不能再给自己找借口了，在香港的时候无人约束，我可以随意的挥霍光阴。在家里宅的话，亲戚朋友尤其家里人很是担心，特别是我生命中最重要的两个女人：母亲和媳妇。于是到了年中，虽然皮肤病依然没有康复，但我已经厌倦了作为一个毫无价值的人存在于世。心底里，我渴望世界听到我的声音，因我存在而改变，而不是一直作为一个边缘人物存在着。但很多时候我还是会给自我设限，会介怀于我虚度的光阴，介怀于我曾经的失败，介怀于我那并不闪闪发光的履历。但无论如何，我收拾行囊，重新出发了，以一个更谦卑的姿态。</p>
+<p>在boss上，我海投以及面笔了好些公司，最终我依然没有自信的奔赴大公司，我选择了一家智能硬件作为自我调整的起点。6月15日我再次翻开人生的新篇章，来到了深圳塘朗，追逐体面的生活，希望用自己的文字，代码以及思想发光发亮。至此，在HOLA已然半年，早期为算法组开展论文研讨学习，后续是全程跟进云台项目的算法实现：包括SLAM，三维重建以及点云墙面分割的核心模块。目前为止虽然基本的核心功能已然完成，但仍然有很多内容需要补齐学习，为后续真正的工程化作知识储备。另外如CTO所说，HOLA这个平台是否适合我继续发展个人的职业规划以及技术路径。工作这半年，大部分时间是孤身负重前行的，业务最相似的还是算法组的兄弟朋友们：研发一哥，世攀；玩乐达人，炯彬；斯文大汉，啸天；苦比打工人，东勇；除此还有系统大佬jazzy以及CTO聪哥。基本上，公司内部对三维这块是一片空白的，所以产生了硬币的两端：无人监管我的工作，无人能准确评价我的工作；无人关注我的工作，无人协同我的工作。未来的一年希望能加快项目的落地应用，产生实际的价值。</p>
+<h4 id="2022上半年的工作指标"><a href="#2022上半年的工作指标" class="headerlink" title="2022上半年的工作指标"></a>2022上半年的工作指标</h4><ul>
+<li>薪资至少上调20%</li>
+<li>SLAM 14讲的book &amp; homework</li>
+<li>PCL的系统学习</li>
+</ul>
+<h3 id="学习上"><a href="#学习上" class="headerlink" title="学习上"></a>学习上</h3><p>关于今年的学习，从上文就可知确实进步较慢，但要相信人生是个不断经历的过程，如同重看五年前的自己一样，当时虽然稚嫩但充满阳光和希望；如今的自己，虽有初老心态，但尚未暮年，重新出发，为时未晚。</p>
+<p>已读书单：《浪潮之巅》，《为我的身体养阳气》，《C++ Primer》</p>
+<p>在读书单：《SLAM 14讲》，《三十岁，一切刚刚开始》</p>
+<p>学习方向&amp;主题： C++， SLAM， 三维重建， std标准库， STL模板， 算法导论， LEETCODE</p>
+<p>重新开始经营我的github,以及我的个人博客，记录生活的点点滴滴，一部一脚印。三十年以来的输入足够我输出一些东西了，积极认真地输出自己的观点，去和这个可爱的世界碰撞摩擦吧！马上要三十岁了，走在这个重要的节点上，希望自己成为有担当，值得信任，靠谱的人。更希望自己打破自我设限的枷锁，去勇敢探索生活，探索生命，去冒险，去舞蹈，去歌唱，这是每个人唯一一次的人生阿，已然安然度过了30年了，没有什么再让你值得畏惧了，那就放手去做吧。</p>
+<h3 id="生活上"><a href="#生活上" class="headerlink" title="生活上"></a>生活上</h3><p>首先是运动和减肥！！！</p>
+<p>关于生活，最大的关键字可能是安逸，但影响最大的词应该是疾病。无论精神上还是身体上，长时间缺乏对生活的激情与热情容易致抑。更进一步引起睡眠紊乱，身体亚健康的各种慢性病也冒出来，比如湿疹，这两年简直痛苦不堪，夜不能寐。战胜严重的皮肤慢性病，需要持之以恒的耐心，需要强颜欢笑的乐观，需要时刻注意控制行为。多少次深夜里，我甚至愿意用各种誓言，只为换来自己的身体健康。年轻时拥有的一切是如此轻而易举而又在后来失去时觉得弥足珍贵。</p>
+<p>困扰我工作生活生命已经两年的湿疹，在近期终于在积极阳光的生活中得到一丝丝的控制，明年我并不奢望和贪心康复，只希望面积能缩小至不影响作息，毕竟良好的作息和生活习惯是每一天元气能量的源泉。</p>
+<p>另一方面，说到生活，最应该被提起的就是家人与朋友。关于朋友，虽然有丝许的进步，得到现在算法组同事的互动来往，但可能是自身技术不够牛逼或者是不苟言笑，或者是不够真挚待人。虽然入职半年，但真正有互动能见面言笑的人可能两个手也数得完，希望新的一年也继续勇敢表达自我，真挚对待别人。然后就是最重要的家人，来到深圳后，在顺德待的时间大幅减少，一个月能有两次回家看看就不错了。另外和珊珊结婚后尚未育儿，随着年岁渐长，年近30的我们迫切需要生儿育女了，而这一点更是双方家长最迫切的事情了，希望明年能有新的突破。说实话，没有完美的工作，只有称心如意的工作，在HOLA的工作让我慢慢走出自己人生的低谷，work-life balance的双休与无加班节奏也很好的平衡我身体上遇到的种种问题。虽然作为程序员毫无忠诚度可言，但我从心底感激和感恩HOLA，让我重新支棱起了自己，不再是瘫倒地上的烂泥，明年愿自己慢慢成为高飞天际的雄鹰。</p>
+]]></content>
+      <categories>
+        <category>年终总结</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>恐惧之破</title>
+    <url>/2022/01/05/shisan/%E6%81%90%E6%83%A7%E4%B9%8B%E7%A0%B4/</url>
+    <content><![CDATA[<p>你有恐惧吗？  想必有的<br>你想解除恐惧吗？  必定想的<br>可为什么你无法真正解除？  因为你不知道恐惧从何而来，更不知道什么是恐惧。</p>
+<h3 id="那么恐惧从何而来？"><a href="#那么恐惧从何而来？" class="headerlink" title="那么恐惧从何而来？"></a>那么恐惧从何而来？</h3><p>从曲解真相而来</p>
+<h3 id="恐惧是什么？"><a href="#恐惧是什么？" class="headerlink" title="恐惧是什么？"></a>恐惧是什么？</h3><p>是你的人生大礼给你的提醒。</p>
+<h3 id="此刻要你深深明白"><a href="#此刻要你深深明白" class="headerlink" title="此刻要你深深明白"></a>此刻要你深深明白</h3><p>二元有相世界，恐惧来自于你对真相的无视或者曲解。如此，只要你无视或者曲解了真相，必定会形成相应的恐惧；如此，你内心恐惧的形成是为了提醒你搞清楚恐惧背后的真相；如此，若是你逃避真相，你必定会反复感受到恐惧；如此，当你心有恐惧，请直面你所恐惧的东西，并搞清楚其真相，当你一旦真正清楚真相，恐惧必定就会随之而消失；与此同时，必定你就能在搞清楚真相的过程中收获到你人生的大礼。</p>
+]]></content>
+      <categories>
+        <category>十三手记</category>
+      </categories>
+      <tags>
+        <tag>十三手记</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>奖惩精要</title>
     <url>/2021/12/27/shisan/%E5%A5%96%E6%83%A9%E7%B2%BE%E8%A6%81/</url>
     <content><![CDATA[<p><code>摘自微信公众号十三手记</code></p>
@@ -1277,12 +1412,27 @@
       </tags>
   </entry>
   <entry>
-    <title>恐惧之破</title>
-    <url>/2022/01/05/shisan/%E6%81%90%E6%83%A7%E4%B9%8B%E7%A0%B4/</url>
-    <content><![CDATA[<p>你有恐惧吗？  想必有的<br>你想解除恐惧吗？  必定想的<br>可为什么你无法真正解除？  因为你不知道恐惧从何而来，更不知道什么是恐惧。</p>
-<h3 id="那么恐惧从何而来？"><a href="#那么恐惧从何而来？" class="headerlink" title="那么恐惧从何而来？"></a>那么恐惧从何而来？</h3><p>从曲解真相而来</p>
-<h3 id="恐惧是什么？"><a href="#恐惧是什么？" class="headerlink" title="恐惧是什么？"></a>恐惧是什么？</h3><p>是你的人生大礼给你的提醒。</p>
-<h3 id="此刻要你深深明白"><a href="#此刻要你深深明白" class="headerlink" title="此刻要你深深明白"></a>此刻要你深深明白</h3><p>二元有相世界，恐惧来自于你对真相的无视或者曲解。如此，只要你无视或者曲解了真相，必定会形成相应的恐惧；如此，你内心恐惧的形成是为了提醒你搞清楚恐惧背后的真相；如此，若是你逃避真相，你必定会反复感受到恐惧；如此，当你心有恐惧，请直面你所恐惧的东西，并搞清楚其真相，当你一旦真正清楚真相，恐惧必定就会随之而消失；与此同时，必定你就能在搞清楚真相的过程中收获到你人生的大礼。</p>
+    <title>努力方向之正解</title>
+    <url>/2021/12/21/shisan/%E5%8A%AA%E5%8A%9B%E6%96%B9%E5%90%91%E4%B9%8B%E6%AD%A3%E8%A7%A3/</url>
+    <content><![CDATA[<p><code>文章摘自微信公众号：十三先生手记</code></p>
+<p>人们总是误以为”方向不对，努力白费“</p>
+<p>所以到底什么方向是努力的正确方向，是对事情方向性的选择吗？<br>看起来是这样的，其实不然，在事情没有出现结果之前，谁能确定方向对不对？<br>于是乎，在很长一段时间里，你在方向的选择上纠结，大量耗费了精力；久而久之，方向选择对你的意义就逐步降低；久而久之，你在没有了方向的努力中不断的迷茫，努力所收获到的就多半不如意；久而久之，你便自然逐步丧失了努力的动力。</p>
+<p>所以其中蕴含<em><strong>真正的智慧</strong></em>是什么呢？<br>此刻，十三先生要你深深的明白：对于你真正想要成就的方向而言，基于外在目标而牵引你的行动方向就是你的迷障，基于你内心真正愿意去做的方向才是真正利于你达成整体目标的方向。若是你在每次做选择之际，你都按你内心真正未权衡的意愿立刻去着手行动，并在行动的过程中，实事求是的不断优化解决遇到的问题，而不是在事前先拿你预设的可能遇到的问题去和你的资源做权衡匹配，在来做方向选择的决定，假以时日，必定你会不断收获到你真正想要收获到的利益。</p>
+<h3 id="个人感悟"><a href="#个人感悟" class="headerlink" title="个人感悟"></a>个人感悟</h3><p>与其纠结于方向正确，不如尽快行动起来，尽快在行动中感受自我。那些未经反复驱动，内心自发想要完成的事情就是你人生的正确方向了。</p>
+]]></content>
+      <categories>
+        <category>十三手记</category>
+      </categories>
+      <tags>
+        <tag>十三手记</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>能量朗读</title>
+    <url>/2021/12/20/shisan/%E8%83%BD%E9%87%8F%E6%9C%97%E8%AF%BB/</url>
+    <content><![CDATA[<p><code>文章摘自微信公众号：十三先生手记</code></p>
+<p>小时候，我就一直渴望幸福，一直渴望坚强；<br>小时候，我就一直渴望正直，一直渴望善良；<br>小时候，为就一直渴望快乐，一直渴望成长；<br>现在，我几乎丢失了我的信心，我几乎丢失了我的梦想！<br>我知道，我不能再这样消极的逃避。<br>我知道，我不能再这样平庸的彷徨。<br>我知道，我要全力迸发我的热情；我要勇敢的收复我的希望。<br>我知道，我要真诚的对待身边每一个人，这样，我才能被每一个人真诚的对待；<br>我知道，我要用心的对待每天的时光，这样，我才能收获每天的力量；<br>我知道，我要帮助身边每一个人达成心愿，这样，大家才能帮助我实现梦想。<br>从今天起，我要打败我的懒惰，重拾我的阳光；<br>从今天起，我要改变我的粗俗，提升我的修养；<br>从今天起，我要挑战我的懦弱，找回我的坚强；</p>
+<p>我是为爱这个世界而来<br>我要让世界因我的爱而更加美丽，<br>我要让世界因我的爱而更加安康，<br>我要让世界因我的爱而更加真诚，<br>我要让世界因我的爱而更加和畅。</p>
 ]]></content>
       <categories>
         <category>十三手记</category>
@@ -1334,20 +1484,6 @@
       </tags>
   </entry>
   <entry>
-    <title>能量朗读</title>
-    <url>/2021/12/20/shisan/%E8%83%BD%E9%87%8F%E6%9C%97%E8%AF%BB/</url>
-    <content><![CDATA[<p><code>文章摘自微信公众号：十三先生手记</code></p>
-<p>小时候，我就一直渴望幸福，一直渴望坚强；<br>小时候，我就一直渴望正直，一直渴望善良；<br>小时候，为就一直渴望快乐，一直渴望成长；<br>现在，我几乎丢失了我的信心，我几乎丢失了我的梦想！<br>我知道，我不能再这样消极的逃避。<br>我知道，我不能再这样平庸的彷徨。<br>我知道，我要全力迸发我的热情；我要勇敢的收复我的希望。<br>我知道，我要真诚的对待身边每一个人，这样，我才能被每一个人真诚的对待；<br>我知道，我要用心的对待每天的时光，这样，我才能收获每天的力量；<br>我知道，我要帮助身边每一个人达成心愿，这样，大家才能帮助我实现梦想。<br>从今天起，我要打败我的懒惰，重拾我的阳光；<br>从今天起，我要改变我的粗俗，提升我的修养；<br>从今天起，我要挑战我的懦弱，找回我的坚强；</p>
-<p>我是为爱这个世界而来<br>我要让世界因我的爱而更加美丽，<br>我要让世界因我的爱而更加安康，<br>我要让世界因我的爱而更加真诚，<br>我要让世界因我的爱而更加和畅。</p>
-]]></content>
-      <categories>
-        <category>十三手记</category>
-      </categories>
-      <tags>
-        <tag>十三手记</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>金钱之二元整体观</title>
     <url>/2021/12/22/shisan/%E9%87%91%E9%92%B1%E4%B9%8B%E4%BA%8C%E5%85%83%E6%95%B4%E4%BD%93%E8%A7%82/</url>
     <content><![CDATA[<p><code>摘自微信号十三手记</code></p>
@@ -1379,26 +1515,6 @@
 <p>此时，十三先生要你深深的明白：二元有相世界，金钱的实际价值必定等于你诚意付出之时创造出的相应实际价值，但是你却一直有种想付出更少收获更多金钱的想法，所以你不自知的不愿搞清楚。因为一旦你搞清楚了这个核心原理，你就无法继续投机取巧，就无法继续偷懒了。但是，只要你真正诚意看懂并接纳了这个关键点，你就能更加务实的面对自己所面对的一切人和事，你才能因此而尽可能减少多余的动作，你才能因减少多余动作而减少障碍环节，你才能因减少障碍环节而减少不必要的消耗，如此，你整体的行动才能更加高效，反而你才能走上人生各种成功的捷径。</p>
 <h3 id="个人感悟"><a href="#个人感悟" class="headerlink" title="个人感悟"></a>个人感悟</h3><p>回忆过去，确有种种如此的感觉。上高中和大学的时候，每一分钱都来自父母，舍不得多花乱花。出来工作后，可能得益于名校光环，匹配一些不太核心的岗位时候，工作的艰辛就远不及当初，于是感觉金钱就来得容易了，殊不知金钱其实也流入并不富裕，只因个人消费比较简单，只花该花的钱，只享受该享受的事。于是渐渐，也失去了赚大钱的欲望，虽说不能没有，但明显不及年少时的强烈，花钱也比较随意，一直没有大的积蓄，理财也是三天打鱼四天撒网的状态。希望认真对待工作中的每一件事，认清金钱来之不易，努力增长自己的财富，也能合理地用度。</p>
 <p>另外，而立之年，却没有多余的精力和财产赡养父母，更多的是让父母为自己忧心忡忡，目前为止，依然算不上才社会能游刃有余，立足四方。此后，应<strong>挖掘自己的兴趣目标，提升个人在社会中的价值</strong>。</p>
-]]></content>
-      <categories>
-        <category>十三手记</category>
-      </categories>
-      <tags>
-        <tag>十三手记</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>需求正解</title>
-    <url>/2022/01/10/shisan/%E9%9C%80%E6%B1%82%E6%AD%A3%E8%A7%A3/</url>
-    <content><![CDATA[<p><code>文章摘自微信公众号：十三先生手记</code></p>
-<h3 id="何谓需求"><a href="#何谓需求" class="headerlink" title="何谓需求"></a>何谓需求</h3><p>你清晰什么是真正的需求吗？<br>必定不清晰</p>
-<p>那什么是真正的需求？<br>对境需求，不是过去的需求，更不是未来的需求。</p>
-<p>什么是境的需求？<br>是适合你当时的实际需求。</p>
-<p>需求有几种？<br>两种：人事物本身，以及附加给人事物的概念</p>
-<p>人事物本身是什么意思？<br>是人事物本来的功能和价值。</p>
-<p>概念需求是什么意思？<br>是附加到人事物的功能和价值上的概念，是让你产生欲望后误以为自己需求的迷障。</p>
-<p>谁附加的概念？<br>是你自己或者是外界。</p>
-<h3 id="此刻要你深深的明白"><a href="#此刻要你深深的明白" class="headerlink" title="此刻要你深深的明白"></a>此刻要你深深的明白</h3><p>由于你的贪心，你分不清自己真正的需求。所以，你过去总被人事物的附加概念牵动而消耗了大量资源和精力，所以只有你真正懂得了你要的是人事物本身的功能和价值，你才不会被这些附加的概念干扰和误导，你才真正懂得了珍惜物命，你才真正懂得了珍惜缘分，你才真正懂得了珍惜人生。</p>
 ]]></content>
       <categories>
         <category>十三手记</category>
@@ -1989,143 +2105,23 @@
       </tags>
   </entry>
   <entry>
-    <title>2021_年终总结</title>
-    <url>/2021/12/31/rizhi/2021-%E5%B9%B4%E7%BB%88%E6%80%BB%E7%BB%93/</url>
-    <content><![CDATA[<p>回顾今年的自己，提出个人思见和应该执行改进的点。</p>
-<h3 id="工作上"><a href="#工作上" class="headerlink" title="工作上"></a>工作上</h3><p>年初从测量机器人这个项目跳出来，主要是派发的需求集中在基于opencv的图表绘制上，另外一个是基于opencv的户型图分割项目。由于数据来源没有统一化，基于图像的户型分割较大的不稳定因素；关于图表绘制核心的功能就是解决文本碰撞的问题；期间还用网页自动化点击脚本完成了一个疫情一日一表的自动填表功能，节省了每日必做的无用行为。之前看到python基于桌面图像识别可以自动匹配鼠标行为，这是原来项目的高级方法。作为一个程序员，生活中如果出现较多的重复度大的行为与操作时，就应该开始考虑自动化脚本或者程序去自动执行。</p>
-<p>跳出在顺德的工作后，由于皮肤问题变本加厉，有很长的一段时间我是在家休养，每天除了睡得非常多以外，大部分时间都在宅家度过，让老父母亲着实担心不浅。这个坏毛病是在香港最后几年养成的，当时的这个研究生和本科的一些坏习惯让我最终渐渐失去了对自我的自律以及对自我的期待，对自我的希望。我当时像泄了气的气球，一泻千里，由此深深的陷入人生以来的低谷。也许是我的叛逆期晚到了，从那一刻我才开始体会到一点点的自由，自我开始向这个世界抗争拉扯。大学以前，一直认为只要读书好就可报答家人，这种被动的内驱力面对真正的困难和社会的残酷竞争时是多么的无力。</p>
-<p>害怕失败，害怕白眼，害怕接受自己的无能，于是我有点像堕落的高材生，开始逃避，开始偷懒。一些不良的嗜好也让我的人格不再高尚，比如毫无意义重复的游戏世界,比如深陷情绪的孤独，<a href="%EF%BC%8C%E6%AF%94%E5%A6%82%E5%94%BE%E6%89%8B%E5%8F%AF%E5%BE%97%E7%9A%84%E9%BB%84%E8%89%B2%E5%BF%AB%E4%B9%90%EF%BC%8C"></a>还好从没接触直达灵魂的药品了。值得庆幸的是，我自小深深的记住了外婆反复强调的千万不能碰毒品。这句话是外婆对孙辈们的苦口婆心，也是最低最低的要求了。经历的这一切，我深知自己自制力的脆弱，应减少对不良事物的好奇与冒险，希望我这一辈子都能与成瘾性隔绝，否则我很容易预见到自己再一次的堕落。</p>
-<p>这一切就发生在今年上，直到年中我也发现自己不能再给自己找借口了，在香港的时候无人约束，我可以随意的挥霍光阴。在家里宅的话，亲戚朋友尤其家里人很是担心，特别是我生命中最重要的两个女人：母亲和媳妇。于是到了年中，虽然皮肤病依然没有康复，但我已经厌倦了作为一个毫无价值的人存在于世。心底里，我渴望世界听到我的声音，因我存在而改变，而不是一直作为一个边缘人物存在着。但很多时候我还是会给自我设限，会介怀于我虚度的光阴，介怀于我曾经的失败，介怀于我那并不闪闪发光的履历。但无论如何，我收拾行囊，重新出发了，以一个更谦卑的姿态。</p>
-<p>在boss上，我海投以及面笔了好些公司，最终我依然没有自信的奔赴大公司，我选择了一家智能硬件作为自我调整的起点。6月15日我再次翻开人生的新篇章，来到了深圳塘朗，追逐体面的生活，希望用自己的文字，代码以及思想发光发亮。至此，在HOLA已然半年，早期为算法组开展论文研讨学习，后续是全程跟进云台项目的算法实现：包括SLAM，三维重建以及点云墙面分割的核心模块。目前为止虽然基本的核心功能已然完成，但仍然有很多内容需要补齐学习，为后续真正的工程化作知识储备。另外如CTO所说，HOLA这个平台是否适合我继续发展个人的职业规划以及技术路径。工作这半年，大部分时间是孤身负重前行的，业务最相似的还是算法组的兄弟朋友们：研发一哥，世攀；玩乐达人，炯彬；斯文大汉，啸天；苦比打工人，东勇；除此还有系统大佬jazzy以及CTO聪哥。基本上，公司内部对三维这块是一片空白的，所以产生了硬币的两端：无人监管我的工作，无人能准确评价我的工作；无人关注我的工作，无人协同我的工作。未来的一年希望能加快项目的落地应用，产生实际的价值。</p>
-<h4 id="2022上半年的工作指标"><a href="#2022上半年的工作指标" class="headerlink" title="2022上半年的工作指标"></a>2022上半年的工作指标</h4><ul>
-<li>薪资至少上调20%</li>
-<li>SLAM 14讲的book &amp; homework</li>
-<li>PCL的系统学习</li>
-</ul>
-<h3 id="学习上"><a href="#学习上" class="headerlink" title="学习上"></a>学习上</h3><p>关于今年的学习，从上文就可知确实进步较慢，但要相信人生是个不断经历的过程，如同重看五年前的自己一样，当时虽然稚嫩但充满阳光和希望；如今的自己，虽有初老心态，但尚未暮年，重新出发，为时未晚。</p>
-<p>已读书单：《浪潮之巅》，《为我的身体养阳气》，《C++ Primer》</p>
-<p>在读书单：《SLAM 14讲》，《三十岁，一切刚刚开始》</p>
-<p>学习方向&amp;主题： C++， SLAM， 三维重建， std标准库， STL模板， 算法导论， LEETCODE</p>
-<p>重新开始经营我的github,以及我的个人博客，记录生活的点点滴滴，一部一脚印。三十年以来的输入足够我输出一些东西了，积极认真地输出自己的观点，去和这个可爱的世界碰撞摩擦吧！马上要三十岁了，走在这个重要的节点上，希望自己成为有担当，值得信任，靠谱的人。更希望自己打破自我设限的枷锁，去勇敢探索生活，探索生命，去冒险，去舞蹈，去歌唱，这是每个人唯一一次的人生阿，已然安然度过了30年了，没有什么再让你值得畏惧了，那就放手去做吧。</p>
-<h3 id="生活上"><a href="#生活上" class="headerlink" title="生活上"></a>生活上</h3><p>首先是运动和减肥！！！</p>
-<p>关于生活，最大的关键字可能是安逸，但影响最大的词应该是疾病。无论精神上还是身体上，长时间缺乏对生活的激情与热情容易致抑。更进一步引起睡眠紊乱，身体亚健康的各种慢性病也冒出来，比如湿疹，这两年简直痛苦不堪，夜不能寐。战胜严重的皮肤慢性病，需要持之以恒的耐心，需要强颜欢笑的乐观，需要时刻注意控制行为。多少次深夜里，我甚至愿意用各种誓言，只为换来自己的身体健康。年轻时拥有的一切是如此轻而易举而又在后来失去时觉得弥足珍贵。</p>
-<p>困扰我工作生活生命已经两年的湿疹，在近期终于在积极阳光的生活中得到一丝丝的控制，明年我并不奢望和贪心康复，只希望面积能缩小至不影响作息，毕竟良好的作息和生活习惯是每一天元气能量的源泉。</p>
-<p>另一方面，说到生活，最应该被提起的就是家人与朋友。关于朋友，虽然有丝许的进步，得到现在算法组同事的互动来往，但可能是自身技术不够牛逼或者是不苟言笑，或者是不够真挚待人。虽然入职半年，但真正有互动能见面言笑的人可能两个手也数得完，希望新的一年也继续勇敢表达自我，真挚对待别人。然后就是最重要的家人，来到深圳后，在顺德待的时间大幅减少，一个月能有两次回家看看就不错了。另外和珊珊结婚后尚未育儿，随着年岁渐长，年近30的我们迫切需要生儿育女了，而这一点更是双方家长最迫切的事情了，希望明年能有新的突破。说实话，没有完美的工作，只有称心如意的工作，在HOLA的工作让我慢慢走出自己人生的低谷，work-life balance的双休与无加班节奏也很好的平衡我身体上遇到的种种问题。虽然作为程序员毫无忠诚度可言，但我从心底感激和感恩HOLA，让我重新支棱起了自己，不再是瘫倒地上的烂泥，明年愿自己慢慢成为高飞天际的雄鹰。</p>
+    <title>需求正解</title>
+    <url>/2022/01/10/shisan/%E9%9C%80%E6%B1%82%E6%AD%A3%E8%A7%A3/</url>
+    <content><![CDATA[<p><code>文章摘自微信公众号：十三先生手记</code></p>
+<h3 id="何谓需求"><a href="#何谓需求" class="headerlink" title="何谓需求"></a>何谓需求</h3><p>你清晰什么是真正的需求吗？<br>必定不清晰</p>
+<p>那什么是真正的需求？<br>对境需求，不是过去的需求，更不是未来的需求。</p>
+<p>什么是境的需求？<br>是适合你当时的实际需求。</p>
+<p>需求有几种？<br>两种：人事物本身，以及附加给人事物的概念</p>
+<p>人事物本身是什么意思？<br>是人事物本来的功能和价值。</p>
+<p>概念需求是什么意思？<br>是附加到人事物的功能和价值上的概念，是让你产生欲望后误以为自己需求的迷障。</p>
+<p>谁附加的概念？<br>是你自己或者是外界。</p>
+<h3 id="此刻要你深深的明白"><a href="#此刻要你深深的明白" class="headerlink" title="此刻要你深深的明白"></a>此刻要你深深的明白</h3><p>由于你的贪心，你分不清自己真正的需求。所以，你过去总被人事物的附加概念牵动而消耗了大量资源和精力，所以只有你真正懂得了你要的是人事物本身的功能和价值，你才不会被这些附加的概念干扰和误导，你才真正懂得了珍惜物命，你才真正懂得了珍惜缘分，你才真正懂得了珍惜人生。</p>
 ]]></content>
       <categories>
-        <category>年终总结</category>
-      </categories>
-  </entry>
-  <entry>
-    <title>六年前的自己</title>
-    <url>/2021/12/22/rizhi/%E5%85%AD%E5%B9%B4%E5%89%8D%E7%9A%84%E8%87%AA%E5%B7%B1/</url>
-    <content><![CDATA[<p><a href="https://csrjtan.github.io/">https://csrjtan.github.io/</a><br>回看六年前的自己，摘录一些当时有意义的文段</p>
-<h3 id="23岁的生日"><a href="#23岁的生日" class="headerlink" title="23岁的生日"></a>23岁的生日</h3><p>重读六年前的自己，用文字记录对这个世界的感受和认知，那时候的自己充满了希望，虽然能力配不上欲望而渐渐失落，但依然希望找到那种年轻的感觉。</p>
-<h3 id=""><a href="#" class="headerlink" title=""></a></h3><p>当年的愿望：</p>
-<ul>
-<li>工作上：提高编程和学术能力</li>
-<li>生活上：爱家人，爱生活，爱伴侣</li>
-<li>日常上：坚持读，坚持写，坚持学，坚持感受，坚持表达</li>
-</ul>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">《成长的天空》 </span><br><span class="line">我沉浸在自己的世界里</span><br><span class="line">写着无关是非的歌谣</span><br><span class="line">点蓝的笔触</span><br><span class="line">划过了年轻的天空</span><br><span class="line">一只飞鸟带走我的青春</span><br><span class="line">还我，岁月沉淀的帽子</span><br><span class="line">轻声说道</span><br><span class="line">年轻总不是永远的借口</span><br></pre></td></tr></table></figure>
-
-<h3 id="回看中秋自省的自己"><a href="#回看中秋自省的自己" class="headerlink" title="回看中秋自省的自己"></a>回看中秋自省的自己</h3><p>经过5年起起落落，心态转变得很明显甚至于有点得过且过的样子，现在自己比年轻的自己多了一点能力和资源，却失去了做大梦的勇气和毅力。希望自己能依然不断找到人生的兴奋点，勇往直前地去追寻探索，从今天开始，真正的为自己而活，不在乎别人的眼光，不在乎可能会失去的安逸。</p>
-<h3 id="家人信息简要"><a href="#家人信息简要" class="headerlink" title="家人信息简要"></a>家人信息简要</h3><p>爸：1961.7.8，牛，会计。爱好军事政治经济唱歌。性格硬朗好面子。优点：精神好，能干，勤勉<br>妈：1961.11.12，牛，仓管（退休）。爱好家庭家人养生。优点：节俭，爱戴我们，慈祥<br>哥：1987.8.9，兔，前端全栈，爱好广泛潮流酷玩。优点：工程能力强，迁就随和<br>为：1992.08.13，猴，算法攻城狮。爱好：声乐，运动，游戏。优点：耐受力，随和</p>
-<h3 id="选书策略"><a href="#选书策略" class="headerlink" title="选书策略"></a>选书策略</h3><p>出版社-&gt;作者-&gt;版次-&gt;印次-&gt;印数</p>
-<h3 id="追逐幸福的要素"><a href="#追逐幸福的要素" class="headerlink" title="追逐幸福的要素"></a>追逐幸福的要素</h3><ul>
-<li>找到喜欢的工作，有收入又受到社会尊重</li>
-<li>减少上下班耗费的时间，有充足的社交时间</li>
-<li>对国家和社会有政治热情，有参与度</li>
-</ul>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">不论曾经的彼此多么幼稚，多么可笑</span><br><span class="line">终有一天我们都变得成熟；</span><br><span class="line">也终有一天，我们都会老去；</span><br><span class="line">可是，却没有人可以永远不长大，</span><br><span class="line">却没有人可以永远年轻，</span><br><span class="line">成熟，有时候会让人心痛、很无奈。</span><br><span class="line">那个时候才会懂得：</span><br><span class="line">爱情本不是件该执着的事情。</span><br></pre></td></tr></table></figure>]]></content>
-      <categories>
-        <category>日常</category>
+        <category>十三手记</category>
       </categories>
       <tags>
-        <tag>博客迁移</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>经典话术</title>
-    <url>/2021/12/21/rizhi/%E7%BB%8F%E5%85%B8%E8%AF%9D%E6%9C%AF/</url>
-    <content><![CDATA[<p><code>格林先生说</code></p>
-<p>1.yes and 法则<br>通常交流容易别人提一个观点，我们不认同会yes,but. 这样别人容易产生“那就这样吧，你说什么就是什么吧”</p>
-<p>正常回复应该尽量接纳对方一部分的内容，然后才一点点引出冲突。<br>e.g. …确实会…,不过有时候…</p>
-<p>2.即兴表达框架-PREP<br>Point-&gt;Reason-&gt;Example-&gt;Point</p>
-<p>3.SCQ-A<br>提出问题，寻求帮助。Situation-&gt;Conflict-&gt;Question-&gt;Answer<br>常用于工作汇报，包括问题背景，问题原因，主要问题，如何解决。</p>
-<p>4.FFC 赞美法则<br>Feel-&gt;Fact-&gt;Compare<br>（Feel）我觉得今天你搭配很有气质<br>（Fact）因为腰线能突出身形<br>(Compare) 这是我今年见到的最潮的连衣裙</p>
-<p>5.引导选择<br>模板：是…还是…/ 是否…/ 要不要…,好处是这样<br>提问封闭，只需选择，无需开放式思考</p>
-<p>6.万能表达：观察+感受+需求+请求<br>（观察）珊珊，你最近每晚都是凌晨才睡觉<br>（感受）我觉得有干扰<br>（需求）而且我希望你能身体健康，这样白天才精神<br>（请求）所以希望明天开始，能不能11点准时关灯</p>
-<p>7.汇报FFA法则<br>Fact-&gt;Feeling-&gt;Action<br>最近工作如何，我感觉主要是跟不上进度，接下来一周我会如何做。</p>
-<p><code>蛋蛋碎嘴子</code></p>
-<p>1.工作汇报老手<br>新项目砸了=进行了积极的试错，吸收了宝贵的经验<br>数据不好看=有较大的增长空间<br>啥也没干=稳定发展<br>接下来依旧打算啥也不干=保持现有成绩，稳定成果<br>数据稍微好看一点=取得了较大增长</p>
-<p>2.一个人一直墨迹跟你说话不好意思打断，可以尝试：<br>“好的”，“那确实不错”，“的确是这样”，“嗯你说的对”</p>
-<p>3.接到不想做的任务可以说<br>“领导，我仔细看了一下这个需求，我这里可能存在XXX方面的短板”<br>“想要推进这个事情的话，我可能需要XXX方面的支持”<br>暗含“我可说清楚了，办砸了可不赖我”</p>
-<p>4.当想刺探秘密时，先说结论，然后观察对方的反应<br>“我们公司下个月要发奖金你”</p>
-<p>5.汇报模板：<br>【日常在做什么】+【做这件事的目的】+【做这件事有什么困难】+【怎么做得更好】</p>
-<p>6.当别人布置杂活，不想做就死死的抠细节<br>“你说的这件事大概什么时候需要？”<br>“这个时间点具体到几点？”<br>“我是微信给你还是邮箱给你？”<br>“那我需要先出一个计划，你帮我看看安排合不合适？”<br>如此一来，极大增加之间的沟通成本，让对方崩溃而不想给你安排了。</p>
-<p><code>清闲的九夏</code></p>
-<p>1.别人求你办事，如果想要资源置换，就说：“这事儿不太好办阿”</p>
-<p>2.拒绝借钱：“你知道的，我最近XX，也没钱。”</p>
-<p>3.汇报话术：”这边，我们做了A，B两种方案，各有优势，希望给点意见，看选哪个做比较佳“</p>
-<p>4.经常使用分点叙述<br>我是这么认为的，第一，X；第二，X；第三，X。</p>
-<p>5.请求帮忙时，先提出自己的办法<br>”经过了解，遇到一些问题，我的解决办法是XX，大家看看还有没有更好的办法?”<br>不论多平庸都要提一个。</p>
-<p>6.请求帮忙“不好意思，可以插一下队吗？因为我真的很急”</p>
-<p>7.聊天想聊下去：揪住对方的关键词+延伸过往彼此交流过的信息</p>
-<p>“今天又加班，很烦”<br>“怎么又加班，又是上次那个领导吗”</p>
-<p>“我爱豆塌房子了”<br>“哪个，上回说的那个吗，我去”</p>
-<p>8.不想聊下去<br>“今天又加班”<br>“怎么又加班，这算啥事”</p>
-<p>“我爱豆塌房子了”<br>“又他”</p>
-<p>9.领导说“辛苦了”<br>你：“从中学到很多，很有收获。”</p>
-<p>10.领导的节日问候（也可不发，上班的时候再热情问候即可）：<br>尊称+感谢+互动+祝福</p>
-<p>11.说服别人，改变一个人的想法<br>认同立场，替换观点。</p>
-<p>自嘲： 是阿…而且…</p>
-]]></content>
-      <categories>
-        <category>日常</category>
-      </categories>
-      <tags>
-        <tag>知乎</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>心态练习</title>
-    <url>/2022/01/28/xinli/%E5%BF%83%E6%80%81%E7%BB%83%E4%B9%A0/</url>
-    <content><![CDATA[<h3 id="可以刻意练习的六种心态"><a href="#可以刻意练习的六种心态" class="headerlink" title="可以刻意练习的六种心态"></a>可以刻意练习的六种心态</h3><p>1.旁观者心态<br><strong>方法：任何不喜欢的事情发生了，你就想象一个画面-你从身体跳出来了，你在5米之外看自己。</strong><br>作用：可以四两拨千斤，化解所有烦恼。开悟者常用，但一般需要经历太多苦修才能达到境界。</p>
-<p>从旁观者看，这个人既陌生又熟悉，但这人终究是陌生人，他发生的任何事都和你没有关系，甚至很搞笑好玩。</p>
-<p>原理：练习久了，你基本不会被情绪困扰，旁观者心态是不响应生理性、基因性、即时性、冲动性和本能性的反应。这些反应是所有痛苦的根源，不但解决不了问题，反而会让事情变得更加糟糕。</p>
-<p>2.归零者心态<br>当感觉做人不容易，压力特别大，心情非常沮丧，非常迷茫的时候，用这个心态可以安静下来找到目标，让自己的人生变清晰，恢复自信。</p>
-<p><strong>方法：想象过去的一切一切都只是你的一个梦而以。既然过去的一切一切都是梦，全部归零了。现在的自己就是新生婴儿，未来的自己一切都是崭新的。</strong></p>
-<p>原理：既然是新生的，就不要带有包袱，不管是荣誉的还是耻辱的。人生最可怕的事情就是路径依赖。归零者厉害之初在于让你突破路径依赖，成为改变命运的起点。</p>
-<p>3.一日囚心态<br>用于对抗消费主义陷阱，远离个人经济危机</p>
-<p><strong>方法：想买东西的时候，想象自己只能活在今天了，买来的东西今天用不上的话就会消失。</strong></p>
-<p>4.造物主心态<br>献给低自尊，低价值感，低存在感的同学们<br>是不是特别爱觉得对不起？是不是觉得自己终究是不配了？是不是觉得强者的世界中自己就像一颗无足轻重的露珠？</p>
-<p>请大胆勇敢使用造物主心态</p>
-<p><strong>方法：这个世界是你创造的，所有人所有事都是你脑袋里长出来的，它们对你来说，才终究是不配了。</strong></p>
-<p>原理：这其实就是世界运作的本质和人生的真相，可以多读相关的书了解</p>
-<p>应用场景：面对应试面试，演讲；面对弱智和杠精；教员就是造物主心态的代表性人物，参见相关诗词“五岭逶迤腾细浪，乌蒙磅翎走泥丸“</p>
-<p>5.复仇者心态<br>弱者最大的问题在于甘于弱势地位，认为“大家不都这样过的吗”，但凡能成就的人都有卧薪尝胆的复仇之心，老天爷不会平白无故帮助一个过于佛系的人。</p>
-<p>首先要找个仇人（不是真正意义上的，是为了成就自己找的一个靶子），可以虚构一个人出来。他和你有着不共戴天之仇，而且如果5年后比他钱少，他就能弄死你。反复构建比较细节，直到可恨。</p>
-<p>方法：如何复仇？如何5年后弄死虚构的人；现在存的每一分钱都是对他的一记耳光。每一分钟认真的工作都是一记飞腿。每一次毫无意义的消费都是仇人射来的箭。每一次自甘堕落都是对手的励精图治。</p>
-<p>可以用于办公室政治，追求对象，追求财富，追求成就上。</p>
-<p>6.永生者心态</p>
-<p>方法：就像永远不会死那样，去追求道德和精神生活的完善。</p>
-<p>“积善之家必有余庆，及不善之家必有余殃”</p>
-<p>总结：心态改变行为，行为改变命运。</p>
-<h3 id="高赞的回答"><a href="#高赞的回答" class="headerlink" title="高赞的回答"></a>高赞的回答</h3><p>1.不内耗<br>不让负面情绪影响自己超过3天，不苦情。有想表达的事情勇敢争取表达；遇到负面反馈再应对，不猜测不内耗。</p>
-<p>2.不让别人消耗自己<br>与简单的人做朋友，远离强势，带来压迫感，会负面打击别人的人。</p>
-<p>3.戒掉虚荣心<br>认清事物的本质，刨去表面毫无用处的附加值</p>
-<p>4.表达出来与内心完全一致，相信别人也如此<br>不害怕表达真实的自己，表达出来的跟内心完全一致，不让别人猜；推己及人，相信别人表达出来的也跟内心一致</p>
-<p>5.练习深度工作<br>专注工作，控制自控力，集中精力在眼前有难度，有挑战的事情上。</p>
-<p>6.做长期主义者<br>人人都渴望“快速成功”，但真正成功的事情都是经历播种、施肥、浇灌而成的。</p>
-<p>7.社交时，不把自己放在被评价的位置<br>遇到比自己强的人，不要在意，承认对方优点，也不否定自我，没有必要太在意别人的看法。</p>
-<p>8.克制自我的同理心<br>太敏感感知别人情绪，容易成为讨好型人格。</p>
-]]></content>
-      <categories>
-        <category>心理</category>
-      </categories>
-      <tags>
-        <tag>心理</tag>
+        <tag>十三手记</tag>
       </tags>
   </entry>
   <entry>
@@ -2189,6 +2185,46 @@
       </categories>
       <tags>
         <tag>身体健康</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>心态练习</title>
+    <url>/2022/01/28/xinli/%E5%BF%83%E6%80%81%E7%BB%83%E4%B9%A0/</url>
+    <content><![CDATA[<h3 id="可以刻意练习的六种心态"><a href="#可以刻意练习的六种心态" class="headerlink" title="可以刻意练习的六种心态"></a>可以刻意练习的六种心态</h3><p>1.旁观者心态<br><strong>方法：任何不喜欢的事情发生了，你就想象一个画面-你从身体跳出来了，你在5米之外看自己。</strong><br>作用：可以四两拨千斤，化解所有烦恼。开悟者常用，但一般需要经历太多苦修才能达到境界。</p>
+<p>从旁观者看，这个人既陌生又熟悉，但这人终究是陌生人，他发生的任何事都和你没有关系，甚至很搞笑好玩。</p>
+<p>原理：练习久了，你基本不会被情绪困扰，旁观者心态是不响应生理性、基因性、即时性、冲动性和本能性的反应。这些反应是所有痛苦的根源，不但解决不了问题，反而会让事情变得更加糟糕。</p>
+<p>2.归零者心态<br>当感觉做人不容易，压力特别大，心情非常沮丧，非常迷茫的时候，用这个心态可以安静下来找到目标，让自己的人生变清晰，恢复自信。</p>
+<p><strong>方法：想象过去的一切一切都只是你的一个梦而以。既然过去的一切一切都是梦，全部归零了。现在的自己就是新生婴儿，未来的自己一切都是崭新的。</strong></p>
+<p>原理：既然是新生的，就不要带有包袱，不管是荣誉的还是耻辱的。人生最可怕的事情就是路径依赖。归零者厉害之初在于让你突破路径依赖，成为改变命运的起点。</p>
+<p>3.一日囚心态<br>用于对抗消费主义陷阱，远离个人经济危机</p>
+<p><strong>方法：想买东西的时候，想象自己只能活在今天了，买来的东西今天用不上的话就会消失。</strong></p>
+<p>4.造物主心态<br>献给低自尊，低价值感，低存在感的同学们<br>是不是特别爱觉得对不起？是不是觉得自己终究是不配了？是不是觉得强者的世界中自己就像一颗无足轻重的露珠？</p>
+<p>请大胆勇敢使用造物主心态</p>
+<p><strong>方法：这个世界是你创造的，所有人所有事都是你脑袋里长出来的，它们对你来说，才终究是不配了。</strong></p>
+<p>原理：这其实就是世界运作的本质和人生的真相，可以多读相关的书了解</p>
+<p>应用场景：面对应试面试，演讲；面对弱智和杠精；教员就是造物主心态的代表性人物，参见相关诗词“五岭逶迤腾细浪，乌蒙磅翎走泥丸“</p>
+<p>5.复仇者心态<br>弱者最大的问题在于甘于弱势地位，认为“大家不都这样过的吗”，但凡能成就的人都有卧薪尝胆的复仇之心，老天爷不会平白无故帮助一个过于佛系的人。</p>
+<p>首先要找个仇人（不是真正意义上的，是为了成就自己找的一个靶子），可以虚构一个人出来。他和你有着不共戴天之仇，而且如果5年后比他钱少，他就能弄死你。反复构建比较细节，直到可恨。</p>
+<p>方法：如何复仇？如何5年后弄死虚构的人；现在存的每一分钱都是对他的一记耳光。每一分钟认真的工作都是一记飞腿。每一次毫无意义的消费都是仇人射来的箭。每一次自甘堕落都是对手的励精图治。</p>
+<p>可以用于办公室政治，追求对象，追求财富，追求成就上。</p>
+<p>6.永生者心态</p>
+<p>方法：就像永远不会死那样，去追求道德和精神生活的完善。</p>
+<p>“积善之家必有余庆，及不善之家必有余殃”</p>
+<p>总结：心态改变行为，行为改变命运。</p>
+<h3 id="高赞的回答"><a href="#高赞的回答" class="headerlink" title="高赞的回答"></a>高赞的回答</h3><p>1.不内耗<br>不让负面情绪影响自己超过3天，不苦情。有想表达的事情勇敢争取表达；遇到负面反馈再应对，不猜测不内耗。</p>
+<p>2.不让别人消耗自己<br>与简单的人做朋友，远离强势，带来压迫感，会负面打击别人的人。</p>
+<p>3.戒掉虚荣心<br>认清事物的本质，刨去表面毫无用处的附加值</p>
+<p>4.表达出来与内心完全一致，相信别人也如此<br>不害怕表达真实的自己，表达出来的跟内心完全一致，不让别人猜；推己及人，相信别人表达出来的也跟内心一致</p>
+<p>5.练习深度工作<br>专注工作，控制自控力，集中精力在眼前有难度，有挑战的事情上。</p>
+<p>6.做长期主义者<br>人人都渴望“快速成功”，但真正成功的事情都是经历播种、施肥、浇灌而成的。</p>
+<p>7.社交时，不把自己放在被评价的位置<br>遇到比自己强的人，不要在意，承认对方优点，也不否定自我，没有必要太在意别人的看法。</p>
+<p>8.克制自我的同理心<br>太敏感感知别人情绪，容易成为讨好型人格。</p>
+]]></content>
+      <categories>
+        <category>心理</category>
+      </categories>
+      <tags>
+        <tag>心理</tag>
       </tags>
   </entry>
 </search>

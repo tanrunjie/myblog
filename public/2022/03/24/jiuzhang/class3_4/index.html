@@ -20,20 +20,20 @@
     var CONFIG = {"hostname":"tanrunjie.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"./public/search.xml"};
   </script>
 
-  <meta name="description" content="计时，常用于测试代码的运行时间和效率。 以往用法ctime1234567#include &lt;ctime&gt;using namespace std;clock_t start &#x3D; clock();func();clock_t end &#x3D; clock();cout &lt;&lt; &quot;spend &quot; &lt;&lt; (double)(end-start)&#x2F;CLOCKS_">
+  <meta name="description" content="class 3Binary Tree Traversal先序： 根 左 右后序： 左 右 根中序： 左 根 右 遍历方法：  递归方法：一句话描述递归函数，如把根节点放入res里； 优化成非递归：借助栈的数据结构，动手背诵； 分治，分解攻克：问题分成两半，或者多份，分别解决再合并答案；带return value的递归方法; 二叉树的通用解法  递归方法：退出条件，节点为空如何处理；问题分成左右两半">
 <meta property="og:type" content="article">
-<meta property="og:title" content="chrono库">
-<meta property="og:url" content="http://tanrunjie.github.io/2021/12/29/cpp/chrono%E5%BA%93/index.html">
+<meta property="og:title" content="class3_4">
+<meta property="og:url" content="http://tanrunjie.github.io/2022/03/24/jiuzhang/class3_4/index.html">
 <meta property="og:site_name" content="奇幻物语">
-<meta property="og:description" content="计时，常用于测试代码的运行时间和效率。 以往用法ctime1234567#include &lt;ctime&gt;using namespace std;clock_t start &#x3D; clock();func();clock_t end &#x3D; clock();cout &lt;&lt; &quot;spend &quot; &lt;&lt; (double)(end-start)&#x2F;CLOCKS_">
+<meta property="og:description" content="class 3Binary Tree Traversal先序： 根 左 右后序： 左 右 根中序： 左 根 右 遍历方法：  递归方法：一句话描述递归函数，如把根节点放入res里； 优化成非递归：借助栈的数据结构，动手背诵； 分治，分解攻克：问题分成两半，或者多份，分别解决再合并答案；带return value的递归方法; 二叉树的通用解法  递归方法：退出条件，节点为空如何处理；问题分成左右两半">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2021-12-29T08:09:34.000Z">
-<meta property="article:modified_time" content="2022-01-05T06:25:34.925Z">
+<meta property="article:published_time" content="2022-03-24T10:38:43.000Z">
+<meta property="article:modified_time" content="2022-03-28T08:30:27.015Z">
 <meta property="article:author" content="神秘囚徒">
-<meta property="article:tag" content="c++">
+<meta property="article:tag" content="九章算法">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="http://tanrunjie.github.io/2021/12/29/cpp/chrono%E5%BA%93/">
+<link rel="canonical" href="http://tanrunjie.github.io/2022/03/24/jiuzhang/class3_4/">
 
 
 <script id="page-configurations">
@@ -46,7 +46,7 @@
   };
 </script>
 
-  <title>chrono库 | 奇幻物语</title>
+  <title>class3_4 | 奇幻物语</title>
   
 
 
@@ -200,7 +200,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://tanrunjie.github.io/2021/12/29/cpp/chrono%E5%BA%93/">
+    <link itemprop="mainEntityOfPage" href="http://tanrunjie.github.io/2022/03/24/jiuzhang/class3_4/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpeg">
@@ -213,7 +213,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          chrono库
+          class3_4
         </h1>
 
         <div class="post-meta">
@@ -223,14 +223,14 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2021-12-29 16:09:34" itemprop="dateCreated datePublished" datetime="2021-12-29T16:09:34+08:00">2021-12-29</time>
+              <time title="创建时间：2022-03-24 18:38:43" itemprop="dateCreated datePublished" datetime="2022-03-24T18:38:43+08:00">2022-03-24</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-01-05 14:25:34" itemprop="dateModified" datetime="2022-01-05T14:25:34+08:00">2022-01-05</time>
+                <time title="修改时间：2022-03-28 16:30:27" itemprop="dateModified" datetime="2022-03-28T16:30:27+08:00">2022-03-28</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -238,7 +238,7 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/c/" itemprop="url" rel="index"><span itemprop="name">c++</span></a>
+                  <a href="/categories/%E4%B9%9D%E7%AB%A0%E7%AE%97%E6%B3%95/" itemprop="url" rel="index"><span itemprop="name">九章算法</span></a>
                 </span>
             </span>
 
@@ -255,14 +255,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>714</span>
+              <span>1.8k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
+              <span>2 分钟</span>
             </span>
 
         </div>
@@ -274,12 +274,31 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>计时，常用于测试代码的运行时间和效率。</p>
-<h3 id="以往用法ctime"><a href="#以往用法ctime" class="headerlink" title="以往用法ctime"></a>以往用法ctime</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;ctime&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="keyword">clock_t</span> start = <span class="built_in">clock</span>();</span><br><span class="line"><span class="built_in">func</span>();</span><br><span class="line"><span class="keyword">clock_t</span> end = <span class="built_in">clock</span>();</span><br><span class="line">cout &lt;&lt; <span class="string">&quot;spend &quot;</span> &lt;&lt; (<span class="keyword">double</span>)(end-start)/CLOCKS_PER_SEC &lt;&lt;<span class="string">&quot; second&quot;</span> &lt;&lt; endl;  <span class="comment">// 精确到毫秒</span></span><br></pre></td></tr></table></figure>
+        <h3 id="class-3"><a href="#class-3" class="headerlink" title="class 3"></a>class 3</h3><h4 id="Binary-Tree-Traversal"><a href="#Binary-Tree-Traversal" class="headerlink" title="Binary Tree Traversal"></a>Binary Tree Traversal</h4><p>先序： 根 左 右<br>后序： 左 右 根<br>中序： 左 根 右</p>
+<p>遍历方法：</p>
+<ul>
+<li>递归方法：一句话描述递归函数，如把根节点放入res里；</li>
+<li>优化成非递归：借助栈的数据结构，动手背诵；</li>
+<li>分治，分解攻克：问题分成两半，或者多份，分别解决再合并答案；带return value的递归方法; 二叉树的通用解法</li>
+</ul>
+<p>递归方法：退出条件，节点为空如何处理；问题分成左右两半怎么处理；分治方法递归一般带相同返回类型参数。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 递归法：</span></span><br><span class="line">    <span class="function">vector&lt;<span class="keyword">int</span>&gt; <span class="title">preorderTraversal</span><span class="params">(TreeNode *root)</span> </span>&#123;</span><br><span class="line">        <span class="comment">// write your code here</span></span><br><span class="line">        vector&lt;<span class="keyword">int</span>&gt; res;</span><br><span class="line">        <span class="built_in">preorder</span>(root, res);</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">     <span class="comment">// 递归方法：把根节点放入res里</span></span><br><span class="line">     <span class="function"><span class="keyword">void</span> <span class="title">preorder</span><span class="params">(TreeNode* root, vector&lt;<span class="keyword">int</span>&gt;&amp; res)</span></span></span><br><span class="line"><span class="function">     </span>&#123;</span><br><span class="line">         <span class="keyword">if</span>(root == <span class="literal">nullptr</span>)</span><br><span class="line">         &#123;</span><br><span class="line">             <span class="keyword">return</span> ;</span><br><span class="line">         &#125;</span><br><span class="line">         res.<span class="built_in">push_back</span>(root-&gt;val);</span><br><span class="line">         <span class="built_in">preorder</span>(root-&gt;left, res);</span><br><span class="line">         <span class="built_in">preorder</span>(root-&gt;right, res);</span><br><span class="line">     &#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 非递归法</span></span><br><span class="line"><span class="comment">// 分治法</span></span><br><span class="line"><span class="function">vector&lt;<span class="keyword">int</span>&gt; <span class="title">preorderTraversal</span><span class="params">(TreeNode *root)</span> </span>&#123;</span><br><span class="line">        <span class="comment">// write your code here</span></span><br><span class="line">        vector&lt;<span class="keyword">int</span>&gt; res;</span><br><span class="line">        <span class="keyword">if</span>(root == <span class="literal">nullptr</span>)</span><br><span class="line">            <span class="keyword">return</span> res;</span><br><span class="line">        </span><br><span class="line">        <span class="comment">// divide</span></span><br><span class="line">        vector&lt;<span class="keyword">int</span>&gt; left = <span class="built_in">preorderTraversal</span>(root-&gt;left);</span><br><span class="line">        vector&lt;<span class="keyword">int</span>&gt; right = <span class="built_in">preorderTraversal</span>(root-&gt;right);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// conquer</span></span><br><span class="line">        res.<span class="built_in">push_back</span>(root-&gt;val);</span><br><span class="line">        res.<span class="built_in">insert</span>(res.<span class="built_in">end</span>(), left.<span class="built_in">begin</span>(), left.<span class="built_in">end</span>());</span><br><span class="line">        res.<span class="built_in">insert</span>(res.<span class="built_in">end</span>(), right.<span class="built_in">begin</span>(), right.<span class="built_in">end</span>());</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
 
+<p>DFS分治法解决归并排序，快速排序以及大部分二叉树问题。<br>树型分析法来分析复杂度:如归并排序为O(nlogn),logn层，每层合并需遍历每个元素n,O(1)分，O（n)治，需要额外O（N）空间，保证稳定排序；快速排序一样为O(nlogn),用O（n)分，O(1)治，不是稳定排序。一个先局部后整体，一个先整体后局部的分治方法。  </p>
+<h4 id="BFS广度优先搜索"><a href="#BFS广度优先搜索" class="headerlink" title="BFS广度优先搜索"></a>BFS广度优先搜索</h4><p>逐层执行的实现方法：</p>
+<ul>
+<li>两个queue: 导来导去</li>
+<li>一个queue+dummy node:加入层分割符</li>
+<li>单queue(best)： 一层一层往下走</li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">vector&lt;vector&lt;<span class="keyword">int</span>&gt;&gt; <span class="built_in">levelOrder</span>(TreeNode *root) &#123;</span><br><span class="line">        <span class="comment">// write your code here 基本功：唯手熟耳</span></span><br><span class="line">        vector&lt;vector&lt;<span class="keyword">int</span>&gt;&gt; res;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span>(root == <span class="literal">nullptr</span>)</span><br><span class="line">            <span class="keyword">return</span> res;</span><br><span class="line">        queue&lt;TreeNode*&gt; q;</span><br><span class="line">        q.<span class="built_in">push</span>(root);</span><br><span class="line">        <span class="keyword">while</span>(!q.<span class="built_in">empty</span>())</span><br><span class="line">        &#123;</span><br><span class="line">            vector&lt;<span class="keyword">int</span>&gt; level;</span><br><span class="line">            <span class="keyword">int</span> size = q.<span class="built_in">size</span>();  <span class="comment">// 提前取size,因为q.size()会变化</span></span><br><span class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span> ; i&lt; size; i++)</span><br><span class="line">            &#123;</span><br><span class="line">                TreeNode* head = q.<span class="built_in">front</span>();</span><br><span class="line">                q.<span class="built_in">pop</span>();</span><br><span class="line">                level.<span class="built_in">push_back</span>(head-&gt;val);</span><br><span class="line">                <span class="keyword">if</span>(head-&gt;left != <span class="literal">nullptr</span>)</span><br><span class="line">                    q.<span class="built_in">push</span>(head-&gt;left);</span><br><span class="line">                <span class="keyword">if</span>(head-&gt;right != <span class="literal">nullptr</span>)</span><br><span class="line">                    q.<span class="built_in">push</span>(head-&gt;right);</span><br><span class="line">            &#125;</span><br><span class="line">            res.<span class="built_in">push_back</span>(level);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
 
-<h3 id="chrono用法"><a href="#chrono用法" class="headerlink" title="chrono用法"></a>chrono用法</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;chrono&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> chrono;</span><br><span class="line"></span><br><span class="line"><span class="keyword">auto</span> start = system_clock::<span class="built_in">now</span>();</span><br><span class="line"><span class="built_in">func</span>();</span><br><span class="line"><span class="keyword">auto</span> end = system_clock::<span class="built_in">now</span>();</span><br><span class="line"><span class="keyword">auto</span> duration = duration_cast&lt;microseconds&gt;(end-start);</span><br><span class="line">cout &lt;&lt;<span class="string">&quot;spend &quot;</span> &lt;&lt; <span class="built_in"><span class="keyword">double</span></span>(duration.<span class="built_in">count</span>()) * microseconds::period::num / microseconds::period::den &lt;&lt; <span class="string">&quot; second&quot;</span> &lt;&lt; endl;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<p>其中，auto为自动类型；除了system_clock,还可用steady_clock和high_resolution_clock; microseconds表示微妙，甚至还有nanoseconds纳秒；num和den表示计时单位的分子和分母。</p>
+<p>要求掌握：</p>
+<ul>
+<li>递归：遍历和分治</li>
+<li>非递归实现： 前序和中序</li>
+<li>利用queue的BFS实现</li>
+</ul>
 
     </div>
 
@@ -289,7 +308,7 @@
 
       <footer class="post-footer">
           <div class="post-tags">
-              <a href="/tags/c/" rel="tag"># c++</a>
+              <a href="/tags/%E4%B9%9D%E7%AB%A0%E7%AE%97%E6%B3%95/" rel="tag"># 九章算法</a>
           </div>
 
         
@@ -298,13 +317,10 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2021/12/28/shisan/%E6%B4%9E%E8%A7%81%E7%9D%A1%E7%9C%A0/" rel="prev" title="洞见睡眠">
-      <i class="fa fa-chevron-left"></i> 洞见睡眠
+    <a href="/2022/03/23/leetcode/%E5%AD%98%E5%9C%A8%E9%87%8D%E5%A4%8D%E5%85%83%E7%B4%A0/" rel="prev" title="217.存在重复元素">
+      <i class="fa fa-chevron-left"></i> 217.存在重复元素
     </a></div>
-      <div class="post-nav-item">
-    <a href="/2021/12/31/rizhi/2021-%E5%B9%B4%E7%BB%88%E6%80%BB%E7%BB%93/" rel="next" title="2021_年终总结">
-      2021_年终总结 <i class="fa fa-chevron-right"></i>
-    </a></div>
+      <div class="post-nav-item"></div>
     </div>
       </footer>
     
@@ -364,7 +380,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%A5%E5%BE%80%E7%94%A8%E6%B3%95ctime"><span class="nav-number">1.</span> <span class="nav-text">以往用法ctime</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#chrono%E7%94%A8%E6%B3%95"><span class="nav-number">2.</span> <span class="nav-text">chrono用法</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#class-3"><span class="nav-number">1.</span> <span class="nav-text">class 3</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Binary-Tree-Traversal"><span class="nav-number">1.1.</span> <span class="nav-text">Binary Tree Traversal</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#BFS%E5%B9%BF%E5%BA%A6%E4%BC%98%E5%85%88%E6%90%9C%E7%B4%A2"><span class="nav-number">1.2.</span> <span class="nav-text">BFS广度优先搜索</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -585,7 +601,7 @@ NexT.utils.loadComments(document.querySelector('#gitalk-container'), () => {
       repo        : 'tanrunjie.github.io',
       owner       : 'tanrunjie',
       admin       : ['tanrunjie'],
-      id          : 'df3c4c91e7e06519f1cf7b0a2b20237f',
+      id          : '86f3deeb339d0ab8e78ca8476bd5158c',
         language: 'zh-CN',
       distractionFreeMode: false
     });
