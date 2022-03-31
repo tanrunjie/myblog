@@ -1,5 +1,5 @@
 ---
-title: class1_2
+title: 九章基础class_1_2
 categories:
   - 九章算法
 mathjax: true
@@ -7,7 +7,7 @@ date: 2022-03-17 15:03:52
 tags: 九章算法
 ---
 
-### 第一课
+### 第一课 Intro
 
 #### strStr问题
 常见问题： 上来直接说KMP算法（过难）
@@ -59,7 +59,7 @@ class Solution{
 - 掌握递归算法，掌握区分度
 
 
-### 第二课
+### 第二课 BST
 
 #### 二分搜索通用模板
 ``` cpp
