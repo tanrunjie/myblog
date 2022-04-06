@@ -130,3 +130,61 @@ vector<vector<int>> levelOrder(TreeNode *root) {
 - 初始化 Initialization: 最小的状态，起点
 - 答案 Answer: 最大的状态，终点
 
+对于二维matrix，初始化第0行和第0列。
+
+``` cpp
+// Matrix DP
+int uniquePathsWithObstacles(vector<vector<int>> &obstacleGrid) {
+        // write your code here
+        int row = obstacleGrid.size();
+        int col = obstacleGrid[0].size();
+
+        vector<vector<int>> f(row, vector<int>(col,0));
+        
+        for(int i=0; i<row; i++)
+        {
+            if(obstacleGrid[i][0] == 0)
+                f[i][0] = 1;
+            else
+                break;
+        }
+        for(int j=0; j<col; j++)
+        {
+            if(obstacleGrid[0][j] == 0)
+                f[0][j] = 1;
+            else
+                break;
+        }
+
+        for(int i=1; i<row; i++)
+            for(int j=1; j<col; j++)
+            {
+                if(obstacleGrid[i][j] == 0)
+                    f[i][j] = f[i-1][j] + f[i][j-1]; 
+                else
+                    f[i][j] = 0;
+            }   
+
+        return f[row-1][col-1];
+
+    }
+
+
+```
+
+与贪心的区别：DP先决策，再执行；贪心直接基于当前执行。一般做题用贪心都是不符要求的。
+与分治的区别：分治需要递归；DP着重解决重复运算；
+如果路径上下左右则无法DP，属于图论。
+
+五大常用算法：分治、贪心、DP、回溯、穷举
+
+分治问题特征：
+- 问题规模缩小到一定可容易解决
+- 问题可分解为若干规模小的相同问题
+- 重要特征：分解的子问题的解可合并为大问题的解
+- 各子问题相互独立，不含公共子子问题
+若不满足第三条，可考虑贪心或DP。
+
+DP问题性质：
+- 最优化：问题的最优解包含在子问题的最优解中
+Sequence DP 
