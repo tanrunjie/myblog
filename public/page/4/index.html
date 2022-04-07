@@ -196,6 +196,341 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://tanrunjie.github.io/2021/12/27/UNIX-Tutorial/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpeg">
+      <meta itemprop="name" content="神秘囚徒">
+      <meta itemprop="description" content="你太习惯这个世界了，才会对任何事情都不感到惊奇。">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="奇幻物语">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/12/27/UNIX-Tutorial/" class="post-title-link" itemprop="url">UNIX_Tutorial</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-12-27 10:55:55" itemprop="dateCreated datePublished" datetime="2021-12-27T10:55:55+08:00">2021-12-27</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-12-28 20:38:38" itemprop="dateModified" datetime="2021-12-28T20:38:38+08:00">2021-12-28</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%B8%B8%E7%94%A8%E6%8C%87%E4%BB%A4/" itemprop="url" rel="index"><span itemprop="name">常用指令</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>2.8k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>3 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>Unix和Linux的基本指令<br><a target="_blank" rel="noopener" href="http://www.ee.surrey.ac.uk/Teaching/Unix/">http://www.ee.surrey.ac.uk/Teaching/Unix/</a></p>
+<h3 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h3><p>内核(Kernel): 分配时钟和内存给程序和处理文件存储以及系统交互<br>Shell:用户和内核的命令交互<br>UNIX中要么时文件，要么是程序</p>
+<h3 id="Tutorial-One-amp-Two"><a href="#Tutorial-One-amp-Two" class="headerlink" title="Tutorial One &amp; Two"></a>Tutorial One &amp; Two</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">ls -a</span><br><span class="line">pwd</span><br><span class="line"></span><br><span class="line"><span class="comment">// search sci in file.txt</span></span><br><span class="line"><span class="comment">// Method 1</span></span><br><span class="line">less file.txt</span><br><span class="line">/sci  </span><br><span class="line"></span><br><span class="line"><span class="comment">// Method 2</span></span><br><span class="line">grep sci file.txt <span class="comment">//-i mean &#x27;ignore up/low case&#x27;</span></span><br><span class="line"></span><br><span class="line">wc -l file.txt  <span class="comment">// count line in file.txt</span></span><br><span class="line"></span><br><span class="line">clear <span class="comment">// clean monitor</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="Tutorial-Three-amp-Four"><a href="#Tutorial-Three-amp-Four" class="headerlink" title="Tutorial Three &amp; Four"></a>Tutorial Three &amp; Four</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">cat &gt; list1  <span class="comment">// output to list1</span></span><br><span class="line">cat &gt;&gt; list1 <span class="comment">// append to list1</span></span><br><span class="line">cat list1 list2 &gt; biglist <span class="comment">// concat list1 and list2 to biglist</span></span><br><span class="line"></span><br><span class="line">sort &lt; biglist &gt; slist <span class="comment">// sort biglist and output to slist</span></span><br><span class="line">command1 | command2  <span class="comment">// pipe the output of command1 to the input of command2</span></span><br><span class="line"></span><br><span class="line">ls list*</span><br><span class="line">ls ?list</span><br><span class="line"></span><br><span class="line"><span class="comment">// getting help</span></span><br><span class="line">man wc</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th>Command</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>command &gt; file</td>
+<td>redirect standard output to a file</td>
+</tr>
+<tr>
+<td>command &gt;&gt; file</td>
+<td>append standard output to a file</td>
+</tr>
+<tr>
+<td>command &lt; file</td>
+<td>redirect standard input from a file</td>
+</tr>
+<tr>
+<td>command1 | command2</td>
+<td>pipe output of command1 to input of command2</td>
+</tr>
+<tr>
+<td>who</td>
+<td>list users currently logged</td>
+</tr>
+</tbody></table>
+<h3 id="Tutorial-Five-amp-Six"><a href="#Tutorial-Five-amp-Six" class="headerlink" title="Tutorial Five &amp; Six"></a>Tutorial Five &amp; Six</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">ls -l</span><br><span class="line"></span><br><span class="line">-rwxrw-r-- <span class="number">1</span> ee51ab beng95 <span class="number">2450</span> Sept29 <span class="number">11</span>:<span class="number">52</span> file1</span><br><span class="line"></span><br><span class="line"><span class="comment">// read/write/execute rights in owner/group/everyone</span></span><br><span class="line"><span class="comment">// file_size time file_name</span></span><br><span class="line"></span><br><span class="line">chmod a+x ex <span class="comment">// add permission to execute ex to all</span></span><br></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th>Symbol</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>u</td>
+<td>user</td>
+</tr>
+<tr>
+<td>g</td>
+<td>group</td>
+</tr>
+<tr>
+<td>o</td>
+<td>other</td>
+</tr>
+<tr>
+<td>a</td>
+<td>all</td>
+</tr>
+<tr>
+<td>r</td>
+<td>read</td>
+</tr>
+<tr>
+<td>w</td>
+<td>write and delete</td>
+</tr>
+<tr>
+<td>x</td>
+<td>execute and access directory</td>
+</tr>
+<tr>
+<td>+</td>
+<td>add permission</td>
+</tr>
+<tr>
+<td>-</td>
+<td>take away permission</td>
+</tr>
+</tbody></table>
+<h4 id="summary-of-process-control"><a href="#summary-of-process-control" class="headerlink" title="summary of process control"></a>summary of process control</h4><p>foreground: terminal suspend and wait<br>background: terminal can go on</p>
+<table>
+<thead>
+<tr>
+<th>Command</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>ls -lag</td>
+<td>list access rights for all files</td>
+</tr>
+<tr>
+<td>chmod [options] file</td>
+<td>change access rights for named file</td>
+</tr>
+<tr>
+<td>command &amp;</td>
+<td>run command in background</td>
+</tr>
+<tr>
+<td>^C</td>
+<td>kill the job running in the forground</td>
+</tr>
+<tr>
+<td>^Z</td>
+<td>suspend the job running in the foreground</td>
+</tr>
+<tr>
+<td>jobs</td>
+<td>list current jobs</td>
+</tr>
+<tr>
+<td>bg %2</td>
+<td>background the suspended job</td>
+</tr>
+<tr>
+<td>fg %1</td>
+<td>foreground job number 1</td>
+</tr>
+<tr>
+<td>kill %1</td>
+<td>kill job number 1</td>
+</tr>
+<tr>
+<td>ps</td>
+<td>list current processes</td>
+</tr>
+<tr>
+<td>kill 310</td>
+<td>kill process id 310</td>
+</tr>
+</tbody></table>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">df .  <span class="comment">// report space left on the file system</span></span><br><span class="line">ls -lh</span><br><span class="line">gzip</span><br><span class="line">gunzip  <span class="comment">// unzip</span></span><br><span class="line">tar -xvf .tar <span class="comment">// extract</span></span><br><span class="line">diff file1 file2  <span class="comment">// &lt; denotes file1, &gt; denotes file2</span></span><br><span class="line"></span><br><span class="line">history <span class="comment">// terminal history</span></span><br><span class="line">!! <span class="comment">// recall last command</span></span><br><span class="line">!<span class="number">-3</span> <span class="comment">// recall third most recent command</span></span><br><span class="line">!grep <span class="comment">// recall last command starting with grep</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+<h3 id="Tutorial-Seven-amp-Eight"><a href="#Tutorial-Seven-amp-Eight" class="headerlink" title="Tutorial Seven &amp; Eight"></a>Tutorial Seven &amp; Eight</h3><p>Install software:</p>
+<ol>
+<li>Locate and download the source code(which is usually compressed)</li>
+<li>Unpack the source code</li>
+<li>Compile the code(Most difficult)</li>
+<li>Install the resulting executable</li>
+<li>Set paths to the installation directory</li>
+</ol>
+<p><strong>make</strong>:manage large programs and only compiling those parts changed<br><strong>Makefile</strong>: record the related make rules, contains information on how to compile the software.</p>
+<p>Some simplest way to compile a package:</p>
+<ol>
+<li><strong>cd</strong> to the directory containing the packages’ source code.</li>
+<li>Type <strong>./configure</strong> to configure the package for your system</li>
+<li>Type <strong>make</strong> to compile the package</li>
+<li>Optionally, type <strong>make check</strong> to run any self0tests that come with the package.</li>
+<li>Type <strong>make install</strong> to install the programs and any data files and documentation.</li>
+<li>Optionally, type <strong>make clean</strong> to remove the program binaries and object files from the source code directory.</li>
+</ol>
+<h4 id="UNIX-variables"><a href="#UNIX-variables" class="headerlink" title="UNIX variables"></a>UNIX variables</h4><p>two categories: Environment variables, Shell variables<br>Shell variables: apply only to the current instance of shell and set short-term working conditions.<br>Environment variables: system environment with UPPER CASE name</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">echo $PATH <span class="comment">// print system environment</span></span><br><span class="line">set PATH=($PATH ~/new_path/)  <span class="comment">// add path to PATH</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://tanrunjie.github.io/2021/12/24/shisan/%E9%87%91%E9%92%B1%E7%9A%84%E5%AE%9E%E9%99%85%E4%BB%B7%E5%80%BC/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpeg">
+      <meta itemprop="name" content="神秘囚徒">
+      <meta itemprop="description" content="你太习惯这个世界了，才会对任何事情都不感到惊奇。">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="奇幻物语">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/12/24/shisan/%E9%87%91%E9%92%B1%E7%9A%84%E5%AE%9E%E9%99%85%E4%BB%B7%E5%80%BC/" class="post-title-link" itemprop="url">金钱的实际价值</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-12-24 17:40:17" itemprop="dateCreated datePublished" datetime="2021-12-24T17:40:17+08:00">2021-12-24</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-01-05 14:24:54" itemprop="dateModified" datetime="2022-01-05T14:24:54+08:00">2022-01-05</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%8D%81%E4%B8%89%E6%89%8B%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">十三手记</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>698</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>1 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p><code>摘自十三手记</code></p>
+<p>若是认真观察自己过往对金钱的感受，必定发现一个现象：钱来得容易的时候，也花得容易；钱来得艰难，也就比较耐用。</p>
+<p>但大多数时候，我们不愿面对这样的真相：金钱实际价值的背后有自己投机取巧的小心思。</p>
+<p>此时，十三先生要你深深的明白：二元有相世界，金钱的实际价值必定等于你诚意付出之时创造出的相应实际价值，但是你却一直有种想付出更少收获更多金钱的想法，所以你不自知的不愿搞清楚。因为一旦你搞清楚了这个核心原理，你就无法继续投机取巧，就无法继续偷懒了。但是，只要你真正诚意看懂并接纳了这个关键点，你就能更加务实的面对自己所面对的一切人和事，你才能因此而尽可能减少多余的动作，你才能因减少多余动作而减少障碍环节，你才能因减少障碍环节而减少不必要的消耗，如此，你整体的行动才能更加高效，反而你才能走上人生各种成功的捷径。</p>
+<h3 id="个人感悟"><a href="#个人感悟" class="headerlink" title="个人感悟"></a>个人感悟</h3><p>回忆过去，确有种种如此的感觉。上高中和大学的时候，每一分钱都来自父母，舍不得多花乱花。出来工作后，可能得益于名校光环，匹配一些不太核心的岗位时候，工作的艰辛就远不及当初，于是感觉金钱就来得容易了，殊不知金钱其实也流入并不富裕，只因个人消费比较简单，只花该花的钱，只享受该享受的事。于是渐渐，也失去了赚大钱的欲望，虽说不能没有，但明显不及年少时的强烈，花钱也比较随意，一直没有大的积蓄，理财也是三天打鱼四天撒网的状态。希望认真对待工作中的每一件事，认清金钱来之不易，努力增长自己的财富，也能合理地用度。</p>
+<p>另外，而立之年，却没有多余的精力和财产赡养父母，更多的是让父母为自己忧心忡忡，目前为止，依然算不上才社会能游刃有余，立足四方。此后，应<strong>挖掘自己的兴趣目标，提升个人在社会中的价值</strong>。</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://tanrunjie.github.io/2021/12/23/TSDF%E7%AE%97%E6%B3%95/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -417,7 +752,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://tanrunjie.github.io/2021/12/22/rizhi/%E5%85%AD%E5%B9%B4%E5%89%8D%E7%9A%84%E8%87%AA%E5%B7%B1/">
+    <link itemprop="mainEntityOfPage" href="http://tanrunjie.github.io/2021/12/22/personal/%E5%85%AD%E5%B9%B4%E5%89%8D%E7%9A%84%E8%87%AA%E5%B7%B1/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpeg">
@@ -431,7 +766,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2021/12/22/rizhi/%E5%85%AD%E5%B9%B4%E5%89%8D%E7%9A%84%E8%87%AA%E5%B7%B1/" class="post-title-link" itemprop="url">六年前的自己</a>
+            <a href="/2021/12/22/personal/%E5%85%AD%E5%B9%B4%E5%89%8D%E7%9A%84%E8%87%AA%E5%B7%B1/" class="post-title-link" itemprop="url">六年前的自己</a>
         </h2>
 
         <div class="post-meta">
@@ -621,7 +956,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://tanrunjie.github.io/2021/12/21/rizhi/%E7%BB%8F%E5%85%B8%E8%AF%9D%E6%9C%AF/">
+    <link itemprop="mainEntityOfPage" href="http://tanrunjie.github.io/2021/12/21/personal/%E7%BB%8F%E5%85%B8%E8%AF%9D%E6%9C%AF/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpeg">
@@ -635,7 +970,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2021/12/21/rizhi/%E7%BB%8F%E5%85%B8%E8%AF%9D%E6%9C%AF/" class="post-title-link" itemprop="url">经典话术</a>
+            <a href="/2021/12/21/personal/%E7%BB%8F%E5%85%B8%E8%AF%9D%E6%9C%AF/" class="post-title-link" itemprop="url">经典话术</a>
         </h2>
 
         <div class="post-meta">
@@ -1052,217 +1387,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://tanrunjie.github.io/2021/12/16/cpp/%E9%80%BB%E8%BE%91%E6%8E%A7%E5%88%B6/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpeg">
-      <meta itemprop="name" content="神秘囚徒">
-      <meta itemprop="description" content="你太习惯这个世界了，才会对任何事情都不感到惊奇。">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="奇幻物语">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/12/16/cpp/%E9%80%BB%E8%BE%91%E6%8E%A7%E5%88%B6/" class="post-title-link" itemprop="url">逻辑控制</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2021-12-16 15:09:48" itemprop="dateCreated datePublished" datetime="2021-12-16T15:09:48+08:00">2021-12-16</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-01-05 14:25:34" itemprop="dateModified" datetime="2022-01-05T14:25:34+08:00">2022-01-05</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/c/" itemprop="url" rel="index"><span itemprop="name">c++</span></a>
-                </span>
-            </span>
-
-          <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>1.1k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h3 id="do…while…-至少会执行一次的循环逻辑"><a href="#do…while…-至少会执行一次的循环逻辑" class="headerlink" title="do…while… 至少会执行一次的循环逻辑"></a>do…while… 至少会执行一次的循环逻辑</h3><p>哨兵(sentinel)字符: 一直读取，直到’他‘为止</p>
-<h3 id="检查文件是否正确打开很关键"><a href="#检查文件是否正确打开很关键" class="headerlink" title="检查文件是否正确打开很关键"></a>检查文件是否正确打开很关键</h3><p>用string读ifstream数据</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;fstream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string&gt;</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line">    ifstream inFile;</span><br><span class="line">    inFile.<span class="built_in">open</span>(filename);</span><br><span class="line">    <span class="keyword">if</span>(!inFile.<span class="built_in">is_open</span>())</span><br><span class="line">    &#123;</span><br><span class="line">        cout &lt;&lt;<span class="string">&quot;Failed Open&quot;</span>;</span><br><span class="line">        <span class="built_in">exit</span>(EXIT_FAILURE);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 逐行读放在string</span></span><br><span class="line">    string str;</span><br><span class="line">    <span class="built_in">getline</span>(inFile, str);</span><br><span class="line">    <span class="comment">//stoi, stof, stod </span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-<h3 id="关于函数，真正的乐趣在于编写自己的函数，函数库"><a href="#关于函数，真正的乐趣在于编写自己的函数，函数库" class="headerlink" title="关于函数，真正的乐趣在于编写自己的函数，函数库"></a>关于函数，真正的乐趣在于编写自己的函数，函数库</h3><h3 id="指向const的指针以及const指针"><a href="#指向const的指针以及const指针" class="headerlink" title="指向const的指针以及const指针"></a>指向const的指针以及const指针</h3><p><img src="/images/12_17_1.png"></p>
-<h3 id="递归使用"><a href="#递归使用" class="headerlink" title="递归使用"></a>递归使用</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">recurs</span><span class="params">(arg)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="function">stat1</span></span><br><span class="line"><span class="function">    <span class="title">if</span><span class="params">(test)</span></span></span><br><span class="line"><span class="function">        <span class="title">recurs</span><span class="params">(arg)</span></span></span><br><span class="line"><span class="function">    stat2</span></span><br><span class="line"><span class="function">&#125;</span></span><br></pre></td></tr></table></figure>
-<p>先执行stat1,打开满足条件，打开新的递归；直到新的递归不满足条件，逐步执行stat2并关闭当前函数；直到所有打开的函数都关闭了。</p>
-<h3 id="函数指针"><a href="#函数指针" class="headerlink" title="函数指针"></a>函数指针</h3><p>用函数指针将第一函数找到第二函数，而非直接调用；虽然笨拙，但好处是可以在不同时间传递不同的函数地址；<br>语法：double (*pf)(int);</p>
-<h3 id="应尽量使用const"><a href="#应尽量使用const" class="headerlink" title="应尽量使用const"></a>应尽量使用const</h3><p>1.使用const可以避免无意中修改数据的失误<br>2.使用const使函数能够处理const和非const实参，否则将不能处理const实参<br>3.使用const引用使函数能够正确生成并使用临时变量</p>
-<h3 id="引用非常适合用于结构和类"><a href="#引用非常适合用于结构和类" class="headerlink" title="引用非常适合用于结构和类"></a>引用非常适合用于<strong>结构和类</strong></h3><p>何时使用引用参数：1.能够修改调用函数中的数据对象 2.通过传递引用而非拷贝提高程序运行速度</p>
-<h3 id="语法糖：函数默认参数从右往左"><a href="#语法糖：函数默认参数从右往左" class="headerlink" title="语法糖：函数默认参数从右往左"></a>语法糖：函数默认参数从右往左</h3><h3 id="函数多态：重载函数"><a href="#函数多态：重载函数" class="headerlink" title="函数多态：重载函数"></a>函数多态：重载函数</h3><p>不应滥用，适用于不同参数类型输入，完成基本一致功能的多个函数使用，const与非const也不一样</p>
-<h3 id="函数多态：模板编程"><a href="#函数多态：模板编程" class="headerlink" title="函数多态：模板编程"></a>函数多态：模板编程</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;  <span class="comment">// typename -&gt; class is ok</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Swap</span><span class="params">(T &amp;a, T &amp;b)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    T temp;</span><br><span class="line">    temp = a;</span><br><span class="line">    a = b;</span><br><span class="line">    b = temp;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<p>编译器如何匹配最佳函数是一个复杂而完备的过程，大致规则如下：<br>1.完全匹配，但常规函数优于模板<br>2.提升转换（char/shorts提升至int, float提升至double)<br>3.标准转换（int 转换char, long 转换double)<br>4.用户定义的转换，如类声明</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://tanrunjie.github.io/2021/12/15/cpp/%E5%AD%97%E7%AC%A6%E4%B8%B2/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpeg">
-      <meta itemprop="name" content="神秘囚徒">
-      <meta itemprop="description" content="你太习惯这个世界了，才会对任何事情都不感到惊奇。">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="奇幻物语">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/12/15/cpp/%E5%AD%97%E7%AC%A6%E4%B8%B2/" class="post-title-link" itemprop="url">字符串</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2021-12-15 16:08:04" itemprop="dateCreated datePublished" datetime="2021-12-15T16:08:04+08:00">2021-12-15</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-01-05 14:25:34" itemprop="dateModified" datetime="2022-01-05T14:25:34+08:00">2022-01-05</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/c/" itemprop="url" rel="index"><span itemprop="name">c++</span></a>
-                </span>
-            </span>
-
-          <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>923</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h3 id="C-style字符串"><a href="#C-style字符串" class="headerlink" title="C-style字符串"></a>C-style字符串</h3><p>结尾带’\0’,这对于很多处理字符串的函数很关键。#include <cstring>包含大量C语言字串的操作函数如strlen, strcpy, strcat…</p>
-<p>strlen():只计算数组或者指针中的字符个数，不带结尾</p>
-<p><code>cin.getline(name,20)</code>:读取整行的字串到name,最多20个<br>cin.get()：类似，但下一次调用开头会带有换行(换行缓存到下次get)，顺便检查了上一次输入的正确程度。</p>
-<p>针对string类的getline(cin, string); 与cin混合使用时，在cin&gt;&gt;完成后，getline前需要通过getline(cin,”\n”)清除缓存，否则不进入getline输入。</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 清除缓存</span></span><br><span class="line">string str=<span class="string">&quot;\n&quot;</span>;</span><br><span class="line"><span class="built_in">getline</span>(cin,str);</span><br></pre></td></tr></table></figure>
-
-
-
-<h3 id="string类"><a href="#string类" class="headerlink" title="string类"></a>string类</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string&gt;</span></span></span><br><span class="line">std::string</span><br></pre></td></tr></table></figure>
-<p>更方便，也更安全。像vector一样管理char.</p>
-<h3 id="struct和union"><a href="#struct和union" class="headerlink" title="struct和union"></a>struct和union</h3><p>union只能同时存储<strong>一种</strong>类型，其他类型的会lost</p>
-<h3 id="new和delete"><a href="#new和delete" class="headerlink" title="new和delete"></a>new和delete</h3><ul>
-<li>不要delete释放不是new的内存</li>
-<li>不要delete同一块内存两次</li>
-<li>new[]数组应当用delete []释放</li>
-<li>若用new[]为单一实体分配内存，应使用delete（不带方括号）释放</li>
-<li>对空指针delete是安全的</li>
-</ul>
-<h3 id="cin与cin-getline区别"><a href="#cin与cin-getline区别" class="headerlink" title="cin与cin.getline区别"></a>cin与cin.getline区别</h3><p>cin.getline(addr,80) 与cin&gt;&gt;addr<br>getline:读整行直到‘回车’<br>cin:首先跳过‘空格’，读取字串，再次遇‘空格’停止；即跳过前面的空格，读取单个单词。</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cin&gt;&gt;ch;</span><br><span class="line">cin.<span class="built_in">get</span>(ch);</span><br><span class="line">ch=cin.<span class="built_in">get</span>();</span><br></pre></td></tr></table></figure>
-<p>上面区别主要是cin&gt;&gt;ch直接跳过空格换行以及制表符</p>
-<h3 id="string格式化输出4位数字-前面补0，多用于文件名操作"><a href="#string格式化输出4位数字-前面补0，多用于文件名操作" class="headerlink" title="string格式化输出4位数字,前面补0，多用于文件名操作"></a>string格式化输出4位数字,前面补0，多用于文件名操作</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> num_zero = <span class="number">4</span>;</span><br><span class="line">string num = <span class="built_in">to_string</span>(int_val);</span><br><span class="line">string new_num = <span class="built_in">string</span>(num_zero-num.<span class="built_in">length</span>(),<span class="string">&#x27;0&#x27;</span>) + num;</span><br></pre></td></tr></table></figure>
-<p>注意int_val长度小于num_zero。</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1334,20 +1458,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">42</span>
+          <span class="site-state-item-count">44</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-count">16</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">19</span>
+        <span class="site-state-item-count">20</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -1388,12 +1512,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">86k</span>
+    <span title="站点总字数">88k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">1:18</span>
+    <span title="站点阅读时长">1:20</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
   </div>
@@ -1472,6 +1596,59 @@
   
 
   
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
 
   
 

@@ -187,4 +187,5 @@ int uniquePathsWithObstacles(vector<vector<int>> &obstacleGrid) {
 
 DP问题性质：
 - 最优化：问题的最优解包含在子问题的最优解中
+
 Sequence DP 
