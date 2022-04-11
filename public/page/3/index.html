@@ -196,6 +196,197 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://tanrunjie.github.io/2022/01/14/pcl/%E5%A2%99%E9%9D%A2%E5%88%86%E5%89%B2/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpeg">
+      <meta itemprop="name" content="神秘囚徒">
+      <meta itemprop="description" content="你太习惯这个世界了，才会对任何事情都不感到惊奇。">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="奇幻物语">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/01/14/pcl/%E5%A2%99%E9%9D%A2%E5%88%86%E5%89%B2/" class="post-title-link" itemprop="url">墙面分割</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-01-14 14:12:27" itemprop="dateCreated datePublished" datetime="2022-01-14T14:12:27+08:00">2022-01-14</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-01-17 17:21:51" itemprop="dateModified" datetime="2022-01-17T17:21:51+08:00">2022-01-17</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/pcl/" itemprop="url" rel="index"><span itemprop="name">pcl</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>524</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>1 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h3 id="区域生长分割region-growing-segmentation"><a href="#区域生长分割region-growing-segmentation" class="headerlink" title="区域生长分割region growing segmentation"></a>区域生长分割region growing segmentation</h3><p>算法核心：基于点法线之间角度的比较，尽量将满足平滑约束的相邻点合并在一起，以一簇点集的形式输出，视为相同平面</p>
+<p>工作原理：区域增长从有最小曲率值curvature的点。则需要计算所有曲率值并进行排序；因为曲率最小的点位于平坦区域，从平坦区域增长可以减少区域的总数。（曲率与法线的求解方法类似,法线描述点在表面的法向，曲率则是法线间协方差矩阵的特征值，描述法向一致性)</p>
+<p>具体过程：</p>
+<ol>
+<li>对未标记点的曲率排序，将最小曲率点放入种子集</li>
+<li>对每个种子的所有邻点计算</li>
+<li>1 每个近邻点与当前点的法线角度差(reg.setSmoothnessThreshold),如果小于阈值则重点考虑，进入2.2判断</li>
+<li>2 该点通过2.1法线角度差检验，如果曲率小于设定的阈值(reg.setCurvatureThreshold)，这个点即被添加到种子点集，属于当前平面</li>
+<li>通过两次检验的点，被从原始点云去除</li>
+<li>设置最小点簇的点数reg.setMinClusterSize,以及最大簇reg.segMaxClusterSize</li>
+<li>重复1-3生成min~max个点数的所有平面，并对不同平面标记颜色区分</li>
+<li>直到算法在剩余点中生成的点簇不能满足min,停止工作</li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://tanrunjie.github.io/2022/01/13/opencv/%E7%89%B9%E5%BE%81%E5%8C%B9%E9%85%8D/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpeg">
+      <meta itemprop="name" content="神秘囚徒">
+      <meta itemprop="description" content="你太习惯这个世界了，才会对任何事情都不感到惊奇。">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="奇幻物语">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/01/13/opencv/%E7%89%B9%E5%BE%81%E5%8C%B9%E9%85%8D/" class="post-title-link" itemprop="url">特征匹配</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2022-01-13 17:32:27 / 修改时间：17:49:45" itemprop="dateCreated datePublished" datetime="2022-01-13T17:32:27+08:00">2022-01-13</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/opencv/" itemprop="url" rel="index"><span itemprop="name">opencv</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>4.1k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>4 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h4 id="ubuntu下opencv-CMakeList文件"><a href="#ubuntu下opencv-CMakeList文件" class="headerlink" title="ubuntu下opencv CMakeList文件"></a>ubuntu下opencv CMakeList文件</h4><p>通过terminal直接apt安装opencv，一般挂载在/usr/local/lib下；此时find_package即可找到</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="meta"># cmake needs this <span class="meta-keyword">line</span></span></span><br><span class="line"><span class="built_in">cmake_minimum_required</span>(VERSION <span class="number">3.1</span>)</span><br><span class="line"></span><br><span class="line"># <span class="function">Define project name</span></span><br><span class="line"><span class="function"><span class="title">project</span><span class="params">(FeatureMapping)</span></span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function"># Find OpenCV, you may need to set OpenCV_DIR variable</span></span><br><span class="line"><span class="function"><span class="meta"># to the absolute path to the directory containing OpenCVConfig.cmake file</span></span></span><br><span class="line"><span class="function"><span class="meta"># via the command <span class="meta-keyword">line</span> or GUI</span></span></span><br><span class="line"><span class="function"><span class="title">find_package</span><span class="params">(OpenCV REQUIRED)</span></span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function"># Enable C++11</span></span><br><span class="line"><span class="function"><span class="title">set</span><span class="params">(CMAKE_CXX_STANDARD <span class="number">11</span>)</span></span></span><br><span class="line"><span class="function"><span class="title">set</span><span class="params">(CMAKE_CXX_STANDARD_REQUIRED TRUE)</span></span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function"># Declare the executable target built from your sources</span></span><br><span class="line"><span class="function"><span class="title">add_executable</span><span class="params">(main main.cpp)</span></span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function"># Link your application with OpenCV libraries</span></span><br><span class="line"><span class="function"><span class="title">target_link_libraries</span><span class="params">(main PRIVATE $&#123;OpenCV_LIBS&#125;)</span></span></span><br><span class="line"><span class="function"></span></span><br></pre></td></tr></table></figure>
+
+
+<h4 id="两RGB图间的特征匹配"><a href="#两RGB图间的特征匹配" class="headerlink" title="两RGB图间的特征匹配"></a>两RGB图间的特征匹配</h4><p>具体可参考官方教程<a target="_blank" rel="noopener" href="https://docs.opencv.org/4.x/d7/dff/tutorial_feature_homography.html">https://docs.opencv.org/4.x/d7/dff/tutorial_feature_homography.html</a></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;opencv4/opencv2/highgui.hpp&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;opencv4/opencv2/opencv.hpp&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;opencv4/opencv2/imgproc.hpp&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;opencv4/opencv2/features2d.hpp&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;opencv4/opencv2/core.hpp&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;opencv4/opencv2/calib3d.hpp&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> cv;</span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span> **argv)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    cout &lt;&lt; CV_VERSION &lt;&lt; endl;</span><br><span class="line"></span><br><span class="line">    Mat img1 = <span class="built_in">imread</span>(<span class="string">&quot;001.JPG&quot;</span>);</span><br><span class="line">    Mat img2 = <span class="built_in">imread</span>(<span class="string">&quot;002.JPG&quot;</span>);</span><br><span class="line"></span><br><span class="line">    Ptr&lt;SIFT&gt; detector = SIFT::<span class="built_in">create</span>();</span><br><span class="line">    vector&lt;KeyPoint&gt; keypoints1, keypoints2;</span><br><span class="line">    Mat descriptors1, descriptors2;</span><br><span class="line">    detector-&gt;<span class="built_in">detectAndCompute</span>(img1, <span class="built_in">noArray</span>(), keypoints1, descriptors1);</span><br><span class="line">    detector-&gt;<span class="built_in">detectAndCompute</span>(img2, <span class="built_in">noArray</span>(), keypoints2, descriptors2);</span><br><span class="line"></span><br><span class="line">    Ptr&lt;DescriptorMatcher&gt; matcher = DescriptorMatcher::<span class="built_in">create</span>(DescriptorMatcher::FLANNBASED);</span><br><span class="line"></span><br><span class="line">    vector&lt;vector&lt;DMatch&gt;&gt; knn_matches;</span><br><span class="line">    matcher-&gt;<span class="built_in">knnMatch</span>(descriptors1, descriptors2, knn_matches, <span class="number">2</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">const</span> <span class="keyword">float</span> ratio_thresh = <span class="number">0.5f</span>;</span><br><span class="line">    vector&lt;DMatch&gt; good_matches;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">size_t</span> i=<span class="number">0</span>; i&lt;knn_matches.<span class="built_in">size</span>();i++)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span>(knn_matches[i][<span class="number">0</span>].distance &lt; ratio_thresh * knn_matches[i][<span class="number">1</span>].distance)</span><br><span class="line">        &#123;</span><br><span class="line">            good_matches.<span class="built_in">push_back</span>(knn_matches[i][<span class="number">0</span>]);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    Mat img_matches;</span><br><span class="line">    <span class="built_in">drawMatches</span>(img1, keypoints1, img2, keypoints2, good_matches, img_matches);</span><br><span class="line">    </span><br><span class="line">    </span><br><span class="line">    <span class="comment">//-- Localize the object</span></span><br><span class="line">    std::vector&lt;Point2f&gt; obj;</span><br><span class="line">    std::vector&lt;Point2f&gt; scene;</span><br><span class="line">    <span class="keyword">for</span>( <span class="keyword">size_t</span> i = <span class="number">0</span>; i &lt; good_matches.<span class="built_in">size</span>(); i++ )</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment">//-- Get the keypoints from the good matches</span></span><br><span class="line">        obj.<span class="built_in">push_back</span>( keypoints1[ good_matches[i].queryIdx ].pt );</span><br><span class="line">        scene.<span class="built_in">push_back</span>( keypoints2[ good_matches[i].trainIdx ].pt );</span><br><span class="line">    &#125;</span><br><span class="line">    Mat H = <span class="built_in">findHomography</span>( obj, scene, RANSAC );</span><br><span class="line">    cout &lt;&lt; H &lt;&lt; endl;</span><br><span class="line">    <span class="comment">//-- Get the corners from the image_1 ( the object to be &quot;detected&quot; )</span></span><br><span class="line">    <span class="function">std::vector&lt;Point2f&gt; <span class="title">obj_corners</span><span class="params">(<span class="number">4</span>)</span></span>;</span><br><span class="line">    obj_corners[<span class="number">0</span>] = <span class="built_in">Point2f</span>(<span class="number">0</span>, <span class="number">0</span>);</span><br><span class="line">    obj_corners[<span class="number">1</span>] = <span class="built_in">Point2f</span>( (<span class="keyword">float</span>)img1.cols, <span class="number">0</span> );</span><br><span class="line">    obj_corners[<span class="number">2</span>] = <span class="built_in">Point2f</span>( (<span class="keyword">float</span>)img1.cols, (<span class="keyword">float</span>)img1.rows );</span><br><span class="line">    obj_corners[<span class="number">3</span>] = <span class="built_in">Point2f</span>( <span class="number">0</span>, (<span class="keyword">float</span>)img1.rows );</span><br><span class="line">    <span class="function">std::vector&lt;Point2f&gt; <span class="title">scene_corners</span><span class="params">(<span class="number">4</span>)</span></span>;</span><br><span class="line">    <span class="built_in">perspectiveTransform</span>( obj_corners, scene_corners, H);</span><br><span class="line">    <span class="comment">//-- Draw lines between the corners (the mapped object in the scene - image_2 )</span></span><br><span class="line">    <span class="built_in">line</span>( img_matches, scene_corners[<span class="number">0</span>] + <span class="built_in">Point2f</span>((<span class="keyword">float</span>)img1.cols, <span class="number">0</span>),</span><br><span class="line">          scene_corners[<span class="number">1</span>] + <span class="built_in">Point2f</span>((<span class="keyword">float</span>)img1.cols, <span class="number">0</span>), <span class="built_in">Scalar</span>(<span class="number">0</span>, <span class="number">255</span>, <span class="number">0</span>), <span class="number">4</span> );</span><br><span class="line">    <span class="built_in">line</span>( img_matches, scene_corners[<span class="number">1</span>] + <span class="built_in">Point2f</span>((<span class="keyword">float</span>)img1.cols, <span class="number">0</span>),</span><br><span class="line">          scene_corners[<span class="number">2</span>] + <span class="built_in">Point2f</span>((<span class="keyword">float</span>)img1.cols, <span class="number">0</span>), <span class="built_in">Scalar</span>( <span class="number">0</span>, <span class="number">255</span>, <span class="number">0</span>), <span class="number">4</span> );</span><br><span class="line">    <span class="built_in">line</span>( img_matches, scene_corners[<span class="number">2</span>] + <span class="built_in">Point2f</span>((<span class="keyword">float</span>)img1.cols, <span class="number">0</span>),</span><br><span class="line">          scene_corners[<span class="number">3</span>] + <span class="built_in">Point2f</span>((<span class="keyword">float</span>)img1.cols, <span class="number">0</span>), <span class="built_in">Scalar</span>( <span class="number">0</span>, <span class="number">255</span>, <span class="number">0</span>), <span class="number">4</span> );</span><br><span class="line">    <span class="built_in">line</span>( img_matches, scene_corners[<span class="number">3</span>] + <span class="built_in">Point2f</span>((<span class="keyword">float</span>)img1.cols, <span class="number">0</span>),</span><br><span class="line">          scene_corners[<span class="number">0</span>] + <span class="built_in">Point2f</span>((<span class="keyword">float</span>)img1.cols, <span class="number">0</span>), <span class="built_in">Scalar</span>( <span class="number">0</span>, <span class="number">255</span>, <span class="number">0</span>), <span class="number">4</span> );</span><br><span class="line">    <span class="comment">//-- Show detected matches</span></span><br><span class="line"></span><br><span class="line">    <span class="built_in">namedWindow</span>(<span class="string">&quot;Matches&quot;</span>, WINDOW_NORMAL);</span><br><span class="line">    <span class="built_in">imshow</span>(<span class="string">&quot;Matches&quot;</span>, img_matches );</span><br><span class="line">    <span class="comment">// imwrite(&quot;good_res.jpg&quot;, img_matches);</span></span><br><span class="line">    </span><br><span class="line">   </span><br><span class="line">    <span class="built_in">waitKey</span>();</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">输出H：</span></span><br><span class="line"><span class="comment">[0.9771928708495958, -0.008932567941541457, 129.4806431662592;</span></span><br><span class="line"><span class="comment"> 0.0342771681684575, 0.9114878090650101, 163.0011063784843;</span></span><br><span class="line"><span class="comment"> 3.322036688562577e-05, -1.090291446290035e-05, 1]</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>值得注意的是，本版本是opencv 4.5,与Opencv2/3有很多语法不一样了；关于特征点和描述子最大的区别：特征点是特征坐标KeyPoint，描述子是描述邻域信息的Mat。</p>
+<p>特征匹配总体的流程：<br>1.首先读取图片，创建检测特征SIFT，ORB，SURF(xfeature)等<br>2.如果检测子包含描述子，则直接detectAndCompute<br>3.一般用BFMatcher直接对描述子点对vector<DMatch> 进行暴力匹配，这里是优化加速版用FLANN的knn，注意的是ORB可用HAMMING距离，其他则不可。<br>4.接着对KNN点对进行基于距离的筛选<br>5.对置信度高的点对进行RANSAC的单应变换矩阵求解</p>
+<p>至此基本完成特征匹配的功能，得到的单应矩阵描述了图片间的变换关系；这是很多CV高级应用的基础，如校正，拼接，SLAM等。</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://tanrunjie.github.io/2022/01/10/shisan/%E9%9C%80%E6%B1%82%E6%AD%A3%E8%A7%A3/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1080,201 +1271,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://tanrunjie.github.io/2021/12/28/cpp/c-%E5%B9%B6%E5%8F%91%E5%AE%9E%E6%88%98/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpeg">
-      <meta itemprop="name" content="神秘囚徒">
-      <meta itemprop="description" content="你太习惯这个世界了，才会对任何事情都不感到惊奇。">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="奇幻物语">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/12/28/cpp/c-%E5%B9%B6%E5%8F%91%E5%AE%9E%E6%88%98/" class="post-title-link" itemprop="url">c++并发实战</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2021-12-28 10:48:17" itemprop="dateCreated datePublished" datetime="2021-12-28T10:48:17+08:00">2021-12-28</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-01-05 14:25:34" itemprop="dateModified" datetime="2022-01-05T14:25:34+08:00">2022-01-05</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/c/" itemprop="url" rel="index"><span itemprop="name">c++</span></a>
-                </span>
-            </span>
-
-          <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>855</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h3 id="chap1-c-并发世界"><a href="#chap1-c-并发世界" class="headerlink" title="chap1 c++并发世界"></a>chap1 c++并发世界</h3><p>C++98的13年后，2011的C++11成为新的规范，同时确认了每三年发布新的扩展技术规范。<br>在C++11中，c++ standard第一次承认多线程存在于C++语言中，意味CPP编写与平台无关的多线程程序成为可能。以往编写多线程并发需要针对运行平台部署依赖扩展库，如今可移植性成为可能。</p>
-<p><code>何谓并发和多线程？</code><br>单核的并发存在切换上下文的不必要损耗。<br>多线程：一个进程下，多个小单元共用数据资源，单机并发较常用，实际上CPP支持的是多线程。<br>多进程：开辟多个共用数据资源，多个进程并行，占用大量资源，通讯成本加大，适用于多机。</p>
-<p>并行：关注性能； 并发：关注任务分离；</p>
-<p><code>为什么要并发?</code>  </p>
-<ol>
-<li>关注分离：将相关代码与无关代码分离，使得程序更容易理解和测试。</li>
-<li>关注性能：将任务并行以及可以将数据并行<br>不使用并发的原因：收益比不上成本，一方面脑力以及代码维护成本，一方面是线程资源。尤其32位地址的架构，<br>对于4G(32bit)的架构，每个线程占用1MB，那么开4096个就用尽所有地址，运行太多会出问题。对于现用的板子有1GB的内存可用。对于现用的64位PC，开一个线程ulimit -s可知为8MB;ulimit -u可以看当前可开多少个线程上限，64GB可开约26万个上限。<br>由于多线程使代码复杂且难以理解，只有显著提升性能才值得一干。</li>
-</ol>
-<h3 id="chap2-线程管理"><a href="#chap2-线程管理" class="headerlink" title="chap2 线程管理"></a>chap2 线程管理</h3><ul>
-<li>线程启动：std::thread对象用函数或者类初始化的同时，开始自动启动线程。</li>
-<li>线程等待与分离：join为等待线程执行完成；detach则让线程分离自主执行，此时访问已销毁的变量会引起错误。如果线程已使用过join,则不可再次join。joinable()返回false。<br>解决方法：将数据复制到线程中，可以总结用一个访问局部变量的函数创建线程是危险行为。</li>
-<li>分离线程：通常又称守护线程，没有任何显式的用户接口并在后台运行的线程，通常长时间运行。</li>
-<li>转移线程： thread2 = std::move(thread1);若thread2已有线程，则系统直接调用terminate结束错误。</li>
-</ul>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://tanrunjie.github.io/2021/12/27/shisan/%E5%A5%96%E6%83%A9%E7%B2%BE%E8%A6%81/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpeg">
-      <meta itemprop="name" content="神秘囚徒">
-      <meta itemprop="description" content="你太习惯这个世界了，才会对任何事情都不感到惊奇。">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="奇幻物语">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/12/27/shisan/%E5%A5%96%E6%83%A9%E7%B2%BE%E8%A6%81/" class="post-title-link" itemprop="url">奖惩精要</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2021-12-27 14:48:52" itemprop="dateCreated datePublished" datetime="2021-12-27T14:48:52+08:00">2021-12-27</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-01-05 14:24:21" itemprop="dateModified" datetime="2022-01-05T14:24:21+08:00">2022-01-05</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E5%8D%81%E4%B8%89%E6%89%8B%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">十三手记</span></a>
-                </span>
-            </span>
-
-          <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>446</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p><code>摘自微信公众号十三手记</code></p>
-<p>自古以来，在团队、组织及家庭教育等人际关系管理中，奖惩都是当事人的必修课，凡能善用者，都能收获到相当的人生成就，可是真正能把奖惩落实到位乃至出神入化的人凤毛麟角，究其原因，其实都是没能真正明白奖惩的核心精髓，甚至因为错用奖惩而受到惩罚。</p>
-<h4 id="首先，奖惩时为了更好的控制别人吗？"><a href="#首先，奖惩时为了更好的控制别人吗？" class="headerlink" title="首先，奖惩时为了更好的控制别人吗？"></a>首先，奖惩时为了更好的控制别人吗？</h4><p>你以为是，但必定不是。若是为了更好的控制别人，为何那么多人用了奖惩手段并未真正收到真正控制别人的真正效果？  </p>
-<h4 id="那么，奖惩到底是为了什么？"><a href="#那么，奖惩到底是为了什么？" class="headerlink" title="那么，奖惩到底是为了什么？"></a>那么，奖惩到底是为了什么？</h4><p>那是为了促进对方强大的同时与其交心。  </p>
-<h4 id="何时奖惩？"><a href="#何时奖惩？" class="headerlink" title="何时奖惩？"></a>何时奖惩？</h4><p>尽快，及时  </p>
-<h4 id="何处奖惩？"><a href="#何处奖惩？" class="headerlink" title="何处奖惩？"></a>何处奖惩？</h4><p>公开的要公开，私下的要私下，否则就是反效果。</p>
-<p>此刻，十三先生要你深深的明白：在你的人际关系管理中，若是你的奖惩只是你控制别人的手段，那你的手段最多只是临时效果，最终必定不能如你所愿，甚至受到反效果；若是你的奖惩是在用心反馈你对别人行为有效性的重视，是为了及时给予对方诚意的肯定或是改进提醒，那你就是在用奖惩的办法促进对方强大的同时与其交心，假以时日，你必定能收获到奖惩给你的人际关系处理的真实力量和价值。</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1346,7 +1342,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">44</span>
+          <span class="site-state-item-count">46</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -1400,12 +1396,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">88k</span>
+    <span title="站点总字数">89k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">1:20</span>
+    <span title="站点阅读时长">1:21</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
   </div>

@@ -12,11 +12,14 @@ tags: 九章算法
 - Max/Min问题
 - True/False问题
 - 计数问题
-可能不是DP问题的：
-- 需要所有“具体”的方案 part 2符配前j个字符的LCS长度
-function: dp[i][j] = dp[i-1][j-1] + 1 if a[i]==b[j]
-          dp[i][j] = max(dp[i-1][j],dp[i][j-1]) if a[i]!=b[j]
+可能不是DP问题的
+- 需要所有“具体”的方案 
+- 输入是“集合”而非“序列”
 
+例题：a,b两串的Longest Common Sequence的长度
+state: dp[i][j], a前i子串匹配b前j子串的LCS长度
+function: dp[i][j] = dp[i-1][j-1] + 1 if a[i]==b[j]
+dp[i][j] = max(dp[i-1][j],dp[i][j-1]) if a[i]!=b[j]
 init: dp[i][0]=0, dp[0][j] = 0;
 ans:dp[a.size()][b.size()]
 

@@ -726,6 +726,31 @@
       </tags>
   </entry>
   <entry>
+    <title>逻辑控制</title>
+    <url>/2021/12/16/cpp/%E9%80%BB%E8%BE%91%E6%8E%A7%E5%88%B6/</url>
+    <content><![CDATA[<h3 id="do…while…-至少会执行一次的循环逻辑"><a href="#do…while…-至少会执行一次的循环逻辑" class="headerlink" title="do…while… 至少会执行一次的循环逻辑"></a>do…while… 至少会执行一次的循环逻辑</h3><p>哨兵(sentinel)字符: 一直读取，直到’他‘为止</p>
+<h3 id="检查文件是否正确打开很关键"><a href="#检查文件是否正确打开很关键" class="headerlink" title="检查文件是否正确打开很关键"></a>检查文件是否正确打开很关键</h3><p>用string读ifstream数据</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;fstream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string&gt;</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line">    ifstream inFile;</span><br><span class="line">    inFile.<span class="built_in">open</span>(filename);</span><br><span class="line">    <span class="keyword">if</span>(!inFile.<span class="built_in">is_open</span>())</span><br><span class="line">    &#123;</span><br><span class="line">        cout &lt;&lt;<span class="string">&quot;Failed Open&quot;</span>;</span><br><span class="line">        <span class="built_in">exit</span>(EXIT_FAILURE);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 逐行读放在string</span></span><br><span class="line">    string str;</span><br><span class="line">    <span class="built_in">getline</span>(inFile, str);</span><br><span class="line">    <span class="comment">//stoi, stof, stod </span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<h3 id="关于函数，真正的乐趣在于编写自己的函数，函数库"><a href="#关于函数，真正的乐趣在于编写自己的函数，函数库" class="headerlink" title="关于函数，真正的乐趣在于编写自己的函数，函数库"></a>关于函数，真正的乐趣在于编写自己的函数，函数库</h3><h3 id="指向const的指针以及const指针"><a href="#指向const的指针以及const指针" class="headerlink" title="指向const的指针以及const指针"></a>指向const的指针以及const指针</h3><p><img src="/images/12_17_1.png"></p>
+<h3 id="递归使用"><a href="#递归使用" class="headerlink" title="递归使用"></a>递归使用</h3><figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">recurs</span><span class="params">(arg)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="function">stat1</span></span><br><span class="line"><span class="function">    <span class="title">if</span><span class="params">(test)</span></span></span><br><span class="line"><span class="function">        <span class="title">recurs</span><span class="params">(arg)</span></span></span><br><span class="line"><span class="function">    stat2</span></span><br><span class="line"><span class="function">&#125;</span></span><br></pre></td></tr></table></figure>
+<p>先执行stat1,打开满足条件，打开新的递归；直到新的递归不满足条件，逐步执行stat2并关闭当前函数；直到所有打开的函数都关闭了。</p>
+<h3 id="函数指针"><a href="#函数指针" class="headerlink" title="函数指针"></a>函数指针</h3><p>用函数指针将第一函数找到第二函数，而非直接调用；虽然笨拙，但好处是可以在不同时间传递不同的函数地址；<br>语法：double (*pf)(int);</p>
+<h3 id="应尽量使用const"><a href="#应尽量使用const" class="headerlink" title="应尽量使用const"></a>应尽量使用const</h3><p>1.使用const可以避免无意中修改数据的失误<br>2.使用const使函数能够处理const和非const实参，否则将不能处理const实参<br>3.使用const引用使函数能够正确生成并使用临时变量</p>
+<h3 id="引用非常适合用于结构和类"><a href="#引用非常适合用于结构和类" class="headerlink" title="引用非常适合用于结构和类"></a>引用非常适合用于<strong>结构和类</strong></h3><p>何时使用引用参数：1.能够修改调用函数中的数据对象 2.通过传递引用而非拷贝提高程序运行速度</p>
+<h3 id="语法糖：函数默认参数从右往左"><a href="#语法糖：函数默认参数从右往左" class="headerlink" title="语法糖：函数默认参数从右往左"></a>语法糖：函数默认参数从右往左</h3><h3 id="函数多态：重载函数"><a href="#函数多态：重载函数" class="headerlink" title="函数多态：重载函数"></a>函数多态：重载函数</h3><p>不应滥用，适用于不同参数类型输入，完成基本一致功能的多个函数使用，const与非const也不一样</p>
+<h3 id="函数多态：模板编程"><a href="#函数多态：模板编程" class="headerlink" title="函数多态：模板编程"></a>函数多态：模板编程</h3><figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;  <span class="comment">// typename -&gt; class is ok</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Swap</span><span class="params">(T &amp;a, T &amp;b)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    T temp;</span><br><span class="line">    temp = a;</span><br><span class="line">    a = b;</span><br><span class="line">    b = temp;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>编译器如何匹配最佳函数是一个复杂而完备的过程，大致规则如下：<br>1.完全匹配，但常规函数优于模板<br>2.提升转换（char/shorts提升至int, float提升至double)<br>3.标准转换（int 转换char, long 转换double)<br>4.用户定义的转换，如类声明</p>
+]]></content>
+      <categories>
+        <category>c++</category>
+      </categories>
+      <tags>
+        <tag>c++ primer</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>腾讯课堂-C++11多线程</title>
     <url>/2021/12/28/cpp/%E8%85%BE%E8%AE%AF%E8%AF%BE%E5%A0%82-C-11%E5%A4%9A%E7%BA%BF%E7%A8%8B/</url>
     <content><![CDATA[<h3 id="线程管理"><a href="#线程管理" class="headerlink" title="线程管理"></a>线程管理</h3><p>多线程的执行函数尽量用传引用，以减少不必要资源开销；根据hardware_concurrency得到核心数来决定开多线程的数量；</p>
@@ -759,52 +784,6 @@
       </categories>
       <tags>
         <tag>C++ 多线程 并发</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>逻辑控制</title>
-    <url>/2021/12/16/cpp/%E9%80%BB%E8%BE%91%E6%8E%A7%E5%88%B6/</url>
-    <content><![CDATA[<h3 id="do…while…-至少会执行一次的循环逻辑"><a href="#do…while…-至少会执行一次的循环逻辑" class="headerlink" title="do…while… 至少会执行一次的循环逻辑"></a>do…while… 至少会执行一次的循环逻辑</h3><p>哨兵(sentinel)字符: 一直读取，直到’他‘为止</p>
-<h3 id="检查文件是否正确打开很关键"><a href="#检查文件是否正确打开很关键" class="headerlink" title="检查文件是否正确打开很关键"></a>检查文件是否正确打开很关键</h3><p>用string读ifstream数据</p>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;fstream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string&gt;</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line">    ifstream inFile;</span><br><span class="line">    inFile.<span class="built_in">open</span>(filename);</span><br><span class="line">    <span class="keyword">if</span>(!inFile.<span class="built_in">is_open</span>())</span><br><span class="line">    &#123;</span><br><span class="line">        cout &lt;&lt;<span class="string">&quot;Failed Open&quot;</span>;</span><br><span class="line">        <span class="built_in">exit</span>(EXIT_FAILURE);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 逐行读放在string</span></span><br><span class="line">    string str;</span><br><span class="line">    <span class="built_in">getline</span>(inFile, str);</span><br><span class="line">    <span class="comment">//stoi, stof, stod </span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-<h3 id="关于函数，真正的乐趣在于编写自己的函数，函数库"><a href="#关于函数，真正的乐趣在于编写自己的函数，函数库" class="headerlink" title="关于函数，真正的乐趣在于编写自己的函数，函数库"></a>关于函数，真正的乐趣在于编写自己的函数，函数库</h3><h3 id="指向const的指针以及const指针"><a href="#指向const的指针以及const指针" class="headerlink" title="指向const的指针以及const指针"></a>指向const的指针以及const指针</h3><p><img src="/images/12_17_1.png"></p>
-<h3 id="递归使用"><a href="#递归使用" class="headerlink" title="递归使用"></a>递归使用</h3><figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">recurs</span><span class="params">(arg)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="function">stat1</span></span><br><span class="line"><span class="function">    <span class="title">if</span><span class="params">(test)</span></span></span><br><span class="line"><span class="function">        <span class="title">recurs</span><span class="params">(arg)</span></span></span><br><span class="line"><span class="function">    stat2</span></span><br><span class="line"><span class="function">&#125;</span></span><br></pre></td></tr></table></figure>
-<p>先执行stat1,打开满足条件，打开新的递归；直到新的递归不满足条件，逐步执行stat2并关闭当前函数；直到所有打开的函数都关闭了。</p>
-<h3 id="函数指针"><a href="#函数指针" class="headerlink" title="函数指针"></a>函数指针</h3><p>用函数指针将第一函数找到第二函数，而非直接调用；虽然笨拙，但好处是可以在不同时间传递不同的函数地址；<br>语法：double (*pf)(int);</p>
-<h3 id="应尽量使用const"><a href="#应尽量使用const" class="headerlink" title="应尽量使用const"></a>应尽量使用const</h3><p>1.使用const可以避免无意中修改数据的失误<br>2.使用const使函数能够处理const和非const实参，否则将不能处理const实参<br>3.使用const引用使函数能够正确生成并使用临时变量</p>
-<h3 id="引用非常适合用于结构和类"><a href="#引用非常适合用于结构和类" class="headerlink" title="引用非常适合用于结构和类"></a>引用非常适合用于<strong>结构和类</strong></h3><p>何时使用引用参数：1.能够修改调用函数中的数据对象 2.通过传递引用而非拷贝提高程序运行速度</p>
-<h3 id="语法糖：函数默认参数从右往左"><a href="#语法糖：函数默认参数从右往左" class="headerlink" title="语法糖：函数默认参数从右往左"></a>语法糖：函数默认参数从右往左</h3><h3 id="函数多态：重载函数"><a href="#函数多态：重载函数" class="headerlink" title="函数多态：重载函数"></a>函数多态：重载函数</h3><p>不应滥用，适用于不同参数类型输入，完成基本一致功能的多个函数使用，const与非const也不一样</p>
-<h3 id="函数多态：模板编程"><a href="#函数多态：模板编程" class="headerlink" title="函数多态：模板编程"></a>函数多态：模板编程</h3><figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;  <span class="comment">// typename -&gt; class is ok</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Swap</span><span class="params">(T &amp;a, T &amp;b)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    T temp;</span><br><span class="line">    temp = a;</span><br><span class="line">    a = b;</span><br><span class="line">    b = temp;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<p>编译器如何匹配最佳函数是一个复杂而完备的过程，大致规则如下：<br>1.完全匹配，但常规函数优于模板<br>2.提升转换（char/shorts提升至int, float提升至double)<br>3.标准转换（int 转换char, long 转换double)<br>4.用户定义的转换，如类声明</p>
-]]></content>
-      <categories>
-        <category>c++</category>
-      </categories>
-      <tags>
-        <tag>c++ primer</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>EIGEN_1 HELLO_WOLRD</title>
-    <url>/2022/01/20/eigen/eigen-1/</url>
-    <content><![CDATA[<h3 id="EIGEN简介"><a href="#EIGEN简介" class="headerlink" title="EIGEN简介"></a>EIGEN简介</h3><p>FROM WIKI: Eigen is a high-level C++ library of template headers for linear algebra, matrix and vector operations, geometrical transformations, numerical solvers and related algorithms.<br>简而言之C++开源模板库，支持线性代数、矩阵矢量运算和数值分析，是个方便好用的数学库。</p>
-<p>更绝的是，EIGEN所有源码用头文件编写，所以只需要Include,无需编译链接过程，直接与平台无关，非常通用！</p>
-<h3 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h3><p>安装过程也很简单，在UBUNTU下直接</p>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line">sudo apt-get install libeigen3-dev</span><br></pre></td></tr></table></figure>
-<p>一般安装在/usr/include目录下</p>
-<p>使用直接与标准库类似，#include &lt;Eigen/Dense&gt;等</p>
-<h3 id="主要模块"><a href="#主要模块" class="headerlink" title="主要模块"></a>主要模块</h3><p><img src="/images/01_20_1.png"></p>
-<h3 id="简单例子"><a href="#简单例子" class="headerlink" title="简单例子"></a>简单例子</h3><figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;eigen3/Eigen/Dense&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> Eigen;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line"></span><br><span class="line">    Matrix3d m = Matrix3d::<span class="built_in">Random</span>();</span><br><span class="line">    m = ( m + Matrix3d::<span class="built_in">Constant</span>(<span class="number">1.2</span>)) * <span class="number">50</span>;</span><br><span class="line"></span><br><span class="line">    cout &lt;&lt; m &lt;&lt; endl;</span><br><span class="line">    <span class="function">Vector3d <span class="title">v</span><span class="params">(<span class="number">3</span>)</span></span>;</span><br><span class="line">    v &lt;&lt; <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>;</span><br><span class="line">    cout &lt;&lt;m*v &lt;&lt; endl;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<p>这是fix_sized定义的写法，一般4*4以下的矩阵矢量用固定大小写法，对于比较大的才用不定量写法MatirxXd, VectorXd;</p>
-<p>主要结构为1D对象Vector, Array和2D对象Matrix</p>
-]]></content>
-      <categories>
-        <category>EIGEN</category>
-      </categories>
-      <tags>
-        <tag>EIGEN</tag>
       </tags>
   </entry>
   <entry>
@@ -859,6 +838,38 @@
 
 <p>相关题目：二分查找first order/ last order, 二分查找区域， 二分插入数值， 增长矩阵二分查找等<br>注意带重复元素不能用二分<br>三步翻转法</p>
 ]]></content>
+      <categories>
+        <category>九章算法</category>
+      </categories>
+      <tags>
+        <tag>九章算法</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>九章基础class_5_6</title>
+    <url>/2022/04/08/jiuzhang/class5_6/</url>
+    <content><![CDATA[<h3 id="第五课-双序列DP"><a href="#第五课-双序列DP" class="headerlink" title="第五课 双序列DP"></a>第五课 双序列DP</h3><p>再次强调，可能为DP的问题： 记忆化搜索</p>
+<ul>
+<li>Max/Min问题</li>
+<li>True/False问题</li>
+<li>计数问题<br>可能不是DP问题的</li>
+<li>需要所有“具体”的方案 </li>
+<li>输入是“集合”而非“序列”</li>
+</ul>
+<p>例题：a,b两串的Longest Common Sequence的长度<br>state: dp[i][j], a前i子串匹配b前j子串的LCS长度<br>function: dp[i][j] = dp[i-1][j-1] + 1 if a[i]==b[j]<br>dp[i][j] = max(dp[i-1][j],dp[i][j-1]) if a[i]!=b[j]<br>init: dp[i][0]=0, dp[0][j] = 0;<br>ans:dp[a.size()][b.size()]</p>
+<p>重点：序列a,b挑出i,j子序列的dp</p>
+<ul>
+<li>dp[i][j]定义</li>
+<li>dp[i][j]的转换以及从i,j为结尾的情况考虑</li>
+</ul>
+<p>总结：</p>
+<ul>
+<li>归纳可能使用或不使用DP的规律</li>
+<li>DP四要素：状态，转换方程，初始化和答案</li>
+<li>三种常见面试DP：矩阵，单序列，双序列</li>
+<li>奇技淫巧：初始化首行首列， N个数开N+1位置的数组</li>
+</ul>
+<h3 id="第六课"><a href="#第六课" class="headerlink" title="第六课"></a>第六课</h3>]]></content>
       <categories>
         <category>九章算法</category>
       </categories>
@@ -937,7 +948,6 @@
 <ul>
 <li>最优化：问题的最优解包含在子问题的最优解中</li>
 </ul>
-<p>Sequence DP </p>
 ]]></content>
       <categories>
         <category>九章算法</category>
@@ -947,72 +957,24 @@
       </tags>
   </entry>
   <entry>
-    <title>217.存在重复元素</title>
-    <url>/2022/03/23/leetcode/%E5%AD%98%E5%9C%A8%E9%87%8D%E5%A4%8D%E5%85%83%E7%B4%A0/</url>
-    <content><![CDATA[<h3 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h3><p>给你一个整数数组 nums 。如果任一值在数组中出现 至少两次 ，返回 true ；如果数组中每个元素互不相同，返回 false 。
- </p>
-<p>示例 1：</p>
-<p>输入：nums = [1,2,3,1]<br>输出：true<br>示例 2：</p>
-<p>输入：nums = [1,2,3,4]<br>输出：false<br>示例 3：</p>
-<p>输入：nums = [1,1,1,3,3,4,3,2,4,2]<br>输出：true
- </p>
-<h3 id="解法"><a href="#解法" class="headerlink" title="解法"></a>解法</h3><h4 id="一-个人方法，使用map-lt-int-string-gt-作hashmap"><a href="#一-个人方法，使用map-lt-int-string-gt-作hashmap" class="headerlink" title="一.个人方法，使用map&lt;int, string&gt;作hashmap"></a>一.个人方法，使用map&lt;int, string&gt;作hashmap</h4><figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">bool</span> <span class="title">containsDuplicate</span><span class="params">(vector&lt;<span class="keyword">int</span>&gt;&amp; nums)</span> </span>&#123;</span><br><span class="line">        map&lt;<span class="keyword">int</span>, string&gt; mmap;</span><br><span class="line">        string flag = <span class="string">&quot;y&quot;</span>;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;nums.<span class="built_in">size</span>(); i++)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span>(mmap[nums[i]] == flag)</span><br><span class="line">                <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">            mmap[nums[i]] = flag;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-
-<h4 id="二-先排序，然后检查相邻是否相等重复"><a href="#二-先排序，然后检查相邻是否相等重复" class="headerlink" title="二.先排序，然后检查相邻是否相等重复"></a>二.先排序，然后检查相邻是否相等重复</h4><figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">containDuplicate</span><span class="params">(vector&lt;<span class="keyword">int</span>&gt;&amp; nums)</span></span>&#123;</span><br><span class="line">  <span class="built_in">sort</span>(nums.<span class="built_in">begin</span>(), nums.<span class="built_in">end</span>());</span><br><span class="line">  <span class="keyword">int</span> n = nums.<span class="built_in">size</span>();</span><br><span class="line">  <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;n<span class="number">-1</span>;i++)&#123;</span><br><span class="line">    <span class="keyword">if</span>(nums[i] == nums[i+<span class="number">1</span>])</span><br><span class="line">      <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-<h4 id="三-用unordered-set的哈希表"><a href="#三-用unordered-set的哈希表" class="headerlink" title="三.用unordered_set的哈希表"></a>三.用unordered_set的哈希表</h4><figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">containDuplicate</span><span class="params">(vector&lt;<span class="keyword">int</span>&gt;&amp; nums)</span></span>&#123;</span><br><span class="line">  unordered_set&lt;<span class="keyword">int</span>&gt; s;</span><br><span class="line">  <span class="keyword">for</span>(<span class="keyword">int</span> x:nums)&#123;</span><br><span class="line">    <span class="keyword">if</span>(s.<span class="built_in">find</span>(x)!=s.<span class="built_in">end</span>())</span><br><span class="line">      <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">    s.<span class="built_in">insert</span>(x);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="相关知识"><a href="#相关知识" class="headerlink" title="相关知识"></a>相关知识</h3><h4 id="map"><a href="#map" class="headerlink" title="map"></a>map</h4><p>关联容器，一对一，第一个关键字只能出现一次，内部为自建红黑数（非严格平衡二叉树），可对数据自动排序。<br>map的特点时增删节点开销小，迭代器可以修改value,但不能修改key.查找数据复杂度为Log(N)</p>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;map&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 初始化</span></span><br><span class="line">std::map&lt;<span class="keyword">int</span>, string&gt; mStudent;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 构建</span></span><br><span class="line">mStudent.<span class="built_in">insert</span>(pair&lt;<span class="keyword">int</span>, string&gt;(<span class="number">1</span>,<span class="string">&quot;stu_one&quot;</span>));</span><br><span class="line">mStudent.<span class="built_in">insert</span>(pair&lt;<span class="keyword">int</span>, string&gt;(<span class="number">2</span>,<span class="string">&quot;stu_two&quot;</span>));</span><br><span class="line">mStudent.<span class="built_in">insert</span>(map&lt;<span class="keyword">int</span>, string&gt;::<span class="built_in">value_type</span>(<span class="number">3</span>,<span class="string">&quot;stu_three&quot;</span>)); </span><br><span class="line">mStudent[<span class="number">4</span>] = <span class="string">&quot;stu_four&quot;</span>;  <span class="comment">// 可覆盖旧有</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 遍历</span></span><br><span class="line">map&lt;<span class="keyword">int</span>, string&gt;::iterator iter;</span><br><span class="line"><span class="keyword">for</span>(iter = mStudent.<span class="built_in">begin</span>(); iter != mStudent.<span class="built_in">end</span>(); iter++)</span><br><span class="line">  cout &lt;&lt;iter-&gt;first&lt;&lt;<span class="string">&#x27; &#x27;</span> &lt;&lt; iter-&gt;second &lt;&lt; endl;</span><br><span class="line"></span><br><span class="line">pair&lt;map&lt;<span class="keyword">int</span>, string&gt;::iterator, <span class="keyword">bool</span>&gt; Insert_Pair;</span><br><span class="line"></span><br><span class="line"><span class="comment">// insert方法如旧有则插入失败</span></span><br><span class="line"><span class="comment">// first为map的迭代器，second为true/false</span></span><br><span class="line">Insert_Pair = mStudent.<span class="built_in">insert</span>(pair&lt;<span class="keyword">int</span>, string&gt;(<span class="number">1</span>,<span class="string">&quot;stu_one&quot;</span>));</span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> nSize = mStudent.<span class="built_in">size</span>();  <span class="comment">// 长度</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 查找</span></span><br><span class="line"><span class="comment">// 1.count</span></span><br><span class="line"><span class="comment">// 2.find</span></span><br><span class="line">map&lt;<span class="keyword">int</span>, string&gt;::iterator iter;</span><br><span class="line">iter = mStudent.<span class="built_in">find</span>(<span class="number">1</span>);</span><br><span class="line"><span class="keyword">if</span>(iter==mStudent.<span class="built_in">end</span>())</span><br><span class="line">  cout &lt;&lt;<span class="string">&quot;not found&quot;</span>;</span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">  mStudent.<span class="built_in">erase</span>(iter);   <span class="comment">// 删除erase</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 自定义sort</span></span><br><span class="line"><span class="comment">// 1.数据结构的&lt;重载  2.sort的仿函数</span></span><br></pre></td></tr></table></figure>
-
-<pre><code> C++ maps是一种关联式容器，包含“关键字/值”对
-
- begin()         返回指向map头部的迭代器
-
- clear(）        删除所有元素
-
- count()         返回指定元素出现的次数
-
- empty()         如果map为空则返回true
-
- end()           返回指向map末尾的迭代器
-
- equal_range()   返回特殊条目的迭代器对
-
- erase()         删除一个元素
-
- find()          查找一个元素
-
- get_allocator() 返回map的配置器
-
- insert()        插入元素
-
- key_comp()      返回比较元素key的函数
-
- lower_bound()   返回键值&gt;=给定元素的第一个位置
-
- max_size()      返回可以容纳的最大元素个数
-
- rbegin()        返回一个指向map尾部的逆向迭代器
-
- rend()          返回一个指向map头部的逆向迭代器
-
- size()          返回map中元素的个数
-
- swap()           交换两个map
-
- upper_bound()    返回键值&gt;给定元素的第一个位置
-
- value_comp()     返回比较元素value的函数
-</code></pre>
-<h4 id="unordered-set"><a href="#unordered-set" class="headerlink" title="unordered_set"></a>unordered_set</h4><p>基于哈希表的unordered_set和unordered_map区别于基于红黑树的set和map，内部无须，查找效率O（1）用空间换时间。原型为unordered_set<key>,key为任意基本类型，然后经过默认hash(key)转成size_t作为bucker.具体用法如下：</p>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;unordered_set&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 初始化和插入</span></span><br><span class="line">std::unordered_set&lt;<span class="keyword">int</span>&gt; ms&#123;<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>&#125;;</span><br><span class="line">ms.<span class="built_in">insert</span>(<span class="number">6</span>);</span><br><span class="line">ms.<span class="built_in">insert</span>(<span class="number">7</span>); <span class="comment">// 注意没有ms.at()或者ms[idx]的表述</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 遍历</span></span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">auto</span> &amp;s: ms)</span><br><span class="line">  cout &lt;&lt; s &lt;&lt; endl;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// 删除</span></span><br><span class="line">ms.<span class="built_in">erase</span>(<span class="number">2</span>);  <span class="comment">//若无则什么也不发生，返回删除元素个数</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 计数</span></span><br><span class="line">cout &lt;&lt; ms.<span class="built_in">count</span>(<span class="number">2</span>); <span class="comment">// 0</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 查找</span></span><br><span class="line">ms.<span class="built_in">find</span>(<span class="number">3</span>);  <span class="comment">// 返回查找迭代器，若无则返回ms.end()</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>]]></content>
+    <title>EIGEN_1 HELLO_WOLRD</title>
+    <url>/2022/01/20/eigen/eigen-1/</url>
+    <content><![CDATA[<h3 id="EIGEN简介"><a href="#EIGEN简介" class="headerlink" title="EIGEN简介"></a>EIGEN简介</h3><p>FROM WIKI: Eigen is a high-level C++ library of template headers for linear algebra, matrix and vector operations, geometrical transformations, numerical solvers and related algorithms.<br>简而言之C++开源模板库，支持线性代数、矩阵矢量运算和数值分析，是个方便好用的数学库。</p>
+<p>更绝的是，EIGEN所有源码用头文件编写，所以只需要Include,无需编译链接过程，直接与平台无关，非常通用！</p>
+<h3 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h3><p>安装过程也很简单，在UBUNTU下直接</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line">sudo apt-get install libeigen3-dev</span><br></pre></td></tr></table></figure>
+<p>一般安装在/usr/include目录下</p>
+<p>使用直接与标准库类似，#include &lt;Eigen/Dense&gt;等</p>
+<h3 id="主要模块"><a href="#主要模块" class="headerlink" title="主要模块"></a>主要模块</h3><p><img src="/images/01_20_1.png"></p>
+<h3 id="简单例子"><a href="#简单例子" class="headerlink" title="简单例子"></a>简单例子</h3><figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;eigen3/Eigen/Dense&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> Eigen;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line"></span><br><span class="line">    Matrix3d m = Matrix3d::<span class="built_in">Random</span>();</span><br><span class="line">    m = ( m + Matrix3d::<span class="built_in">Constant</span>(<span class="number">1.2</span>)) * <span class="number">50</span>;</span><br><span class="line"></span><br><span class="line">    cout &lt;&lt; m &lt;&lt; endl;</span><br><span class="line">    <span class="function">Vector3d <span class="title">v</span><span class="params">(<span class="number">3</span>)</span></span>;</span><br><span class="line">    v &lt;&lt; <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>;</span><br><span class="line">    cout &lt;&lt;m*v &lt;&lt; endl;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>这是fix_sized定义的写法，一般4*4以下的矩阵矢量用固定大小写法，对于比较大的才用不定量写法MatirxXd, VectorXd;</p>
+<p>主要结构为1D对象Vector, Array和2D对象Matrix</p>
+]]></content>
       <categories>
-        <category>leetcode</category>
+        <category>EIGEN</category>
       </categories>
       <tags>
-        <tag>leetcode</tag>
+        <tag>EIGEN</tag>
       </tags>
   </entry>
   <entry>
@@ -1058,35 +1020,6 @@
       </categories>
       <tags>
         <tag>opencv</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>六年前的自己</title>
-    <url>/2021/12/22/personal/%E5%85%AD%E5%B9%B4%E5%89%8D%E7%9A%84%E8%87%AA%E5%B7%B1/</url>
-    <content><![CDATA[<p><a href="https://csrjtan.github.io/">https://csrjtan.github.io/</a><br>回看六年前的自己，摘录一些当时有意义的文段</p>
-<h3 id="23岁的生日"><a href="#23岁的生日" class="headerlink" title="23岁的生日"></a>23岁的生日</h3><p>重读六年前的自己，用文字记录对这个世界的感受和认知，那时候的自己充满了希望，虽然能力配不上欲望而渐渐失落，但依然希望找到那种年轻的感觉。</p>
-<h3 id=""><a href="#" class="headerlink" title=""></a></h3><p>当年的愿望：</p>
-<ul>
-<li>工作上：提高编程和学术能力</li>
-<li>生活上：爱家人，爱生活，爱伴侣</li>
-<li>日常上：坚持读，坚持写，坚持学，坚持感受，坚持表达</li>
-</ul>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">《成长的天空》 </span><br><span class="line">我沉浸在自己的世界里</span><br><span class="line">写着无关是非的歌谣</span><br><span class="line">点蓝的笔触</span><br><span class="line">划过了年轻的天空</span><br><span class="line">一只飞鸟带走我的青春</span><br><span class="line">还我，岁月沉淀的帽子</span><br><span class="line">轻声说道</span><br><span class="line">年轻总不是永远的借口</span><br></pre></td></tr></table></figure>
-
-<h3 id="回看中秋自省的自己"><a href="#回看中秋自省的自己" class="headerlink" title="回看中秋自省的自己"></a>回看中秋自省的自己</h3><p>经过5年起起落落，心态转变得很明显甚至于有点得过且过的样子，现在自己比年轻的自己多了一点能力和资源，却失去了做大梦的勇气和毅力。希望自己能依然不断找到人生的兴奋点，勇往直前地去追寻探索，从今天开始，真正的为自己而活，不在乎别人的眼光，不在乎可能会失去的安逸。</p>
-<h3 id="家人信息简要"><a href="#家人信息简要" class="headerlink" title="家人信息简要"></a>家人信息简要</h3><p>爸：1961.7.8，牛，会计。爱好军事政治经济唱歌。性格硬朗好面子。优点：精神好，能干，勤勉<br>妈：1961.11.12，牛，仓管（退休）。爱好家庭家人养生。优点：节俭，爱戴我们，慈祥<br>哥：1987.8.9，兔，前端全栈，爱好广泛潮流酷玩。优点：工程能力强，迁就随和<br>为：1992.08.13，猴，算法攻城狮。爱好：声乐，运动，游戏。优点：耐受力，随和</p>
-<h3 id="选书策略"><a href="#选书策略" class="headerlink" title="选书策略"></a>选书策略</h3><p>出版社-&gt;作者-&gt;版次-&gt;印次-&gt;印数</p>
-<h3 id="追逐幸福的要素"><a href="#追逐幸福的要素" class="headerlink" title="追逐幸福的要素"></a>追逐幸福的要素</h3><ul>
-<li>找到喜欢的工作，有收入又受到社会尊重</li>
-<li>减少上下班耗费的时间，有充足的社交时间</li>
-<li>对国家和社会有政治热情，有参与度</li>
-</ul>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">不论曾经的彼此多么幼稚，多么可笑</span><br><span class="line">终有一天我们都变得成熟；</span><br><span class="line">也终有一天，我们都会老去；</span><br><span class="line">可是，却没有人可以永远不长大，</span><br><span class="line">却没有人可以永远年轻，</span><br><span class="line">成熟，有时候会让人心痛、很无奈。</span><br><span class="line">那个时候才会懂得：</span><br><span class="line">爱情本不是件该执着的事情。</span><br></pre></td></tr></table></figure>]]></content>
-      <categories>
-        <category>日常</category>
-      </categories>
-      <tags>
-        <tag>博客迁移</tag>
       </tags>
   </entry>
   <entry>
@@ -1225,6 +1158,100 @@
       </tags>
   </entry>
   <entry>
+    <title>六年前的自己</title>
+    <url>/2021/12/22/personal/%E5%85%AD%E5%B9%B4%E5%89%8D%E7%9A%84%E8%87%AA%E5%B7%B1/</url>
+    <content><![CDATA[<p><a href="https://csrjtan.github.io/">https://csrjtan.github.io/</a><br>回看六年前的自己，摘录一些当时有意义的文段</p>
+<h3 id="23岁的生日"><a href="#23岁的生日" class="headerlink" title="23岁的生日"></a>23岁的生日</h3><p>重读六年前的自己，用文字记录对这个世界的感受和认知，那时候的自己充满了希望，虽然能力配不上欲望而渐渐失落，但依然希望找到那种年轻的感觉。</p>
+<h3 id=""><a href="#" class="headerlink" title=""></a></h3><p>当年的愿望：</p>
+<ul>
+<li>工作上：提高编程和学术能力</li>
+<li>生活上：爱家人，爱生活，爱伴侣</li>
+<li>日常上：坚持读，坚持写，坚持学，坚持感受，坚持表达</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">《成长的天空》 </span><br><span class="line">我沉浸在自己的世界里</span><br><span class="line">写着无关是非的歌谣</span><br><span class="line">点蓝的笔触</span><br><span class="line">划过了年轻的天空</span><br><span class="line">一只飞鸟带走我的青春</span><br><span class="line">还我，岁月沉淀的帽子</span><br><span class="line">轻声说道</span><br><span class="line">年轻总不是永远的借口</span><br></pre></td></tr></table></figure>
+
+<h3 id="回看中秋自省的自己"><a href="#回看中秋自省的自己" class="headerlink" title="回看中秋自省的自己"></a>回看中秋自省的自己</h3><p>经过5年起起落落，心态转变得很明显甚至于有点得过且过的样子，现在自己比年轻的自己多了一点能力和资源，却失去了做大梦的勇气和毅力。希望自己能依然不断找到人生的兴奋点，勇往直前地去追寻探索，从今天开始，真正的为自己而活，不在乎别人的眼光，不在乎可能会失去的安逸。</p>
+<h3 id="家人信息简要"><a href="#家人信息简要" class="headerlink" title="家人信息简要"></a>家人信息简要</h3><p>爸：1961.7.8，牛，会计。爱好军事政治经济唱歌。性格硬朗好面子。优点：精神好，能干，勤勉<br>妈：1961.11.12，牛，仓管（退休）。爱好家庭家人养生。优点：节俭，爱戴我们，慈祥<br>哥：1987.8.9，兔，前端全栈，爱好广泛潮流酷玩。优点：工程能力强，迁就随和<br>为：1992.08.13，猴，算法攻城狮。爱好：声乐，运动，游戏。优点：耐受力，随和</p>
+<h3 id="选书策略"><a href="#选书策略" class="headerlink" title="选书策略"></a>选书策略</h3><p>出版社-&gt;作者-&gt;版次-&gt;印次-&gt;印数</p>
+<h3 id="追逐幸福的要素"><a href="#追逐幸福的要素" class="headerlink" title="追逐幸福的要素"></a>追逐幸福的要素</h3><ul>
+<li>找到喜欢的工作，有收入又受到社会尊重</li>
+<li>减少上下班耗费的时间，有充足的社交时间</li>
+<li>对国家和社会有政治热情，有参与度</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">不论曾经的彼此多么幼稚，多么可笑</span><br><span class="line">终有一天我们都变得成熟；</span><br><span class="line">也终有一天，我们都会老去；</span><br><span class="line">可是，却没有人可以永远不长大，</span><br><span class="line">却没有人可以永远年轻，</span><br><span class="line">成熟，有时候会让人心痛、很无奈。</span><br><span class="line">那个时候才会懂得：</span><br><span class="line">爱情本不是件该执着的事情。</span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>日常</category>
+      </categories>
+      <tags>
+        <tag>博客迁移</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>google_c++编程风格指南</title>
+    <url>/2022/04/11/reading/google-cpp-style-guide-cn/</url>
+    <content><![CDATA[<h3 id="指南简介"><a href="#指南简介" class="headerlink" title="指南简介"></a>指南简介</h3><p>谷歌开源项目主要是C++，因此开放编程指南方面合并代码，总共五万字指南涉及广泛，论证严密。指南不仅列出怎么做以及为什么这么做，同时告诫什么情况可以破例以及权衡其中利弊。</p>
+<h4 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h4><p>由于C++强大的特性，容易产生难以阅读和维护的问题，有时候需要限制部分特性以保持代码清爽。</p>
+<h4 id="头文件"><a href="#头文件" class="headerlink" title="头文件"></a>头文件</h4><p>头文件：每个.cc对应一个.h，main和单元测试除外</p>
+<p>自给自足原则（self-contained）：一个头需要包含自身所需的其他头，同时使用#define保护；若非如此，头需要特定平台的symbols则用.inc扩展名。</p>
+<p>所有头应使用#define防止多重包含，保证唯一性。</p>
+<h4 id="使用前置声明"><a href="#使用前置声明" class="headerlink" title="使用前置声明"></a>使用前置声明</h4><p>先声明，后面再定义。</p>
+<p>优点：</p>
+<ul>
+<li>节省编译时间，多余#include迫使编译器展开文件，处理更多输入</li>
+<li>节省重新编译时间，#include使代码因头文件无关改动而重新编译多次</li>
+</ul>
+<p>缺点：</p>
+<ul>
+<li>隐藏了依赖关系，头文件改动时跳过必要的重新编译过程</li>
+<li>可能被库的后续更改所破坏</li>
+<li>声明来自std::的symbol，其行为未定义</li>
+<li>难以判断何时使用前置声明还是#include，极端情况甚至暗暗改变代码含义</li>
+</ul>
+<p>总结：</p>
+<ul>
+<li>尽量避免前置声明那些定义在其他项目中的实体</li>
+<li>函数：总是使用#include</li>
+<li>类模板：优先使用#include</li>
+</ul>
+<h4 id="内联函数"><a href="#内联函数" class="headerlink" title="内联函数"></a>内联函数</h4><p>只有10行以内才定义内联，直接代码展开</p>
+<p>优点：目标代码高效，关键函数可内联<br>缺点：滥用会使代码量增大<br>总结：</p>
+<ul>
+<li>谨慎对待析构函数内联，隐含的成员和基类析构会被调用</li>
+<li>内联包含循环或switch语句的函数常常<strong>得不偿失</strong></li>
+<li>编译器不会把虚函数和递归函数内联</li>
+</ul>
+<h4 id="include路径及顺序"><a href="#include路径及顺序" class="headerlink" title="#include路径及顺序"></a>#include路径及顺序</h4><p>项目内头文件应按项目源码目录树结构排列，避免使用UNIX特殊的快捷目录.或..<br>e.g. #include “dir2/foo2.h”头文件的次序:</p>
+<ul>
+<li>1.dir2/foo2.h</li>
+<li>2.C系统文件</li>
+<li>3.C++系统文件</li>
+<li>4.其他库的.h文件</li>
+<li>5.本项目内的.h文件</li>
+</ul>
+<p>条件编译</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">ifdef</span> LANG_CXX11</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;initializaer_list&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span><br></pre></td></tr></table></figure>
+
+<p>译者笔记：</p>
+<ul>
+<li>避免多重包含是最基本的要求</li>
+<li>前置声明是为了降低编译依赖，防止修改文件头引起多米诺效应</li>
+<li>内联函数合理使用可提高代码效率</li>
+<li>独立内联头-inl.h可提高代码可读性</li>
+<li>使用完整项目路径可减少隐藏依赖，保证内部错误及时发现</li>
+<li>前置声明的类为不完全类型，<strong>只能定义指向的指针或引用</strong></li>
+<li>类内部函数自动内联，建议独立放入.cc文件，贯彻声明与定义分离原则</li>
+<li>#include中插入空行以分离头文件，C库，C++库以及其他库.h和本项目.h</li>
+</ul>
+<h3 id="作用域"><a href="#作用域" class="headerlink" title="作用域"></a>作用域</h3><p>命名空间将全局作用域细分为独立作用域，可有效防止全局命名冲突<br>内联命名inline namespace只允许用于跨版本的ABI兼容性</p>
+]]></content>
+      <categories>
+        <category>读书笔记</category>
+      </categories>
+      <tags>
+        <tag>读书笔记</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>《浪潮之巅》第4版：读书笔记</title>
     <url>/2021/11/26/reading/%E6%B5%AA%E6%BD%AE%E4%B9%8B%E5%B7%85/</url>
     <content><![CDATA[<h3 id="一部工业革命后的近代科技发展史"><a href="#一部工业革命后的近代科技发展史" class="headerlink" title="一部工业革命后的近代科技发展史"></a>一部工业革命后的近代科技发展史</h3><p>第一次阅读这本书大概是在大学的时期，当时应该还是第一第二版的样子。可惜当时认知有限或者是兴趣使然，确实是没有坚持读下来。作为一本信息科技人的导论书籍，吴军老师主要是从<strong>创始人及公司基因，资本加速以及调整创新</strong>等多个维度阐释每一个时代的技术浪潮。也让我重新认识硅谷，重新认识所有信息产业耳熟能详的近代技术及工业制品。有点后悔当初年少没有认认真真开启好这一本导论，以致于没有一个非常完备的大局观去规划个人职业生涯以及技术路线。弯弯曲曲之下，也就不难预见自己人生所能触及的高度了。</p>
@@ -1287,6 +1314,75 @@
       </tags>
   </entry>
   <entry>
+    <title>217.存在重复元素</title>
+    <url>/2022/03/23/leetcode/%E5%AD%98%E5%9C%A8%E9%87%8D%E5%A4%8D%E5%85%83%E7%B4%A0/</url>
+    <content><![CDATA[<h3 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h3><p>给你一个整数数组 nums 。如果任一值在数组中出现 至少两次 ，返回 true ；如果数组中每个元素互不相同，返回 false 。
+ </p>
+<p>示例 1：</p>
+<p>输入：nums = [1,2,3,1]<br>输出：true<br>示例 2：</p>
+<p>输入：nums = [1,2,3,4]<br>输出：false<br>示例 3：</p>
+<p>输入：nums = [1,1,1,3,3,4,3,2,4,2]<br>输出：true
+ </p>
+<h3 id="解法"><a href="#解法" class="headerlink" title="解法"></a>解法</h3><h4 id="一-个人方法，使用map-lt-int-string-gt-作hashmap"><a href="#一-个人方法，使用map-lt-int-string-gt-作hashmap" class="headerlink" title="一.个人方法，使用map&lt;int, string&gt;作hashmap"></a>一.个人方法，使用map&lt;int, string&gt;作hashmap</h4><figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">bool</span> <span class="title">containsDuplicate</span><span class="params">(vector&lt;<span class="keyword">int</span>&gt;&amp; nums)</span> </span>&#123;</span><br><span class="line">        map&lt;<span class="keyword">int</span>, string&gt; mmap;</span><br><span class="line">        string flag = <span class="string">&quot;y&quot;</span>;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;nums.<span class="built_in">size</span>(); i++)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span>(mmap[nums[i]] == flag)</span><br><span class="line">                <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">            mmap[nums[i]] = flag;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<h4 id="二-先排序，然后检查相邻是否相等重复"><a href="#二-先排序，然后检查相邻是否相等重复" class="headerlink" title="二.先排序，然后检查相邻是否相等重复"></a>二.先排序，然后检查相邻是否相等重复</h4><figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">containDuplicate</span><span class="params">(vector&lt;<span class="keyword">int</span>&gt;&amp; nums)</span></span>&#123;</span><br><span class="line">  <span class="built_in">sort</span>(nums.<span class="built_in">begin</span>(), nums.<span class="built_in">end</span>());</span><br><span class="line">  <span class="keyword">int</span> n = nums.<span class="built_in">size</span>();</span><br><span class="line">  <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;n<span class="number">-1</span>;i++)&#123;</span><br><span class="line">    <span class="keyword">if</span>(nums[i] == nums[i+<span class="number">1</span>])</span><br><span class="line">      <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<h4 id="三-用unordered-set的哈希表"><a href="#三-用unordered-set的哈希表" class="headerlink" title="三.用unordered_set的哈希表"></a>三.用unordered_set的哈希表</h4><figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">containDuplicate</span><span class="params">(vector&lt;<span class="keyword">int</span>&gt;&amp; nums)</span></span>&#123;</span><br><span class="line">  unordered_set&lt;<span class="keyword">int</span>&gt; s;</span><br><span class="line">  <span class="keyword">for</span>(<span class="keyword">int</span> x:nums)&#123;</span><br><span class="line">    <span class="keyword">if</span>(s.<span class="built_in">find</span>(x)!=s.<span class="built_in">end</span>())</span><br><span class="line">      <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">    s.<span class="built_in">insert</span>(x);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="相关知识"><a href="#相关知识" class="headerlink" title="相关知识"></a>相关知识</h3><h4 id="map"><a href="#map" class="headerlink" title="map"></a>map</h4><p>关联容器，一对一，第一个关键字只能出现一次，内部为自建红黑数（非严格平衡二叉树），可对数据自动排序。<br>map的特点时增删节点开销小，迭代器可以修改value,但不能修改key.查找数据复杂度为Log(N)</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;map&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 初始化</span></span><br><span class="line">std::map&lt;<span class="keyword">int</span>, string&gt; mStudent;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 构建</span></span><br><span class="line">mStudent.<span class="built_in">insert</span>(pair&lt;<span class="keyword">int</span>, string&gt;(<span class="number">1</span>,<span class="string">&quot;stu_one&quot;</span>));</span><br><span class="line">mStudent.<span class="built_in">insert</span>(pair&lt;<span class="keyword">int</span>, string&gt;(<span class="number">2</span>,<span class="string">&quot;stu_two&quot;</span>));</span><br><span class="line">mStudent.<span class="built_in">insert</span>(map&lt;<span class="keyword">int</span>, string&gt;::<span class="built_in">value_type</span>(<span class="number">3</span>,<span class="string">&quot;stu_three&quot;</span>)); </span><br><span class="line">mStudent[<span class="number">4</span>] = <span class="string">&quot;stu_four&quot;</span>;  <span class="comment">// 可覆盖旧有</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 遍历</span></span><br><span class="line">map&lt;<span class="keyword">int</span>, string&gt;::iterator iter;</span><br><span class="line"><span class="keyword">for</span>(iter = mStudent.<span class="built_in">begin</span>(); iter != mStudent.<span class="built_in">end</span>(); iter++)</span><br><span class="line">  cout &lt;&lt;iter-&gt;first&lt;&lt;<span class="string">&#x27; &#x27;</span> &lt;&lt; iter-&gt;second &lt;&lt; endl;</span><br><span class="line"></span><br><span class="line">pair&lt;map&lt;<span class="keyword">int</span>, string&gt;::iterator, <span class="keyword">bool</span>&gt; Insert_Pair;</span><br><span class="line"></span><br><span class="line"><span class="comment">// insert方法如旧有则插入失败</span></span><br><span class="line"><span class="comment">// first为map的迭代器，second为true/false</span></span><br><span class="line">Insert_Pair = mStudent.<span class="built_in">insert</span>(pair&lt;<span class="keyword">int</span>, string&gt;(<span class="number">1</span>,<span class="string">&quot;stu_one&quot;</span>));</span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> nSize = mStudent.<span class="built_in">size</span>();  <span class="comment">// 长度</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 查找</span></span><br><span class="line"><span class="comment">// 1.count</span></span><br><span class="line"><span class="comment">// 2.find</span></span><br><span class="line">map&lt;<span class="keyword">int</span>, string&gt;::iterator iter;</span><br><span class="line">iter = mStudent.<span class="built_in">find</span>(<span class="number">1</span>);</span><br><span class="line"><span class="keyword">if</span>(iter==mStudent.<span class="built_in">end</span>())</span><br><span class="line">  cout &lt;&lt;<span class="string">&quot;not found&quot;</span>;</span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">  mStudent.<span class="built_in">erase</span>(iter);   <span class="comment">// 删除erase</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 自定义sort</span></span><br><span class="line"><span class="comment">// 1.数据结构的&lt;重载  2.sort的仿函数</span></span><br></pre></td></tr></table></figure>
+
+<pre><code> C++ maps是一种关联式容器，包含“关键字/值”对
+
+ begin()         返回指向map头部的迭代器
+
+ clear(）        删除所有元素
+
+ count()         返回指定元素出现的次数
+
+ empty()         如果map为空则返回true
+
+ end()           返回指向map末尾的迭代器
+
+ equal_range()   返回特殊条目的迭代器对
+
+ erase()         删除一个元素
+
+ find()          查找一个元素
+
+ get_allocator() 返回map的配置器
+
+ insert()        插入元素
+
+ key_comp()      返回比较元素key的函数
+
+ lower_bound()   返回键值&gt;=给定元素的第一个位置
+
+ max_size()      返回可以容纳的最大元素个数
+
+ rbegin()        返回一个指向map尾部的逆向迭代器
+
+ rend()          返回一个指向map头部的逆向迭代器
+
+ size()          返回map中元素的个数
+
+ swap()           交换两个map
+
+ upper_bound()    返回键值&gt;给定元素的第一个位置
+
+ value_comp()     返回比较元素value的函数
+</code></pre>
+<h4 id="unordered-set"><a href="#unordered-set" class="headerlink" title="unordered_set"></a>unordered_set</h4><p>基于哈希表的unordered_set和unordered_map区别于基于红黑树的set和map，内部无须，查找效率O（1）用空间换时间。原型为unordered_set<key>,key为任意基本类型，然后经过默认hash(key)转成size_t作为bucker.具体用法如下：</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;unordered_set&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 初始化和插入</span></span><br><span class="line">std::unordered_set&lt;<span class="keyword">int</span>&gt; ms&#123;<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>&#125;;</span><br><span class="line">ms.<span class="built_in">insert</span>(<span class="number">6</span>);</span><br><span class="line">ms.<span class="built_in">insert</span>(<span class="number">7</span>); <span class="comment">// 注意没有ms.at()或者ms[idx]的表述</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 遍历</span></span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">auto</span> &amp;s: ms)</span><br><span class="line">  cout &lt;&lt; s &lt;&lt; endl;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// 删除</span></span><br><span class="line">ms.<span class="built_in">erase</span>(<span class="number">2</span>);  <span class="comment">//若无则什么也不发生，返回删除元素个数</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 计数</span></span><br><span class="line">cout &lt;&lt; ms.<span class="built_in">count</span>(<span class="number">2</span>); <span class="comment">// 0</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 查找</span></span><br><span class="line">ms.<span class="built_in">find</span>(<span class="number">3</span>);  <span class="comment">// 返回查找迭代器，若无则返回ms.end()</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>leetcode</category>
+      </categories>
+      <tags>
+        <tag>leetcode</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>奖惩精要</title>
     <url>/2021/12/27/shisan/%E5%A5%96%E6%83%A9%E7%B2%BE%E8%A6%81/</url>
     <content><![CDATA[<p><code>摘自微信公众号十三手记</code></p>
@@ -1296,21 +1392,6 @@
 <h4 id="何时奖惩？"><a href="#何时奖惩？" class="headerlink" title="何时奖惩？"></a>何时奖惩？</h4><p>尽快，及时  </p>
 <h4 id="何处奖惩？"><a href="#何处奖惩？" class="headerlink" title="何处奖惩？"></a>何处奖惩？</h4><p>公开的要公开，私下的要私下，否则就是反效果。</p>
 <p>此刻，十三先生要你深深的明白：在你的人际关系管理中，若是你的奖惩只是你控制别人的手段，那你的手段最多只是临时效果，最终必定不能如你所愿，甚至受到反效果；若是你的奖惩是在用心反馈你对别人行为有效性的重视，是为了及时给予对方诚意的肯定或是改进提醒，那你就是在用奖惩的办法促进对方强大的同时与其交心，假以时日，你必定能收获到奖惩给你的人际关系处理的真实力量和价值。</p>
-]]></content>
-      <categories>
-        <category>十三手记</category>
-      </categories>
-      <tags>
-        <tag>十三手记</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>恐惧之破</title>
-    <url>/2022/01/05/shisan/%E6%81%90%E6%83%A7%E4%B9%8B%E7%A0%B4/</url>
-    <content><![CDATA[<p>你有恐惧吗？  想必有的<br>你想解除恐惧吗？  必定想的<br>可为什么你无法真正解除？  因为你不知道恐惧从何而来，更不知道什么是恐惧。</p>
-<h3 id="那么恐惧从何而来？"><a href="#那么恐惧从何而来？" class="headerlink" title="那么恐惧从何而来？"></a>那么恐惧从何而来？</h3><p>从曲解真相而来</p>
-<h3 id="恐惧是什么？"><a href="#恐惧是什么？" class="headerlink" title="恐惧是什么？"></a>恐惧是什么？</h3><p>是你的人生大礼给你的提醒。</p>
-<h3 id="此刻要你深深明白"><a href="#此刻要你深深明白" class="headerlink" title="此刻要你深深明白"></a>此刻要你深深明白</h3><p>二元有相世界，恐惧来自于你对真相的无视或者曲解。如此，只要你无视或者曲解了真相，必定会形成相应的恐惧；如此，你内心恐惧的形成是为了提醒你搞清楚恐惧背后的真相；如此，若是你逃避真相，你必定会反复感受到恐惧；如此，当你心有恐惧，请直面你所恐惧的东西，并搞清楚其真相，当你一旦真正清楚真相，恐惧必定就会随之而消失；与此同时，必定你就能在搞清楚真相的过程中收获到你人生的大礼。</p>
 ]]></content>
       <categories>
         <category>十三手记</category>
@@ -1532,6 +1613,21 @@
       </tags>
   </entry>
   <entry>
+    <title>恐惧之破</title>
+    <url>/2022/01/05/shisan/%E6%81%90%E6%83%A7%E4%B9%8B%E7%A0%B4/</url>
+    <content><![CDATA[<p>你有恐惧吗？  想必有的<br>你想解除恐惧吗？  必定想的<br>可为什么你无法真正解除？  因为你不知道恐惧从何而来，更不知道什么是恐惧。</p>
+<h3 id="那么恐惧从何而来？"><a href="#那么恐惧从何而来？" class="headerlink" title="那么恐惧从何而来？"></a>那么恐惧从何而来？</h3><p>从曲解真相而来</p>
+<h3 id="恐惧是什么？"><a href="#恐惧是什么？" class="headerlink" title="恐惧是什么？"></a>恐惧是什么？</h3><p>是你的人生大礼给你的提醒。</p>
+<h3 id="此刻要你深深明白"><a href="#此刻要你深深明白" class="headerlink" title="此刻要你深深明白"></a>此刻要你深深明白</h3><p>二元有相世界，恐惧来自于你对真相的无视或者曲解。如此，只要你无视或者曲解了真相，必定会形成相应的恐惧；如此，你内心恐惧的形成是为了提醒你搞清楚恐惧背后的真相；如此，若是你逃避真相，你必定会反复感受到恐惧；如此，当你心有恐惧，请直面你所恐惧的东西，并搞清楚其真相，当你一旦真正清楚真相，恐惧必定就会随之而消失；与此同时，必定你就能在搞清楚真相的过程中收获到你人生的大礼。</p>
+]]></content>
+      <categories>
+        <category>十三手记</category>
+      </categories>
+      <tags>
+        <tag>十三手记</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>接纳麻烦</title>
     <url>/2022/01/18/shisan/%E6%8E%A5%E7%BA%B3%E9%BA%BB%E7%83%A6/</url>
     <content><![CDATA[<p><code>摘自微信号十三手记</code></p>
@@ -1611,6 +1707,23 @@
       </tags>
   </entry>
   <entry>
+    <title>金钱的实际价值</title>
+    <url>/2021/12/24/shisan/%E9%87%91%E9%92%B1%E7%9A%84%E5%AE%9E%E9%99%85%E4%BB%B7%E5%80%BC/</url>
+    <content><![CDATA[<p><code>摘自十三手记</code></p>
+<p>若是认真观察自己过往对金钱的感受，必定发现一个现象：钱来得容易的时候，也花得容易；钱来得艰难，也就比较耐用。</p>
+<p>但大多数时候，我们不愿面对这样的真相：金钱实际价值的背后有自己投机取巧的小心思。</p>
+<p>此时，十三先生要你深深的明白：二元有相世界，金钱的实际价值必定等于你诚意付出之时创造出的相应实际价值，但是你却一直有种想付出更少收获更多金钱的想法，所以你不自知的不愿搞清楚。因为一旦你搞清楚了这个核心原理，你就无法继续投机取巧，就无法继续偷懒了。但是，只要你真正诚意看懂并接纳了这个关键点，你就能更加务实的面对自己所面对的一切人和事，你才能因此而尽可能减少多余的动作，你才能因减少多余动作而减少障碍环节，你才能因减少障碍环节而减少不必要的消耗，如此，你整体的行动才能更加高效，反而你才能走上人生各种成功的捷径。</p>
+<h3 id="个人感悟"><a href="#个人感悟" class="headerlink" title="个人感悟"></a>个人感悟</h3><p>回忆过去，确有种种如此的感觉。上高中和大学的时候，每一分钱都来自父母，舍不得多花乱花。出来工作后，可能得益于名校光环，匹配一些不太核心的岗位时候，工作的艰辛就远不及当初，于是感觉金钱就来得容易了，殊不知金钱其实也流入并不富裕，只因个人消费比较简单，只花该花的钱，只享受该享受的事。于是渐渐，也失去了赚大钱的欲望，虽说不能没有，但明显不及年少时的强烈，花钱也比较随意，一直没有大的积蓄，理财也是三天打鱼四天撒网的状态。希望认真对待工作中的每一件事，认清金钱来之不易，努力增长自己的财富，也能合理地用度。</p>
+<p>另外，而立之年，却没有多余的精力和财产赡养父母，更多的是让父母为自己忧心忡忡，目前为止，依然算不上才社会能游刃有余，立足四方。此后，应<strong>挖掘自己的兴趣目标，提升个人在社会中的价值</strong>。</p>
+]]></content>
+      <categories>
+        <category>十三手记</category>
+      </categories>
+      <tags>
+        <tag>十三手记</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>需求正解</title>
     <url>/2022/01/10/shisan/%E9%9C%80%E6%B1%82%E6%AD%A3%E8%A7%A3/</url>
     <content><![CDATA[<p><code>文章摘自微信公众号：十三先生手记</code></p>
@@ -1622,23 +1735,6 @@
 <p>概念需求是什么意思？<br>是附加到人事物的功能和价值上的概念，是让你产生欲望后误以为自己需求的迷障。</p>
 <p>谁附加的概念？<br>是你自己或者是外界。</p>
 <h3 id="此刻要你深深的明白"><a href="#此刻要你深深的明白" class="headerlink" title="此刻要你深深的明白"></a>此刻要你深深的明白</h3><p>由于你的贪心，你分不清自己真正的需求。所以，你过去总被人事物的附加概念牵动而消耗了大量资源和精力，所以只有你真正懂得了你要的是人事物本身的功能和价值，你才不会被这些附加的概念干扰和误导，你才真正懂得了珍惜物命，你才真正懂得了珍惜缘分，你才真正懂得了珍惜人生。</p>
-]]></content>
-      <categories>
-        <category>十三手记</category>
-      </categories>
-      <tags>
-        <tag>十三手记</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>金钱的实际价值</title>
-    <url>/2021/12/24/shisan/%E9%87%91%E9%92%B1%E7%9A%84%E5%AE%9E%E9%99%85%E4%BB%B7%E5%80%BC/</url>
-    <content><![CDATA[<p><code>摘自十三手记</code></p>
-<p>若是认真观察自己过往对金钱的感受，必定发现一个现象：钱来得容易的时候，也花得容易；钱来得艰难，也就比较耐用。</p>
-<p>但大多数时候，我们不愿面对这样的真相：金钱实际价值的背后有自己投机取巧的小心思。</p>
-<p>此时，十三先生要你深深的明白：二元有相世界，金钱的实际价值必定等于你诚意付出之时创造出的相应实际价值，但是你却一直有种想付出更少收获更多金钱的想法，所以你不自知的不愿搞清楚。因为一旦你搞清楚了这个核心原理，你就无法继续投机取巧，就无法继续偷懒了。但是，只要你真正诚意看懂并接纳了这个关键点，你就能更加务实的面对自己所面对的一切人和事，你才能因此而尽可能减少多余的动作，你才能因减少多余动作而减少障碍环节，你才能因减少障碍环节而减少不必要的消耗，如此，你整体的行动才能更加高效，反而你才能走上人生各种成功的捷径。</p>
-<h3 id="个人感悟"><a href="#个人感悟" class="headerlink" title="个人感悟"></a>个人感悟</h3><p>回忆过去，确有种种如此的感觉。上高中和大学的时候，每一分钱都来自父母，舍不得多花乱花。出来工作后，可能得益于名校光环，匹配一些不太核心的岗位时候，工作的艰辛就远不及当初，于是感觉金钱就来得容易了，殊不知金钱其实也流入并不富裕，只因个人消费比较简单，只花该花的钱，只享受该享受的事。于是渐渐，也失去了赚大钱的欲望，虽说不能没有，但明显不及年少时的强烈，花钱也比较随意，一直没有大的积蓄，理财也是三天打鱼四天撒网的状态。希望认真对待工作中的每一件事，认清金钱来之不易，努力增长自己的财富，也能合理地用度。</p>
-<p>另外，而立之年，却没有多余的精力和财产赡养父母，更多的是让父母为自己忧心忡忡，目前为止，依然算不上才社会能游刃有余，立足四方。此后，应<strong>挖掘自己的兴趣目标，提升个人在社会中的价值</strong>。</p>
 ]]></content>
       <categories>
         <category>十三手记</category>
