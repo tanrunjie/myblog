@@ -44,4 +44,33 @@ ans: f[n][x]为true 的最大值的x
 
 TO DO：较难，待补充具体解法
 
-### 第六课
+### 第六课 链表
+目标：
+- Dummy Node哨兵节点
+- 相关基本技巧
+- 快慢指针：删N节点，找环
+
+1. head!=nullptr  head->next!=nullptr
+2. 删除：pre.next = cur.next
+3. 头节点要改变，引入dummy node；可不用单独判断链表头的情况，代码更简洁
+4. swap(pre, now) 翻转链表
+
+#### Dummy Node常用场合
+1.有序链表去重复元素
+2.翻转链表
+3.合并两个有序链表
+4.分割链表
+
+归并排序链表：
+- 1.找中点，快慢指针
+- 2.拆分左右
+- 3.排序序列
+- 4.合并
+
+合并K个链表：
+- 用priority_queue<ListNode*, vector<ListNode*> , comp>最大堆来优化
+- 分治两两合并
+
+copy随机链表，每个节点带next和random：
+- hash记录克隆节点（遍历一次）
+- 基于节点克隆边
