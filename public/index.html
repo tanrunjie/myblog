@@ -196,6 +196,87 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://tanrunjie.github.io/2022/04/18/jiuzhang/class7-8/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpeg">
+      <meta itemprop="name" content="神秘囚徒">
+      <meta itemprop="description" content="你太习惯这个世界了，才会对任何事情都不感到惊奇。">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="奇幻物语">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/04/18/jiuzhang/class7-8/" class="post-title-link" itemprop="url">九章基础class_7_8</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2022-04-18 11:31:06 / 修改时间：11:32:38" itemprop="dateCreated datePublished" datetime="2022-04-18T11:31:06+08:00">2022-04-18</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E4%B9%9D%E7%AB%A0%E5%9F%BA%E7%A1%80/" itemprop="url" rel="index"><span itemprop="name">九章基础</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>6</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>1 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h3 id="第七课-图搜索"><a href="#第七课-图搜索" class="headerlink" title="第七课 图搜索"></a>第七课 图搜索</h3>
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://tanrunjie.github.io/2022/04/11/reading/google-cpp-style-guide-cn/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -219,10 +300,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2022-04-11 16:40:34 / 修改时间：18:34:08" itemprop="dateCreated datePublished" datetime="2022-04-11T16:40:34+08:00">2022-04-11</time>
+              <time title="创建时间：2022-04-11 16:40:34" itemprop="dateCreated datePublished" datetime="2022-04-11T16:40:34+08:00">2022-04-11</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-04-20 16:35:19" itemprop="dateModified" datetime="2022-04-20T16:35:19+08:00">2022-04-20</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -239,7 +326,7 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>1.1k</span>
+              <span>1.4k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
@@ -312,6 +399,16 @@
 <li>#include中插入空行以分离头文件，C库，C++库以及其他库.h和本项目.h</li>
 </ul>
 <h3 id="作用域"><a href="#作用域" class="headerlink" title="作用域"></a>作用域</h3><p>命名空间将全局作用域细分为独立作用域，可有效防止全局命名冲突<br>内联命名inline namespace只允许用于跨版本的ABI兼容性</p>
+<p>默认命名空间：main存在的常用的，其他空间调用可::func<br>匿名空间：无名namespace{},主要用途：1.定义符号限于文件内部使用，不被外部引用 2.类似static修饰整个空间内容</p>
+<p>关于使用命名空间的策略标准：</p>
+<ul>
+<li>允许鼓励匿名命名空间，避免运行时命名冲突</li>
+<li>不在std空间声明任何东西，会引起不可移植性</li>
+<li>尽量不用using namespace name;污染命名空间</li>
+<li>允许使用空间别名</li>
+<li>禁止内联命名空间</li>
+</ul>
+<h3 id="嵌套类"><a href="#嵌套类" class="headerlink" title="嵌套类"></a>嵌套类</h3><p>即成员类用法<br>缺点：嵌套类只能在外围类的内部做前置声明，即任何使用Foo::Bar*的指针头文件必须包含Foo的整个声明。<br>用法：不要定义为公有，除非是接口的一部分。</p>
 
       
     </div>
@@ -354,10 +451,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2022-04-08 15:01:35 / 修改时间：17:31:44" itemprop="dateCreated datePublished" datetime="2022-04-08T15:01:35+08:00">2022-04-08</time>
+              <time title="创建时间：2022-04-08 15:01:35" itemprop="dateCreated datePublished" datetime="2022-04-08T15:01:35+08:00">2022-04-08</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-04-13 18:38:52" itemprop="dateModified" datetime="2022-04-13T18:38:52+08:00">2022-04-13</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -374,7 +477,7 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>434</span>
+              <span>991</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
@@ -414,7 +517,40 @@
 <li>三种常见面试DP：矩阵，单序列，双序列</li>
 <li>奇技淫巧：初始化首行首列， N个数开N+1位置的数组</li>
 </ul>
-<h3 id="第六课"><a href="#第六课" class="headerlink" title="第六课"></a>第六课</h3>
+<h4 id="背包问题"><a href="#背包问题" class="headerlink" title="背包问题"></a>背包问题</h4><p>定义：n个整数，装m的背包<br>state: f[i][j]“前i”个数，能否组成和为j<br>function: f[i][j] = f[i-1][j-a[i]] or f[i-1][j]<br>init: f[x][0] = true; f[0][1-m] = false;<br>ans: f[n][x]为true 的最大值的x</p>
+<p>当前行只跟上一行i-1有关：滚动数组优化，用模2; 如与i-1, i-2有关，则模3；如此类推。</p>
+<p>TO DO：较难，待补充具体解法</p>
+<h3 id="第六课-链表"><a href="#第六课-链表" class="headerlink" title="第六课 链表"></a>第六课 链表</h3><p>目标：</p>
+<ul>
+<li>Dummy Node哨兵节点</li>
+<li>相关基本技巧</li>
+<li>快慢指针：删N节点，找环</li>
+</ul>
+<ol>
+<li>head!=nullptr  head-&gt;next!=nullptr</li>
+<li>删除：pre.next = cur.next</li>
+<li>头节点要改变，引入dummy node；可不用单独判断链表头的情况，代码更简洁</li>
+<li>swap(pre, now) 翻转链表</li>
+</ol>
+<h4 id="Dummy-Node常用场合"><a href="#Dummy-Node常用场合" class="headerlink" title="Dummy Node常用场合"></a>Dummy Node常用场合</h4><p>1.有序链表去重复元素<br>2.翻转链表<br>3.合并两个有序链表<br>4.分割链表</p>
+<p>归并排序链表：</p>
+<ul>
+<li>1.找中点，快慢指针</li>
+<li>2.拆分左右</li>
+<li>3.排序序列</li>
+<li>4.合并</li>
+</ul>
+<p>合并K个链表：</p>
+<ul>
+<li>用priority_queue&lt;ListNode*, vector&lt;ListNode*&gt; , comp&gt;最大堆来优化</li>
+<li>分治两两合并</li>
+</ul>
+<p>copy随机链表，每个节点带next和random：</p>
+<ul>
+<li>hash记录克隆节点（遍历一次）</li>
+<li>基于节点克隆边</li>
+</ul>
+
       
     </div>
 
@@ -1028,6 +1164,121 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://tanrunjie.github.io/2022/03/04/SLAMBOOK2/SLAMBOOK_7_8/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpeg">
+      <meta itemprop="name" content="神秘囚徒">
+      <meta itemprop="description" content="你太习惯这个世界了，才会对任何事情都不感到惊奇。">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="奇幻物语">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/03/04/SLAMBOOK2/SLAMBOOK_7_8/" class="post-title-link" itemprop="url">SLAMBOOK_7_8</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-03-04 17:30:33" itemprop="dateCreated datePublished" datetime="2022-03-04T17:30:33+08:00">2022-03-04</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-03-30 15:18:06" itemprop="dateModified" datetime="2022-03-30T15:18:06+08:00">2022-03-30</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/SLAMBOOK/" itemprop="url" rel="index"><span itemprop="name">SLAMBOOK</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>1.2k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>1 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h3 id="视觉里程计"><a href="#视觉里程计" class="headerlink" title="视觉里程计"></a>视觉里程计</h3><p>主要目标：</p>
+<ul>
+<li>理解图像特征点的意义，掌握单幅图像提取特征点及多幅图像中匹配特征点的方法</li>
+<li>理解对极几何原理，利用对极约束，恢复图像之间的camera位姿</li>
+<li>理解PnP问题，利用已知三维结构与图像对应关系，求解camera位姿</li>
+<li>理解ICP问题，利用点云匹配关系，求解camera位姿</li>
+<li>理解三角化获得二维图像上对应点的三维结构</li>
+</ul>
+<p>图像特征性质：多图可重复、可区别、高效率、本地性</p>
+<p>对极几何：从两张RGB图的特征匹配中求解本质矩阵，从而推出R，t.由8组特征匹配对SVD求解有4个可能解，幸运地只有一个解均在两个相机的光轴正向。但因缺乏深度尺度，所以t为单位1.<br>不稳定的问题：1.初始化纯旋转t为0，三角化R不稳定； 2.多于8个特征匹配点可用最小二乘或者RANSAC方法求E，F，H；</p>
+<p>三角测量：将两个二维点对以及之间的位姿变换输入opencv的triangulatePoints中，得到点对的三维空间坐标；由于三角测量由平移产生，引出核心矛盾：平移小，则像素有较大深度不确定性；平移大，则图像外观变化大，特征匹配困难。</p>
+<p>PnP:载入两张RGB图及其中一张对齐的Depth图，使用opencv的solvePnP解三维点对及二维点对的外参位姿变化R，t;</p>
+<p>Bundle Adjustment：用于最小化重投影误差，将观测到的三维空间点与当前估计位姿投影位置得到的误差。考虑匹配特征点上的最优化重投影。</p>
+<p>ICP方法：载入两个位姿状态的RGBD图，图像匹配后获得匹配好的3D点对，直接采用线性代数的求解（SVD）及BA优化获得最佳外参位姿即可。</p>
+<h4 id="课后习题"><a href="#课后习题" class="headerlink" title="课后习题"></a>课后习题</h4><p>1.图像特征点原理及区别<br>Harris角点：基于图像灰度的一阶导数滤波检测，主要依赖与移动方向窗口内图像块的相似性。</p>
+<p>SIFT/SURF：1.构建高斯差分金字塔 2.准确提取关键点 3.结合邻域构建描述子</p>
+<p>2.opencv接口，SIFT::create(nfeatures, nOctavelLayers, constrastThreshold, edgeThreshold, sigma);<br>特征数量，金字塔最小层数，特征过滤阈值，边缘过滤阈值，高斯层级。<br>默认参数下，1000个SIFT特征点用时0.15s;</p>
+<p>3.如何让特征点分布更均匀：goodFeatureToTrack(GFTT)方法</p>
+<p>4.特征匹配方法有哪些？<br>FLANN快速最近邻搜索包，大数据下比BFMatcher暴力搜索要佳。FLANN主要三种算法：KD tree, k-means tree, hiearachy tree;</p>
+<p>5.其他PNP方法：EPNP精度较高，复杂度为O（N）.DLT更快，精度下降。</p>
+<p>6.G2O可把两图的空间点都加进来一起优化</p>
+<p>7.图像误匹配影响整体优化效果，可以通过鲁棒核函数降低影响程度，同时引入RANSAC.</p>
+<h3 id="视觉里程计2"><a href="#视觉里程计2" class="headerlink" title="视觉里程计2"></a>视觉里程计2</h3><p>本章目标：</p>
+<ul>
+<li>理解光流法特征点跟踪</li>
+<li>理解直接法估计相机位姿</li>
+<li>使用G2O进行直接法计算</li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://tanrunjie.github.io/2022/03/04/SLAMBOOK2/SLAMBOOK_5_6/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1174,252 +1425,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://tanrunjie.github.io/2022/03/04/SLAMBOOK2/SLAMBOOK_7_8/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpeg">
-      <meta itemprop="name" content="神秘囚徒">
-      <meta itemprop="description" content="你太习惯这个世界了，才会对任何事情都不感到惊奇。">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="奇幻物语">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/03/04/SLAMBOOK2/SLAMBOOK_7_8/" class="post-title-link" itemprop="url">SLAMBOOK_7_8</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2022-03-04 17:30:33" itemprop="dateCreated datePublished" datetime="2022-03-04T17:30:33+08:00">2022-03-04</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-03-30 15:18:06" itemprop="dateModified" datetime="2022-03-30T15:18:06+08:00">2022-03-30</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/SLAMBOOK/" itemprop="url" rel="index"><span itemprop="name">SLAMBOOK</span></a>
-                </span>
-            </span>
-
-          <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>1.2k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h3 id="视觉里程计"><a href="#视觉里程计" class="headerlink" title="视觉里程计"></a>视觉里程计</h3><p>主要目标：</p>
-<ul>
-<li>理解图像特征点的意义，掌握单幅图像提取特征点及多幅图像中匹配特征点的方法</li>
-<li>理解对极几何原理，利用对极约束，恢复图像之间的camera位姿</li>
-<li>理解PnP问题，利用已知三维结构与图像对应关系，求解camera位姿</li>
-<li>理解ICP问题，利用点云匹配关系，求解camera位姿</li>
-<li>理解三角化获得二维图像上对应点的三维结构</li>
-</ul>
-<p>图像特征性质：多图可重复、可区别、高效率、本地性</p>
-<p>对极几何：从两张RGB图的特征匹配中求解本质矩阵，从而推出R，t.由8组特征匹配对SVD求解有4个可能解，幸运地只有一个解均在两个相机的光轴正向。但因缺乏深度尺度，所以t为单位1.<br>不稳定的问题：1.初始化纯旋转t为0，三角化R不稳定； 2.多于8个特征匹配点可用最小二乘或者RANSAC方法求E，F，H；</p>
-<p>三角测量：将两个二维点对以及之间的位姿变换输入opencv的triangulatePoints中，得到点对的三维空间坐标；由于三角测量由平移产生，引出核心矛盾：平移小，则像素有较大深度不确定性；平移大，则图像外观变化大，特征匹配困难。</p>
-<p>PnP:载入两张RGB图及其中一张对齐的Depth图，使用opencv的solvePnP解三维点对及二维点对的外参位姿变化R，t;</p>
-<p>Bundle Adjustment：用于最小化重投影误差，将观测到的三维空间点与当前估计位姿投影位置得到的误差。考虑匹配特征点上的最优化重投影。</p>
-<p>ICP方法：载入两个位姿状态的RGBD图，图像匹配后获得匹配好的3D点对，直接采用线性代数的求解（SVD）及BA优化获得最佳外参位姿即可。</p>
-<h4 id="课后习题"><a href="#课后习题" class="headerlink" title="课后习题"></a>课后习题</h4><p>1.图像特征点原理及区别<br>Harris角点：基于图像灰度的一阶导数滤波检测，主要依赖与移动方向窗口内图像块的相似性。</p>
-<p>SIFT/SURF：1.构建高斯差分金字塔 2.准确提取关键点 3.结合邻域构建描述子</p>
-<p>2.opencv接口，SIFT::create(nfeatures, nOctavelLayers, constrastThreshold, edgeThreshold, sigma);<br>特征数量，金字塔最小层数，特征过滤阈值，边缘过滤阈值，高斯层级。<br>默认参数下，1000个SIFT特征点用时0.15s;</p>
-<p>3.如何让特征点分布更均匀：goodFeatureToTrack(GFTT)方法</p>
-<p>4.特征匹配方法有哪些？<br>FLANN快速最近邻搜索包，大数据下比BFMatcher暴力搜索要佳。FLANN主要三种算法：KD tree, k-means tree, hiearachy tree;</p>
-<p>5.其他PNP方法：EPNP精度较高，复杂度为O（N）.DLT更快，精度下降。</p>
-<p>6.G2O可把两图的空间点都加进来一起优化</p>
-<p>7.图像误匹配影响整体优化效果，可以通过鲁棒核函数降低影响程度，同时引入RANSAC.</p>
-<h3 id="视觉里程计2"><a href="#视觉里程计2" class="headerlink" title="视觉里程计2"></a>视觉里程计2</h3><p>本章目标：</p>
-<ul>
-<li>理解光流法特征点跟踪</li>
-<li>理解直接法估计相机位姿</li>
-<li>使用G2O进行直接法计算</li>
-</ul>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://tanrunjie.github.io/2022/02/28/SLAMBOOK2/SLAMBOOK_3_4/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpeg">
-      <meta itemprop="name" content="神秘囚徒">
-      <meta itemprop="description" content="你太习惯这个世界了，才会对任何事情都不感到惊奇。">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="奇幻物语">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/02/28/SLAMBOOK2/SLAMBOOK_3_4/" class="post-title-link" itemprop="url">SLAMBOOK_3_4</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2022-02-28 11:22:57" itemprop="dateCreated datePublished" datetime="2022-02-28T11:22:57+08:00">2022-02-28</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-03-04 17:30:19" itemprop="dateModified" datetime="2022-03-04T17:30:19+08:00">2022-03-04</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/SLAMBOOK/" itemprop="url" rel="index"><span itemprop="name">SLAMBOOK</span></a>
-                </span>
-            </span>
-
-          <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>1.8k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>2 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h3 id="三维空间刚体运动"><a href="#三维空间刚体运动" class="headerlink" title="三维空间刚体运动"></a>三维空间刚体运动</h3><p>目标：</p>
-<ul>
-<li>理解三维空间的刚体运动描述方式：旋转、变换、四元数和欧拉角</li>
-<li>掌握Eigen库的矩阵和几何模块</li>
-</ul>
-<p>基本概念：<br>坐标：一方面与向量本身有关，另一方面与坐标系选取有关。<br>向量：可以是空间中的一样东西<br>外积可表示旋转：右手系叉乘<br>欧式变换：保证同一个向量在各个坐标系下的长度和夹角都不会变化，则可由一个旋转和平移组成<br>旋转矩阵的性质：行列式为1的正交矩阵，SO(n)是特殊正交群<br>齐次坐标：把旋转和平移写入一个矩阵，且保持整个关系为线性关系<br>变换矩阵T：左上为旋转，右侧为平移，左下为0，右下为1的特殊欧式群</p>
-<h4 id="旋转的表达"><a href="#旋转的表达" class="headerlink" title="旋转的表达"></a>旋转的表达</h4><p>1.旋转矩阵：正交阵且行列式为1,行列向量相互正交；内积为0；</p>
-<p>2.三个旋转轴和旋转角：使用一个向量，方向与旋转轴一致，长度等于旋转角，即李代数。由Rodrigues’s Formula可得：$R = cos\theta I + (1-cos\theta)nn^T + sin\theta n^`$ 其中n’是向量到反对称的转换符，从旋转矩阵到旋转向量转换$\theta = arccos(\frac{tr(R)-1}{2})$<br>转轴n是矩阵R特征值1对应的特征向量。解此方程归一化可得旋转轴。</p>
-<p>3.欧拉角：分离成三次绕坐标轴旋转即yaw-pitch-roll.注意著名的<strong>万向锁</strong>问题，+-90度时，丢失一个自由度，产生奇异性问题。因此不适于插值和迭代，往往只用于人机交互。</p>
-<p>4.四元数：既是紧凑的，也没有奇异性的旋转表达。缺点不够直观和运算复杂。<br>熟悉相互表达之间的转换。</p>
-<h4 id="相似、仿射、射影变换"><a href="#相似、仿射、射影变换" class="headerlink" title="相似、仿射、射影变换"></a>相似、仿射、射影变换</h4><p>1.相似： $T_s = [sR t]$, 7个自由度，xyz坐标上均匀缩放<br>2.仿射： $T_A = [A t]$, 12个自由度，A是可逆矩阵而不必是正交矩阵<br>3.射影： $T_p $, 15个自由度，最不规则的</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Eigen rotate data structure</span></span><br><span class="line">Eigen::Matrix3d;  <span class="comment">// 3*3 R matrix</span></span><br><span class="line">Eigen::AngleAxisd;  <span class="comment">// 3*1 R vector</span></span><br><span class="line">Eigen::Vector3d;   <span class="comment">// 3*1 Euler Angle</span></span><br><span class="line">Eigen::Quaterniond;  <span class="comment">// 4*1 quaternion</span></span><br><span class="line">Eigen::Isometry3d;  <span class="comment">// 4*4 T transformed</span></span><br><span class="line">Eigen::Affine3d;   <span class="comment">// 4*4 affine matrix</span></span><br><span class="line">Eigen::Projective3d;  <span class="comment">// 4*4 projective matrix</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="李群与李代数"><a href="#李群与李代数" class="headerlink" title="李群与李代数"></a>李群与李代数</h3><p>目标：</p>
-<ul>
-<li>理解概念，掌握SO(3),SE(3)</li>
-<li>理解BCH近似意义</li>
-<li>李代数的扰动模型</li>
-<li>运用Sohpus对李代数运算</li>
-</ul>
-<p>什么是Sophus? Sophus是Eigen的拓展，李代数库</p>
-<p>为何引入李代数？ 旋转矩阵自身带有正交和行列式为1的约束，作为优化变量引入额外的约束使得优化困难。通过李群和李代数的转换关系，使位姿估计变成无约束的优化问题，简化求解方式。</p>
-<h4 id="数学基础"><a href="#数学基础" class="headerlink" title="数学基础"></a>数学基础</h4><p>什么是群？ 一种集合加上一种运算的代数结构。封结幺逆<br>可以验证：</p>
-<ul>
-<li>旋转矩阵集合和矩阵乘法构成群</li>
-<li>变换矩阵和矩阵乘法也构成群</li>
-<li>因此它们为旋转矩阵群和交换矩阵群</li>
-</ul>
-<p>矩阵中常见的群：</p>
-<ul>
-<li>一般线性群GL(n) : n*n的可逆矩阵，对矩阵乘法成群</li>
-<li>特殊正交群SO(n) : 旋转矩阵群SO(2)和SO(3)</li>
-<li>特殊欧式群SE(n) : 前面的n维欧式变换， SE(2)和SE(3)</li>
-</ul>
-<p>什么是李群Lie Group？ 指具有连续（光滑）性质的群，既是群也是流形。整数群是离散的，不属于。而SO和SE在实数空间连续运动，所以属于李群。SO(3)和SE(3)只有定义良好的乘法，没有加法所以难以进行取极限和求导的操作。将旋转矩阵用李代数逼近迭代优化。</p>
-<p>一种李代数（小写）对应一种李群（大写）。</p>
-<p>$RR^T = I$ 对连续时间求导得 $ R^, R^T = -(R^, R^T )^T $, $R^,$为对时间t的导数。即满足反对称矩阵。最后得$R(t) = exp(\phi_0t)$<br>这表示：</p>
-<ul>
-<li>1.给定某时刻的R，我们能求一个$\phi$描述R在局部的导数关系，正切空间邻域。$\phi$正是SO(3)上的李代数so(3)</li>
-<li>2.矩阵指数如何计算？事实上这正是李群与李代数之间的指数/对数映射</li>
-</ul>
-<p>什么是李代数？ 每个李群对应一个李代数，描述了李群单位元数的正切空间性质。满足封闭性、双线性、自反性、雅可比等价</p>
-<p>什么是李括号？二元运算，表达了两个元素的差异。</p>
-<h4 id="指数与对数映射"><a href="#指数与对数映射" class="headerlink" title="指数与对数映射"></a>指数与对数映射</h4><p>// To do 后续补充，本章涉及较多数学和公式</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1491,20 +1496,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">46</span>
+          <span class="site-state-item-count">47</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">16</span>
+        <span class="site-state-item-count">17</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">20</span>
+        <span class="site-state-item-count">21</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -1545,12 +1550,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">89k</span>
+    <span title="站点总字数">90k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">1:21</span>
+    <span title="站点阅读时长">1:22</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
   </div>

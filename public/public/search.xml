@@ -186,6 +186,61 @@
       </tags>
   </entry>
   <entry>
+    <title>SLAMBOOK_3_4</title>
+    <url>/2022/02/28/SLAMBOOK2/SLAMBOOK_3_4/</url>
+    <content><![CDATA[<h3 id="三维空间刚体运动"><a href="#三维空间刚体运动" class="headerlink" title="三维空间刚体运动"></a>三维空间刚体运动</h3><p>目标：</p>
+<ul>
+<li>理解三维空间的刚体运动描述方式：旋转、变换、四元数和欧拉角</li>
+<li>掌握Eigen库的矩阵和几何模块</li>
+</ul>
+<p>基本概念：<br>坐标：一方面与向量本身有关，另一方面与坐标系选取有关。<br>向量：可以是空间中的一样东西<br>外积可表示旋转：右手系叉乘<br>欧式变换：保证同一个向量在各个坐标系下的长度和夹角都不会变化，则可由一个旋转和平移组成<br>旋转矩阵的性质：行列式为1的正交矩阵，SO(n)是特殊正交群<br>齐次坐标：把旋转和平移写入一个矩阵，且保持整个关系为线性关系<br>变换矩阵T：左上为旋转，右侧为平移，左下为0，右下为1的特殊欧式群</p>
+<h4 id="旋转的表达"><a href="#旋转的表达" class="headerlink" title="旋转的表达"></a>旋转的表达</h4><p>1.旋转矩阵：正交阵且行列式为1,行列向量相互正交；内积为0；</p>
+<p>2.三个旋转轴和旋转角：使用一个向量，方向与旋转轴一致，长度等于旋转角，即李代数。由Rodrigues’s Formula可得：$R = cos\theta I + (1-cos\theta)nn^T + sin\theta n^`$ 其中n’是向量到反对称的转换符，从旋转矩阵到旋转向量转换$\theta = arccos(\frac{tr(R)-1}{2})$<br>转轴n是矩阵R特征值1对应的特征向量。解此方程归一化可得旋转轴。</p>
+<p>3.欧拉角：分离成三次绕坐标轴旋转即yaw-pitch-roll.注意著名的<strong>万向锁</strong>问题，+-90度时，丢失一个自由度，产生奇异性问题。因此不适于插值和迭代，往往只用于人机交互。</p>
+<p>4.四元数：既是紧凑的，也没有奇异性的旋转表达。缺点不够直观和运算复杂。<br>熟悉相互表达之间的转换。</p>
+<h4 id="相似、仿射、射影变换"><a href="#相似、仿射、射影变换" class="headerlink" title="相似、仿射、射影变换"></a>相似、仿射、射影变换</h4><p>1.相似： $T_s = [sR t]$, 7个自由度，xyz坐标上均匀缩放<br>2.仿射： $T_A = [A t]$, 12个自由度，A是可逆矩阵而不必是正交矩阵<br>3.射影： $T_p $, 15个自由度，最不规则的</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="comment">// Eigen rotate data structure</span></span><br><span class="line">Eigen::Matrix3d;  <span class="comment">// 3*3 R matrix</span></span><br><span class="line">Eigen::AngleAxisd;  <span class="comment">// 3*1 R vector</span></span><br><span class="line">Eigen::Vector3d;   <span class="comment">// 3*1 Euler Angle</span></span><br><span class="line">Eigen::Quaterniond;  <span class="comment">// 4*1 quaternion</span></span><br><span class="line">Eigen::Isometry3d;  <span class="comment">// 4*4 T transformed</span></span><br><span class="line">Eigen::Affine3d;   <span class="comment">// 4*4 affine matrix</span></span><br><span class="line">Eigen::Projective3d;  <span class="comment">// 4*4 projective matrix</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="李群与李代数"><a href="#李群与李代数" class="headerlink" title="李群与李代数"></a>李群与李代数</h3><p>目标：</p>
+<ul>
+<li>理解概念，掌握SO(3),SE(3)</li>
+<li>理解BCH近似意义</li>
+<li>李代数的扰动模型</li>
+<li>运用Sohpus对李代数运算</li>
+</ul>
+<p>什么是Sophus? Sophus是Eigen的拓展，李代数库</p>
+<p>为何引入李代数？ 旋转矩阵自身带有正交和行列式为1的约束，作为优化变量引入额外的约束使得优化困难。通过李群和李代数的转换关系，使位姿估计变成无约束的优化问题，简化求解方式。</p>
+<h4 id="数学基础"><a href="#数学基础" class="headerlink" title="数学基础"></a>数学基础</h4><p>什么是群？ 一种集合加上一种运算的代数结构。封结幺逆<br>可以验证：</p>
+<ul>
+<li>旋转矩阵集合和矩阵乘法构成群</li>
+<li>变换矩阵和矩阵乘法也构成群</li>
+<li>因此它们为旋转矩阵群和交换矩阵群</li>
+</ul>
+<p>矩阵中常见的群：</p>
+<ul>
+<li>一般线性群GL(n) : n*n的可逆矩阵，对矩阵乘法成群</li>
+<li>特殊正交群SO(n) : 旋转矩阵群SO(2)和SO(3)</li>
+<li>特殊欧式群SE(n) : 前面的n维欧式变换， SE(2)和SE(3)</li>
+</ul>
+<p>什么是李群Lie Group？ 指具有连续（光滑）性质的群，既是群也是流形。整数群是离散的，不属于。而SO和SE在实数空间连续运动，所以属于李群。SO(3)和SE(3)只有定义良好的乘法，没有加法所以难以进行取极限和求导的操作。将旋转矩阵用李代数逼近迭代优化。</p>
+<p>一种李代数（小写）对应一种李群（大写）。</p>
+<p>$RR^T = I$ 对连续时间求导得 $ R^, R^T = -(R^, R^T )^T $, $R^,$为对时间t的导数。即满足反对称矩阵。最后得$R(t) = exp(\phi_0t)$<br>这表示：</p>
+<ul>
+<li>1.给定某时刻的R，我们能求一个$\phi$描述R在局部的导数关系，正切空间邻域。$\phi$正是SO(3)上的李代数so(3)</li>
+<li>2.矩阵指数如何计算？事实上这正是李群与李代数之间的指数/对数映射</li>
+</ul>
+<p>什么是李代数？ 每个李群对应一个李代数，描述了李群单位元数的正切空间性质。满足封闭性、双线性、自反性、雅可比等价</p>
+<p>什么是李括号？二元运算，表达了两个元素的差异。</p>
+<h4 id="指数与对数映射"><a href="#指数与对数映射" class="headerlink" title="指数与对数映射"></a>指数与对数映射</h4><p>// To do 后续补充，本章涉及较多数学和公式</p>
+]]></content>
+      <categories>
+        <category>SLAMBOOK</category>
+      </categories>
+      <tags>
+        <tag>SLAMBOOK</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>SLAM十四讲_一预备及初识</title>
     <url>/2022/01/07/SLAMBOOK2/SLAMBOOK_1_2/</url>
     <content><![CDATA[<h3 id="预备知识"><a href="#预备知识" class="headerlink" title="预备知识"></a>预备知识</h3><h4 id="SLAM：Simultaneous-Localization-and-Mapping"><a href="#SLAM：Simultaneous-Localization-and-Mapping" class="headerlink" title="SLAM：Simultaneous Localization and Mapping"></a>SLAM：Simultaneous Localization and Mapping</h4><p>同步定位及建图：搭载特定传感器的主体，在没有环境先验信息情况下，在运动过程中建立环境模型，同时估计自己位姿的过程。根据传感器分为深度相机，RGB相机和激光。不同传感器特点不一样，应用环境以及遇到的难点不同。本书主要是视觉SLAM：围绕RGB相机，也会引入Depth相机。</p>
@@ -269,52 +324,36 @@
       </tags>
   </entry>
   <entry>
-    <title>SLAMBOOK_3_4</title>
-    <url>/2022/02/28/SLAMBOOK2/SLAMBOOK_3_4/</url>
-    <content><![CDATA[<h3 id="三维空间刚体运动"><a href="#三维空间刚体运动" class="headerlink" title="三维空间刚体运动"></a>三维空间刚体运动</h3><p>目标：</p>
+    <title>SLAMBOOK_7_8</title>
+    <url>/2022/03/04/SLAMBOOK2/SLAMBOOK_7_8/</url>
+    <content><![CDATA[<h3 id="视觉里程计"><a href="#视觉里程计" class="headerlink" title="视觉里程计"></a>视觉里程计</h3><p>主要目标：</p>
 <ul>
-<li>理解三维空间的刚体运动描述方式：旋转、变换、四元数和欧拉角</li>
-<li>掌握Eigen库的矩阵和几何模块</li>
+<li>理解图像特征点的意义，掌握单幅图像提取特征点及多幅图像中匹配特征点的方法</li>
+<li>理解对极几何原理，利用对极约束，恢复图像之间的camera位姿</li>
+<li>理解PnP问题，利用已知三维结构与图像对应关系，求解camera位姿</li>
+<li>理解ICP问题，利用点云匹配关系，求解camera位姿</li>
+<li>理解三角化获得二维图像上对应点的三维结构</li>
 </ul>
-<p>基本概念：<br>坐标：一方面与向量本身有关，另一方面与坐标系选取有关。<br>向量：可以是空间中的一样东西<br>外积可表示旋转：右手系叉乘<br>欧式变换：保证同一个向量在各个坐标系下的长度和夹角都不会变化，则可由一个旋转和平移组成<br>旋转矩阵的性质：行列式为1的正交矩阵，SO(n)是特殊正交群<br>齐次坐标：把旋转和平移写入一个矩阵，且保持整个关系为线性关系<br>变换矩阵T：左上为旋转，右侧为平移，左下为0，右下为1的特殊欧式群</p>
-<h4 id="旋转的表达"><a href="#旋转的表达" class="headerlink" title="旋转的表达"></a>旋转的表达</h4><p>1.旋转矩阵：正交阵且行列式为1,行列向量相互正交；内积为0；</p>
-<p>2.三个旋转轴和旋转角：使用一个向量，方向与旋转轴一致，长度等于旋转角，即李代数。由Rodrigues’s Formula可得：$R = cos\theta I + (1-cos\theta)nn^T + sin\theta n^`$ 其中n’是向量到反对称的转换符，从旋转矩阵到旋转向量转换$\theta = arccos(\frac{tr(R)-1}{2})$<br>转轴n是矩阵R特征值1对应的特征向量。解此方程归一化可得旋转轴。</p>
-<p>3.欧拉角：分离成三次绕坐标轴旋转即yaw-pitch-roll.注意著名的<strong>万向锁</strong>问题，+-90度时，丢失一个自由度，产生奇异性问题。因此不适于插值和迭代，往往只用于人机交互。</p>
-<p>4.四元数：既是紧凑的，也没有奇异性的旋转表达。缺点不够直观和运算复杂。<br>熟悉相互表达之间的转换。</p>
-<h4 id="相似、仿射、射影变换"><a href="#相似、仿射、射影变换" class="headerlink" title="相似、仿射、射影变换"></a>相似、仿射、射影变换</h4><p>1.相似： $T_s = [sR t]$, 7个自由度，xyz坐标上均匀缩放<br>2.仿射： $T_A = [A t]$, 12个自由度，A是可逆矩阵而不必是正交矩阵<br>3.射影： $T_p $, 15个自由度，最不规则的</p>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="comment">// Eigen rotate data structure</span></span><br><span class="line">Eigen::Matrix3d;  <span class="comment">// 3*3 R matrix</span></span><br><span class="line">Eigen::AngleAxisd;  <span class="comment">// 3*1 R vector</span></span><br><span class="line">Eigen::Vector3d;   <span class="comment">// 3*1 Euler Angle</span></span><br><span class="line">Eigen::Quaterniond;  <span class="comment">// 4*1 quaternion</span></span><br><span class="line">Eigen::Isometry3d;  <span class="comment">// 4*4 T transformed</span></span><br><span class="line">Eigen::Affine3d;   <span class="comment">// 4*4 affine matrix</span></span><br><span class="line">Eigen::Projective3d;  <span class="comment">// 4*4 projective matrix</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="李群与李代数"><a href="#李群与李代数" class="headerlink" title="李群与李代数"></a>李群与李代数</h3><p>目标：</p>
+<p>图像特征性质：多图可重复、可区别、高效率、本地性</p>
+<p>对极几何：从两张RGB图的特征匹配中求解本质矩阵，从而推出R，t.由8组特征匹配对SVD求解有4个可能解，幸运地只有一个解均在两个相机的光轴正向。但因缺乏深度尺度，所以t为单位1.<br>不稳定的问题：1.初始化纯旋转t为0，三角化R不稳定； 2.多于8个特征匹配点可用最小二乘或者RANSAC方法求E，F，H；</p>
+<p>三角测量：将两个二维点对以及之间的位姿变换输入opencv的triangulatePoints中，得到点对的三维空间坐标；由于三角测量由平移产生，引出核心矛盾：平移小，则像素有较大深度不确定性；平移大，则图像外观变化大，特征匹配困难。</p>
+<p>PnP:载入两张RGB图及其中一张对齐的Depth图，使用opencv的solvePnP解三维点对及二维点对的外参位姿变化R，t;</p>
+<p>Bundle Adjustment：用于最小化重投影误差，将观测到的三维空间点与当前估计位姿投影位置得到的误差。考虑匹配特征点上的最优化重投影。</p>
+<p>ICP方法：载入两个位姿状态的RGBD图，图像匹配后获得匹配好的3D点对，直接采用线性代数的求解（SVD）及BA优化获得最佳外参位姿即可。</p>
+<h4 id="课后习题"><a href="#课后习题" class="headerlink" title="课后习题"></a>课后习题</h4><p>1.图像特征点原理及区别<br>Harris角点：基于图像灰度的一阶导数滤波检测，主要依赖与移动方向窗口内图像块的相似性。</p>
+<p>SIFT/SURF：1.构建高斯差分金字塔 2.准确提取关键点 3.结合邻域构建描述子</p>
+<p>2.opencv接口，SIFT::create(nfeatures, nOctavelLayers, constrastThreshold, edgeThreshold, sigma);<br>特征数量，金字塔最小层数，特征过滤阈值，边缘过滤阈值，高斯层级。<br>默认参数下，1000个SIFT特征点用时0.15s;</p>
+<p>3.如何让特征点分布更均匀：goodFeatureToTrack(GFTT)方法</p>
+<p>4.特征匹配方法有哪些？<br>FLANN快速最近邻搜索包，大数据下比BFMatcher暴力搜索要佳。FLANN主要三种算法：KD tree, k-means tree, hiearachy tree;</p>
+<p>5.其他PNP方法：EPNP精度较高，复杂度为O（N）.DLT更快，精度下降。</p>
+<p>6.G2O可把两图的空间点都加进来一起优化</p>
+<p>7.图像误匹配影响整体优化效果，可以通过鲁棒核函数降低影响程度，同时引入RANSAC.</p>
+<h3 id="视觉里程计2"><a href="#视觉里程计2" class="headerlink" title="视觉里程计2"></a>视觉里程计2</h3><p>本章目标：</p>
 <ul>
-<li>理解概念，掌握SO(3),SE(3)</li>
-<li>理解BCH近似意义</li>
-<li>李代数的扰动模型</li>
-<li>运用Sohpus对李代数运算</li>
+<li>理解光流法特征点跟踪</li>
+<li>理解直接法估计相机位姿</li>
+<li>使用G2O进行直接法计算</li>
 </ul>
-<p>什么是Sophus? Sophus是Eigen的拓展，李代数库</p>
-<p>为何引入李代数？ 旋转矩阵自身带有正交和行列式为1的约束，作为优化变量引入额外的约束使得优化困难。通过李群和李代数的转换关系，使位姿估计变成无约束的优化问题，简化求解方式。</p>
-<h4 id="数学基础"><a href="#数学基础" class="headerlink" title="数学基础"></a>数学基础</h4><p>什么是群？ 一种集合加上一种运算的代数结构。封结幺逆<br>可以验证：</p>
-<ul>
-<li>旋转矩阵集合和矩阵乘法构成群</li>
-<li>变换矩阵和矩阵乘法也构成群</li>
-<li>因此它们为旋转矩阵群和交换矩阵群</li>
-</ul>
-<p>矩阵中常见的群：</p>
-<ul>
-<li>一般线性群GL(n) : n*n的可逆矩阵，对矩阵乘法成群</li>
-<li>特殊正交群SO(n) : 旋转矩阵群SO(2)和SO(3)</li>
-<li>特殊欧式群SE(n) : 前面的n维欧式变换， SE(2)和SE(3)</li>
-</ul>
-<p>什么是李群Lie Group？ 指具有连续（光滑）性质的群，既是群也是流形。整数群是离散的，不属于。而SO和SE在实数空间连续运动，所以属于李群。SO(3)和SE(3)只有定义良好的乘法，没有加法所以难以进行取极限和求导的操作。将旋转矩阵用李代数逼近迭代优化。</p>
-<p>一种李代数（小写）对应一种李群（大写）。</p>
-<p>$RR^T = I$ 对连续时间求导得 $ R^, R^T = -(R^, R^T )^T $, $R^,$为对时间t的导数。即满足反对称矩阵。最后得$R(t) = exp(\phi_0t)$<br>这表示：</p>
-<ul>
-<li>1.给定某时刻的R，我们能求一个$\phi$描述R在局部的导数关系，正切空间邻域。$\phi$正是SO(3)上的李代数so(3)</li>
-<li>2.矩阵指数如何计算？事实上这正是李群与李代数之间的指数/对数映射</li>
-</ul>
-<p>什么是李代数？ 每个李群对应一个李代数，描述了李群单位元数的正切空间性质。满足封闭性、双线性、自反性、雅可比等价</p>
-<p>什么是李括号？二元运算，表达了两个元素的差异。</p>
-<h4 id="指数与对数映射"><a href="#指数与对数映射" class="headerlink" title="指数与对数映射"></a>指数与对数映射</h4><p>// To do 后续补充，本章涉及较多数学和公式</p>
 ]]></content>
       <categories>
         <category>SLAMBOOK</category>
@@ -389,45 +428,6 @@
 </ul>
 <p>g2o进一步把SLAM优化问题用图论描述，成为图优化问题。节点表示优化变量，边为误差项。<br>使用流程：<br>1.顶点的更新函数：位姿更新需要重新定义左乘或者右乘的更新<br>2.顶点重置以及边的误差计算，获得所有边连接顶点的估计值<br>3.读写结果</p>
 <p>课后习题总结：<br>1.矩阵A正定，则rank(A) = n, 可求逆。欠定则有多组解，超定则无解，有最小二乘解。<br>2.最速法过于贪心二迭代次数多，牛顿法需计算海塞矩阵，二者均不实用；SLAM常用GN，LM和Dog-Leg狗腿法：高斯牛顿简单高效，但病态矩阵时容易发散；LM是可信域法，略满于GN但正定性强，不易发散；狗腿与LM类似，为解决GN近似计算Hessian不准确而提出的。一般的优化库还包括Nlopt,slam++等。<br>3.A不满秩时，近似的H也半正定，越不正定越接近0矩阵，求逆误差越大，因此$\Delta x$越不可靠<br>4.狗腿法具体看<a href="https://blog.csdn.net/qq_35590091/article/details/94628887">https://blog.csdn.net/qq_35590091/article/details/94628887</a></p>
-]]></content>
-      <categories>
-        <category>SLAMBOOK</category>
-      </categories>
-      <tags>
-        <tag>SLAMBOOK</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>SLAMBOOK_7_8</title>
-    <url>/2022/03/04/SLAMBOOK2/SLAMBOOK_7_8/</url>
-    <content><![CDATA[<h3 id="视觉里程计"><a href="#视觉里程计" class="headerlink" title="视觉里程计"></a>视觉里程计</h3><p>主要目标：</p>
-<ul>
-<li>理解图像特征点的意义，掌握单幅图像提取特征点及多幅图像中匹配特征点的方法</li>
-<li>理解对极几何原理，利用对极约束，恢复图像之间的camera位姿</li>
-<li>理解PnP问题，利用已知三维结构与图像对应关系，求解camera位姿</li>
-<li>理解ICP问题，利用点云匹配关系，求解camera位姿</li>
-<li>理解三角化获得二维图像上对应点的三维结构</li>
-</ul>
-<p>图像特征性质：多图可重复、可区别、高效率、本地性</p>
-<p>对极几何：从两张RGB图的特征匹配中求解本质矩阵，从而推出R，t.由8组特征匹配对SVD求解有4个可能解，幸运地只有一个解均在两个相机的光轴正向。但因缺乏深度尺度，所以t为单位1.<br>不稳定的问题：1.初始化纯旋转t为0，三角化R不稳定； 2.多于8个特征匹配点可用最小二乘或者RANSAC方法求E，F，H；</p>
-<p>三角测量：将两个二维点对以及之间的位姿变换输入opencv的triangulatePoints中，得到点对的三维空间坐标；由于三角测量由平移产生，引出核心矛盾：平移小，则像素有较大深度不确定性；平移大，则图像外观变化大，特征匹配困难。</p>
-<p>PnP:载入两张RGB图及其中一张对齐的Depth图，使用opencv的solvePnP解三维点对及二维点对的外参位姿变化R，t;</p>
-<p>Bundle Adjustment：用于最小化重投影误差，将观测到的三维空间点与当前估计位姿投影位置得到的误差。考虑匹配特征点上的最优化重投影。</p>
-<p>ICP方法：载入两个位姿状态的RGBD图，图像匹配后获得匹配好的3D点对，直接采用线性代数的求解（SVD）及BA优化获得最佳外参位姿即可。</p>
-<h4 id="课后习题"><a href="#课后习题" class="headerlink" title="课后习题"></a>课后习题</h4><p>1.图像特征点原理及区别<br>Harris角点：基于图像灰度的一阶导数滤波检测，主要依赖与移动方向窗口内图像块的相似性。</p>
-<p>SIFT/SURF：1.构建高斯差分金字塔 2.准确提取关键点 3.结合邻域构建描述子</p>
-<p>2.opencv接口，SIFT::create(nfeatures, nOctavelLayers, constrastThreshold, edgeThreshold, sigma);<br>特征数量，金字塔最小层数，特征过滤阈值，边缘过滤阈值，高斯层级。<br>默认参数下，1000个SIFT特征点用时0.15s;</p>
-<p>3.如何让特征点分布更均匀：goodFeatureToTrack(GFTT)方法</p>
-<p>4.特征匹配方法有哪些？<br>FLANN快速最近邻搜索包，大数据下比BFMatcher暴力搜索要佳。FLANN主要三种算法：KD tree, k-means tree, hiearachy tree;</p>
-<p>5.其他PNP方法：EPNP精度较高，复杂度为O（N）.DLT更快，精度下降。</p>
-<p>6.G2O可把两图的空间点都加进来一起优化</p>
-<p>7.图像误匹配影响整体优化效果，可以通过鲁棒核函数降低影响程度，同时引入RANSAC.</p>
-<h3 id="视觉里程计2"><a href="#视觉里程计2" class="headerlink" title="视觉里程计2"></a>视觉里程计2</h3><p>本章目标：</p>
-<ul>
-<li>理解光流法特征点跟踪</li>
-<li>理解直接法估计相机位姿</li>
-<li>使用G2O进行直接法计算</li>
-</ul>
 ]]></content>
       <categories>
         <category>SLAMBOOK</category>
@@ -517,40 +517,6 @@
       </tags>
   </entry>
   <entry>
-    <title>字符串</title>
-    <url>/2021/12/15/cpp/%E5%AD%97%E7%AC%A6%E4%B8%B2/</url>
-    <content><![CDATA[<h3 id="C-style字符串"><a href="#C-style字符串" class="headerlink" title="C-style字符串"></a>C-style字符串</h3><p>结尾带’\0’,这对于很多处理字符串的函数很关键。#include <cstring>包含大量C语言字串的操作函数如strlen, strcpy, strcat…</p>
-<p>strlen():只计算数组或者指针中的字符个数，不带结尾</p>
-<p><code>cin.getline(name,20)</code>:读取整行的字串到name,最多20个<br>cin.get()：类似，但下一次调用开头会带有换行(换行缓存到下次get)，顺便检查了上一次输入的正确程度。</p>
-<p>针对string类的getline(cin, string); 与cin混合使用时，在cin&gt;&gt;完成后，getline前需要通过getline(cin,”\n”)清除缓存，否则不进入getline输入。</p>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 清除缓存</span></span><br><span class="line">string str=<span class="string">&quot;\n&quot;</span>;</span><br><span class="line"><span class="built_in">getline</span>(cin,str);</span><br></pre></td></tr></table></figure>
-
-
-
-<h3 id="string类"><a href="#string类" class="headerlink" title="string类"></a>string类</h3><figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string&gt;</span></span></span><br><span class="line">std::string</span><br></pre></td></tr></table></figure>
-<p>更方便，也更安全。像vector一样管理char.</p>
-<h3 id="struct和union"><a href="#struct和union" class="headerlink" title="struct和union"></a>struct和union</h3><p>union只能同时存储<strong>一种</strong>类型，其他类型的会lost</p>
-<h3 id="new和delete"><a href="#new和delete" class="headerlink" title="new和delete"></a>new和delete</h3><ul>
-<li>不要delete释放不是new的内存</li>
-<li>不要delete同一块内存两次</li>
-<li>new[]数组应当用delete []释放</li>
-<li>若用new[]为单一实体分配内存，应使用delete（不带方括号）释放</li>
-<li>对空指针delete是安全的</li>
-</ul>
-<h3 id="cin与cin-getline区别"><a href="#cin与cin-getline区别" class="headerlink" title="cin与cin.getline区别"></a>cin与cin.getline区别</h3><p>cin.getline(addr,80) 与cin&gt;&gt;addr<br>getline:读整行直到‘回车’<br>cin:首先跳过‘空格’，读取字串，再次遇‘空格’停止；即跳过前面的空格，读取单个单词。</p>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line">cin&gt;&gt;ch;</span><br><span class="line">cin.<span class="built_in">get</span>(ch);</span><br><span class="line">ch=cin.<span class="built_in">get</span>();</span><br></pre></td></tr></table></figure>
-<p>上面区别主要是cin&gt;&gt;ch直接跳过空格换行以及制表符</p>
-<h3 id="string格式化输出4位数字-前面补0，多用于文件名操作"><a href="#string格式化输出4位数字-前面补0，多用于文件名操作" class="headerlink" title="string格式化输出4位数字,前面补0，多用于文件名操作"></a>string格式化输出4位数字,前面补0，多用于文件名操作</h3><figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="keyword">int</span> num_zero = <span class="number">4</span>;</span><br><span class="line">string num = <span class="built_in">to_string</span>(int_val);</span><br><span class="line">string new_num = <span class="built_in">string</span>(num_zero-num.<span class="built_in">length</span>(),<span class="string">&#x27;0&#x27;</span>) + num;</span><br></pre></td></tr></table></figure>
-<p>注意int_val长度小于num_zero。</p>
-]]></content>
-      <categories>
-        <category>c++</category>
-      </categories>
-      <tags>
-        <tag>c++ primer</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>内存模型</title>
     <url>/2021/12/20/cpp/%E5%86%85%E5%AD%98%E6%A8%A1%E5%9E%8B/</url>
     <content><![CDATA[<h3 id="头文件通常包含的内容"><a href="#头文件通常包含的内容" class="headerlink" title="头文件通常包含的内容"></a>头文件通常包含的内容</h3><ul>
@@ -606,6 +572,40 @@
       </categories>
       <tags>
         <tag>c++</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>字符串</title>
+    <url>/2021/12/15/cpp/%E5%AD%97%E7%AC%A6%E4%B8%B2/</url>
+    <content><![CDATA[<h3 id="C-style字符串"><a href="#C-style字符串" class="headerlink" title="C-style字符串"></a>C-style字符串</h3><p>结尾带’\0’,这对于很多处理字符串的函数很关键。#include <cstring>包含大量C语言字串的操作函数如strlen, strcpy, strcat…</p>
+<p>strlen():只计算数组或者指针中的字符个数，不带结尾</p>
+<p><code>cin.getline(name,20)</code>:读取整行的字串到name,最多20个<br>cin.get()：类似，但下一次调用开头会带有换行(换行缓存到下次get)，顺便检查了上一次输入的正确程度。</p>
+<p>针对string类的getline(cin, string); 与cin混合使用时，在cin&gt;&gt;完成后，getline前需要通过getline(cin,”\n”)清除缓存，否则不进入getline输入。</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 清除缓存</span></span><br><span class="line">string str=<span class="string">&quot;\n&quot;</span>;</span><br><span class="line"><span class="built_in">getline</span>(cin,str);</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="string类"><a href="#string类" class="headerlink" title="string类"></a>string类</h3><figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string&gt;</span></span></span><br><span class="line">std::string</span><br></pre></td></tr></table></figure>
+<p>更方便，也更安全。像vector一样管理char.</p>
+<h3 id="struct和union"><a href="#struct和union" class="headerlink" title="struct和union"></a>struct和union</h3><p>union只能同时存储<strong>一种</strong>类型，其他类型的会lost</p>
+<h3 id="new和delete"><a href="#new和delete" class="headerlink" title="new和delete"></a>new和delete</h3><ul>
+<li>不要delete释放不是new的内存</li>
+<li>不要delete同一块内存两次</li>
+<li>new[]数组应当用delete []释放</li>
+<li>若用new[]为单一实体分配内存，应使用delete（不带方括号）释放</li>
+<li>对空指针delete是安全的</li>
+</ul>
+<h3 id="cin与cin-getline区别"><a href="#cin与cin-getline区别" class="headerlink" title="cin与cin.getline区别"></a>cin与cin.getline区别</h3><p>cin.getline(addr,80) 与cin&gt;&gt;addr<br>getline:读整行直到‘回车’<br>cin:首先跳过‘空格’，读取字串，再次遇‘空格’停止；即跳过前面的空格，读取单个单词。</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line">cin&gt;&gt;ch;</span><br><span class="line">cin.<span class="built_in">get</span>(ch);</span><br><span class="line">ch=cin.<span class="built_in">get</span>();</span><br></pre></td></tr></table></figure>
+<p>上面区别主要是cin&gt;&gt;ch直接跳过空格换行以及制表符</p>
+<h3 id="string格式化输出4位数字-前面补0，多用于文件名操作"><a href="#string格式化输出4位数字-前面补0，多用于文件名操作" class="headerlink" title="string格式化输出4位数字,前面补0，多用于文件名操作"></a>string格式化输出4位数字,前面补0，多用于文件名操作</h3><figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="keyword">int</span> num_zero = <span class="number">4</span>;</span><br><span class="line">string num = <span class="built_in">to_string</span>(int_val);</span><br><span class="line">string new_num = <span class="built_in">string</span>(num_zero-num.<span class="built_in">length</span>(),<span class="string">&#x27;0&#x27;</span>) + num;</span><br></pre></td></tr></table></figure>
+<p>注意int_val长度小于num_zero。</p>
+]]></content>
+      <categories>
+        <category>c++</category>
+      </categories>
+      <tags>
+        <tag>c++ primer</tag>
       </tags>
   </entry>
   <entry>
@@ -787,15 +787,24 @@
       </tags>
   </entry>
   <entry>
-    <title>九章行测</title>
-    <url>/2022/04/01/jiuzhang/behavior/</url>
-    <content><![CDATA[<h4 id="Intro-yourself"><a href="#Intro-yourself" class="headerlink" title="Intro yourself"></a>Intro yourself</h4><p>要点：适当的内容表达，元气健康的兴趣，</p>
+    <title>EIGEN_1 HELLO_WOLRD</title>
+    <url>/2022/01/20/eigen/eigen-1/</url>
+    <content><![CDATA[<h3 id="EIGEN简介"><a href="#EIGEN简介" class="headerlink" title="EIGEN简介"></a>EIGEN简介</h3><p>FROM WIKI: Eigen is a high-level C++ library of template headers for linear algebra, matrix and vector operations, geometrical transformations, numerical solvers and related algorithms.<br>简而言之C++开源模板库，支持线性代数、矩阵矢量运算和数值分析，是个方便好用的数学库。</p>
+<p>更绝的是，EIGEN所有源码用头文件编写，所以只需要Include,无需编译链接过程，直接与平台无关，非常通用！</p>
+<h3 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h3><p>安装过程也很简单，在UBUNTU下直接</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line">sudo apt-get install libeigen3-dev</span><br></pre></td></tr></table></figure>
+<p>一般安装在/usr/include目录下</p>
+<p>使用直接与标准库类似，#include &lt;Eigen/Dense&gt;等</p>
+<h3 id="主要模块"><a href="#主要模块" class="headerlink" title="主要模块"></a>主要模块</h3><p><img src="/images/01_20_1.png"></p>
+<h3 id="简单例子"><a href="#简单例子" class="headerlink" title="简单例子"></a>简单例子</h3><figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;eigen3/Eigen/Dense&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> Eigen;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line"></span><br><span class="line">    Matrix3d m = Matrix3d::<span class="built_in">Random</span>();</span><br><span class="line">    m = ( m + Matrix3d::<span class="built_in">Constant</span>(<span class="number">1.2</span>)) * <span class="number">50</span>;</span><br><span class="line"></span><br><span class="line">    cout &lt;&lt; m &lt;&lt; endl;</span><br><span class="line">    <span class="function">Vector3d <span class="title">v</span><span class="params">(<span class="number">3</span>)</span></span>;</span><br><span class="line">    v &lt;&lt; <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>;</span><br><span class="line">    cout &lt;&lt;m*v &lt;&lt; endl;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>这是fix_sized定义的写法，一般4*4以下的矩阵矢量用固定大小写法，对于比较大的才用不定量写法MatirxXd, VectorXd;</p>
+<p>主要结构为1D对象Vector, Array和2D对象Matrix</p>
 ]]></content>
       <categories>
-        <category>九章算法</category>
+        <category>EIGEN</category>
       </categories>
       <tags>
-        <tag>九章算法</tag>
+        <tag>EIGEN</tag>
       </tags>
   </entry>
   <entry>
@@ -869,7 +878,52 @@
 <li>三种常见面试DP：矩阵，单序列，双序列</li>
 <li>奇技淫巧：初始化首行首列， N个数开N+1位置的数组</li>
 </ul>
-<h3 id="第六课"><a href="#第六课" class="headerlink" title="第六课"></a>第六课</h3>]]></content>
+<h4 id="背包问题"><a href="#背包问题" class="headerlink" title="背包问题"></a>背包问题</h4><p>定义：n个整数，装m的背包<br>state: f[i][j]“前i”个数，能否组成和为j<br>function: f[i][j] = f[i-1][j-a[i]] or f[i-1][j]<br>init: f[x][0] = true; f[0][1-m] = false;<br>ans: f[n][x]为true 的最大值的x</p>
+<p>当前行只跟上一行i-1有关：滚动数组优化，用模2; 如与i-1, i-2有关，则模3；如此类推。</p>
+<p>TO DO：较难，待补充具体解法</p>
+<h3 id="第六课-链表"><a href="#第六课-链表" class="headerlink" title="第六课 链表"></a>第六课 链表</h3><p>目标：</p>
+<ul>
+<li>Dummy Node哨兵节点</li>
+<li>相关基本技巧</li>
+<li>快慢指针：删N节点，找环</li>
+</ul>
+<ol>
+<li>head!=nullptr  head-&gt;next!=nullptr</li>
+<li>删除：pre.next = cur.next</li>
+<li>头节点要改变，引入dummy node；可不用单独判断链表头的情况，代码更简洁</li>
+<li>swap(pre, now) 翻转链表</li>
+</ol>
+<h4 id="Dummy-Node常用场合"><a href="#Dummy-Node常用场合" class="headerlink" title="Dummy Node常用场合"></a>Dummy Node常用场合</h4><p>1.有序链表去重复元素<br>2.翻转链表<br>3.合并两个有序链表<br>4.分割链表</p>
+<p>归并排序链表：</p>
+<ul>
+<li>1.找中点，快慢指针</li>
+<li>2.拆分左右</li>
+<li>3.排序序列</li>
+<li>4.合并</li>
+</ul>
+<p>合并K个链表：</p>
+<ul>
+<li>用priority_queue&lt;ListNode*, vector&lt;ListNode*&gt; , comp&gt;最大堆来优化</li>
+<li>分治两两合并</li>
+</ul>
+<p>copy随机链表，每个节点带next和random：</p>
+<ul>
+<li>hash记录克隆节点（遍历一次）</li>
+<li>基于节点克隆边</li>
+</ul>
+]]></content>
+      <categories>
+        <category>九章算法</category>
+      </categories>
+      <tags>
+        <tag>九章算法</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>九章行测</title>
+    <url>/2022/04/01/jiuzhang/behavior/</url>
+    <content><![CDATA[<h4 id="Intro-yourself"><a href="#Intro-yourself" class="headerlink" title="Intro yourself"></a>Intro yourself</h4><p>要点：适当的内容表达，元气健康的兴趣，</p>
+]]></content>
       <categories>
         <category>九章算法</category>
       </categories>
@@ -957,24 +1011,83 @@
       </tags>
   </entry>
   <entry>
-    <title>EIGEN_1 HELLO_WOLRD</title>
-    <url>/2022/01/20/eigen/eigen-1/</url>
-    <content><![CDATA[<h3 id="EIGEN简介"><a href="#EIGEN简介" class="headerlink" title="EIGEN简介"></a>EIGEN简介</h3><p>FROM WIKI: Eigen is a high-level C++ library of template headers for linear algebra, matrix and vector operations, geometrical transformations, numerical solvers and related algorithms.<br>简而言之C++开源模板库，支持线性代数、矩阵矢量运算和数值分析，是个方便好用的数学库。</p>
-<p>更绝的是，EIGEN所有源码用头文件编写，所以只需要Include,无需编译链接过程，直接与平台无关，非常通用！</p>
-<h3 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h3><p>安装过程也很简单，在UBUNTU下直接</p>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line">sudo apt-get install libeigen3-dev</span><br></pre></td></tr></table></figure>
-<p>一般安装在/usr/include目录下</p>
-<p>使用直接与标准库类似，#include &lt;Eigen/Dense&gt;等</p>
-<h3 id="主要模块"><a href="#主要模块" class="headerlink" title="主要模块"></a>主要模块</h3><p><img src="/images/01_20_1.png"></p>
-<h3 id="简单例子"><a href="#简单例子" class="headerlink" title="简单例子"></a>简单例子</h3><figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;eigen3/Eigen/Dense&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> Eigen;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line"></span><br><span class="line">    Matrix3d m = Matrix3d::<span class="built_in">Random</span>();</span><br><span class="line">    m = ( m + Matrix3d::<span class="built_in">Constant</span>(<span class="number">1.2</span>)) * <span class="number">50</span>;</span><br><span class="line"></span><br><span class="line">    cout &lt;&lt; m &lt;&lt; endl;</span><br><span class="line">    <span class="function">Vector3d <span class="title">v</span><span class="params">(<span class="number">3</span>)</span></span>;</span><br><span class="line">    v &lt;&lt; <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>;</span><br><span class="line">    cout &lt;&lt;m*v &lt;&lt; endl;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<p>这是fix_sized定义的写法，一般4*4以下的矩阵矢量用固定大小写法，对于比较大的才用不定量写法MatirxXd, VectorXd;</p>
-<p>主要结构为1D对象Vector, Array和2D对象Matrix</p>
-]]></content>
+    <title>217.存在重复元素</title>
+    <url>/2022/03/23/leetcode/%E5%AD%98%E5%9C%A8%E9%87%8D%E5%A4%8D%E5%85%83%E7%B4%A0/</url>
+    <content><![CDATA[<h3 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h3><p>给你一个整数数组 nums 。如果任一值在数组中出现 至少两次 ，返回 true ；如果数组中每个元素互不相同，返回 false 。
+ </p>
+<p>示例 1：</p>
+<p>输入：nums = [1,2,3,1]<br>输出：true<br>示例 2：</p>
+<p>输入：nums = [1,2,3,4]<br>输出：false<br>示例 3：</p>
+<p>输入：nums = [1,1,1,3,3,4,3,2,4,2]<br>输出：true
+ </p>
+<h3 id="解法"><a href="#解法" class="headerlink" title="解法"></a>解法</h3><h4 id="一-个人方法，使用map-lt-int-string-gt-作hashmap"><a href="#一-个人方法，使用map-lt-int-string-gt-作hashmap" class="headerlink" title="一.个人方法，使用map&lt;int, string&gt;作hashmap"></a>一.个人方法，使用map&lt;int, string&gt;作hashmap</h4><figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">bool</span> <span class="title">containsDuplicate</span><span class="params">(vector&lt;<span class="keyword">int</span>&gt;&amp; nums)</span> </span>&#123;</span><br><span class="line">        map&lt;<span class="keyword">int</span>, string&gt; mmap;</span><br><span class="line">        string flag = <span class="string">&quot;y&quot;</span>;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;nums.<span class="built_in">size</span>(); i++)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span>(mmap[nums[i]] == flag)</span><br><span class="line">                <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">            mmap[nums[i]] = flag;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<h4 id="二-先排序，然后检查相邻是否相等重复"><a href="#二-先排序，然后检查相邻是否相等重复" class="headerlink" title="二.先排序，然后检查相邻是否相等重复"></a>二.先排序，然后检查相邻是否相等重复</h4><figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">containDuplicate</span><span class="params">(vector&lt;<span class="keyword">int</span>&gt;&amp; nums)</span></span>&#123;</span><br><span class="line">  <span class="built_in">sort</span>(nums.<span class="built_in">begin</span>(), nums.<span class="built_in">end</span>());</span><br><span class="line">  <span class="keyword">int</span> n = nums.<span class="built_in">size</span>();</span><br><span class="line">  <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;n<span class="number">-1</span>;i++)&#123;</span><br><span class="line">    <span class="keyword">if</span>(nums[i] == nums[i+<span class="number">1</span>])</span><br><span class="line">      <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<h4 id="三-用unordered-set的哈希表"><a href="#三-用unordered-set的哈希表" class="headerlink" title="三.用unordered_set的哈希表"></a>三.用unordered_set的哈希表</h4><figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">containDuplicate</span><span class="params">(vector&lt;<span class="keyword">int</span>&gt;&amp; nums)</span></span>&#123;</span><br><span class="line">  unordered_set&lt;<span class="keyword">int</span>&gt; s;</span><br><span class="line">  <span class="keyword">for</span>(<span class="keyword">int</span> x:nums)&#123;</span><br><span class="line">    <span class="keyword">if</span>(s.<span class="built_in">find</span>(x)!=s.<span class="built_in">end</span>())</span><br><span class="line">      <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">    s.<span class="built_in">insert</span>(x);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="相关知识"><a href="#相关知识" class="headerlink" title="相关知识"></a>相关知识</h3><h4 id="map"><a href="#map" class="headerlink" title="map"></a>map</h4><p>关联容器，一对一，第一个关键字只能出现一次，内部为自建红黑数（非严格平衡二叉树），可对数据自动排序。<br>map的特点时增删节点开销小，迭代器可以修改value,但不能修改key.查找数据复杂度为Log(N)</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;map&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 初始化</span></span><br><span class="line">std::map&lt;<span class="keyword">int</span>, string&gt; mStudent;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 构建</span></span><br><span class="line">mStudent.<span class="built_in">insert</span>(pair&lt;<span class="keyword">int</span>, string&gt;(<span class="number">1</span>,<span class="string">&quot;stu_one&quot;</span>));</span><br><span class="line">mStudent.<span class="built_in">insert</span>(pair&lt;<span class="keyword">int</span>, string&gt;(<span class="number">2</span>,<span class="string">&quot;stu_two&quot;</span>));</span><br><span class="line">mStudent.<span class="built_in">insert</span>(map&lt;<span class="keyword">int</span>, string&gt;::<span class="built_in">value_type</span>(<span class="number">3</span>,<span class="string">&quot;stu_three&quot;</span>)); </span><br><span class="line">mStudent[<span class="number">4</span>] = <span class="string">&quot;stu_four&quot;</span>;  <span class="comment">// 可覆盖旧有</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 遍历</span></span><br><span class="line">map&lt;<span class="keyword">int</span>, string&gt;::iterator iter;</span><br><span class="line"><span class="keyword">for</span>(iter = mStudent.<span class="built_in">begin</span>(); iter != mStudent.<span class="built_in">end</span>(); iter++)</span><br><span class="line">  cout &lt;&lt;iter-&gt;first&lt;&lt;<span class="string">&#x27; &#x27;</span> &lt;&lt; iter-&gt;second &lt;&lt; endl;</span><br><span class="line"></span><br><span class="line">pair&lt;map&lt;<span class="keyword">int</span>, string&gt;::iterator, <span class="keyword">bool</span>&gt; Insert_Pair;</span><br><span class="line"></span><br><span class="line"><span class="comment">// insert方法如旧有则插入失败</span></span><br><span class="line"><span class="comment">// first为map的迭代器，second为true/false</span></span><br><span class="line">Insert_Pair = mStudent.<span class="built_in">insert</span>(pair&lt;<span class="keyword">int</span>, string&gt;(<span class="number">1</span>,<span class="string">&quot;stu_one&quot;</span>));</span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> nSize = mStudent.<span class="built_in">size</span>();  <span class="comment">// 长度</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 查找</span></span><br><span class="line"><span class="comment">// 1.count</span></span><br><span class="line"><span class="comment">// 2.find</span></span><br><span class="line">map&lt;<span class="keyword">int</span>, string&gt;::iterator iter;</span><br><span class="line">iter = mStudent.<span class="built_in">find</span>(<span class="number">1</span>);</span><br><span class="line"><span class="keyword">if</span>(iter==mStudent.<span class="built_in">end</span>())</span><br><span class="line">  cout &lt;&lt;<span class="string">&quot;not found&quot;</span>;</span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">  mStudent.<span class="built_in">erase</span>(iter);   <span class="comment">// 删除erase</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 自定义sort</span></span><br><span class="line"><span class="comment">// 1.数据结构的&lt;重载  2.sort的仿函数</span></span><br></pre></td></tr></table></figure>
+
+<pre><code> C++ maps是一种关联式容器，包含“关键字/值”对
+
+ begin()         返回指向map头部的迭代器
+
+ clear(）        删除所有元素
+
+ count()         返回指定元素出现的次数
+
+ empty()         如果map为空则返回true
+
+ end()           返回指向map末尾的迭代器
+
+ equal_range()   返回特殊条目的迭代器对
+
+ erase()         删除一个元素
+
+ find()          查找一个元素
+
+ get_allocator() 返回map的配置器
+
+ insert()        插入元素
+
+ key_comp()      返回比较元素key的函数
+
+ lower_bound()   返回键值&gt;=给定元素的第一个位置
+
+ max_size()      返回可以容纳的最大元素个数
+
+ rbegin()        返回一个指向map尾部的逆向迭代器
+
+ rend()          返回一个指向map头部的逆向迭代器
+
+ size()          返回map中元素的个数
+
+ swap()           交换两个map
+
+ upper_bound()    返回键值&gt;给定元素的第一个位置
+
+ value_comp()     返回比较元素value的函数
+</code></pre>
+<h4 id="unordered-set"><a href="#unordered-set" class="headerlink" title="unordered_set"></a>unordered_set</h4><p>基于哈希表的unordered_set和unordered_map区别于基于红黑树的set和map，内部无须，查找效率O（1）用空间换时间。原型为unordered_set<key>,key为任意基本类型，然后经过默认hash(key)转成size_t作为bucker.具体用法如下：</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;unordered_set&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 初始化和插入</span></span><br><span class="line">std::unordered_set&lt;<span class="keyword">int</span>&gt; ms&#123;<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>&#125;;</span><br><span class="line">ms.<span class="built_in">insert</span>(<span class="number">6</span>);</span><br><span class="line">ms.<span class="built_in">insert</span>(<span class="number">7</span>); <span class="comment">// 注意没有ms.at()或者ms[idx]的表述</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 遍历</span></span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">auto</span> &amp;s: ms)</span><br><span class="line">  cout &lt;&lt; s &lt;&lt; endl;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// 删除</span></span><br><span class="line">ms.<span class="built_in">erase</span>(<span class="number">2</span>);  <span class="comment">//若无则什么也不发生，返回删除元素个数</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 计数</span></span><br><span class="line">cout &lt;&lt; ms.<span class="built_in">count</span>(<span class="number">2</span>); <span class="comment">// 0</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 查找</span></span><br><span class="line">ms.<span class="built_in">find</span>(<span class="number">3</span>);  <span class="comment">// 返回查找迭代器，若无则返回ms.end()</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>]]></content>
       <categories>
-        <category>EIGEN</category>
+        <category>leetcode</category>
       </categories>
       <tags>
-        <tag>EIGEN</tag>
+        <tag>leetcode</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>九章基础class_7_8</title>
+    <url>/2022/04/18/jiuzhang/class7-8/</url>
+    <content><![CDATA[<h3 id="第七课-图搜索"><a href="#第七课-图搜索" class="headerlink" title="第七课 图搜索"></a>第七课 图搜索</h3>]]></content>
+      <categories>
+        <category>九章基础</category>
+      </categories>
+      <tags>
+        <tag>九章基础</tag>
       </tags>
   </entry>
   <entry>
@@ -1002,27 +1115,6 @@
       </tags>
   </entry>
   <entry>
-    <title>特征匹配</title>
-    <url>/2022/01/13/opencv/%E7%89%B9%E5%BE%81%E5%8C%B9%E9%85%8D/</url>
-    <content><![CDATA[<h4 id="ubuntu下opencv-CMakeList文件"><a href="#ubuntu下opencv-CMakeList文件" class="headerlink" title="ubuntu下opencv CMakeList文件"></a>ubuntu下opencv CMakeList文件</h4><p>通过terminal直接apt安装opencv，一般挂载在/usr/local/lib下；此时find_package即可找到</p>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"><span class="meta"># cmake needs this <span class="meta-keyword">line</span></span></span><br><span class="line"><span class="built_in">cmake_minimum_required</span>(VERSION <span class="number">3.1</span>)</span><br><span class="line"></span><br><span class="line"># <span class="function">Define project name</span></span><br><span class="line"><span class="function"><span class="title">project</span><span class="params">(FeatureMapping)</span></span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function"># Find OpenCV, you may need to set OpenCV_DIR variable</span></span><br><span class="line"><span class="function"><span class="meta"># to the absolute path to the directory containing OpenCVConfig.cmake file</span></span></span><br><span class="line"><span class="function"><span class="meta"># via the command <span class="meta-keyword">line</span> or GUI</span></span></span><br><span class="line"><span class="function"><span class="title">find_package</span><span class="params">(OpenCV REQUIRED)</span></span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function"># Enable C++11</span></span><br><span class="line"><span class="function"><span class="title">set</span><span class="params">(CMAKE_CXX_STANDARD <span class="number">11</span>)</span></span></span><br><span class="line"><span class="function"><span class="title">set</span><span class="params">(CMAKE_CXX_STANDARD_REQUIRED TRUE)</span></span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function"># Declare the executable target built from your sources</span></span><br><span class="line"><span class="function"><span class="title">add_executable</span><span class="params">(main main.cpp)</span></span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function"># Link your application with OpenCV libraries</span></span><br><span class="line"><span class="function"><span class="title">target_link_libraries</span><span class="params">(main PRIVATE $&#123;OpenCV_LIBS&#125;)</span></span></span><br><span class="line"><span class="function"></span></span><br></pre></td></tr></table></figure>
-
-
-<h4 id="两RGB图间的特征匹配"><a href="#两RGB图间的特征匹配" class="headerlink" title="两RGB图间的特征匹配"></a>两RGB图间的特征匹配</h4><p>具体可参考官方教程<a href="https://docs.opencv.org/4.x/d7/dff/tutorial_feature_homography.html">https://docs.opencv.org/4.x/d7/dff/tutorial_feature_homography.html</a></p>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;opencv4/opencv2/highgui.hpp&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;opencv4/opencv2/opencv.hpp&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;opencv4/opencv2/imgproc.hpp&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;opencv4/opencv2/features2d.hpp&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;opencv4/opencv2/core.hpp&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;opencv4/opencv2/calib3d.hpp&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> cv;</span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span> **argv)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    cout &lt;&lt; CV_VERSION &lt;&lt; endl;</span><br><span class="line"></span><br><span class="line">    Mat img1 = <span class="built_in">imread</span>(<span class="string">&quot;001.JPG&quot;</span>);</span><br><span class="line">    Mat img2 = <span class="built_in">imread</span>(<span class="string">&quot;002.JPG&quot;</span>);</span><br><span class="line"></span><br><span class="line">    Ptr&lt;SIFT&gt; detector = SIFT::<span class="built_in">create</span>();</span><br><span class="line">    vector&lt;KeyPoint&gt; keypoints1, keypoints2;</span><br><span class="line">    Mat descriptors1, descriptors2;</span><br><span class="line">    detector-&gt;<span class="built_in">detectAndCompute</span>(img1, <span class="built_in">noArray</span>(), keypoints1, descriptors1);</span><br><span class="line">    detector-&gt;<span class="built_in">detectAndCompute</span>(img2, <span class="built_in">noArray</span>(), keypoints2, descriptors2);</span><br><span class="line"></span><br><span class="line">    Ptr&lt;DescriptorMatcher&gt; matcher = DescriptorMatcher::<span class="built_in">create</span>(DescriptorMatcher::FLANNBASED);</span><br><span class="line"></span><br><span class="line">    vector&lt;vector&lt;DMatch&gt;&gt; knn_matches;</span><br><span class="line">    matcher-&gt;<span class="built_in">knnMatch</span>(descriptors1, descriptors2, knn_matches, <span class="number">2</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">const</span> <span class="keyword">float</span> ratio_thresh = <span class="number">0.5f</span>;</span><br><span class="line">    vector&lt;DMatch&gt; good_matches;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">size_t</span> i=<span class="number">0</span>; i&lt;knn_matches.<span class="built_in">size</span>();i++)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span>(knn_matches[i][<span class="number">0</span>].distance &lt; ratio_thresh * knn_matches[i][<span class="number">1</span>].distance)</span><br><span class="line">        &#123;</span><br><span class="line">            good_matches.<span class="built_in">push_back</span>(knn_matches[i][<span class="number">0</span>]);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    Mat img_matches;</span><br><span class="line">    <span class="built_in">drawMatches</span>(img1, keypoints1, img2, keypoints2, good_matches, img_matches);</span><br><span class="line">    </span><br><span class="line">    </span><br><span class="line">    <span class="comment">//-- Localize the object</span></span><br><span class="line">    std::vector&lt;Point2f&gt; obj;</span><br><span class="line">    std::vector&lt;Point2f&gt; scene;</span><br><span class="line">    <span class="keyword">for</span>( <span class="keyword">size_t</span> i = <span class="number">0</span>; i &lt; good_matches.<span class="built_in">size</span>(); i++ )</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment">//-- Get the keypoints from the good matches</span></span><br><span class="line">        obj.<span class="built_in">push_back</span>( keypoints1[ good_matches[i].queryIdx ].pt );</span><br><span class="line">        scene.<span class="built_in">push_back</span>( keypoints2[ good_matches[i].trainIdx ].pt );</span><br><span class="line">    &#125;</span><br><span class="line">    Mat H = <span class="built_in">findHomography</span>( obj, scene, RANSAC );</span><br><span class="line">    cout &lt;&lt; H &lt;&lt; endl;</span><br><span class="line">    <span class="comment">//-- Get the corners from the image_1 ( the object to be &quot;detected&quot; )</span></span><br><span class="line">    <span class="function">std::vector&lt;Point2f&gt; <span class="title">obj_corners</span><span class="params">(<span class="number">4</span>)</span></span>;</span><br><span class="line">    obj_corners[<span class="number">0</span>] = <span class="built_in">Point2f</span>(<span class="number">0</span>, <span class="number">0</span>);</span><br><span class="line">    obj_corners[<span class="number">1</span>] = <span class="built_in">Point2f</span>( (<span class="keyword">float</span>)img1.cols, <span class="number">0</span> );</span><br><span class="line">    obj_corners[<span class="number">2</span>] = <span class="built_in">Point2f</span>( (<span class="keyword">float</span>)img1.cols, (<span class="keyword">float</span>)img1.rows );</span><br><span class="line">    obj_corners[<span class="number">3</span>] = <span class="built_in">Point2f</span>( <span class="number">0</span>, (<span class="keyword">float</span>)img1.rows );</span><br><span class="line">    <span class="function">std::vector&lt;Point2f&gt; <span class="title">scene_corners</span><span class="params">(<span class="number">4</span>)</span></span>;</span><br><span class="line">    <span class="built_in">perspectiveTransform</span>( obj_corners, scene_corners, H);</span><br><span class="line">    <span class="comment">//-- Draw lines between the corners (the mapped object in the scene - image_2 )</span></span><br><span class="line">    <span class="built_in">line</span>( img_matches, scene_corners[<span class="number">0</span>] + <span class="built_in">Point2f</span>((<span class="keyword">float</span>)img1.cols, <span class="number">0</span>),</span><br><span class="line">          scene_corners[<span class="number">1</span>] + <span class="built_in">Point2f</span>((<span class="keyword">float</span>)img1.cols, <span class="number">0</span>), <span class="built_in">Scalar</span>(<span class="number">0</span>, <span class="number">255</span>, <span class="number">0</span>), <span class="number">4</span> );</span><br><span class="line">    <span class="built_in">line</span>( img_matches, scene_corners[<span class="number">1</span>] + <span class="built_in">Point2f</span>((<span class="keyword">float</span>)img1.cols, <span class="number">0</span>),</span><br><span class="line">          scene_corners[<span class="number">2</span>] + <span class="built_in">Point2f</span>((<span class="keyword">float</span>)img1.cols, <span class="number">0</span>), <span class="built_in">Scalar</span>( <span class="number">0</span>, <span class="number">255</span>, <span class="number">0</span>), <span class="number">4</span> );</span><br><span class="line">    <span class="built_in">line</span>( img_matches, scene_corners[<span class="number">2</span>] + <span class="built_in">Point2f</span>((<span class="keyword">float</span>)img1.cols, <span class="number">0</span>),</span><br><span class="line">          scene_corners[<span class="number">3</span>] + <span class="built_in">Point2f</span>((<span class="keyword">float</span>)img1.cols, <span class="number">0</span>), <span class="built_in">Scalar</span>( <span class="number">0</span>, <span class="number">255</span>, <span class="number">0</span>), <span class="number">4</span> );</span><br><span class="line">    <span class="built_in">line</span>( img_matches, scene_corners[<span class="number">3</span>] + <span class="built_in">Point2f</span>((<span class="keyword">float</span>)img1.cols, <span class="number">0</span>),</span><br><span class="line">          scene_corners[<span class="number">0</span>] + <span class="built_in">Point2f</span>((<span class="keyword">float</span>)img1.cols, <span class="number">0</span>), <span class="built_in">Scalar</span>( <span class="number">0</span>, <span class="number">255</span>, <span class="number">0</span>), <span class="number">4</span> );</span><br><span class="line">    <span class="comment">//-- Show detected matches</span></span><br><span class="line"></span><br><span class="line">    <span class="built_in">namedWindow</span>(<span class="string">&quot;Matches&quot;</span>, WINDOW_NORMAL);</span><br><span class="line">    <span class="built_in">imshow</span>(<span class="string">&quot;Matches&quot;</span>, img_matches );</span><br><span class="line">    <span class="comment">// imwrite(&quot;good_res.jpg&quot;, img_matches);</span></span><br><span class="line">    </span><br><span class="line">   </span><br><span class="line">    <span class="built_in">waitKey</span>();</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">输出H：</span></span><br><span class="line"><span class="comment">[0.9771928708495958, -0.008932567941541457, 129.4806431662592;</span></span><br><span class="line"><span class="comment"> 0.0342771681684575, 0.9114878090650101, 163.0011063784843;</span></span><br><span class="line"><span class="comment"> 3.322036688562577e-05, -1.090291446290035e-05, 1]</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<p>值得注意的是，本版本是opencv 4.5,与Opencv2/3有很多语法不一样了；关于特征点和描述子最大的区别：特征点是特征坐标KeyPoint，描述子是描述邻域信息的Mat。</p>
-<p>特征匹配总体的流程：<br>1.首先读取图片，创建检测特征SIFT，ORB，SURF(xfeature)等<br>2.如果检测子包含描述子，则直接detectAndCompute<br>3.一般用BFMatcher直接对描述子点对vector<DMatch> 进行暴力匹配，这里是优化加速版用FLANN的knn，注意的是ORB可用HAMMING距离，其他则不可。<br>4.接着对KNN点对进行基于距离的筛选<br>5.对置信度高的点对进行RANSAC的单应变换矩阵求解</p>
-<p>至此基本完成特征匹配的功能，得到的单应矩阵描述了图片间的变换关系；这是很多CV高级应用的基础，如校正，拼接，SLAM等。</p>
-]]></content>
-      <categories>
-        <category>opencv</category>
-      </categories>
-      <tags>
-        <tag>opencv</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>2022第一季度总结</title>
     <url>/2022/04/07/personal/2022%E7%AC%AC%E4%B8%80%E5%AD%A3%E5%BA%A6%E6%80%BB%E7%BB%93/</url>
     <content><![CDATA[<h3 id="工作上"><a href="#工作上" class="headerlink" title="工作上"></a>工作上</h3><h4 id="本职工作"><a href="#本职工作" class="headerlink" title="本职工作"></a>本职工作</h4><p>由于产品部对预研项目的信心和期望不高，今年头三个月我主推的项目基本没有进展。于是我在本来就量产项目为重的小公司里面地位更卑微了，随时有被毕业的风险，也可能是因为薪资不高，反正我现在有点“食之无味，弃之可惜”的味道了。只能趁着这段时间多学习，多看看论文，多写写代码。希望能让自己的职业生涯有点起色。</p>
@@ -1046,6 +1138,27 @@
       </categories>
       <tags>
         <tag>总结</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>特征匹配</title>
+    <url>/2022/01/13/opencv/%E7%89%B9%E5%BE%81%E5%8C%B9%E9%85%8D/</url>
+    <content><![CDATA[<h4 id="ubuntu下opencv-CMakeList文件"><a href="#ubuntu下opencv-CMakeList文件" class="headerlink" title="ubuntu下opencv CMakeList文件"></a>ubuntu下opencv CMakeList文件</h4><p>通过terminal直接apt安装opencv，一般挂载在/usr/local/lib下；此时find_package即可找到</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"><span class="meta"># cmake needs this <span class="meta-keyword">line</span></span></span><br><span class="line"><span class="built_in">cmake_minimum_required</span>(VERSION <span class="number">3.1</span>)</span><br><span class="line"></span><br><span class="line"># <span class="function">Define project name</span></span><br><span class="line"><span class="function"><span class="title">project</span><span class="params">(FeatureMapping)</span></span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function"># Find OpenCV, you may need to set OpenCV_DIR variable</span></span><br><span class="line"><span class="function"><span class="meta"># to the absolute path to the directory containing OpenCVConfig.cmake file</span></span></span><br><span class="line"><span class="function"><span class="meta"># via the command <span class="meta-keyword">line</span> or GUI</span></span></span><br><span class="line"><span class="function"><span class="title">find_package</span><span class="params">(OpenCV REQUIRED)</span></span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function"># Enable C++11</span></span><br><span class="line"><span class="function"><span class="title">set</span><span class="params">(CMAKE_CXX_STANDARD <span class="number">11</span>)</span></span></span><br><span class="line"><span class="function"><span class="title">set</span><span class="params">(CMAKE_CXX_STANDARD_REQUIRED TRUE)</span></span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function"># Declare the executable target built from your sources</span></span><br><span class="line"><span class="function"><span class="title">add_executable</span><span class="params">(main main.cpp)</span></span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function"># Link your application with OpenCV libraries</span></span><br><span class="line"><span class="function"><span class="title">target_link_libraries</span><span class="params">(main PRIVATE $&#123;OpenCV_LIBS&#125;)</span></span></span><br><span class="line"><span class="function"></span></span><br></pre></td></tr></table></figure>
+
+
+<h4 id="两RGB图间的特征匹配"><a href="#两RGB图间的特征匹配" class="headerlink" title="两RGB图间的特征匹配"></a>两RGB图间的特征匹配</h4><p>具体可参考官方教程<a href="https://docs.opencv.org/4.x/d7/dff/tutorial_feature_homography.html">https://docs.opencv.org/4.x/d7/dff/tutorial_feature_homography.html</a></p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;opencv4/opencv2/highgui.hpp&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;opencv4/opencv2/opencv.hpp&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;opencv4/opencv2/imgproc.hpp&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;opencv4/opencv2/features2d.hpp&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;opencv4/opencv2/core.hpp&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;opencv4/opencv2/calib3d.hpp&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> cv;</span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span> **argv)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    cout &lt;&lt; CV_VERSION &lt;&lt; endl;</span><br><span class="line"></span><br><span class="line">    Mat img1 = <span class="built_in">imread</span>(<span class="string">&quot;001.JPG&quot;</span>);</span><br><span class="line">    Mat img2 = <span class="built_in">imread</span>(<span class="string">&quot;002.JPG&quot;</span>);</span><br><span class="line"></span><br><span class="line">    Ptr&lt;SIFT&gt; detector = SIFT::<span class="built_in">create</span>();</span><br><span class="line">    vector&lt;KeyPoint&gt; keypoints1, keypoints2;</span><br><span class="line">    Mat descriptors1, descriptors2;</span><br><span class="line">    detector-&gt;<span class="built_in">detectAndCompute</span>(img1, <span class="built_in">noArray</span>(), keypoints1, descriptors1);</span><br><span class="line">    detector-&gt;<span class="built_in">detectAndCompute</span>(img2, <span class="built_in">noArray</span>(), keypoints2, descriptors2);</span><br><span class="line"></span><br><span class="line">    Ptr&lt;DescriptorMatcher&gt; matcher = DescriptorMatcher::<span class="built_in">create</span>(DescriptorMatcher::FLANNBASED);</span><br><span class="line"></span><br><span class="line">    vector&lt;vector&lt;DMatch&gt;&gt; knn_matches;</span><br><span class="line">    matcher-&gt;<span class="built_in">knnMatch</span>(descriptors1, descriptors2, knn_matches, <span class="number">2</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">const</span> <span class="keyword">float</span> ratio_thresh = <span class="number">0.5f</span>;</span><br><span class="line">    vector&lt;DMatch&gt; good_matches;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">size_t</span> i=<span class="number">0</span>; i&lt;knn_matches.<span class="built_in">size</span>();i++)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span>(knn_matches[i][<span class="number">0</span>].distance &lt; ratio_thresh * knn_matches[i][<span class="number">1</span>].distance)</span><br><span class="line">        &#123;</span><br><span class="line">            good_matches.<span class="built_in">push_back</span>(knn_matches[i][<span class="number">0</span>]);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    Mat img_matches;</span><br><span class="line">    <span class="built_in">drawMatches</span>(img1, keypoints1, img2, keypoints2, good_matches, img_matches);</span><br><span class="line">    </span><br><span class="line">    </span><br><span class="line">    <span class="comment">//-- Localize the object</span></span><br><span class="line">    std::vector&lt;Point2f&gt; obj;</span><br><span class="line">    std::vector&lt;Point2f&gt; scene;</span><br><span class="line">    <span class="keyword">for</span>( <span class="keyword">size_t</span> i = <span class="number">0</span>; i &lt; good_matches.<span class="built_in">size</span>(); i++ )</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment">//-- Get the keypoints from the good matches</span></span><br><span class="line">        obj.<span class="built_in">push_back</span>( keypoints1[ good_matches[i].queryIdx ].pt );</span><br><span class="line">        scene.<span class="built_in">push_back</span>( keypoints2[ good_matches[i].trainIdx ].pt );</span><br><span class="line">    &#125;</span><br><span class="line">    Mat H = <span class="built_in">findHomography</span>( obj, scene, RANSAC );</span><br><span class="line">    cout &lt;&lt; H &lt;&lt; endl;</span><br><span class="line">    <span class="comment">//-- Get the corners from the image_1 ( the object to be &quot;detected&quot; )</span></span><br><span class="line">    <span class="function">std::vector&lt;Point2f&gt; <span class="title">obj_corners</span><span class="params">(<span class="number">4</span>)</span></span>;</span><br><span class="line">    obj_corners[<span class="number">0</span>] = <span class="built_in">Point2f</span>(<span class="number">0</span>, <span class="number">0</span>);</span><br><span class="line">    obj_corners[<span class="number">1</span>] = <span class="built_in">Point2f</span>( (<span class="keyword">float</span>)img1.cols, <span class="number">0</span> );</span><br><span class="line">    obj_corners[<span class="number">2</span>] = <span class="built_in">Point2f</span>( (<span class="keyword">float</span>)img1.cols, (<span class="keyword">float</span>)img1.rows );</span><br><span class="line">    obj_corners[<span class="number">3</span>] = <span class="built_in">Point2f</span>( <span class="number">0</span>, (<span class="keyword">float</span>)img1.rows );</span><br><span class="line">    <span class="function">std::vector&lt;Point2f&gt; <span class="title">scene_corners</span><span class="params">(<span class="number">4</span>)</span></span>;</span><br><span class="line">    <span class="built_in">perspectiveTransform</span>( obj_corners, scene_corners, H);</span><br><span class="line">    <span class="comment">//-- Draw lines between the corners (the mapped object in the scene - image_2 )</span></span><br><span class="line">    <span class="built_in">line</span>( img_matches, scene_corners[<span class="number">0</span>] + <span class="built_in">Point2f</span>((<span class="keyword">float</span>)img1.cols, <span class="number">0</span>),</span><br><span class="line">          scene_corners[<span class="number">1</span>] + <span class="built_in">Point2f</span>((<span class="keyword">float</span>)img1.cols, <span class="number">0</span>), <span class="built_in">Scalar</span>(<span class="number">0</span>, <span class="number">255</span>, <span class="number">0</span>), <span class="number">4</span> );</span><br><span class="line">    <span class="built_in">line</span>( img_matches, scene_corners[<span class="number">1</span>] + <span class="built_in">Point2f</span>((<span class="keyword">float</span>)img1.cols, <span class="number">0</span>),</span><br><span class="line">          scene_corners[<span class="number">2</span>] + <span class="built_in">Point2f</span>((<span class="keyword">float</span>)img1.cols, <span class="number">0</span>), <span class="built_in">Scalar</span>( <span class="number">0</span>, <span class="number">255</span>, <span class="number">0</span>), <span class="number">4</span> );</span><br><span class="line">    <span class="built_in">line</span>( img_matches, scene_corners[<span class="number">2</span>] + <span class="built_in">Point2f</span>((<span class="keyword">float</span>)img1.cols, <span class="number">0</span>),</span><br><span class="line">          scene_corners[<span class="number">3</span>] + <span class="built_in">Point2f</span>((<span class="keyword">float</span>)img1.cols, <span class="number">0</span>), <span class="built_in">Scalar</span>( <span class="number">0</span>, <span class="number">255</span>, <span class="number">0</span>), <span class="number">4</span> );</span><br><span class="line">    <span class="built_in">line</span>( img_matches, scene_corners[<span class="number">3</span>] + <span class="built_in">Point2f</span>((<span class="keyword">float</span>)img1.cols, <span class="number">0</span>),</span><br><span class="line">          scene_corners[<span class="number">0</span>] + <span class="built_in">Point2f</span>((<span class="keyword">float</span>)img1.cols, <span class="number">0</span>), <span class="built_in">Scalar</span>( <span class="number">0</span>, <span class="number">255</span>, <span class="number">0</span>), <span class="number">4</span> );</span><br><span class="line">    <span class="comment">//-- Show detected matches</span></span><br><span class="line"></span><br><span class="line">    <span class="built_in">namedWindow</span>(<span class="string">&quot;Matches&quot;</span>, WINDOW_NORMAL);</span><br><span class="line">    <span class="built_in">imshow</span>(<span class="string">&quot;Matches&quot;</span>, img_matches );</span><br><span class="line">    <span class="comment">// imwrite(&quot;good_res.jpg&quot;, img_matches);</span></span><br><span class="line">    </span><br><span class="line">   </span><br><span class="line">    <span class="built_in">waitKey</span>();</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">输出H：</span></span><br><span class="line"><span class="comment">[0.9771928708495958, -0.008932567941541457, 129.4806431662592;</span></span><br><span class="line"><span class="comment"> 0.0342771681684575, 0.9114878090650101, 163.0011063784843;</span></span><br><span class="line"><span class="comment"> 3.322036688562577e-05, -1.090291446290035e-05, 1]</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>值得注意的是，本版本是opencv 4.5,与Opencv2/3有很多语法不一样了；关于特征点和描述子最大的区别：特征点是特征坐标KeyPoint，描述子是描述邻域信息的Mat。</p>
+<p>特征匹配总体的流程：<br>1.首先读取图片，创建检测特征SIFT，ORB，SURF(xfeature)等<br>2.如果检测子包含描述子，则直接detectAndCompute<br>3.一般用BFMatcher直接对描述子点对vector<DMatch> 进行暴力匹配，这里是优化加速版用FLANN的knn，注意的是ORB可用HAMMING距离，其他则不可。<br>4.接着对KNN点对进行基于距离的筛选<br>5.对置信度高的点对进行RANSAC的单应变换矩阵求解</p>
+<p>至此基本完成特征匹配的功能，得到的单应矩阵描述了图片间的变换关系；这是很多CV高级应用的基础，如校正，拼接，SLAM等。</p>
+]]></content>
+      <categories>
+        <category>opencv</category>
+      </categories>
+      <tags>
+        <tag>opencv</tag>
       </tags>
   </entry>
   <entry>
@@ -1187,6 +1300,40 @@
       </tags>
   </entry>
   <entry>
+    <title>皮肤的秘密</title>
+    <url>/2022/01/19/reading/%E7%9A%AE%E8%82%A4%E7%9A%84%E7%A7%98%E5%AF%86/</url>
+    <content><![CDATA[<h3 id="认识皮肤"><a href="#认识皮肤" class="headerlink" title="认识皮肤"></a>认识皮肤</h3><p>皮肤是人体最大的器官，展开达两平方米，是人体之于外界环境的保护膜，同时也是零距离感受外界的第一道关卡，所以每一寸都遍布了神经细胞。</p>
+<p>皮肤主要由三层构成：表皮，真皮以及皮下组合。其中表皮与真皮间的基底膜带决定了皮肤的弹性紧致，而且是在1岁形成不可逆的衰老，无法重生所以只能好好保护延缓其衰老。皮肤细胞从底层出生，衰老于真皮并死亡在表皮并成为保护屏障，正常周期为4周。患有皮肤病的可能会加速该过程至5天，导致表皮的屏障并不完整。</p>
+<h3 id="表皮"><a href="#表皮" class="headerlink" title="表皮"></a>表皮</h3><p>由于皮肤表面存在着大量微生物群，所以保持皮肤的pH值是非常重要的，应当合理维持完好无损的酸性保护膜，人工清洁剂约5.5，另外对于皮下脂肪过厚的皮肤褶皱，唯一有效办法是减肥。可以用抗真菌软膏，另外带锌软膏可缓解皮肤炎症，带走多余水分。</p>
+<p><img src="/images/01_19_1.png"></p>
+<p>生长纹无足轻重，关于肤色，是有黑色素影响的。研究表明，橙色皮肤最具吸引力，可多摄入胡萝卜素B达到。颠痕主要由基底膜带大面积受损，表皮过度损耗引起的。对于渗水伤口可用硅霜或贴上硅凝胶伤口贴。治疗疙瘩需要强效疗法如：激光疗法、热针、冷冻疗法以及X射线放射疗法。</p>
+<h3 id="真皮"><a href="#真皮" class="headerlink" title="真皮"></a>真皮</h3><p>真皮充满紧致的结缔组织，带来稳固性以及拉伸性，任何的日晒、日光浴、烟草、压力、睡眠不足、营养不良以及缺乏运动等会加速弹性纤维的流失。臀部皮肤就是自然老化的参考，面部等受光照影响较大是老化较快的皮肤。另外，皮肤在4度就开始出现冻疮，而冬天皮肤也能适应，所以只在晚上睡前使用保湿即可，白天冬天保湿使皮肤含水量升高，反而容易冻伤。</p>
+<p>真皮层拥有大量神经，使皮肤成为最大的神经器官，抚摸有调节中枢神经和社交等作用。同时含有腺体，会分泌激素气味等。</p>
+]]></content>
+      <categories>
+        <category>读书笔记</category>
+      </categories>
+      <tags>
+        <tag>读书笔记</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>努力方向之正解</title>
+    <url>/2021/12/21/shisan/%E5%8A%AA%E5%8A%9B%E6%96%B9%E5%90%91%E4%B9%8B%E6%AD%A3%E8%A7%A3/</url>
+    <content><![CDATA[<p><code>文章摘自微信公众号：十三先生手记</code></p>
+<p>人们总是误以为”方向不对，努力白费“</p>
+<p>所以到底什么方向是努力的正确方向，是对事情方向性的选择吗？<br>看起来是这样的，其实不然，在事情没有出现结果之前，谁能确定方向对不对？<br>于是乎，在很长一段时间里，你在方向的选择上纠结，大量耗费了精力；久而久之，方向选择对你的意义就逐步降低；久而久之，你在没有了方向的努力中不断的迷茫，努力所收获到的就多半不如意；久而久之，你便自然逐步丧失了努力的动力。</p>
+<p>所以其中蕴含<em><strong>真正的智慧</strong></em>是什么呢？<br>此刻，十三先生要你深深的明白：对于你真正想要成就的方向而言，基于外在目标而牵引你的行动方向就是你的迷障，基于你内心真正愿意去做的方向才是真正利于你达成整体目标的方向。若是你在每次做选择之际，你都按你内心真正未权衡的意愿立刻去着手行动，并在行动的过程中，实事求是的不断优化解决遇到的问题，而不是在事前先拿你预设的可能遇到的问题去和你的资源做权衡匹配，在来做方向选择的决定，假以时日，必定你会不断收获到你真正想要收获到的利益。</p>
+<h3 id="个人感悟"><a href="#个人感悟" class="headerlink" title="个人感悟"></a>个人感悟</h3><p>与其纠结于方向正确，不如尽快行动起来，尽快在行动中感受自我。那些未经反复驱动，内心自发想要完成的事情就是你人生的正确方向了。</p>
+]]></content>
+      <categories>
+        <category>十三手记</category>
+      </categories>
+      <tags>
+        <tag>十三手记</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>google_c++编程风格指南</title>
     <url>/2022/04/11/reading/google-cpp-style-guide-cn/</url>
     <content><![CDATA[<h3 id="指南简介"><a href="#指南简介" class="headerlink" title="指南简介"></a>指南简介</h3><p>谷歌开源项目主要是C++，因此开放编程指南方面合并代码，总共五万字指南涉及广泛，论证严密。指南不仅列出怎么做以及为什么这么做，同时告诫什么情况可以破例以及权衡其中利弊。</p>
@@ -1243,6 +1390,16 @@
 <li>#include中插入空行以分离头文件，C库，C++库以及其他库.h和本项目.h</li>
 </ul>
 <h3 id="作用域"><a href="#作用域" class="headerlink" title="作用域"></a>作用域</h3><p>命名空间将全局作用域细分为独立作用域，可有效防止全局命名冲突<br>内联命名inline namespace只允许用于跨版本的ABI兼容性</p>
+<p>默认命名空间：main存在的常用的，其他空间调用可::func<br>匿名空间：无名namespace{},主要用途：1.定义符号限于文件内部使用，不被外部引用 2.类似static修饰整个空间内容</p>
+<p>关于使用命名空间的策略标准：</p>
+<ul>
+<li>允许鼓励匿名命名空间，避免运行时命名冲突</li>
+<li>不在std空间声明任何东西，会引起不可移植性</li>
+<li>尽量不用using namespace name;污染命名空间</li>
+<li>允许使用空间别名</li>
+<li>禁止内联命名空间</li>
+</ul>
+<h3 id="嵌套类"><a href="#嵌套类" class="headerlink" title="嵌套类"></a>嵌套类</h3><p>即成员类用法<br>缺点：嵌套类只能在外围类的内部做前置声明，即任何使用Foo::Bar*的指针头文件必须包含Foo的整个声明。<br>用法：不要定义为公有，除非是接口的一部分。</p>
 ]]></content>
       <categories>
         <category>读书笔记</category>
@@ -1280,109 +1437,6 @@
       </tags>
   </entry>
   <entry>
-    <title>皮肤的秘密</title>
-    <url>/2022/01/19/reading/%E7%9A%AE%E8%82%A4%E7%9A%84%E7%A7%98%E5%AF%86/</url>
-    <content><![CDATA[<h3 id="认识皮肤"><a href="#认识皮肤" class="headerlink" title="认识皮肤"></a>认识皮肤</h3><p>皮肤是人体最大的器官，展开达两平方米，是人体之于外界环境的保护膜，同时也是零距离感受外界的第一道关卡，所以每一寸都遍布了神经细胞。</p>
-<p>皮肤主要由三层构成：表皮，真皮以及皮下组合。其中表皮与真皮间的基底膜带决定了皮肤的弹性紧致，而且是在1岁形成不可逆的衰老，无法重生所以只能好好保护延缓其衰老。皮肤细胞从底层出生，衰老于真皮并死亡在表皮并成为保护屏障，正常周期为4周。患有皮肤病的可能会加速该过程至5天，导致表皮的屏障并不完整。</p>
-<h3 id="表皮"><a href="#表皮" class="headerlink" title="表皮"></a>表皮</h3><p>由于皮肤表面存在着大量微生物群，所以保持皮肤的pH值是非常重要的，应当合理维持完好无损的酸性保护膜，人工清洁剂约5.5，另外对于皮下脂肪过厚的皮肤褶皱，唯一有效办法是减肥。可以用抗真菌软膏，另外带锌软膏可缓解皮肤炎症，带走多余水分。</p>
-<p><img src="/images/01_19_1.png"></p>
-<p>生长纹无足轻重，关于肤色，是有黑色素影响的。研究表明，橙色皮肤最具吸引力，可多摄入胡萝卜素B达到。颠痕主要由基底膜带大面积受损，表皮过度损耗引起的。对于渗水伤口可用硅霜或贴上硅凝胶伤口贴。治疗疙瘩需要强效疗法如：激光疗法、热针、冷冻疗法以及X射线放射疗法。</p>
-<h3 id="真皮"><a href="#真皮" class="headerlink" title="真皮"></a>真皮</h3><p>真皮充满紧致的结缔组织，带来稳固性以及拉伸性，任何的日晒、日光浴、烟草、压力、睡眠不足、营养不良以及缺乏运动等会加速弹性纤维的流失。臀部皮肤就是自然老化的参考，面部等受光照影响较大是老化较快的皮肤。另外，皮肤在4度就开始出现冻疮，而冬天皮肤也能适应，所以只在晚上睡前使用保湿即可，白天冬天保湿使皮肤含水量升高，反而容易冻伤。</p>
-<p>真皮层拥有大量神经，使皮肤成为最大的神经器官，抚摸有调节中枢神经和社交等作用。同时含有腺体，会分泌激素气味等。</p>
-]]></content>
-      <categories>
-        <category>读书笔记</category>
-      </categories>
-      <tags>
-        <tag>读书笔记</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>努力方向之正解</title>
-    <url>/2021/12/21/shisan/%E5%8A%AA%E5%8A%9B%E6%96%B9%E5%90%91%E4%B9%8B%E6%AD%A3%E8%A7%A3/</url>
-    <content><![CDATA[<p><code>文章摘自微信公众号：十三先生手记</code></p>
-<p>人们总是误以为”方向不对，努力白费“</p>
-<p>所以到底什么方向是努力的正确方向，是对事情方向性的选择吗？<br>看起来是这样的，其实不然，在事情没有出现结果之前，谁能确定方向对不对？<br>于是乎，在很长一段时间里，你在方向的选择上纠结，大量耗费了精力；久而久之，方向选择对你的意义就逐步降低；久而久之，你在没有了方向的努力中不断的迷茫，努力所收获到的就多半不如意；久而久之，你便自然逐步丧失了努力的动力。</p>
-<p>所以其中蕴含<em><strong>真正的智慧</strong></em>是什么呢？<br>此刻，十三先生要你深深的明白：对于你真正想要成就的方向而言，基于外在目标而牵引你的行动方向就是你的迷障，基于你内心真正愿意去做的方向才是真正利于你达成整体目标的方向。若是你在每次做选择之际，你都按你内心真正未权衡的意愿立刻去着手行动，并在行动的过程中，实事求是的不断优化解决遇到的问题，而不是在事前先拿你预设的可能遇到的问题去和你的资源做权衡匹配，在来做方向选择的决定，假以时日，必定你会不断收获到你真正想要收获到的利益。</p>
-<h3 id="个人感悟"><a href="#个人感悟" class="headerlink" title="个人感悟"></a>个人感悟</h3><p>与其纠结于方向正确，不如尽快行动起来，尽快在行动中感受自我。那些未经反复驱动，内心自发想要完成的事情就是你人生的正确方向了。</p>
-]]></content>
-      <categories>
-        <category>十三手记</category>
-      </categories>
-      <tags>
-        <tag>十三手记</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>217.存在重复元素</title>
-    <url>/2022/03/23/leetcode/%E5%AD%98%E5%9C%A8%E9%87%8D%E5%A4%8D%E5%85%83%E7%B4%A0/</url>
-    <content><![CDATA[<h3 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h3><p>给你一个整数数组 nums 。如果任一值在数组中出现 至少两次 ，返回 true ；如果数组中每个元素互不相同，返回 false 。
- </p>
-<p>示例 1：</p>
-<p>输入：nums = [1,2,3,1]<br>输出：true<br>示例 2：</p>
-<p>输入：nums = [1,2,3,4]<br>输出：false<br>示例 3：</p>
-<p>输入：nums = [1,1,1,3,3,4,3,2,4,2]<br>输出：true
- </p>
-<h3 id="解法"><a href="#解法" class="headerlink" title="解法"></a>解法</h3><h4 id="一-个人方法，使用map-lt-int-string-gt-作hashmap"><a href="#一-个人方法，使用map-lt-int-string-gt-作hashmap" class="headerlink" title="一.个人方法，使用map&lt;int, string&gt;作hashmap"></a>一.个人方法，使用map&lt;int, string&gt;作hashmap</h4><figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">bool</span> <span class="title">containsDuplicate</span><span class="params">(vector&lt;<span class="keyword">int</span>&gt;&amp; nums)</span> </span>&#123;</span><br><span class="line">        map&lt;<span class="keyword">int</span>, string&gt; mmap;</span><br><span class="line">        string flag = <span class="string">&quot;y&quot;</span>;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;nums.<span class="built_in">size</span>(); i++)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span>(mmap[nums[i]] == flag)</span><br><span class="line">                <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">            mmap[nums[i]] = flag;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-
-<h4 id="二-先排序，然后检查相邻是否相等重复"><a href="#二-先排序，然后检查相邻是否相等重复" class="headerlink" title="二.先排序，然后检查相邻是否相等重复"></a>二.先排序，然后检查相邻是否相等重复</h4><figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">containDuplicate</span><span class="params">(vector&lt;<span class="keyword">int</span>&gt;&amp; nums)</span></span>&#123;</span><br><span class="line">  <span class="built_in">sort</span>(nums.<span class="built_in">begin</span>(), nums.<span class="built_in">end</span>());</span><br><span class="line">  <span class="keyword">int</span> n = nums.<span class="built_in">size</span>();</span><br><span class="line">  <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;n<span class="number">-1</span>;i++)&#123;</span><br><span class="line">    <span class="keyword">if</span>(nums[i] == nums[i+<span class="number">1</span>])</span><br><span class="line">      <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-<h4 id="三-用unordered-set的哈希表"><a href="#三-用unordered-set的哈希表" class="headerlink" title="三.用unordered_set的哈希表"></a>三.用unordered_set的哈希表</h4><figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">containDuplicate</span><span class="params">(vector&lt;<span class="keyword">int</span>&gt;&amp; nums)</span></span>&#123;</span><br><span class="line">  unordered_set&lt;<span class="keyword">int</span>&gt; s;</span><br><span class="line">  <span class="keyword">for</span>(<span class="keyword">int</span> x:nums)&#123;</span><br><span class="line">    <span class="keyword">if</span>(s.<span class="built_in">find</span>(x)!=s.<span class="built_in">end</span>())</span><br><span class="line">      <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">    s.<span class="built_in">insert</span>(x);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="相关知识"><a href="#相关知识" class="headerlink" title="相关知识"></a>相关知识</h3><h4 id="map"><a href="#map" class="headerlink" title="map"></a>map</h4><p>关联容器，一对一，第一个关键字只能出现一次，内部为自建红黑数（非严格平衡二叉树），可对数据自动排序。<br>map的特点时增删节点开销小，迭代器可以修改value,但不能修改key.查找数据复杂度为Log(N)</p>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;map&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 初始化</span></span><br><span class="line">std::map&lt;<span class="keyword">int</span>, string&gt; mStudent;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 构建</span></span><br><span class="line">mStudent.<span class="built_in">insert</span>(pair&lt;<span class="keyword">int</span>, string&gt;(<span class="number">1</span>,<span class="string">&quot;stu_one&quot;</span>));</span><br><span class="line">mStudent.<span class="built_in">insert</span>(pair&lt;<span class="keyword">int</span>, string&gt;(<span class="number">2</span>,<span class="string">&quot;stu_two&quot;</span>));</span><br><span class="line">mStudent.<span class="built_in">insert</span>(map&lt;<span class="keyword">int</span>, string&gt;::<span class="built_in">value_type</span>(<span class="number">3</span>,<span class="string">&quot;stu_three&quot;</span>)); </span><br><span class="line">mStudent[<span class="number">4</span>] = <span class="string">&quot;stu_four&quot;</span>;  <span class="comment">// 可覆盖旧有</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 遍历</span></span><br><span class="line">map&lt;<span class="keyword">int</span>, string&gt;::iterator iter;</span><br><span class="line"><span class="keyword">for</span>(iter = mStudent.<span class="built_in">begin</span>(); iter != mStudent.<span class="built_in">end</span>(); iter++)</span><br><span class="line">  cout &lt;&lt;iter-&gt;first&lt;&lt;<span class="string">&#x27; &#x27;</span> &lt;&lt; iter-&gt;second &lt;&lt; endl;</span><br><span class="line"></span><br><span class="line">pair&lt;map&lt;<span class="keyword">int</span>, string&gt;::iterator, <span class="keyword">bool</span>&gt; Insert_Pair;</span><br><span class="line"></span><br><span class="line"><span class="comment">// insert方法如旧有则插入失败</span></span><br><span class="line"><span class="comment">// first为map的迭代器，second为true/false</span></span><br><span class="line">Insert_Pair = mStudent.<span class="built_in">insert</span>(pair&lt;<span class="keyword">int</span>, string&gt;(<span class="number">1</span>,<span class="string">&quot;stu_one&quot;</span>));</span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> nSize = mStudent.<span class="built_in">size</span>();  <span class="comment">// 长度</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 查找</span></span><br><span class="line"><span class="comment">// 1.count</span></span><br><span class="line"><span class="comment">// 2.find</span></span><br><span class="line">map&lt;<span class="keyword">int</span>, string&gt;::iterator iter;</span><br><span class="line">iter = mStudent.<span class="built_in">find</span>(<span class="number">1</span>);</span><br><span class="line"><span class="keyword">if</span>(iter==mStudent.<span class="built_in">end</span>())</span><br><span class="line">  cout &lt;&lt;<span class="string">&quot;not found&quot;</span>;</span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">  mStudent.<span class="built_in">erase</span>(iter);   <span class="comment">// 删除erase</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 自定义sort</span></span><br><span class="line"><span class="comment">// 1.数据结构的&lt;重载  2.sort的仿函数</span></span><br></pre></td></tr></table></figure>
-
-<pre><code> C++ maps是一种关联式容器，包含“关键字/值”对
-
- begin()         返回指向map头部的迭代器
-
- clear(）        删除所有元素
-
- count()         返回指定元素出现的次数
-
- empty()         如果map为空则返回true
-
- end()           返回指向map末尾的迭代器
-
- equal_range()   返回特殊条目的迭代器对
-
- erase()         删除一个元素
-
- find()          查找一个元素
-
- get_allocator() 返回map的配置器
-
- insert()        插入元素
-
- key_comp()      返回比较元素key的函数
-
- lower_bound()   返回键值&gt;=给定元素的第一个位置
-
- max_size()      返回可以容纳的最大元素个数
-
- rbegin()        返回一个指向map尾部的逆向迭代器
-
- rend()          返回一个指向map头部的逆向迭代器
-
- size()          返回map中元素的个数
-
- swap()           交换两个map
-
- upper_bound()    返回键值&gt;给定元素的第一个位置
-
- value_comp()     返回比较元素value的函数
-</code></pre>
-<h4 id="unordered-set"><a href="#unordered-set" class="headerlink" title="unordered_set"></a>unordered_set</h4><p>基于哈希表的unordered_set和unordered_map区别于基于红黑树的set和map，内部无须，查找效率O（1）用空间换时间。原型为unordered_set<key>,key为任意基本类型，然后经过默认hash(key)转成size_t作为bucker.具体用法如下：</p>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;unordered_set&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 初始化和插入</span></span><br><span class="line">std::unordered_set&lt;<span class="keyword">int</span>&gt; ms&#123;<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>&#125;;</span><br><span class="line">ms.<span class="built_in">insert</span>(<span class="number">6</span>);</span><br><span class="line">ms.<span class="built_in">insert</span>(<span class="number">7</span>); <span class="comment">// 注意没有ms.at()或者ms[idx]的表述</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 遍历</span></span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">auto</span> &amp;s: ms)</span><br><span class="line">  cout &lt;&lt; s &lt;&lt; endl;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// 删除</span></span><br><span class="line">ms.<span class="built_in">erase</span>(<span class="number">2</span>);  <span class="comment">//若无则什么也不发生，返回删除元素个数</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 计数</span></span><br><span class="line">cout &lt;&lt; ms.<span class="built_in">count</span>(<span class="number">2</span>); <span class="comment">// 0</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 查找</span></span><br><span class="line">ms.<span class="built_in">find</span>(<span class="number">3</span>);  <span class="comment">// 返回查找迭代器，若无则返回ms.end()</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>]]></content>
-      <categories>
-        <category>leetcode</category>
-      </categories>
-      <tags>
-        <tag>leetcode</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>奖惩精要</title>
     <url>/2021/12/27/shisan/%E5%A5%96%E6%83%A9%E7%B2%BE%E8%A6%81/</url>
     <content><![CDATA[<p><code>摘自微信公众号十三手记</code></p>
@@ -1392,6 +1446,21 @@
 <h4 id="何时奖惩？"><a href="#何时奖惩？" class="headerlink" title="何时奖惩？"></a>何时奖惩？</h4><p>尽快，及时  </p>
 <h4 id="何处奖惩？"><a href="#何处奖惩？" class="headerlink" title="何处奖惩？"></a>何处奖惩？</h4><p>公开的要公开，私下的要私下，否则就是反效果。</p>
 <p>此刻，十三先生要你深深的明白：在你的人际关系管理中，若是你的奖惩只是你控制别人的手段，那你的手段最多只是临时效果，最终必定不能如你所愿，甚至受到反效果；若是你的奖惩是在用心反馈你对别人行为有效性的重视，是为了及时给予对方诚意的肯定或是改进提醒，那你就是在用奖惩的办法促进对方强大的同时与其交心，假以时日，你必定能收获到奖惩给你的人际关系处理的真实力量和价值。</p>
+]]></content>
+      <categories>
+        <category>十三手记</category>
+      </categories>
+      <tags>
+        <tag>十三手记</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>恐惧之破</title>
+    <url>/2022/01/05/shisan/%E6%81%90%E6%83%A7%E4%B9%8B%E7%A0%B4/</url>
+    <content><![CDATA[<p>你有恐惧吗？  想必有的<br>你想解除恐惧吗？  必定想的<br>可为什么你无法真正解除？  因为你不知道恐惧从何而来，更不知道什么是恐惧。</p>
+<h3 id="那么恐惧从何而来？"><a href="#那么恐惧从何而来？" class="headerlink" title="那么恐惧从何而来？"></a>那么恐惧从何而来？</h3><p>从曲解真相而来</p>
+<h3 id="恐惧是什么？"><a href="#恐惧是什么？" class="headerlink" title="恐惧是什么？"></a>恐惧是什么？</h3><p>是你的人生大礼给你的提醒。</p>
+<h3 id="此刻要你深深明白"><a href="#此刻要你深深明白" class="headerlink" title="此刻要你深深明白"></a>此刻要你深深明白</h3><p>二元有相世界，恐惧来自于你对真相的无视或者曲解。如此，只要你无视或者曲解了真相，必定会形成相应的恐惧；如此，你内心恐惧的形成是为了提醒你搞清楚恐惧背后的真相；如此，若是你逃避真相，你必定会反复感受到恐惧；如此，当你心有恐惧，请直面你所恐惧的东西，并搞清楚其真相，当你一旦真正清楚真相，恐惧必定就会随之而消失；与此同时，必定你就能在搞清楚真相的过程中收获到你人生的大礼。</p>
 ]]></content>
       <categories>
         <category>十三手记</category>
@@ -1613,12 +1682,20 @@
       </tags>
   </entry>
   <entry>
-    <title>恐惧之破</title>
-    <url>/2022/01/05/shisan/%E6%81%90%E6%83%A7%E4%B9%8B%E7%A0%B4/</url>
-    <content><![CDATA[<p>你有恐惧吗？  想必有的<br>你想解除恐惧吗？  必定想的<br>可为什么你无法真正解除？  因为你不知道恐惧从何而来，更不知道什么是恐惧。</p>
-<h3 id="那么恐惧从何而来？"><a href="#那么恐惧从何而来？" class="headerlink" title="那么恐惧从何而来？"></a>那么恐惧从何而来？</h3><p>从曲解真相而来</p>
-<h3 id="恐惧是什么？"><a href="#恐惧是什么？" class="headerlink" title="恐惧是什么？"></a>恐惧是什么？</h3><p>是你的人生大礼给你的提醒。</p>
-<h3 id="此刻要你深深明白"><a href="#此刻要你深深明白" class="headerlink" title="此刻要你深深明白"></a>此刻要你深深明白</h3><p>二元有相世界，恐惧来自于你对真相的无视或者曲解。如此，只要你无视或者曲解了真相，必定会形成相应的恐惧；如此，你内心恐惧的形成是为了提醒你搞清楚恐惧背后的真相；如此，若是你逃避真相，你必定会反复感受到恐惧；如此，当你心有恐惧，请直面你所恐惧的东西，并搞清楚其真相，当你一旦真正清楚真相，恐惧必定就会随之而消失；与此同时，必定你就能在搞清楚真相的过程中收获到你人生的大礼。</p>
+    <title>金钱之二元整体观</title>
+    <url>/2021/12/22/shisan/%E9%87%91%E9%92%B1%E4%B9%8B%E4%BA%8C%E5%85%83%E6%95%B4%E4%BD%93%E8%A7%82/</url>
+    <content><![CDATA[<p><code>摘自微信号十三手记</code></p>
+<p>金钱只是金钱的样子吗？<br>你以为是，但必定不是。</p>
+<p>首先明白，金钱的有形或无形形式为什么存在？<br>是为了运行金钱背后的实际价值</p>
+<p>对于金钱而言，一般有三种状态：获取，存储，使用<br>三种状态在一起就是你金钱的留存路径，也是金钱存在的整体。</p>
+<p>此时，十三先生要你深深的明白：只要你对待金钱的这三种状态不平衡，只偏向执着于其一或其二，被你忽略掉的部分都必定会让你体验到金钱的匮乏，你都必定会经历金钱的反复障碍，无论金钱多少，你都是被金钱牵制捆绑的奴才；若是你懂得了今天讲的金钱整体性，在金钱对境中，把这三部分中你当时所处的部分运作出最大的价值和质感，并透过自己的障碍和痛苦主动去发现自己的单边局限，并及时主动透过逆袭自己的小气和不尊重金钱之粗糙的行为来扩大自己的金钱进出通道和格局，如此，假以时日，你便不会被金钱三部分中任何一部分障碍，你便会逐步成为内心富足的金钱主人。</p>
+<p><strong>一条手记</strong>：二元有相世界，金钱是你自己其中一个相，你对待金钱的状态就是你对待自己和对待世界的状态。</p>
+<h3 id="个人感悟"><a href="#个人感悟" class="headerlink" title="个人感悟"></a>个人感悟</h3><p>这边十三先生提到关于金钱从获得，存储和使用三个维度分析，从提升个人金钱观上升提高个人世界观。</p>
+<ul>
+<li>关于获得：没有人会嫌钱多，在尽个人最大努力以及精力下，应最高效提升金钱的获得效率。</li>
+<li>关于存储：有了上一步，存储才有意义，如何有效理财，提升金钱的有效价值；另外，足够的存储才能带给个人底气和自信。</li>
+<li>关于使用：根据上两步的情况，具体规划用度，及时安抚自我，时刻让自己充满斗志与动力。</li>
+</ul>
 ]]></content>
       <categories>
         <category>十三手记</category>
@@ -1638,66 +1715,6 @@
 <p>如此一来，不解决麻烦的结果是什么？<br>你始终不能真正感受自己内心的智慧与力量。</p>
 <h3 id="此刻你要明白"><a href="#此刻你要明白" class="headerlink" title="此刻你要明白"></a>此刻你要明白</h3><p>在你的人生旅程中，你与别人的整体差距，就是你们解决麻烦的程度的差距，如此，当你遇到你以为的麻烦，请不要嫌弃和忽略，请你力所能及的去具体解决，尽量到位，因为在这些解决行为里，不仅有你值得提升的认知，也有你智慧与力量的创造，也有你生命活性的体验，更加你累积人生成就的大礼。</p>
 <h3 id="个人感悟"><a href="#个人感悟" class="headerlink" title="个人感悟"></a>个人感悟</h3><p>虽然我们需要惜时，但也要耐心解决问题，大大小小的问题都是提升自我的途径，尽管麻烦也要去接纳。如果重复度大的则可以考虑自动化去解决。</p>
-]]></content>
-      <categories>
-        <category>十三手记</category>
-      </categories>
-      <tags>
-        <tag>十三手记</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>洞见睡眠</title>
-    <url>/2021/12/28/shisan/%E6%B4%9E%E8%A7%81%E7%9D%A1%E7%9C%A0/</url>
-    <content><![CDATA[<p><code>摘自微信号十三手记</code></p>
-<h3 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h3><p>定时睡眠和睡眠时长时一个人精神饱满的关键吗？<br>你以为是，其实不是。<br>为什么？ 因为你没有真正懂得人的能量消耗和补充的原理，所以被某些单边的睡眠观念影响纠结，进而降低了睡眠质量。  </p>
-<ul>
-<li><p>人的系统能量是怎么消耗的？<br>眼耳鼻舌身的功能运行和头脑里的各种念想。 </p>
-</li>
-<li><p>系统能量是怎么补充的？<br>适当的时候，主动放松降低眼耳鼻舌身意的运行频率，生命本源会自动补充你的精神能量；适度的饮食支持会提供身体所需要的物质能量。</p>
-</li>
-</ul>
-<h3 id="要你深深明白"><a href="#要你深深明白" class="headerlink" title="要你深深明白"></a>要你深深明白</h3><p>二元有相世界，任何时候，当你放松敞开不纠结，系统能量便会自动减少消耗，补充便会自动提高。所以，定时睡眠以及睡眠时长并不是一个人精神饱满的关键，关键的问题是人的系统能量消耗和补充的原理，当你明白了这个原理，你便打破了睡眠是你能量补充的必须形式的局限认知，你便打破了你对睡眠的依赖性。  </p>
-<p>如此，反而你何时睡眠以及睡眠时长就可以根据你的意愿而主动安排；如此，你便不会因所谓的失眠而形成恐惧，便不会被恐惧纠结而形成反复消耗，反而能量补充会更加顺畅；如此，你的睡眠质量反而得到提高，你的生命自由度便会随着你心境的提升而逐步提升，身心健康和自由便走上了可期的道路。</p>
-<h3 id="附赠"><a href="#附赠" class="headerlink" title="附赠"></a>附赠</h3><p>失眠是什么？<br>是你先给自己定个睡觉时间，再把睡不着当成失眠吗？失眠是没睡觉的样子？还是说在特定时间没睡觉？为什么要特定？谁特定的？谁能除了定自己还能定别人？难道你不可以睡得着就睡，睡不着就不睡吗？</p>
-<h3 id="个人感悟"><a href="#个人感悟" class="headerlink" title="个人感悟"></a>个人感悟</h3><p>人类对自己的认知是那么的不足，对睡眠也几乎是一无所知。十三手记表达了令人惊奇的观点，人恢复能量和元气并不完完全全依赖于睡眠。虽然大部分时候睡眠质量很重要，但同时也没有必要一直纠结于自身的睡眠质量。能量的恢复是自然而然的，而人的感官意识都是无时无刻在耗费精力的，但当你关闭了这些感官和意识时，其实你就已经在休整，你的能量就已经是呈现上升的态势。所以，关于休息，我们应该更少焦虑的纠结于睡眠，更多关注我们感官意识的状态。这就是所谓的闭目养神，同时冥想可能可带来注意力的自主调整和加快能量恢复，以致于很多人推荐。</p>
-]]></content>
-      <categories>
-        <category>十三手记</category>
-      </categories>
-      <tags>
-        <tag>十三手记</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>能量朗读</title>
-    <url>/2021/12/20/shisan/%E8%83%BD%E9%87%8F%E6%9C%97%E8%AF%BB/</url>
-    <content><![CDATA[<p><code>文章摘自微信公众号：十三先生手记</code></p>
-<p>小时候，我就一直渴望幸福，一直渴望坚强；<br>小时候，我就一直渴望正直，一直渴望善良；<br>小时候，为就一直渴望快乐，一直渴望成长；<br>现在，我几乎丢失了我的信心，我几乎丢失了我的梦想！<br>我知道，我不能再这样消极的逃避。<br>我知道，我不能再这样平庸的彷徨。<br>我知道，我要全力迸发我的热情；我要勇敢的收复我的希望。<br>我知道，我要真诚的对待身边每一个人，这样，我才能被每一个人真诚的对待；<br>我知道，我要用心的对待每天的时光，这样，我才能收获每天的力量；<br>我知道，我要帮助身边每一个人达成心愿，这样，大家才能帮助我实现梦想。<br>从今天起，我要打败我的懒惰，重拾我的阳光；<br>从今天起，我要改变我的粗俗，提升我的修养；<br>从今天起，我要挑战我的懦弱，找回我的坚强；</p>
-<p>我是为爱这个世界而来<br>我要让世界因我的爱而更加美丽，<br>我要让世界因我的爱而更加安康，<br>我要让世界因我的爱而更加真诚，<br>我要让世界因我的爱而更加和畅。</p>
-]]></content>
-      <categories>
-        <category>十三手记</category>
-      </categories>
-      <tags>
-        <tag>十三手记</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>金钱之二元整体观</title>
-    <url>/2021/12/22/shisan/%E9%87%91%E9%92%B1%E4%B9%8B%E4%BA%8C%E5%85%83%E6%95%B4%E4%BD%93%E8%A7%82/</url>
-    <content><![CDATA[<p><code>摘自微信号十三手记</code></p>
-<p>金钱只是金钱的样子吗？<br>你以为是，但必定不是。</p>
-<p>首先明白，金钱的有形或无形形式为什么存在？<br>是为了运行金钱背后的实际价值</p>
-<p>对于金钱而言，一般有三种状态：获取，存储，使用<br>三种状态在一起就是你金钱的留存路径，也是金钱存在的整体。</p>
-<p>此时，十三先生要你深深的明白：只要你对待金钱的这三种状态不平衡，只偏向执着于其一或其二，被你忽略掉的部分都必定会让你体验到金钱的匮乏，你都必定会经历金钱的反复障碍，无论金钱多少，你都是被金钱牵制捆绑的奴才；若是你懂得了今天讲的金钱整体性，在金钱对境中，把这三部分中你当时所处的部分运作出最大的价值和质感，并透过自己的障碍和痛苦主动去发现自己的单边局限，并及时主动透过逆袭自己的小气和不尊重金钱之粗糙的行为来扩大自己的金钱进出通道和格局，如此，假以时日，你便不会被金钱三部分中任何一部分障碍，你便会逐步成为内心富足的金钱主人。</p>
-<p><strong>一条手记</strong>：二元有相世界，金钱是你自己其中一个相，你对待金钱的状态就是你对待自己和对待世界的状态。</p>
-<h3 id="个人感悟"><a href="#个人感悟" class="headerlink" title="个人感悟"></a>个人感悟</h3><p>这边十三先生提到关于金钱从获得，存储和使用三个维度分析，从提升个人金钱观上升提高个人世界观。</p>
-<ul>
-<li>关于获得：没有人会嫌钱多，在尽个人最大努力以及精力下，应最高效提升金钱的获得效率。</li>
-<li>关于存储：有了上一步，存储才有意义，如何有效理财，提升金钱的有效价值；另外，足够的存储才能带给个人底气和自信。</li>
-<li>关于使用：根据上两步的情况，具体规划用度，及时安抚自我，时刻让自己充满斗志与动力。</li>
-</ul>
 ]]></content>
       <categories>
         <category>十三手记</category>
@@ -1744,6 +1761,29 @@
       </tags>
   </entry>
   <entry>
+    <title>洞见睡眠</title>
+    <url>/2021/12/28/shisan/%E6%B4%9E%E8%A7%81%E7%9D%A1%E7%9C%A0/</url>
+    <content><![CDATA[<p><code>摘自微信号十三手记</code></p>
+<h3 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h3><p>定时睡眠和睡眠时长时一个人精神饱满的关键吗？<br>你以为是，其实不是。<br>为什么？ 因为你没有真正懂得人的能量消耗和补充的原理，所以被某些单边的睡眠观念影响纠结，进而降低了睡眠质量。  </p>
+<ul>
+<li><p>人的系统能量是怎么消耗的？<br>眼耳鼻舌身的功能运行和头脑里的各种念想。 </p>
+</li>
+<li><p>系统能量是怎么补充的？<br>适当的时候，主动放松降低眼耳鼻舌身意的运行频率，生命本源会自动补充你的精神能量；适度的饮食支持会提供身体所需要的物质能量。</p>
+</li>
+</ul>
+<h3 id="要你深深明白"><a href="#要你深深明白" class="headerlink" title="要你深深明白"></a>要你深深明白</h3><p>二元有相世界，任何时候，当你放松敞开不纠结，系统能量便会自动减少消耗，补充便会自动提高。所以，定时睡眠以及睡眠时长并不是一个人精神饱满的关键，关键的问题是人的系统能量消耗和补充的原理，当你明白了这个原理，你便打破了睡眠是你能量补充的必须形式的局限认知，你便打破了你对睡眠的依赖性。  </p>
+<p>如此，反而你何时睡眠以及睡眠时长就可以根据你的意愿而主动安排；如此，你便不会因所谓的失眠而形成恐惧，便不会被恐惧纠结而形成反复消耗，反而能量补充会更加顺畅；如此，你的睡眠质量反而得到提高，你的生命自由度便会随着你心境的提升而逐步提升，身心健康和自由便走上了可期的道路。</p>
+<h3 id="附赠"><a href="#附赠" class="headerlink" title="附赠"></a>附赠</h3><p>失眠是什么？<br>是你先给自己定个睡觉时间，再把睡不着当成失眠吗？失眠是没睡觉的样子？还是说在特定时间没睡觉？为什么要特定？谁特定的？谁能除了定自己还能定别人？难道你不可以睡得着就睡，睡不着就不睡吗？</p>
+<h3 id="个人感悟"><a href="#个人感悟" class="headerlink" title="个人感悟"></a>个人感悟</h3><p>人类对自己的认知是那么的不足，对睡眠也几乎是一无所知。十三手记表达了令人惊奇的观点，人恢复能量和元气并不完完全全依赖于睡眠。虽然大部分时候睡眠质量很重要，但同时也没有必要一直纠结于自身的睡眠质量。能量的恢复是自然而然的，而人的感官意识都是无时无刻在耗费精力的，但当你关闭了这些感官和意识时，其实你就已经在休整，你的能量就已经是呈现上升的态势。所以，关于休息，我们应该更少焦虑的纠结于睡眠，更多关注我们感官意识的状态。这就是所谓的闭目养神，同时冥想可能可带来注意力的自主调整和加快能量恢复，以致于很多人推荐。</p>
+]]></content>
+      <categories>
+        <category>十三手记</category>
+      </categories>
+      <tags>
+        <tag>十三手记</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>高效行动</title>
     <url>/2022/01/18/shisan/%E9%AB%98%E6%95%88%E8%A1%8C%E5%8A%A8/</url>
     <content><![CDATA[<p><code>摘自微信号十三手记</code></p>
@@ -1753,6 +1793,20 @@
 <p>多余动作会产生什么效果？<br>你以为会让事态进展更高效，但，其实必定会生出更多跟事件发展本身无关的新问题，进而形成层层阻碍。</p>
 <h3 id="此刻你要明白"><a href="#此刻你要明白" class="headerlink" title="此刻你要明白"></a>此刻你要明白</h3><p>在事情发展过程中，只有你的行为尽量实事求是的直接着力于事件本身，你才能尽量减少多余动作产生的能耗，你才能让事件在发展过程中更加清晰的优化，你才能让事件的进展更加高效。</p>
 <h3 id="个人感悟"><a href="#个人感悟" class="headerlink" title="个人感悟"></a>个人感悟</h3><p>对于自我而言，其实是逃避真正问题的根因。有时候明知道面前有必须要解决的问题，但是总是希望从外界或者其他不相关的内容中得到方法，而非从自身出发努力去解决问题。因此往往会偏离有价值的行为，以及有效的解决真正问题，因此才一直无法有效解决问题。</p>
+]]></content>
+      <categories>
+        <category>十三手记</category>
+      </categories>
+      <tags>
+        <tag>十三手记</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>能量朗读</title>
+    <url>/2021/12/20/shisan/%E8%83%BD%E9%87%8F%E6%9C%97%E8%AF%BB/</url>
+    <content><![CDATA[<p><code>文章摘自微信公众号：十三先生手记</code></p>
+<p>小时候，我就一直渴望幸福，一直渴望坚强；<br>小时候，我就一直渴望正直，一直渴望善良；<br>小时候，为就一直渴望快乐，一直渴望成长；<br>现在，我几乎丢失了我的信心，我几乎丢失了我的梦想！<br>我知道，我不能再这样消极的逃避。<br>我知道，我不能再这样平庸的彷徨。<br>我知道，我要全力迸发我的热情；我要勇敢的收复我的希望。<br>我知道，我要真诚的对待身边每一个人，这样，我才能被每一个人真诚的对待；<br>我知道，我要用心的对待每天的时光，这样，我才能收获每天的力量；<br>我知道，我要帮助身边每一个人达成心愿，这样，大家才能帮助我实现梦想。<br>从今天起，我要打败我的懒惰，重拾我的阳光；<br>从今天起，我要改变我的粗俗，提升我的修养；<br>从今天起，我要挑战我的懦弱，找回我的坚强；</p>
+<p>我是为爱这个世界而来<br>我要让世界因我的爱而更加美丽，<br>我要让世界因我的爱而更加安康，<br>我要让世界因我的爱而更加真诚，<br>我要让世界因我的爱而更加和畅。</p>
 ]]></content>
       <categories>
         <category>十三手记</category>
@@ -1799,69 +1853,6 @@
       </categories>
       <tags>
         <tag>心理</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>盐选健康</title>
-    <url>/2022/01/21/xinli/%E7%9B%90%E9%80%89%E5%81%A5%E5%BA%B7/</url>
-    <content><![CDATA[<h3 id="优雅起床"><a href="#优雅起床" class="headerlink" title="优雅起床"></a>优雅起床</h3><p>熬夜:睡眠不规律,睡眠不足以及整夜不睡.而非指定睡觉时间,当然中医养生的角度应该是需要早睡早起,早上练功升阳.</p>
-<p>如何优雅起床：</p>
-<ol>
-<li>早起一杯温白开</li>
-<li>感受阳光感受风，开窗通风</li>
-<li>刷牙洗鼻如厕</li>
-<li>吃好早餐</li>
-<li>洗臉：干性用冷水，油性用热水</li>
-</ol>
-<p>起床三不要：</p>
-<ol>
-<li>不要起床太快，可以先拉伸慢慢活动开</li>
-<li>晨练不要太剧烈，八段锦</li>
-<li>如厕不能太用力，自然而为</li>
-</ol>
-<p>避免起床气，其成因：混乱性觉醒，避险本能；不吃早餐危害：肥胖</p>
-<p>完美早餐 = 主食 + 蛋白质 + 蔬菜 + 水果<br>主食可配粗粮红薯、玉米、红豆、紫米等</p>
-<h3 id="早高峰养生"><a href="#早高峰养生" class="headerlink" title="早高峰养生"></a>早高峰养生</h3><p>正常脖子需成熟头部的压力约4～5公斤，但低头幅度达45度时，相当于顶着10瓶大可乐，应尽可能减少低头。长期前伸容易导致肌肉疼痛僵硬，久而久之出现劳损和椎间盘突出；影响心血管健康，血循环及脑供氧。莫憋屁尿，憋尿坏处多。</p>
-<h3 id="对抗久坐"><a href="#对抗久坐" class="headerlink" title="对抗久坐"></a>对抗久坐</h3><p>久坐的坏处：肥胖，腿部血液流速减慢，大量静脉血淤积在小腿，肌肉和韧带等组织过度拉伸的酸胀，使人处于低代谢水平，影响内分泌功能。</p>
-<p>解决方法：寻找站立办公的机会，多走动。小水杯，多厕所，绕远路.</p>
-<p>正确坐姿：抬头挺胸收腹，目视前方</p>
-<p>头部米字操，锻炼颈部后方肌肉</p>
-<p>枕头：压缩后一拳大小，别太软要有支撑</p>
-<p>改善腰部：桥式，飞燕，平板支撑</p>
-<h3 id="关于午休"><a href="#关于午休" class="headerlink" title="关于午休"></a>关于午休</h3><p>吃完睡并不会长胖，多吃或者睡完又吃才会。午睡讲究火候，一般10-20恰到好处，起来神清气爽；如果超过一个小时则进入完全睡眠，起来身体很疲惫。</p>
-<p>晚上难入睡的伙伴，建议中午攒攒睡意，等到晚上再一口气休息好。<br>善用垫枕和U型枕，尽量躺睡，如果不睡觉建议听点音乐作休息，另外善用降噪耳机。</p>
-<h3 id="关于外卖"><a href="#关于外卖" class="headerlink" title="关于外卖"></a>关于外卖</h3><p>正规店家要求《餐饮服务许可证》和《营业执照》<br>远离三种菜：干煸/干锅，“水煮”，炒土豆三鲜等；少油少盐少淀粉。<br>油脂单位热量高，而且代谢困难。减少油炸，重油食品，而且大部分吃到的油不新鲜，进入身体代谢严重影响健康。点菜要避免眼大肚小，饿的时候容易点多。更绝的是可以把油先蹭掉再蘸料吃，实现味道与健康的双赢。</p>
-<p>爱吃炸鸡的朋友，可以把鸡皮扒开吃，尽量摄入非常油的食品。</p>
-<p>针对甜点欲望，可以慢节奏吃+喝水，有效缓解甜品的高热量诱惑。<br>另外要打破杜绝浪费的观念，针对不健康的食品应该果断浪费，因为引起的健康问题反而得不偿失！</p>
-<h3 id="关于晚饭"><a href="#关于晚饭" class="headerlink" title="关于晚饭"></a>关于晚饭</h3><p>正常是规律进食，除非当天中午或者下午吃多了，热量摄入足够了。再就是晚上8～9点入睡的朋友也可不吃，因为睡眠消耗比较小。</p>
-<p>晚饭需要注意的是：1.早吃 2.不暴食 </p>
-<h3 id="关于夜宵"><a href="#关于夜宵" class="headerlink" title="关于夜宵"></a>关于夜宵</h3><p>夜宵的吸引力：1.无聊 2.压力 3.心情不佳<br>可以选择牛奶燕麦粥，少放盐</p>
-<h3 id="关于熬夜"><a href="#关于熬夜" class="headerlink" title="关于熬夜"></a>关于熬夜</h3><p>危害多，长期的睡眠不足比急性通宵的影响更大；严重影响身体机能，免疫力以及反映力等。</p>
-<p>熬夜的主要原因：追剧，小说，游戏。一线普遍12点后睡，日均7.8小时。<br>只要生活规律，睡眠质量高，一觉醒来活力四射，元气满满，那么这样的作息就是适合你的。</p>
-<h3 id="延缓衰老"><a href="#延缓衰老" class="headerlink" title="延缓衰老"></a>延缓衰老</h3><p>25岁后，人的衰老主要是基础代谢下降，预防衰老第一步是维持高水平的代谢率。皮肤衰老首要原因是紫外线，注意防晒。有光就有太阳，有太阳就有紫外线，有紫外线就会变老。</p>
-<h4 id="饮食"><a href="#饮食" class="headerlink" title="饮食"></a>饮食</h4><p>主要方法：1.低油低糖不过饱，过度进食容易消化不良，影响肠胃正常运作 2.均衡饮食，三餐规律。</p>
-<p>多摄入牛奶，酸奶和豆腐，高钙能缓解衰老。铁和锌，维生素ABCD等族群，起到意想不到的作用。</p>
-<p>多摄入粗粮，粗粮最大的优点是带来饱腹感，膳食纤维能与脂肪和胆固醇结合，预防高血脂和脂肪肝等病。</p>
-<p>减少多糖，糖基化是糖和蛋白质结合，使其失去正常的结构和颜色。</p>
-<h4 id="快乐"><a href="#快乐" class="headerlink" title="快乐"></a>快乐</h4><p><code>傻人有傻福</code>，生活已经很苦，不要再给自己太大的压力，学会和自己和解，保持良好心情。长期高压下，导致失眠，毛孔粗大，脱发，皮肤暗沉等问题。试着让自己每天都快乐，接受和享受快乐。</p>
-<h4 id="运动"><a href="#运动" class="headerlink" title="运动"></a>运动</h4><p>动起来，每天半小时的健身锻炼，让你的生理状态和精神面貌都年轻；长久不锻炼，肌肉会退化，人的反映也会变缓。</p>
-<h3 id="关于零食"><a href="#关于零食" class="headerlink" title="关于零食"></a>关于零食</h3><p>每天一小包坚果是可行，但注意油炸和蟹黄等。可以考虑燕麦制品的零食，至于糖果巧克力则是甜蜜的负担，心情不好时可以来一下。最后果脯果干不能当水果吃，选择钠含量不超标的食物。辣条含钠量太高，基本卫生也无法保证，还是别吃了。同时也要减少吃冰制品。方便面垃圾不在于其他，只在于热量高，含盐量高，蛋白质和膳食纤维不足。尽量进食新鲜食材，而非加工制品。</p>
-<p><code>胖子不是一口吃成的，你摄入的每一份糖和油脂都不是无辜的。</code></p>
-<h3 id="生活中的建议"><a href="#生活中的建议" class="headerlink" title="生活中的建议"></a>生活中的建议</h3><ul>
-<li>好好吃每一顿正餐，减少时长产生的饥饿感</li>
-<li>保持学习和工作环境的清爽，不把零食放到容易看见的地方，人的意志很容易动摇，不要自己给自己设置考验</li>
-<li>多喝水，有时你感觉饿了并不一定是身体真的缺少能量，也可能是缺水了，试试站起来倒杯水，补充水分，转移注意力，有时候就能骗过大脑</li>
-<li>买小包装或者分装，拆开一大包容易全部吃完</li>
-<li>定时摄入，稍微补充，而不是随时随地补充能量</li>
-<li>千万不要一边看剧综艺一边零食，否则根本想象不到自己吃了多少<br>总之进食要注意糖、脂肪、热量、钠和蛋白质，尽量选低糖、低热量、低钠、高蛋白的食物，用全麦面包和燕麦来饱腹吧～</li>
-</ul>
-<h3 id="关于饮料"><a href="#关于饮料" class="headerlink" title="关于饮料"></a>关于饮料</h3><p>提神饮料可选茶叶，茶本身比较健康，无糖无脂低热量。咖啡可选美式，名字越好听越可能是健康陷阱。平时午饭后，可来一杯咖啡，小憩15-20分钟，即可在午后华丽转身。能量饮料中含有大量糖，而且咖啡因不能摄入过量，最多依赖茶叶，尽量不依赖功能饮料。</p>
-]]></content>
-      <categories>
-        <category>身体健康</category>
-      </categories>
-      <tags>
-        <tag>身体健康</tag>
       </tags>
   </entry>
   <entry>
@@ -2425,6 +2416,69 @@
       </categories>
       <tags>
         <tag>读书笔记</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>盐选健康</title>
+    <url>/2022/01/21/xinli/%E7%9B%90%E9%80%89%E5%81%A5%E5%BA%B7/</url>
+    <content><![CDATA[<h3 id="优雅起床"><a href="#优雅起床" class="headerlink" title="优雅起床"></a>优雅起床</h3><p>熬夜:睡眠不规律,睡眠不足以及整夜不睡.而非指定睡觉时间,当然中医养生的角度应该是需要早睡早起,早上练功升阳.</p>
+<p>如何优雅起床：</p>
+<ol>
+<li>早起一杯温白开</li>
+<li>感受阳光感受风，开窗通风</li>
+<li>刷牙洗鼻如厕</li>
+<li>吃好早餐</li>
+<li>洗臉：干性用冷水，油性用热水</li>
+</ol>
+<p>起床三不要：</p>
+<ol>
+<li>不要起床太快，可以先拉伸慢慢活动开</li>
+<li>晨练不要太剧烈，八段锦</li>
+<li>如厕不能太用力，自然而为</li>
+</ol>
+<p>避免起床气，其成因：混乱性觉醒，避险本能；不吃早餐危害：肥胖</p>
+<p>完美早餐 = 主食 + 蛋白质 + 蔬菜 + 水果<br>主食可配粗粮红薯、玉米、红豆、紫米等</p>
+<h3 id="早高峰养生"><a href="#早高峰养生" class="headerlink" title="早高峰养生"></a>早高峰养生</h3><p>正常脖子需成熟头部的压力约4～5公斤，但低头幅度达45度时，相当于顶着10瓶大可乐，应尽可能减少低头。长期前伸容易导致肌肉疼痛僵硬，久而久之出现劳损和椎间盘突出；影响心血管健康，血循环及脑供氧。莫憋屁尿，憋尿坏处多。</p>
+<h3 id="对抗久坐"><a href="#对抗久坐" class="headerlink" title="对抗久坐"></a>对抗久坐</h3><p>久坐的坏处：肥胖，腿部血液流速减慢，大量静脉血淤积在小腿，肌肉和韧带等组织过度拉伸的酸胀，使人处于低代谢水平，影响内分泌功能。</p>
+<p>解决方法：寻找站立办公的机会，多走动。小水杯，多厕所，绕远路.</p>
+<p>正确坐姿：抬头挺胸收腹，目视前方</p>
+<p>头部米字操，锻炼颈部后方肌肉</p>
+<p>枕头：压缩后一拳大小，别太软要有支撑</p>
+<p>改善腰部：桥式，飞燕，平板支撑</p>
+<h3 id="关于午休"><a href="#关于午休" class="headerlink" title="关于午休"></a>关于午休</h3><p>吃完睡并不会长胖，多吃或者睡完又吃才会。午睡讲究火候，一般10-20恰到好处，起来神清气爽；如果超过一个小时则进入完全睡眠，起来身体很疲惫。</p>
+<p>晚上难入睡的伙伴，建议中午攒攒睡意，等到晚上再一口气休息好。<br>善用垫枕和U型枕，尽量躺睡，如果不睡觉建议听点音乐作休息，另外善用降噪耳机。</p>
+<h3 id="关于外卖"><a href="#关于外卖" class="headerlink" title="关于外卖"></a>关于外卖</h3><p>正规店家要求《餐饮服务许可证》和《营业执照》<br>远离三种菜：干煸/干锅，“水煮”，炒土豆三鲜等；少油少盐少淀粉。<br>油脂单位热量高，而且代谢困难。减少油炸，重油食品，而且大部分吃到的油不新鲜，进入身体代谢严重影响健康。点菜要避免眼大肚小，饿的时候容易点多。更绝的是可以把油先蹭掉再蘸料吃，实现味道与健康的双赢。</p>
+<p>爱吃炸鸡的朋友，可以把鸡皮扒开吃，尽量摄入非常油的食品。</p>
+<p>针对甜点欲望，可以慢节奏吃+喝水，有效缓解甜品的高热量诱惑。<br>另外要打破杜绝浪费的观念，针对不健康的食品应该果断浪费，因为引起的健康问题反而得不偿失！</p>
+<h3 id="关于晚饭"><a href="#关于晚饭" class="headerlink" title="关于晚饭"></a>关于晚饭</h3><p>正常是规律进食，除非当天中午或者下午吃多了，热量摄入足够了。再就是晚上8～9点入睡的朋友也可不吃，因为睡眠消耗比较小。</p>
+<p>晚饭需要注意的是：1.早吃 2.不暴食 </p>
+<h3 id="关于夜宵"><a href="#关于夜宵" class="headerlink" title="关于夜宵"></a>关于夜宵</h3><p>夜宵的吸引力：1.无聊 2.压力 3.心情不佳<br>可以选择牛奶燕麦粥，少放盐</p>
+<h3 id="关于熬夜"><a href="#关于熬夜" class="headerlink" title="关于熬夜"></a>关于熬夜</h3><p>危害多，长期的睡眠不足比急性通宵的影响更大；严重影响身体机能，免疫力以及反映力等。</p>
+<p>熬夜的主要原因：追剧，小说，游戏。一线普遍12点后睡，日均7.8小时。<br>只要生活规律，睡眠质量高，一觉醒来活力四射，元气满满，那么这样的作息就是适合你的。</p>
+<h3 id="延缓衰老"><a href="#延缓衰老" class="headerlink" title="延缓衰老"></a>延缓衰老</h3><p>25岁后，人的衰老主要是基础代谢下降，预防衰老第一步是维持高水平的代谢率。皮肤衰老首要原因是紫外线，注意防晒。有光就有太阳，有太阳就有紫外线，有紫外线就会变老。</p>
+<h4 id="饮食"><a href="#饮食" class="headerlink" title="饮食"></a>饮食</h4><p>主要方法：1.低油低糖不过饱，过度进食容易消化不良，影响肠胃正常运作 2.均衡饮食，三餐规律。</p>
+<p>多摄入牛奶，酸奶和豆腐，高钙能缓解衰老。铁和锌，维生素ABCD等族群，起到意想不到的作用。</p>
+<p>多摄入粗粮，粗粮最大的优点是带来饱腹感，膳食纤维能与脂肪和胆固醇结合，预防高血脂和脂肪肝等病。</p>
+<p>减少多糖，糖基化是糖和蛋白质结合，使其失去正常的结构和颜色。</p>
+<h4 id="快乐"><a href="#快乐" class="headerlink" title="快乐"></a>快乐</h4><p><code>傻人有傻福</code>，生活已经很苦，不要再给自己太大的压力，学会和自己和解，保持良好心情。长期高压下，导致失眠，毛孔粗大，脱发，皮肤暗沉等问题。试着让自己每天都快乐，接受和享受快乐。</p>
+<h4 id="运动"><a href="#运动" class="headerlink" title="运动"></a>运动</h4><p>动起来，每天半小时的健身锻炼，让你的生理状态和精神面貌都年轻；长久不锻炼，肌肉会退化，人的反映也会变缓。</p>
+<h3 id="关于零食"><a href="#关于零食" class="headerlink" title="关于零食"></a>关于零食</h3><p>每天一小包坚果是可行，但注意油炸和蟹黄等。可以考虑燕麦制品的零食，至于糖果巧克力则是甜蜜的负担，心情不好时可以来一下。最后果脯果干不能当水果吃，选择钠含量不超标的食物。辣条含钠量太高，基本卫生也无法保证，还是别吃了。同时也要减少吃冰制品。方便面垃圾不在于其他，只在于热量高，含盐量高，蛋白质和膳食纤维不足。尽量进食新鲜食材，而非加工制品。</p>
+<p><code>胖子不是一口吃成的，你摄入的每一份糖和油脂都不是无辜的。</code></p>
+<h3 id="生活中的建议"><a href="#生活中的建议" class="headerlink" title="生活中的建议"></a>生活中的建议</h3><ul>
+<li>好好吃每一顿正餐，减少时长产生的饥饿感</li>
+<li>保持学习和工作环境的清爽，不把零食放到容易看见的地方，人的意志很容易动摇，不要自己给自己设置考验</li>
+<li>多喝水，有时你感觉饿了并不一定是身体真的缺少能量，也可能是缺水了，试试站起来倒杯水，补充水分，转移注意力，有时候就能骗过大脑</li>
+<li>买小包装或者分装，拆开一大包容易全部吃完</li>
+<li>定时摄入，稍微补充，而不是随时随地补充能量</li>
+<li>千万不要一边看剧综艺一边零食，否则根本想象不到自己吃了多少<br>总之进食要注意糖、脂肪、热量、钠和蛋白质，尽量选低糖、低热量、低钠、高蛋白的食物，用全麦面包和燕麦来饱腹吧～</li>
+</ul>
+<h3 id="关于饮料"><a href="#关于饮料" class="headerlink" title="关于饮料"></a>关于饮料</h3><p>提神饮料可选茶叶，茶本身比较健康，无糖无脂低热量。咖啡可选美式，名字越好听越可能是健康陷阱。平时午饭后，可来一杯咖啡，小憩15-20分钟，即可在午后华丽转身。能量饮料中含有大量糖，而且咖啡因不能摄入过量，最多依赖茶叶，尽量不依赖功能饮料。</p>
+]]></content>
+      <categories>
+        <category>身体健康</category>
+      </categories>
+      <tags>
+        <tag>身体健康</tag>
       </tags>
   </entry>
 </search>
