@@ -6,7 +6,7 @@
   <link href="http://tanrunjie.github.io/atom.xml" rel="self"/>
   
   <link href="http://tanrunjie.github.io/"/>
-  <updated>2022-04-18T03:32:38.093Z</updated>
+  <updated>2022-04-24T08:26:31.037Z</updated>
   <id>http://tanrunjie.github.io/</id>
   
   <author>
@@ -15,6 +15,53 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>力扣加加</title>
+    <link href="http://tanrunjie.github.io/2022/04/24/reading/lcpp/"/>
+    <id>http://tanrunjie.github.io/2022/04/24/reading/lcpp/</id>
+    <published>2022-04-24T03:30:15.000Z</published>
+    <updated>2022-04-24T08:26:31.037Z</updated>
+    
+    <content type="html"><![CDATA[<p>前言：努力做西湖区最好的算法题解。分为算法专题、91天学算法、精选题解、高频考题（简单-中等-困难）</p><h2 id="算法专题"><a href="#算法专题" class="headerlink" title="算法专题"></a>算法专题</h2><h3 id="数据结构"><a href="#数据结构" class="headerlink" title="数据结构"></a>数据结构</h3><p>线性结构：使用连续内存，序列。利于查询，不利于插入删除<br>非线性结构：使用间断内存，通过地址指针连接,链表。运行时动态生成</p><p>队列、栈都是受限序列。非线性结构是为了高效兼顾静态操作和动态操作，如树堆。<br>堆是一种优先队列，二叉查找树（查找快），AVL平衡树优化深度的BST，及后面的红黑树。</p><h3 id="链表"><a href="#链表" class="headerlink" title="链表"></a>链表</h3><p><img src="/images/4_24_1.jpg"></p><p>链表基本操作,画图理解：注意头尾指针情况<br>插入节点：<br>1.temp = 待插位置前驱节点.next<br>2.待插位置前驱节点.next = 待插指针<br>3.待插指针.next = temp</p><p>删除节点：<br>1.待删除位置的前驱节点.next = 待删除位置的前驱节点.next.next</p><p>遍历：<br>cur = head<br>while(cur!=nullptr){<br>  print(cur)<br>  cur = cur.next<br>}</p><p>前序遍历递归伪代码</p><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">dfs</span>(cur)&#123;</span><br><span class="line">  <span class="keyword">if</span> cur == <span class="literal">nullptr</span></span><br><span class="line">    <span class="keyword">return</span></span><br><span class="line">  <span class="built_in">print</span>(cur.val)</span><br><span class="line">  <span class="keyword">return</span> <span class="built_in">dfs</span>(cur.next)</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure><h4 id="一个原则：画图"><a href="#一个原则：画图" class="headerlink" title="一个原则：画图"></a>一个原则：画图</h4><h4 id="两个考点："><a href="#两个考点：" class="headerlink" title="两个考点："></a>两个考点：</h4><p>1.指针修改<br>比如链表反转，数组直接遍历两两交换</p><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">reverse</span><span class="params">(head, tail)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  cur = head</span><br><span class="line">  pre = <span class="literal">nullptr</span></span><br><span class="line">  <span class="keyword">while</span>(cur!=tail)</span><br><span class="line">  &#123;</span><br><span class="line">    next = cur-&gt;next</span><br><span class="line">    cur-&gt;next = pre</span><br><span class="line">    pre = cur</span><br><span class="line">    cur = next</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> tail</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>2.链表拼接<br>容易穿来穿去。<br>链表的价值：不必要求物理内存连续性，对插入和删除友好。</p><h4 id="三个注意：-覆盖90-错误"><a href="#三个注意：-覆盖90-错误" class="headerlink" title="三个注意： 覆盖90%错误"></a>三个注意： 覆盖90%错误</h4><ul><li>出现了环，造成死循环</li><li>分不清边界，造成边界条件出错</li><li>搞不懂递归做法</li></ul><p>关于链表环：</p><ul><li>题目链表可能有环，判断是否有，以及位置（快慢指针）</li><li>本来没环，被你操作出现环（先画图，看操作；仅仅画出一个子结构即可）</li></ul><p>关于边界：</p><ul><li>如果题目的头节点可能移除，考虑使用虚拟节点，使头节点变成中间节点</li><li>题目返回不是原本的头节点，而是尾节点或者中间节点，要注意指针变化</li></ul><h4 id="前后序"><a href="#前后序" class="headerlink" title="前后序"></a>前后序</h4><p>前序：先处理节点，再左右<br>中序：先左，再处理，再右<br>后序：先左右，最后处理节点</p><p>由于链表天生具有递归性，可以引入递归思维。</p><p>如果前序遍历，可以想象前面链表处理好了，这种情况下处理当前；如果后序，则想象后面处理好了，这种情况下处理当前。</p><h4 id="四个技巧"><a href="#四个技巧" class="headerlink" title="四个技巧"></a>四个技巧</h4><p>虚拟头作用：</p><ul><li>头节点变成中间节点，简化判断</li><li>在合适时候断开，返回链表中间节点</li></ul><p>快慢指针：</p><ul><li>一个先走，一个后走</li><li>一个快走，一个慢走</li></ul><p>穿针引线：先穿再引，即记录后续改动的，再变更之前的</p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;p&gt;前言：努力做西湖区最好的算法题解。分为算法专题、91天学算法、精选题解、高频考题（简单-中等-困难）&lt;/p&gt;
+&lt;h2 id=&quot;算法专题&quot;&gt;&lt;a href=&quot;#算法专题&quot; class=&quot;headerlink&quot; title=&quot;算法专题&quot;&gt;&lt;/a&gt;算法专题&lt;/h2&gt;&lt;h3 id=</summary>
+      
+    
+    
+    
+    <category term="读书笔记" scheme="http://tanrunjie.github.io/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/"/>
+    
+    
+    <category term="读书笔记" scheme="http://tanrunjie.github.io/tags/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>effective_cpp 3rd</title>
+    <link href="http://tanrunjie.github.io/2022/04/21/reading/effective-cpp/"/>
+    <id>http://tanrunjie.github.io/2022/04/21/reading/effective-cpp/</id>
+    <published>2022-04-21T07:56:35.000Z</published>
+    <updated>2022-04-24T03:27:18.159Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="导读"><a href="#导读" class="headerlink" title="导读"></a>导读</h3><p>声明为explicit的构造函数更佳，避免不明确的自动隐式转换<br>对象使用“=”会自动调用copy构造函数<br>命名尽可能带有意义的缩写：lhs, rhs; pw,pa; rw,ra;等<br>关于线程的点：当C++受到全世界关注时，多线程程序还没诞生。因此C++的多线程更多考虑线程安全性。</p><p>内置类型pass-by-value高效，自定义类型pass-by-reference高效。</p><h3 id="chap1-Accustoming-to-C"><a href="#chap1-Accustoming-to-C" class="headerlink" title="chap1 Accustoming to C++"></a>chap1 Accustoming to C++</h3><h4 id="C-的四大组成部分："><a href="#C-的四大组成部分：" class="headerlink" title="C++的四大组成部分："></a>C++的四大组成部分：</h4><ul><li>原生C，C语言的区别在于没有：模板，异常及重载</li><li>面向对象C++特性：类、封装、继承、多态、虚函数</li><li>模板C++特性：泛型编程</li><li>STL算法库<br>根据应用场合所需使用其中的主要成分。</li></ul><h4 id="const-enum-inline-rather-than-define"><a href="#const-enum-inline-rather-than-define" class="headerlink" title="const, enum, inline rather than #define"></a>const, enum, inline rather than #define</h4><p>使用#define则预处理器解释，编译器不可见,因此也没有进符号表，可能导致编译器无法跟踪具体错误。<br>static char倾向用const string，类中的static int用enum {num=5}; enum hack</p><ul><li>对于简单常量，使用const或者enum</li><li>对于#define函数宏，使用内联函数</li></ul><h4 id="尽可能使用const"><a href="#尽可能使用const" class="headerlink" title="尽可能使用const"></a>尽可能使用const</h4><p>const char* p = pa; // const data<br>char* const p = pa; // const ptr<br>规律：星号左侧const为const data, 星号右侧const为const ptr</p><p>因此，下面f1和f2是一致的</p><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">f1</span><span class="params">(<span class="keyword">const</span> Widget* pw)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">f2</span><span class="params">(Widget <span class="keyword">const</span> * pw)</span></span>;</span><br></pre></td></tr></table></figure><p>const 迭代器不得改变指向，但是指向的内容值可以改动。<br>const return可以预防”无意义的赋值动作”错误。<br>const成员函数目的：1.让接口容易理解，指导是否可以改动对象内容 2.使操作const对象成为可能，因为改善C++程序效率根本方法是pass by reference-to-const</p><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// non-const</span></span><br><span class="line"><span class="keyword">char</span>&amp; <span class="keyword">operator</span>[](<span class="keyword">int</span> pos)</span><br><span class="line">&#123; <span class="keyword">return</span> text[pos];&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// const</span></span><br><span class="line"><span class="keyword">const</span> <span class="keyword">char</span>&amp; <span class="keyword">operator</span>[](<span class="keyword">int</span> pos) <span class="keyword">const</span></span><br><span class="line">&#123; <span class="keyword">return</span> text[pos];&#125;</span><br></pre></td></tr></table></figure><p>非const操作可读可写，const操作只针对const对象的读取；</p><p>bitwise const（C++）与Logical const的思考：<br>引入mutable成员变量使在const成员函数中依然可变，从而打破bitwise const，达到Logical const；<br>但mutable不能解决所有const难题，如指向的外部指针需要做边界检验、日志访问信息、完善性检验等，则在类内部产生一个争议的怪物。不利于代码重复、编译加快及维护。一个办法是non-const operator[]调用其const operator[]兄弟，减少重复代码，但是需要两次转型：一次将*this从原型转型为const &amp;,从而避免递归调用non const版本自身；一次是在返回值移除const。从而用const operator[]实现出non-const版本。反向做法则带有风险：曾经承诺不改动的对象被改动了。因此const成员函数调用non-const函数是错误行为，因为non const可能改变成员。</p><p>总结：熟悉const在指针/迭代器上；在指针迭代器及引用指向的对象身上；在函数参数和返回类型上；在成员函数上的使用细则。</p><ul><li>声明const帮助编译器识别错误用法，const可施加于任何作用域内的对象、函数参数、函数返回类型、函数本身。</li><li>编译器实施bitwise constness,但编程时应该使用logical constness</li><li>const和non-const成员函数有着实质等价的实现时，可令non-const版本调用const版本避免代码重复。</li></ul><h4 id="确定对象被使用前被初始化"><a href="#确定对象被使用前被初始化" class="headerlink" title="确定对象被使用前被初始化"></a>确定对象被使用前被初始化</h4><p>构造函数总是使用成员初始化列表<br>static对象：声明周期从构造到程序结束，包括global对象，namespace作用域内的对象、class内、函数内、file作用域内声明为static的对象。<br>区别于static的stack,heap-based对象属于动态内存。</p><p>其中的问题c++对”定义在不同编译单元内的non-local static对象“初始化相对次序无法明确定义。因为决定初始化次序相当困难，常见形式多个编译单元的non-local static对象经有“模板隐式具现化 implicit template instantiations”形成。</p><p>解决方法：将每个non-local static对象搬到自己专属函数内，函数返回一个reference指向它所包含的对象。即singleton设计模式。</p><p>记住：</p><ul><li>为内置型对象进行手工初始化，因为C++编译器不能保证初始化</li><li>构造函数使用成员初始化列表，且尽量确保次序一致</li><li>解决“跨编译单元的初始化次序”问题，用local static对象替换non-local static对象</li></ul><h3 id="chap2-构造-析构-赋值运算"><a href="#chap2-构造-析构-赋值运算" class="headerlink" title="chap2 构造/析构/赋值运算"></a>chap2 构造/析构/赋值运算</h3><h4 id="了解C-默默编写及调用哪些函数"><a href="#了解C-默默编写及调用哪些函数" class="headerlink" title="了解C++默默编写及调用哪些函数"></a>了解C++默默编写及调用哪些函数</h4><p>空类会自动声明一个default构造函数，copy构造函数,一个copy assignment操作符和析构函数</p><h4 id="若不想使用自动函数，则明确拒绝"><a href="#若不想使用自动函数，则明确拒绝" class="headerlink" title="若不想使用自动函数，则明确拒绝"></a>若不想使用自动函数，则明确拒绝</h4><p>一种做法将不想被自动调用的函数主动声明为private(iostream库做法，只有private声明);如果外部调用则编译器报错，如果member或friend函数调用则链接器报错。<br>更绝的做法专门为阻止copying动作设计一个基类，通过private继承，避免member/friend函数访问。</p><h4 id="为多态基类声明virtual析构函数"><a href="#为多态基类声明virtual析构函数" class="headerlink" title="为多态基类声明virtual析构函数"></a>为多态基类声明virtual析构函数</h4><p>从而确保对象derived成分被销毁，避免资源泄漏及败坏数据结构。</p><p>virtual函数实现细节不重要，重要的是带来对象体积的增强，引入virtual table pointer.因此也不能滥用virtual析构</p><p>一般使用心得：只有当class内含有至少一个virtual函数时，才为它声明virtual析构函数</p><p>注意的是：不要企图继承string, STL容器作为多态基类，因为这些均是带有“non-virtual析构函数”的class</p><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">AWOV</span>&#123;</span></span><br><span class="line">  <span class="keyword">public</span>:</span><br><span class="line">    <span class="keyword">virtual</span> ~<span class="built_in">AWOV</span>() = <span class="number">0</span>;  <span class="comment">// 声明pure virtual析构</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">AWOV::~<span class="built_in">AWOV</span>()&#123;&#125; <span class="comment">// 需要明确定义，因为有一系列调用动作</span></span><br></pre></td></tr></table></figure><p>记住：</p><ul><li>多态基类应该声明virtual析构函数，如果class带有任何virtual函数，则应该拥有一个virtual析构函数</li><li>class设计不是作为基类或者多态基类使用，就不要声明virtual析构函数，因为增大对象的体积</li></ul><h4 id="别让异常逃离析构函数"><a href="#别让异常逃离析构函数" class="headerlink" title="别让异常逃离析构函数"></a>别让异常逃离析构函数</h4><p>C++不禁止从析构抛出异常，但如果多个对象析构同时抛出多个异常，则容易导致不明确行为。解决方法：1.析构中抛出异常即abort程序 2.吞下异常，虽然覆盖了失败原因的重要信息，但有时候程序继续运行很重要 3.较佳策略重新设计接口，让client在普通函数中对抛出的异常作反应</p><h4 id="绝不在构造和析构过程调用virtual函数"><a href="#绝不在构造和析构过程调用virtual函数" class="headerlink" title="绝不在构造和析构过程调用virtual函数"></a>绝不在构造和析构过程调用virtual函数</h4>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h3 id=&quot;导读&quot;&gt;&lt;a href=&quot;#导读&quot; class=&quot;headerlink&quot; title=&quot;导读&quot;&gt;&lt;/a&gt;导读&lt;/h3&gt;&lt;p&gt;声明为explicit的构造函数更佳，避免不明确的自动隐式转换&lt;br&gt;对象使用“=”会自动调用copy构造函数&lt;br&gt;命名尽可能带有意义的缩</summary>
+      
+    
+    
+    
+    
+    <category term="读书笔记" scheme="http://tanrunjie.github.io/tags/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/"/>
+    
+  </entry>
   
   <entry>
     <title>九章基础class_7_8</title>
@@ -462,56 +509,6 @@
     
     
     <category term="EIGEN" scheme="http://tanrunjie.github.io/tags/EIGEN/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>皮肤的秘密</title>
-    <link href="http://tanrunjie.github.io/2022/01/19/reading/%E7%9A%AE%E8%82%A4%E7%9A%84%E7%A7%98%E5%AF%86/"/>
-    <id>http://tanrunjie.github.io/2022/01/19/reading/%E7%9A%AE%E8%82%A4%E7%9A%84%E7%A7%98%E5%AF%86/</id>
-    <published>2022-01-19T03:07:58.000Z</published>
-    <updated>2022-01-19T06:40:18.090Z</updated>
-    
-    <content type="html"><![CDATA[<h3 id="认识皮肤"><a href="#认识皮肤" class="headerlink" title="认识皮肤"></a>认识皮肤</h3><p>皮肤是人体最大的器官，展开达两平方米，是人体之于外界环境的保护膜，同时也是零距离感受外界的第一道关卡，所以每一寸都遍布了神经细胞。</p><p>皮肤主要由三层构成：表皮，真皮以及皮下组合。其中表皮与真皮间的基底膜带决定了皮肤的弹性紧致，而且是在1岁形成不可逆的衰老，无法重生所以只能好好保护延缓其衰老。皮肤细胞从底层出生，衰老于真皮并死亡在表皮并成为保护屏障，正常周期为4周。患有皮肤病的可能会加速该过程至5天，导致表皮的屏障并不完整。</p><h3 id="表皮"><a href="#表皮" class="headerlink" title="表皮"></a>表皮</h3><p>由于皮肤表面存在着大量微生物群，所以保持皮肤的pH值是非常重要的，应当合理维持完好无损的酸性保护膜，人工清洁剂约5.5，另外对于皮下脂肪过厚的皮肤褶皱，唯一有效办法是减肥。可以用抗真菌软膏，另外带锌软膏可缓解皮肤炎症，带走多余水分。</p><p><img src="/images/01_19_1.png"></p><p>生长纹无足轻重，关于肤色，是有黑色素影响的。研究表明，橙色皮肤最具吸引力，可多摄入胡萝卜素B达到。颠痕主要由基底膜带大面积受损，表皮过度损耗引起的。对于渗水伤口可用硅霜或贴上硅凝胶伤口贴。治疗疙瘩需要强效疗法如：激光疗法、热针、冷冻疗法以及X射线放射疗法。</p><h3 id="真皮"><a href="#真皮" class="headerlink" title="真皮"></a>真皮</h3><p>真皮充满紧致的结缔组织，带来稳固性以及拉伸性，任何的日晒、日光浴、烟草、压力、睡眠不足、营养不良以及缺乏运动等会加速弹性纤维的流失。臀部皮肤就是自然老化的参考，面部等受光照影响较大是老化较快的皮肤。另外，皮肤在4度就开始出现冻疮，而冬天皮肤也能适应，所以只在晚上睡前使用保湿即可，白天冬天保湿使皮肤含水量升高，反而容易冻伤。</p><p>真皮层拥有大量神经，使皮肤成为最大的神经器官，抚摸有调节中枢神经和社交等作用。同时含有腺体，会分泌激素气味等。</p>]]></content>
-    
-    
-      
-      
-    <summary type="html">&lt;h3 id=&quot;认识皮肤&quot;&gt;&lt;a href=&quot;#认识皮肤&quot; class=&quot;headerlink&quot; title=&quot;认识皮肤&quot;&gt;&lt;/a&gt;认识皮肤&lt;/h3&gt;&lt;p&gt;皮肤是人体最大的器官，展开达两平方米，是人体之于外界环境的保护膜，同时也是零距离感受外界的第一道关卡，所以每一寸都遍布了神经</summary>
-      
-    
-    
-    
-    <category term="读书笔记" scheme="http://tanrunjie.github.io/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/"/>
-    
-    
-    <category term="读书笔记" scheme="http://tanrunjie.github.io/tags/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>接纳麻烦</title>
-    <link href="http://tanrunjie.github.io/2022/01/18/shisan/%E6%8E%A5%E7%BA%B3%E9%BA%BB%E7%83%A6/"/>
-    <id>http://tanrunjie.github.io/2022/01/18/shisan/%E6%8E%A5%E7%BA%B3%E9%BA%BB%E7%83%A6/</id>
-    <published>2022-01-18T04:19:43.000Z</published>
-    <updated>2022-01-18T04:26:31.950Z</updated>
-    
-    <content type="html"><![CDATA[<p><code>摘自微信号十三手记</code></p><h3 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h3><p>什么是麻烦？<br>是那些你特别想忽略或粗糙嫌弃的事。</p><p>麻烦是什么？<br>是你逃避直面真实自己的托词。</p><p>既然如此，还有真正的麻烦吗？<br>没有，麻烦都是必要的，都是来成就你的礼物。</p><p>类似的麻烦为何会反复出现？<br>因为你一直没有透过直面解决这些麻烦去解除生命中的困惑。</p><p>如此一来，不解决麻烦的结果是什么？<br>你始终不能真正感受自己内心的智慧与力量。</p><h3 id="此刻你要明白"><a href="#此刻你要明白" class="headerlink" title="此刻你要明白"></a>此刻你要明白</h3><p>在你的人生旅程中，你与别人的整体差距，就是你们解决麻烦的程度的差距，如此，当你遇到你以为的麻烦，请不要嫌弃和忽略，请你力所能及的去具体解决，尽量到位，因为在这些解决行为里，不仅有你值得提升的认知，也有你智慧与力量的创造，也有你生命活性的体验，更加你累积人生成就的大礼。</p><h3 id="个人感悟"><a href="#个人感悟" class="headerlink" title="个人感悟"></a>个人感悟</h3><p>虽然我们需要惜时，但也要耐心解决问题，大大小小的问题都是提升自我的途径，尽管麻烦也要去接纳。如果重复度大的则可以考虑自动化去解决。</p>]]></content>
-    
-    
-      
-      
-    <summary type="html">&lt;p&gt;&lt;code&gt;摘自微信号十三手记&lt;/code&gt;&lt;/p&gt;
-&lt;h3 id=&quot;引言&quot;&gt;&lt;a href=&quot;#引言&quot; class=&quot;headerlink&quot; title=&quot;引言&quot;&gt;&lt;/a&gt;引言&lt;/h3&gt;&lt;p&gt;什么是麻烦？&lt;br&gt;是那些你特别想忽略或粗糙嫌弃的事。&lt;/p&gt;
-&lt;p&gt;麻烦是什么</summary>
-      
-    
-    
-    
-    <category term="十三手记" scheme="http://tanrunjie.github.io/categories/%E5%8D%81%E4%B8%89%E6%89%8B%E8%AE%B0/"/>
-    
-    
-    <category term="十三手记" scheme="http://tanrunjie.github.io/tags/%E5%8D%81%E4%B8%89%E6%89%8B%E8%AE%B0/"/>
     
   </entry>
   
