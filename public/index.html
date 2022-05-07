@@ -219,10 +219,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2022-04-24 11:30:15 / 修改时间：16:26:31" itemprop="dateCreated datePublished" datetime="2022-04-24T11:30:15+08:00">2022-04-24</time>
+              <time title="创建时间：2022-04-24 11:30:15" itemprop="dateCreated datePublished" datetime="2022-04-24T11:30:15+08:00">2022-04-24</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-05-06 16:56:51" itemprop="dateModified" datetime="2022-05-06T16:56:51+08:00">2022-05-06</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -300,6 +306,7 @@
 <li>一个快走，一个慢走</li>
 </ul>
 <p>穿针引线：先穿再引，即记录后续改动的，再变更之前的</p>
+<h3 id="树专题"><a href="#树专题" class="headerlink" title="树专题"></a>树专题</h3><p><img src="/images/5_6_1.jpg"></p>
 
       
     </div>
@@ -350,7 +357,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-04-24 11:27:18" itemprop="dateModified" datetime="2022-04-24T11:27:18+08:00">2022-04-24</time>
+                <time title="修改时间：2022-05-06 17:51:50" itemprop="dateModified" datetime="2022-05-06T17:51:50+08:00">2022-05-06</time>
               </span>
 
           <br>
@@ -359,7 +366,7 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>2.9k</span>
+              <span>3.2k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
@@ -428,7 +435,15 @@
 <li>class设计不是作为基类或者多态基类使用，就不要声明virtual析构函数，因为增大对象的体积</li>
 </ul>
 <h4 id="别让异常逃离析构函数"><a href="#别让异常逃离析构函数" class="headerlink" title="别让异常逃离析构函数"></a>别让异常逃离析构函数</h4><p>C++不禁止从析构抛出异常，但如果多个对象析构同时抛出多个异常，则容易导致不明确行为。解决方法：1.析构中抛出异常即abort程序 2.吞下异常，虽然覆盖了失败原因的重要信息，但有时候程序继续运行很重要 3.较佳策略重新设计接口，让client在普通函数中对抛出的异常作反应</p>
-<h4 id="绝不在构造和析构过程调用virtual函数"><a href="#绝不在构造和析构过程调用virtual函数" class="headerlink" title="绝不在构造和析构过程调用virtual函数"></a>绝不在构造和析构过程调用virtual函数</h4>
+<h4 id="绝不在构造和析构过程调用virtual函数"><a href="#绝不在构造和析构过程调用virtual函数" class="headerlink" title="绝不在构造和析构过程调用virtual函数"></a>绝不在构造和析构过程调用virtual函数</h4><p>因为这类调用从不下降至derived class</p>
+<h4 id="令operator-返回一个reference-to-this"><a href="#令operator-返回一个reference-to-this" class="headerlink" title="令operator= 返回一个reference to *this"></a>令operator= 返回一个reference to *this</h4><p>从而实现连锁形式,令外防止自我赋值问题</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">e.g.</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Widget</span>&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">  Widget&amp; <span class="keyword">operator</span>=(<span class="keyword">const</span> Widget&amp; rhs)</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="keyword">if</span>(<span class="keyword">this</span>== &amp;rhs)</span><br><span class="line">      <span class="keyword">return</span> *<span class="keyword">this</span>;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">delete</span> pb;</span><br><span class="line">    pb = <span class="keyword">new</span> <span class="built_in">Bitmap</span>(*rhs.pb);</span><br><span class="line">    <span class="keyword">return</span> *<span class="keyword">this</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>记住：</p>
+<ul>
+<li>确保自我赋值=和copy有良好行为</li>
+<li>确定多个对象为同一对象时仍然正确</li>
+</ul>
+<h4 id="复制对象勿忘每一个成分"><a href="#复制对象勿忘每一个成分" class="headerlink" title="复制对象勿忘每一个成分"></a>复制对象勿忘每一个成分</h4>
       
     </div>
 

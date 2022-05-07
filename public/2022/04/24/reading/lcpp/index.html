@@ -28,8 +28,9 @@
 <meta property="og:description" content="前言：努力做西湖区最好的算法题解。分为算法专题、91天学算法、精选题解、高频考题（简单-中等-困难） 算法专题数据结构线性结构：使用连续内存，序列。利于查询，不利于插入删除非线性结构：使用间断内存，通过地址指针连接,链表。运行时动态生成 队列、栈都是受限序列。非线性结构是为了高效兼顾静态操作和动态操作，如树堆。堆是一种优先队列，二叉查找树（查找快），AVL平衡树优化深度的BST，及后面的红黑树。">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://tanrunjie.github.io/images/4_24_1.jpg">
+<meta property="og:image" content="http://tanrunjie.github.io/images/5_6_1.jpg">
 <meta property="article:published_time" content="2022-04-24T03:30:15.000Z">
-<meta property="article:modified_time" content="2022-04-24T08:26:31.037Z">
+<meta property="article:modified_time" content="2022-05-06T08:56:51.976Z">
 <meta property="article:author" content="神秘囚徒">
 <meta property="article:tag" content="读书笔记">
 <meta name="twitter:card" content="summary">
@@ -224,10 +225,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2022-04-24 11:30:15 / 修改时间：16:26:31" itemprop="dateCreated datePublished" datetime="2022-04-24T11:30:15+08:00">2022-04-24</time>
+              <time title="创建时间：2022-04-24 11:30:15" itemprop="dateCreated datePublished" datetime="2022-04-24T11:30:15+08:00">2022-04-24</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-05-06 16:56:51" itemprop="dateModified" datetime="2022-05-06T16:56:51+08:00">2022-05-06</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -312,6 +319,7 @@
 <li>一个快走，一个慢走</li>
 </ul>
 <p>穿针引线：先穿再引，即记录后续改动的，再变更之前的</p>
+<h3 id="树专题"><a href="#树专题" class="headerlink" title="树专题"></a>树专题</h3><p><img src="/images/5_6_1.jpg"></p>
 
     </div>
 
@@ -393,7 +401,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AE%97%E6%B3%95%E4%B8%93%E9%A2%98"><span class="nav-number">1.</span> <span class="nav-text">算法专题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84"><span class="nav-number">1.1.</span> <span class="nav-text">数据结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%93%BE%E8%A1%A8"><span class="nav-number">1.2.</span> <span class="nav-text">链表</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%B8%80%E4%B8%AA%E5%8E%9F%E5%88%99%EF%BC%9A%E7%94%BB%E5%9B%BE"><span class="nav-number">1.2.1.</span> <span class="nav-text">一个原则：画图</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%B8%A4%E4%B8%AA%E8%80%83%E7%82%B9%EF%BC%9A"><span class="nav-number">1.2.2.</span> <span class="nav-text">两个考点：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%B8%89%E4%B8%AA%E6%B3%A8%E6%84%8F%EF%BC%9A-%E8%A6%86%E7%9B%9690-%E9%94%99%E8%AF%AF"><span class="nav-number">1.2.3.</span> <span class="nav-text">三个注意： 覆盖90%错误</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%89%8D%E5%90%8E%E5%BA%8F"><span class="nav-number">1.2.4.</span> <span class="nav-text">前后序</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%9B%9B%E4%B8%AA%E6%8A%80%E5%B7%A7"><span class="nav-number">1.2.5.</span> <span class="nav-text">四个技巧</span></a></li></ol></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AE%97%E6%B3%95%E4%B8%93%E9%A2%98"><span class="nav-number">1.</span> <span class="nav-text">算法专题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84"><span class="nav-number">1.1.</span> <span class="nav-text">数据结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%93%BE%E8%A1%A8"><span class="nav-number">1.2.</span> <span class="nav-text">链表</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%B8%80%E4%B8%AA%E5%8E%9F%E5%88%99%EF%BC%9A%E7%94%BB%E5%9B%BE"><span class="nav-number">1.2.1.</span> <span class="nav-text">一个原则：画图</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%B8%A4%E4%B8%AA%E8%80%83%E7%82%B9%EF%BC%9A"><span class="nav-number">1.2.2.</span> <span class="nav-text">两个考点：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%B8%89%E4%B8%AA%E6%B3%A8%E6%84%8F%EF%BC%9A-%E8%A6%86%E7%9B%9690-%E9%94%99%E8%AF%AF"><span class="nav-number">1.2.3.</span> <span class="nav-text">三个注意： 覆盖90%错误</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%89%8D%E5%90%8E%E5%BA%8F"><span class="nav-number">1.2.4.</span> <span class="nav-text">前后序</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%9B%9B%E4%B8%AA%E6%8A%80%E5%B7%A7"><span class="nav-number">1.2.5.</span> <span class="nav-text">四个技巧</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A0%91%E4%B8%93%E9%A2%98"><span class="nav-number">1.3.</span> <span class="nav-text">树专题</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 

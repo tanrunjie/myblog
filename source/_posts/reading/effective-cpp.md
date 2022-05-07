@@ -114,5 +114,30 @@ AWOV::~AWOV(){} // 需要明确定义，因为有一系列调用动作
 C++不禁止从析构抛出异常，但如果多个对象析构同时抛出多个异常，则容易导致不明确行为。解决方法：1.析构中抛出异常即abort程序 2.吞下异常，虽然覆盖了失败原因的重要信息，但有时候程序继续运行很重要 3.较佳策略重新设计接口，让client在普通函数中对抛出的异常作反应
 
 #### 绝不在构造和析构过程调用virtual函数
+因为这类调用从不下降至derived class
+
+#### 令operator= 返回一个reference to *this
+从而实现连锁形式,令外防止自我赋值问题
+``` cpp
+e.g.
+class Widget{
+public:
+  Widget& operator=(const Widget& rhs)
+  {
+    if(this== &rhs)
+      return *this;
+    
+    delete pb;
+    pb = new Bitmap(*rhs.pb);
+    return *this;
+  }
+};
+```
+记住：
+- 确保自我赋值=和copy有良好行为
+- 确定多个对象为同一对象时仍然正确
+
+#### 复制对象勿忘每一个成分
+
 
 
