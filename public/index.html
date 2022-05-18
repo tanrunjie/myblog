@@ -357,7 +357,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-05-06 17:51:50" itemprop="dateModified" datetime="2022-05-06T17:51:50+08:00">2022-05-06</time>
+                <time title="修改时间：2022-05-18 15:30:35" itemprop="dateModified" datetime="2022-05-18T15:30:35+08:00">2022-05-18</time>
               </span>
 
           <br>
@@ -366,14 +366,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>3.2k</span>
+              <span>4.7k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>3 分钟</span>
+              <span>4 分钟</span>
             </span>
 
         </div>
@@ -443,7 +443,63 @@
 <li>确保自我赋值=和copy有良好行为</li>
 <li>确定多个对象为同一对象时仍然正确</li>
 </ul>
-<h4 id="复制对象勿忘每一个成分"><a href="#复制对象勿忘每一个成分" class="headerlink" title="复制对象勿忘每一个成分"></a>复制对象勿忘每一个成分</h4>
+<h4 id="复制对象勿忘每一个成分"><a href="#复制对象勿忘每一个成分" class="headerlink" title="复制对象勿忘每一个成分"></a>复制对象勿忘每一个成分</h4><ul>
+<li>copying函数应该确保复制“对象所有成员变量”及“所有base class成分”</li>
+<li>不要尝试以某copying函数实现另一个copying函数。可将共同功能放入第三个函数中，被两个copying函数调用</li>
+</ul>
+<h3 id="资源管理（C-重要问题）"><a href="#资源管理（C-重要问题）" class="headerlink" title="资源管理（C++重要问题）"></a>资源管理（C++重要问题）</h3><p>主要原则：一旦使用了，将来必须还给系统。<br>资源包括：内存、文件描述器、互斥锁、图形界面的字型和笔刷、数据库连接以及网络sockets。</p>
+<p>为了警惕调用create动态内存之后，delete的语句有可能被控制流略过，可靠的做法依赖C++的“析构函数自动调用机制”，将资源放进对象内。</p>
+<p>记住：</p>
+<ul>
+<li>防止资源泄漏，使用RAII对象</li>
+<li>两个常用的RAII classes分别是tr1::shared_ptr和auto_ptr,<br>RAII（资源获取即初始化）:1.设计类封装资源 2.在构造函数初始化 3.在析构中销毁 4.使用时声明类</li>
+</ul>
+<p>“当一个RAII对象被复制，该如何处理”：</p>
+<ul>
+<li>一种是禁止复制，copying声明为private</li>
+<li>对底层资源进行“引用计数法”，一并复制管理的资源</li>
+</ul>
+<p>关于资源管理类</p>
+<ul>
+<li>APIs往往要求访问原始资源，所以每个RAII类应该提供一个“取得其所管理资源”的办法</li>
+<li>对原始资源的访问可能由显式转换或隐式转换而得，一般而言显示转换较安全，但隐式转换对客户比较方便</li>
+</ul>
+<h4 id="new和delete采取相同形式"><a href="#new和delete采取相同形式" class="headerlink" title="new和delete采取相同形式"></a>new和delete采取相同形式</h4><p>核心问题：被删除的指针所指是单一对象或者对象数组？</p>
+<p>避免对数组形式左typedefs，容易引起new []和delete []一致性问题。由于STL的string和vector，因此C数组需求几乎为零。</p>
+<p>应该以独立语句将newed对象存储于智能指针内，如果不如此，一旦异常抛出有可能导致难以觉察的资源泄漏。</p>
+<h3 id="设计与声明"><a href="#设计与声明" class="headerlink" title="设计与声明"></a>设计与声明</h3><h4 id="让接口容易正确使用，不易被误用"><a href="#让接口容易正确使用，不易被误用" class="headerlink" title="让接口容易正确使用，不易被误用"></a>让接口容易正确使用，不易被误用</h4><p>接口种类：function、class、template，都是客户与你的代码互动的方式。</p>
+<p>理想上，如果客户企图使用某个接口却没有获得他所预期的行为，这个代码不该通过编译；如果通过编译，则API的作为就该是客户所想要的。</p>
+<p>tricks:使用特定类型作为接口参数,使用shared_ptr强迫RAII</p>
+<p>记住：</p>
+<ul>
+<li>好的接口容易正确使用，应该在所有接口中努力达成这些性质</li>
+<li>“促进正确使用”的办法包括接口的一致性以及内置类型行为兼容</li>
+<li>“阻止误用”的办法包括建立新类型，限制类型上的操作，束缚对象值以及消除客户的资源管理责任</li>
+<li>shared_ptr支持定制型删除器，可防范DLL问题，可被用来自动解除互斥锁</li>
+</ul>
+<h4 id="设计class犹如设计type"><a href="#设计class犹如设计type" class="headerlink" title="设计class犹如设计type"></a>设计class犹如设计type</h4><p>设计包括：重载函数和操作符、控制内存的分配和归还、定义对象的初始化和终结<br>设计规范的一些问题：</p>
+<ul>
+<li>新type的对象应该如何被创建和销毁</li>
+<li>对象初始化和赋值有什么差别</li>
+<li>新type的对象如果被passed by value意味着什么</li>
+<li>新type的“合法值”是什么</li>
+<li>新type需要配合某个继承图系吗</li>
+<li>新type需要什么样转换</li>
+<li>什么样的操作符和函数对新type是合理的</li>
+<li>什么样的标准函数应该驳回</li>
+<li>谁该取用新type的成员</li>
+<li>什么是新type的“未声明接口”</li>
+<li>你的新type有多么一般化</li>
+<li>你真的需要一个新type吗</li>
+</ul>
+<p>记住：class的设计就是type的设计，定义之前确定你已经考虑过本条款覆盖的所有主题</p>
+<h4 id="用pass-by-reference-to-const替换pass-by-value"><a href="#用pass-by-reference-to-const替换pass-by-value" class="headerlink" title="用pass-by-reference-to-const替换pass-by-value"></a>用pass-by-reference-to-const替换pass-by-value</h4><p>Pass-by-value还可能引起切割问题，某些特化信息丢失。</p>
+<p>记住：</p>
+<ul>
+<li>对于内置类型以及STL迭代器和函数对象，使用pass-by-value比较适当</li>
+<li>对于其他struct, type, class用pass-by-reference-to-const更高效</li>
+</ul>
+
       
     </div>
 
@@ -1551,12 +1607,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">94k</span>
+    <span title="站点总字数">96k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">1:26</span>
+    <span title="站点阅读时长">1:27</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
   </div>
