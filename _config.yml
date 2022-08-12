@@ -119,3 +119,7 @@ markdown:
     - markdown-it-abbr
     - markdown-it-emoji
     - hexo-math
+
+hide_posts:
+  filter: hidden
+  noindex: true

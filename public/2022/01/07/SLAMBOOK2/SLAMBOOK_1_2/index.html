@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 5.4.0">
+<meta name="generator" content="Hexo 6.2.0">
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
@@ -346,7 +346,7 @@
 <p>回环检测主要让机器人具有识别曾到达过场景的能力，具体实施可以是二维码图片或者图像间的相似性。</p>
 <p>最后建图包括度量和拓扑地图：2D栅格地图、2D拓扑地图、3D点云地图、3D网格地图；<br>度量地图：强调精确表示地图中物体的位置关系<br>拓扑地图：强调地图元素之间的关系，考虑节点间的连通性</p>
 <h4 id="SLAM数学建模"><a href="#SLAM数学建模" class="headerlink" title="SLAM数学建模"></a>SLAM数学建模</h4><p>主要分为运动方程和观测方程，根据这两个方程是否线性以及噪声是否服从高斯分布进行分类，主要信息是位姿以及观测的路标</p>
-<h4 id="CMAKE的使用"><a href="#CMAKE的使用" class="headerlink" title="CMAKE的使用"></a>CMAKE的使用</h4><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">add_executable</span>(exe main.cpp) # 编译执行文件</span><br><span class="line"></span><br><span class="line"><span class="built_in">add_library</span>(lib lib.cpp)  # 编译静态库 .<span class="function">a</span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function"><span class="title">add_library</span><span class="params">(lib_shared SHARED lib.cpp)</span>  # 编译动态库 .so</span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function"><span class="title">add_executable</span><span class="params">(useLib useLib.cpp)</span>   <span class="meta"># cpp <span class="meta-keyword">include</span>动态库的头文件调用</span></span></span><br><span class="line"><span class="function"><span class="title">target_link_libraries</span><span class="params">(useLib lib_shared)</span>  # 将库文件链接到编译后的文件，最后链接生成最后的执行文件useLib</span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function"># 将库hello和共享库hello_shared安装到/usr/local/lib下</span></span><br><span class="line"><span class="function"><span class="title">INSTALL</span><span class="params">(TARGETS hello hello_shared</span></span></span><br><span class="line"><span class="params"><span class="function">LIBRARY DESTINATION lib</span></span></span><br><span class="line"><span class="params"><span class="function">ARCHIVE DESTINATION lib)</span></span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function"># 将库的头文件安装到/usr/local/include下</span></span><br><span class="line"><span class="function"><span class="title">INSTALL</span><span class="params">(FILES libHelloSLAM.h DESTINATION include/libHelloSLAM)</span></span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function"># 另外目录的项目调用，引入头文件</span></span><br><span class="line"><span class="function"><span class="title">include_directories</span><span class="params">(/usr/local/include/libHelloSLAM)</span></span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function"># 链接库文件</span></span><br><span class="line"><span class="function"><span class="title">target_link_libraries</span><span class="params">(useHello /usr/local/lib/libhello_shared.so)</span></span></span><br><span class="line"><span class="function"></span></span><br></pre></td></tr></table></figure>
+<h4 id="CMAKE的使用"><a href="#CMAKE的使用" class="headerlink" title="CMAKE的使用"></a>CMAKE的使用</h4><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">add_executable</span>(exe main.cpp) # 编译执行文件</span><br><span class="line"></span><br><span class="line"><span class="built_in">add_library</span>(lib lib.cpp)  # 编译静态库 .<span class="function">a</span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function"><span class="title">add_library</span><span class="params">(lib_shared SHARED lib.cpp)</span>  # 编译动态库 .so</span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function"><span class="title">add_executable</span><span class="params">(useLib useLib.cpp)</span>   <span class="meta"># cpp <span class="keyword">include</span>动态库的头文件调用</span></span></span><br><span class="line"><span class="function"><span class="title">target_link_libraries</span><span class="params">(useLib lib_shared)</span>  # 将库文件链接到编译后的文件，最后链接生成最后的执行文件useLib</span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function"># 将库hello和共享库hello_shared安装到/usr/local/lib下</span></span><br><span class="line"><span class="function"><span class="title">INSTALL</span><span class="params">(TARGETS hello hello_shared</span></span></span><br><span class="line"><span class="params"><span class="function">LIBRARY DESTINATION lib</span></span></span><br><span class="line"><span class="params"><span class="function">ARCHIVE DESTINATION lib)</span></span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function"># 将库的头文件安装到/usr/local/include下</span></span><br><span class="line"><span class="function"><span class="title">INSTALL</span><span class="params">(FILES libHelloSLAM.h DESTINATION include/libHelloSLAM)</span></span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function"># 另外目录的项目调用，引入头文件</span></span><br><span class="line"><span class="function"><span class="title">include_directories</span><span class="params">(/usr/local/include/libHelloSLAM)</span></span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function"># 链接库文件</span></span><br><span class="line"><span class="function"><span class="title">target_link_libraries</span><span class="params">(useHello /usr/local/lib/libhello_shared.so)</span></span></span><br><span class="line"><span class="function"></span></span><br></pre></td></tr></table></figure>
 <p>库文件是压缩包，包含编译好的二进制函数，但不知道函数是什么样和调用形式，所以需要结合<strong>头文件</strong>使用。只有拿到头文件和库文件才可以调用库。</p>
 
     </div>
@@ -448,20 +448,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">49</span>
+          <span class="site-state-item-count">46</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">17</span>
+        <span class="site-state-item-count">15</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">21</span>
+        <span class="site-state-item-count">19</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -502,12 +502,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">96k</span>
+    <span title="站点总字数">92k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">1:27</span>
+    <span title="站点阅读时长">1:23</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
   </div>
